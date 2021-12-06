@@ -5,8 +5,7 @@
     "gettext-domain": "desktop-cube",
     "settings-schema": "org.gnome.shell.extensions.desktop-cube",
     "shell-version": [
-        "40",
-        "41"
+        "40"
     ],
     "url": "https://github.com/Schneegans/Desktop-Cube",
     "version": 1
