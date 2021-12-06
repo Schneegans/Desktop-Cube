@@ -1,0 +1,13 @@
+{
+    "uuid": "desktop-cube@schneegans.github.com",
+    "description": "Indulge in nostalgia with useless 3D effects.",
+    "name": "Desktop Cube",
+    "gettext-domain": "desktop-cube",
+    "settings-schema": "org.gnome.shell.extensions.desktop-cube",
+    "shell-version": [
+        "40",
+        "41"
+    ],
+    "url": "https://github.com/Schneegans/Desktop-Cube",
+    "version": 1
+}
