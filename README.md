@@ -5,6 +5,8 @@
 # Desktop Cube for GNOME Shell
 
 When I started using Linux more than a decade ago, it was because of the 3D desktop cube of Compiz.
+Even if this was a pretty useless feature, I am still missing it today.
+As we already have the awesome [Compiz-alike windows efffects](https://extensions.gnome.org/extension/2950/compiz-alike-windows-effect/), I thought it was time to revive 3D workspaces as well!
 
 ## :construction: This is under Construction!
 
