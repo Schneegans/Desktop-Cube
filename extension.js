@@ -127,7 +127,7 @@ class Extension {
       // mode. We will use overviewMode to fold and unfold the cube, and appGridMode to
       // attenuate the scaling effect of the active workspace.
       const overviewMode = extensionThis._getOverviewMode(this);
-      const appGridMode  = extensionThis._getAppGridMode(this);
+      const appGridMode  = this._fitModeAdjustment.value;
 
       // Now loop through all workspace and compute the individual rotations.
       this._workspaces.forEach((w, index) => {
@@ -247,36 +247,6 @@ class Extension {
     return Util.lerp(
         workspacesView._getWorkspaceModeForOverviewState(initialState),
         workspacesView._getWorkspaceModeForOverviewState(finalState), progress);
-  }
-
-  // This method returns 1 if we are in app grid state and 0 in overview state and the
-  // desktop state. In between, the value is smoothly interpolated.
-  _getAppGridMode(workspacesView) {
-    const {initialState, finalState, progress} =
-        workspacesView._overviewAdjustment.getStateTransitionParams();
-
-    // The WorkspacesView class has a _getWorkspaceModeForOverviewState() method which
-    // returns 1 in WINDOW_PICKER state and 0 otherwise. This here is a similar method
-    // which returns 1 in APP_GRID state and zero otherwise.
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L240
-    const getWorkspaceModeForAppGridState = (state) => {
-      const {ControlsState} = OverviewControls;
-
-      switch (state) {
-        case ControlsState.HIDDEN:
-          return 0;
-        case ControlsState.WINDOW_PICKER:
-          return 0;
-        case ControlsState.APP_GRID:
-          return 1;
-      }
-
-      return 0;
-    };
-
-    return Util.lerp(
-        getWorkspaceModeForAppGridState(initialState),
-        getWorkspaceModeForAppGridState(finalState), progress);
   }
 }
 
