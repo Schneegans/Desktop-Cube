@@ -12,7 +12,7 @@ As we already have the awesome [Compiz-alike windows efffects](https://extension
 
 Here's a rough list of thing which might be added in the future, roughly sorted by importance:
 
-- [ ] Support for GNOME Shell 41.
+- [x] Support for GNOME Shell 40 and 41.
 - [ ] Better transitions. I would like to improve the impression of "folding".
 - [ ] Free rotation of the cube with the middle mouse button.
 - [ ] A settings dialog. The opacity of the workspaces, their spacing, and several other things could be configurable.
