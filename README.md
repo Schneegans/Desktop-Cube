@@ -8,15 +8,15 @@ When I started using Linux more than a decade ago, it was because of the 3D desk
 
 ## :construction: This is under Construction!
 
-Here's a rough list of thing which might be added in the future:
+Here's a rough list of thing which might be added in the future, roughly sorted by importance:
 
 - [ ] Support for GNOME Shell 41.
-- [ ] A settings dialog. The opacity of the workspaces, their spacing, and several other things could be configurable.
 - [ ] Better transitions. I would like to improve the impression of "folding".
+- [ ] Free rotation of the cube with the middle mouse button.
+- [ ] A settings dialog. The opacity of the workspaces, their spacing, and several other things could be configurable.
 - [ ] Proper support for multiple monitors (it may work already, I just haven't tested it).
-- [ ] Cuboid transitions when switching workspaces via <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Arrow</kbd>.
 - [ ] Automated CI tests.
-
+- [ ] Cuboid transitions when switching workspaces via <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Arrow</kbd>.
 
 ## :exploding_head: Frequently asked Questions
 
@@ -34,4 +34,4 @@ Most likely. The implementation is pretty hacky and relies on some specific inte
 
 #### The workspaces are not really arranged in a cuboid fashion. Should we change the name of the extension?
 
-That's a smart point! However, covering only 180°, ensures that no one notices that we cannot rotate the "cube" an entire round...
+That's a smart point! However, covering only 180°, ensures that no one notices that we cannot rotate the "cube" for an entire round...
