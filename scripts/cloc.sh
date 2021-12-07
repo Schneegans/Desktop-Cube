@@ -1,12 +1,15 @@
 #!/bin/bash
 
-# ---------------------------------------------------------------------------------------#
+# -------------------------------------------------------------------------------------- #
 #  ,-.  ,--.  ,-.  ,  , ,---.  ,-.  ;-.     ,-. .  . ,-.  ,--. This software may be      #
 #  |  \ |    (   ` | /    |   /   \ |  )   /    |  | |  ) |    modified and distributed  #
-#  |  | |-    `-.  |<     |   |   | |-'    |    |  | |-<  |-   under the MIT license.    #
-#  |  / |    .   ) | \    |   \   / |      \    |  | |  ) |    See the LICENSE file      #
-#  `-'  `--'  `-'  '  `   '    `-'  '       `-' `--` `-'  `--' for details.              #
-# ---------------------------------------------------------------------------------------#
+#  |  | |-    `-.  |<     |   |   | |-'    |    |  | |-<  |-   under the GPLv3 or        #
+#  |  / |    .   ) | \    |   \   / |      \    |  | |  ) |    later. See the LICENSE    #
+#  `-'  `--'  `-'  '  `   '    `-'  '       `-' `--` `-'  `--' file for details.         #
+# -------------------------------------------------------------------------------------- #
+
+# This script is based on a similar script from the Fly-Pie GNOME Shell extension which is
+# published under the MIT License (https://github.com/Schneegans/Fly-Pie).
 
 # This scripts counts the lines of code and comments in all JavaScript files.
 # The copyright-headers are substracted. It uses the command line tool "cloc".

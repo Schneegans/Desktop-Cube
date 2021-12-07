@@ -1,12 +1,15 @@
 #!/bin/bash
 
-# ---------------------------------------------------------------------------------------#
+# -------------------------------------------------------------------------------------- #
 #  ,-.  ,--.  ,-.  ,  , ,---.  ,-.  ;-.     ,-. .  . ,-.  ,--. This software may be      #
 #  |  \ |    (   ` | /    |   /   \ |  )   /    |  | |  ) |    modified and distributed  #
-#  |  | |-    `-.  |<     |   |   | |-'    |    |  | |-<  |-   under the MIT license.    #
-#  |  / |    .   ) | \    |   \   / |      \    |  | |  ) |    See the LICENSE file      #
-#  `-'  `--'  `-'  '  `   '    `-'  '       `-' `--` `-'  `--' for details.              #
-# ---------------------------------------------------------------------------------------#
+#  |  | |-    `-.  |<     |   |   | |-'    |    |  | |-<  |-   under the GPLv3 or        #
+#  |  / |    .   ) | \    |   \   / |      \    |  | |  ) |    later. See the LICENSE    #
+#  `-'  `--'  `-'  '  `   '    `-'  '       `-' `--` `-'  `--' file for details.         #
+# -------------------------------------------------------------------------------------- #
+
+# This script is based on a similar script from the Fly-Pie GNOME Shell extension which is
+# published under the MIT License (https://github.com/Schneegans/Fly-Pie).
 
 # Exit the script when one command fails.
 set -e

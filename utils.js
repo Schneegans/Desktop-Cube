@@ -1,9 +1,9 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 // ,-.  ,--.  ,-.  ,  , ,---.  ,-.  ;-.     ,-. .  . ,-.  ,--. This software may be     //
 // |  \ |    (   ` | /    |   /   \ |  )   /    |  | |  ) |    modified and distributed //
-// |  | |-    `-.  |<     |   |   | |-'    |    |  | |-<  |-   under the MIT license.   //
-// |  / |    .   ) | \    |   \   / |      \    |  | |  ) |    See the LICENSE file     //
-// `-'  `--'  `-'  '  `   '    `-'  '       `-' `--` `-'  `--' for details.             //
+// |  | |-    `-.  |<     |   |   | |-'    |    |  | |-<  |-   under the GPLv3 or       //
+// |  / |    .   ) | \    |   \   / |      \    |  | |  ) |    later. See the LICENSE   //
+// `-'  `--'  `-'  '  `   '    `-'  '       `-' `--` `-'  `--' file for details.        //
 //////////////////////////////////////////////////////////////////////////////////////////
 
 'use strict';
@@ -16,6 +16,8 @@ const Me             = imports.misc.extensionUtils.getCurrentExtension();
 // where the message was logged. As the extensions name is part of the location, you
 // can more effectively watch the log output of GNOME Shell:
 // journalctl -f -o cat | grep -E 'desktop-cube|'
+// This method is based on a similar script from the Fly-Pie GNOME Shell extension which
+// os published under the MIT License (https://github.com/Schneegans/Fly-Pie).
 function debug(message) {
   const stack = new Error().stack.split('\n');
 
