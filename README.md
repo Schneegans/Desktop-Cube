@@ -17,6 +17,7 @@ Here's a rough list of thing which might be added in the future, roughly sorted 
 - [ ] Free rotation of the cube with the middle mouse button.
 - [ ] A settings dialog. The opacity of the workspaces, their spacing, and several other things could be configurable.
 - [ ] Proper support for multiple monitors (it may work already, I just haven't tested it).
+- [ ] Sky boxes!
 - [ ] Automated CI tests.
 - [ ] Cuboid transitions when switching workspaces via <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Arrow</kbd>.
 
