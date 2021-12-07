@@ -109,9 +109,9 @@ class Extension {
       // we cannot get a new one...
       let workspaceWidth = extensionThis._lastWorkspaceWidth;
       if (this._workspaces[0]._background.get_stage() &&
-          this._workspaces[0]._background.width) {
+          this._workspaces[0]._background.allocation.get_width()) {
         workspaceWidth = extensionThis._lastWorkspaceWidth =
-            this._workspaces[0]._background.width;
+            this._workspaces[0]._background.allocation.get_width();
       }
 
       // Our "cube" only covers 180°, if there are only two workspaces, it covers 90°.
