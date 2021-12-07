@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # -------------------------------------------------------------------------------------- #
-#  ,-.  ,--.  ,-.  ,  , ,---.  ,-.  ;-.     ,-. .  . ,-.  ,--. This software may be      #
-#  |  \ |    (   ` | /    |   /   \ |  )   /    |  | |  ) |    modified and distributed  #
-#  |  | |-    `-.  |<     |   |   | |-'    |    |  | |-<  |-   under the GPLv3 or        #
-#  |  / |    .   ) | \    |   \   / |      \    |  | |  ) |    later. See the LICENSE    #
-#  `-'  `--'  `-'  '  `   '    `-'  '       `-' `--` `-'  `--' file for details.         #
+#  ,-.  ,--.  ,-.  ,  , ,---.  ,-.  ;-.     ,-. .  . ,-.  ,--.        Copyright (c) 2021 #
+#  |  \ |    (   ` | /    |   /   \ |  )   /    |  | |  ) |             Simon Schneegans #
+#  |  | |-    `-.  |<     |   |   | |-'    |    |  | |-<  |-    Released under the GPLv3 #
+#  |  / |    .   ) | \    |   \   / |      \    |  | |  ) |        or later. See LICENSE #
+#  `-'  `--'  `-'  '  `   '    `-'  '       `-' `--` `-'  `--'         file for details. #
 # -------------------------------------------------------------------------------------- #
 
 # This script is based on a similar script from the Fly-Pie GNOME Shell extension which is
