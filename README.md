@@ -16,10 +16,12 @@ Here's a rough list of thing which might be added in the future, roughly sorted 
 - [ ] Better transitions. I would like to improve the impression of "folding".
 - [ ] Free rotation of the cube with the middle mouse button.
 - [ ] A settings dialog. The opacity of the workspaces, their spacing, and several other things could be configurable.
+- [ ] Adjust animation speed of workspace switches and entering / leaving overview and app grid (#1).
 - [ ] Proper support for multiple monitors (it may work already, I just haven't tested it).
 - [ ] Sky boxes!
 - [ ] Automated CI tests.
 - [ ] Cuboid transitions when switching workspaces via <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Arrow</kbd>.
+- [ ] Switch workspaces while moving a window with pressed <kbd>Alt</kbd> modifier (not sure if that's possible, though).
 
 ## :exploding_head: Frequently asked Questions
 
