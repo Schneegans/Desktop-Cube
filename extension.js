@@ -20,12 +20,12 @@ const utils          = Me.imports.utils;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // This extensions modifies three methods of the WorkspacesView class of GNOME Shell.   //
-// By doing this, it tweaks the positioning of workspaces in overview mode to make the  //
+// By doing this, it tweaks the positioning of workspaces in overview mode to make them //
 // look like cube faces.                                                                //
 //////////////////////////////////////////////////////////////////////////////////////////
 
 const WORKSPACE_SEPARATION     = 180;  // Complete angle covered by our "cube".
-const TWO_WORKSPACE_SEPARATION = 90;   // Angle covered  if there are only tow workspaces.
+const TWO_WORKSPACE_SEPARATION = 90;   // Angle covered if there are only two workspaces.
 const ACTIVE_OPACITY           = 255;  // Opacity of the front face of the "cube".
 const INACTIVE_OPACITY         = 200;  // Opacity of all other faces.
 const DEPTH_SEPARATION         = 50;   // Distance between window previews and cube faces.
@@ -210,8 +210,8 @@ class Extension {
               Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(gamma * Math.PI / 180));
 
           // Enclosed angle between vector from virtual camera to center of the cube face
-          // and from center of cube face to rotation center. Computed Law of cosines:
-          // alpha=acos((b²+c²-a²)(2bc))
+          // and from center of cube face to rotation center. Computed with the Law of
+          // cosines again: alpha=acos((b²+c²-a²)(2bc))
           const alpha = Math.acos((b * b + c * c - a * a) / (2 * b * c)) * 180 / Math.PI;
 
           // Draw the background actor first if it's a front-facing cube side. Draw it
