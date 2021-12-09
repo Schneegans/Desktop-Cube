@@ -133,8 +133,8 @@ class Extension {
       // from and to the desktop mode. We will use cubeMode to fold and unfold the
       // cube, overviewMode to add some depth between windows and backgrounds, and
       // appGridMode to attenuate the scaling effect of the active workspace.
-      const overviewMode = extensionThis._getOverviewMode(this);
       const appGridMode  = this._fitModeAdjustment.value;
+      const overviewMode = this._overviewAdjustment.value - 2 * appGridMode;
       const cubeMode     = 1 - appGridMode;
 
       // Now loop through all workspace and compute the individual rotations.
@@ -257,19 +257,6 @@ class Extension {
     WorkspacesView.prototype._updateWorkspacesState = this._origUpdateWorkspacesState;
     WorkspacesView.prototype._getSpacing            = this._origGetSpacing;
     WorkspacesView.prototype._updateVisibility      = this._origUpdateVisibility;
-  }
-
-  // ----------------------------------------------------------------------- private stuff
-
-  // This method returns 1 if we are in overview state and 0 in app grid state and the
-  // desktop state. In between, the value is smoothly interpolated.
-  _getOverviewMode(workspacesView) {
-    const {initialState, finalState, progress} =
-        workspacesView._overviewAdjustment.getStateTransitionParams();
-
-    return Util.lerp(
-        workspacesView._getWorkspaceModeForOverviewState(initialState),
-        workspacesView._getWorkspaceModeForOverviewState(finalState), progress);
   }
 }
 
