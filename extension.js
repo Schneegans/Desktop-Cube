@@ -24,11 +24,19 @@ const utils          = Me.imports.utils;
 // look like cube faces.                                                                //
 //////////////////////////////////////////////////////////////////////////////////////////
 
-const WORKSPACE_SEPARATION     = 180;  // Complete angle covered by our "cube".
-const TWO_WORKSPACE_SEPARATION = 90;   // Angle covered if there are only two workspaces.
-const ACTIVE_OPACITY           = 255;  // Opacity of the front face of the "cube".
-const INACTIVE_OPACITY         = 200;  // Opacity of all other faces.
-const DEPTH_SEPARATION         = 50;   // Distance between window previews and cube faces.
+// The scale of inactive workspaces in app grid mode.
+const INACTIVE_SCALE = imports.ui.workspacesView.WORKSPACE_INACTIVE_SCALE;
+
+const CUBE_COVERAGE          = 180;  // Complete angle covered by our "cube".
+const TWO_WORKSPACE_COVERAGE = 90;   // Angle covered if there are only two workspaces.
+const WORKSPACE_SEPARATION   = 50;   // The gap between adjacent workspaces.
+const ACTIVE_OPACITY         = 255;  // Opacity of the front face of the "cube".
+const INACTIVE_OPACITY       = 200;  // Opacity of all other faces.
+const DEPTH_SEPARATION       = 50;   // Distance between window previews and cube faces.
+const HORIZONTAL_STRETCH = 100;  // This moves next and previous workspaces a bit to the
+                                 // left and right. This ensures that we can actually see
+                                 // them if we look at the cube from the front. The value
+                                 // is faded to zero if we have six or more workspaces.
 
 class Extension {
   // The constructor is called once when the extension is loaded, not enabled.
@@ -108,14 +116,14 @@ class Extension {
       // workaround, we store the last valid workspace width we got and use that value if
       // we cannot get a new one...
       let workspaceWidth = extensionThis._lastWorkspaceWidth;
-      if (this._workspaces[0]._background.get_stage() &&
-          this._workspaces[0]._background.allocation.get_width()) {
-        workspaceWidth = extensionThis._lastWorkspaceWidth =
-            this._workspaces[0]._background.allocation.get_width();
+      const bg           = this._workspaces[0]._background;
+      if (bg.get_stage() && bg.allocation.get_width()) {
+        workspaceWidth = bg.allocation.get_width() + 2 * WORKSPACE_SEPARATION;
+        extensionThis._lastWorkspaceWidth = workspaceWidth;
       }
 
       // Our "cube" only covers 180°, if there are only two workspaces, it covers 90°.
-      const maxAngle = (faceCount == 2 ? TWO_WORKSPACE_SEPARATION : WORKSPACE_SEPARATION);
+      const maxAngle = (faceCount == 2 ? TWO_WORKSPACE_COVERAGE : CUBE_COVERAGE);
 
       // That's the angle between consecutove workspaces.
       const faceAngle = maxAngle / (faceCount - 1);
@@ -139,21 +147,26 @@ class Extension {
         w.rotation_angle_y =
             overviewMode * (-this._scrollAdjustment.value + index) * faceAngle;
 
-        // Add some separation between background and windows.
-        w._background.translation_z = overviewMode * -DEPTH_SEPARATION;
+        // Add some separation between background and windows (only in overview mode).
+        w._background.translation_z = -overviewMode * DEPTH_SEPARATION;
 
-        // Distance to being the active workspace in [1..0].
-        const dist = 1 - Math.clamp(Math.abs(this._scrollAdjustment.value - index), 0, 1);
+        // Distance to being the active workspace in [-1...0...1].
+        const dist = Math.clamp(index - this._scrollAdjustment.value, -1, 1);
+
+        // Spread adjacent workspaces to make the visible if we look at a four-sided cube
+        // from the front.
+        if (faceCount <= 4) {
+          w.translation_x = dist * overviewMode * HORIZONTAL_STRETCH;
+        } else {
+          w.translation_x = 0;
+        }
 
         // Update opacity only in overview mode.
-        let opacity = Util.lerp(INACTIVE_OPACITY, ACTIVE_OPACITY, dist);
-        opacity     = 255 * (1 - overviewMode) + opacity * overviewMode;
-        w._background.set_opacity(opacity);
+        const opacity = Util.lerp(ACTIVE_OPACITY, INACTIVE_OPACITY, Math.abs(dist));
+        w._background.set_opacity(Util.lerp(255, opacity, overviewMode));
 
-        // Update scale only in app grid mode.
-        let scale =
-            Util.lerp(imports.ui.workspacesView.WORKSPACE_INACTIVE_SCALE, 1, dist);
-        scale = (1 - appGridMode) + scale * appGridMode;
+        // Update workspace scale only in app grid mode.
+        const scale = Util.lerp(1, INACTIVE_SCALE, Math.abs(dist) * appGridMode);
         w.set_scale(scale, scale);
       });
 
