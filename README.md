@@ -4,16 +4,19 @@
 
 # Desktop Cube for GNOME Shell
 
+  <a href="https://github.com/Schneegans/Desktop-Cube/actions"><img src="https://github.com/Schneegans/Desktop-Cube/workflows/Checks/badge.svg?branch=main" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg?labelColor=303030" /></a>
+  <a href="https://extensions.gnome.org/extension/4648/desktop-cube/"><img src="https://img.shields.io/badge/Download-extensions.gnome.org-e67f4d.svg?logo=gnome&logoColor=lightgrey&labelColor=303030" /></a>
+
+
 When I started using Linux more than a decade ago, it was because of the 3D desktop cube of Compiz.
 Even if this was a pretty useless feature, I am still missing it today.
 As we already have the awesome [Compiz-alike windows efffects](https://extensions.gnome.org/extension/2950/compiz-alike-windows-effect/), I thought it was time to revive 3D workspaces as well!
 
 ## :construction: This is under Construction!
 
-Here's a rough list of thing which might be added in the future, roughly sorted by importance:
+Here's a rough list of thing which might be added in the future, roughly sorted by importance. For a list of things changed in previous releases, you can have a look at the [changelog](docs/changelog.md)!
 
-- [x] Support for GNOME Shell 40 and 41.
-- [ ] Better transitions. I would like to improve the impression of "folding".
 - [ ] Free rotation of the cube with the middle mouse button.
 - [ ] A settings dialog. The opacity of the workspaces, their spacing, and several other things could be configurable.
 - [ ] Adjust animation speed of workspace switches and entering / leaving overview and app grid (#1).
