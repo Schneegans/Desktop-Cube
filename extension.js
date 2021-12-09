@@ -208,14 +208,20 @@ class Extension {
 
         } else {
 
-          // Length of vector from camera to rotation center.
+          // a is the length of vector from camera to rotation center.
           const a = camDist + centerDepth;
-
-          // Length of vector from cube face to rotation center.
-          const b = centerDepth;
 
           // Enclosed angle between the a and b.
           const gamma = Math.abs(w.rotation_angle_y);
+
+          // b is the length of vector from center of cube face to rotation center. This
+          // would be only centerDepth if the sides of the cube were not stretched
+          // horizontally by HORIZONTAL_STRETCH. Computed with law of cosines:
+          // b²=d²+s²-2ds*cos(90+gamma).
+          const s = Math.abs(w.translation_x);
+          const d = centerDepth;
+          const b = Math.sqrt(
+              d * d + s * s - 2 * d * s * Math.cos((90 + gamma) * Math.PI / 180));
 
           // Length of vector from virtual camera to center of the cube face. Computed
           // with law of cosines: c²=a²+b²-2ab*cos(gamma).
