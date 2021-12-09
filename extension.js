@@ -121,7 +121,7 @@ class Extension {
       const faceAngle = maxAngle / (faceCount - 1);
 
       // That's the z-distance from the cube faces to the rotation pivot.
-      const centerDepth = workspaceWidth / 2 / Math.atan(faceAngle * 0.5 * Math.PI / 180);
+      const centerDepth = workspaceWidth / 2 / Math.tan(faceAngle * 0.5 * Math.PI / 180);
 
       // Compute blending state from and to the overview and from and to the app grid
       // mode. We will use overviewMode to fold and unfold the cube, and appGridMode to
