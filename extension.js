@@ -29,14 +29,14 @@ const INACTIVE_SCALE = imports.ui.workspacesView.WORKSPACE_INACTIVE_SCALE;
 
 const CUBE_COVERAGE          = 180;  // Complete angle covered by our "cube".
 const TWO_WORKSPACE_COVERAGE = 90;   // Angle covered if there are only two workspaces.
-const WORKSPACE_SEPARATION   = 50;   // The gap between adjacent workspaces.
+const WORKSPACE_SEPARATION   = 80;   // The gap between adjacent workspaces.
 const ACTIVE_OPACITY         = 255;  // Opacity of the front face of the "cube".
 const INACTIVE_OPACITY       = 200;  // Opacity of all other faces.
 const DEPTH_SEPARATION       = 50;   // Distance between window previews and cube faces.
-const HORIZONTAL_STRETCH = 100;  // This moves next and previous workspaces a bit to the
-                                 // left and right. This ensures that we can actually see
-                                 // them if we look at the cube from the front. The value
-                                 // is faded to zero if we have six or more workspaces.
+const HORIZONTAL_STRETCH = 80;  // This moves next and previous workspaces a bit to the
+                                // left and right. This ensures that we can actually see
+                                // them if we look at the cube from the front. The value
+                                // is faded to zero if we have six or more workspaces.
 
 class Extension {
   // The constructor is called once when the extension is loaded, not enabled.
@@ -92,11 +92,9 @@ class Extension {
       // Compute the negative spacing required to arrange workspaces on top of each other.
       const overlapValue = -this._workspaces[0].get_preferred_width(box.get_size()[1])[1];
 
-      // Compute blending state from and to the overview.
-      const overviewMode = extensionThis._getOverviewMode(this);
-
       // Blend between the negative overlap-spacing and the "normal" spacing value.
-      return (1 - overviewMode) * origValue + overviewMode * overlapValue;
+      const cubeMode = 1 - this._fitModeAdjustment.value;
+      return Util.lerp(origValue, overlapValue, cubeMode);
     };
 
     // This is the main method which is called whenever the workspaces need to be
@@ -131,21 +129,27 @@ class Extension {
       // That's the z-distance from the cube faces to the rotation pivot.
       const centerDepth = workspaceWidth / 2 / Math.tan(faceAngle * 0.5 * Math.PI / 180);
 
-      // Compute blending state from and to the overview and from and to the app grid
-      // mode. We will use overviewMode to fold and unfold the cube, and appGridMode to
-      // attenuate the scaling effect of the active workspace.
+      // Compute blending state from and to the overview, from and to the app grid, and
+      // from and to the desktop mode. We will use cubeMode to fold and unfold the
+      // cube, overviewMode to add some depth between windows and backgrounds, and
+      // appGridMode to attenuate the scaling effect of the active workspace.
       const overviewMode = extensionThis._getOverviewMode(this);
       const appGridMode  = this._fitModeAdjustment.value;
+      const cubeMode     = 1 - appGridMode;
 
       // Now loop through all workspace and compute the individual rotations.
       this._workspaces.forEach((w, index) => {
-        // This updates the corner radii.
+        // First update the corner radii. Corners are only rounded in overview.
         w.stateAdjustment.value = overviewMode;
 
-        // Update rotation.
-        w.pivot_point_z = overviewMode * -centerDepth;
+        // Now update the rotation of the cube face. The rotation center is -centerDepth
+        // units behind the front face.
+        w.pivot_point_z = -centerDepth;
+
+        // The rotation angle is transitioned proportional to overviewMode² to create the
+        // proper impression of folding.
         w.rotation_angle_y =
-            overviewMode * (-this._scrollAdjustment.value + index) * faceAngle;
+            cubeMode * (-this._scrollAdjustment.value + index) * faceAngle;
 
         // Add some separation between background and windows (only in overview mode).
         w._background.translation_z = -overviewMode * DEPTH_SEPARATION;
@@ -153,8 +157,8 @@ class Extension {
         // Distance to being the active workspace in [-1...0...1].
         const dist = Math.clamp(index - this._scrollAdjustment.value, -1, 1);
 
-        // Spread adjacent workspaces to make the visible if we look at a four-sided cube
-        // from the front.
+        // Spread adjacent workspaces to make them a little visible even if we look at a
+        // four-sided cube from the front.
         if (faceCount <= 4) {
           w.translation_x = dist * overviewMode * HORIZONTAL_STRETCH;
         } else {
@@ -163,7 +167,7 @@ class Extension {
 
         // Update opacity only in overview mode.
         const opacity = Util.lerp(ACTIVE_OPACITY, INACTIVE_OPACITY, Math.abs(dist));
-        w._background.set_opacity(Util.lerp(255, opacity, overviewMode));
+        w._background.set_opacity(Util.lerp(255, opacity, cubeMode));
 
         // Update workspace scale only in app grid mode.
         const scale = Util.lerp(1, INACTIVE_SCALE, Math.abs(dist) * appGridMode);
