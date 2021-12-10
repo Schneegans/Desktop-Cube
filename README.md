@@ -13,36 +13,76 @@ When I started using Linux more than a decade ago, it was because of the 3D desk
 Even if this was a pretty useless feature, I am still missing it today.
 As we already have the awesome [Compiz-alike windows efffects](https://extensions.gnome.org/extension/2950/compiz-alike-windows-effect/), I thought it was time to revive 3D workspaces as well!
 
-## :construction: This is under Construction!
+For a list of things changed in previous releases, you can have a look at the [changelog](docs/changelog.md)!
 
-Here's a rough list of thing which might be added in the future, roughly sorted by importance. For a list of things changed in previous releases, you can have a look at the [changelog](docs/changelog.md)!
+## :revolving_hearts: Supporters 
 
-- [ ] Cuboid transitions when switching workspaces via <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Arrow</kbd>.
-- [ ] Free rotation of the cube with the middle mouse button.
-- [ ] A settings dialog. The opacity of the workspaces, their spacing, and several other things could be configurable.
-- [ ] Adjust animation speed of workspace switches and entering / leaving overview and app grid (#1).
-- [ ] Proper support for multiple monitors (it may work already, I just haven't tested it).
-- [ ] Sky boxes!
-- [ ] Automated CI tests.
-- [ ] Switch workspaces while moving a window with pressed <kbd>Alt</kbd> modifier (not sure if that's possible, though).
+<p align="center">
+  <a href="https://github.com/castrojo"><strong>Jorge Castro</strong></a><br><br>
+  <a href="https://github.com/sponsors/Schneegans">Be the next!</a><br><br>
+</p>
 
-## :exploding_head: Frequently asked Questions
+While coding new features is the most awesome way to contribute, providing financial support will help me stay motivated to invest my spare time to keep the project alive in the future.
 
-#### Does this extension increase my productivity?
 
-No.
+## Installation
 
-#### Does this extension increase the performance of GNOME Shell?
+You can either install the Desktop Cube extension from extensions.gnome.org (a), download a stable release
+from GitHub (b) or clone the latest version directly with `git` (c).
 
-Certainly not. But the impact is not so bad after all.
+### a) Installing from extensions.gnome.org
 
-#### Will this extension break if GNOME Shell is updated?
+This is the easiest way to install the Desktop Cube extension. Just head over to
+[extensions.gnome.org](https://extensions.gnome.org/extension/4648/desktop-cube) and flip the switch!
+If you want to use a more up-to-date version, you can try one of the methods listed below.
 
-Most likely. The implementation is pretty hacky and relies on some specific internals of GNOME Shell. But maybe we will be able to keep it running....
+### b) Downloading a Stable Release
 
-#### The workspaces are not really arranged in a cuboid fashion. Should we change the name of the extension?
+Execute this command to download the latest stable release:
 
-That's a smart point! However, covering only 180°, ensures that no one notices that we cannot rotate the "cube" for an entire round...
+```bash
+wget https://github.com/Schneegans/Desktop-Cube/releases/latest/download/desktop-cube@schneegans.github.com.zip
+```
+
+Install it by executing the following command. If you have the Desktop Cube extension already installed and want to upgrade to
+the latest version, append the `--force` flag in order to overwrite existing installs of the Desktop Cube extension.
+
+```bash
+gnome-extensions install desktop-cube@schneegans.github.com.zip
+```
+
+Then restart GNOME Shell with <kbd>Alt</kbd> + <kbd>F2</kbd>, <kbd>r</kbd> + <kbd>Enter</kbd>.
+Or logout / login if you are on Wayland.
+Then you can enable the extension with the *Gnome Tweak Tool*, the *Extensions* application or with this command:
+
+```bash
+gnome-extensions enable desktop-cube@schneegans.github.com
+```
+
+### c) Cloning the Latest Version with `git`
+
+You should **not** clone the Desktop Cube extension directly to the `~/.local/share/gnome-shell/extensions` directory as this may get overridden occasionally!
+Execute the clone command below where you want to have the source code of the extension.
+
+```bash
+git clone https://github.com/Schneegans/Desktop-Cube.git
+cd Desktop-Cube
+```
+
+Now you will have to install the extension.
+The `make` command below compiles the locales, schemas and resources, creates a zip file of the extension and finally installs it with the `gnome-extensions` tool.
+
+```bash
+make install
+```
+
+Then restart GNOME Shell with <kbd>Alt</kbd> + <kbd>F2</kbd>, <kbd>r</kbd> + <kbd>Enter</kbd>.
+Or logout / login if you are on Wayland.
+Then you can enable the extension with the *Gnome Tweak Tool*, the *Extensions* application or with this command:
+
+```bash
+gnome-extensions enable desktop-cube@schneegans.github.com
+```
 
 ## :octocat: I want to contribute!
 
