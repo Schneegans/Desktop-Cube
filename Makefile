@@ -15,9 +15,10 @@ uninstall:
 
 clean:
 	rm \
-	desktop-cube@schneegans.github.com.zip
+	desktop-cube@schneegans.github.com.zip \
+	schemas/gschemas.compiled
 
-desktop-cube@schneegans.github.com.zip: $(JS_FILES)
+desktop-cube@schneegans.github.com.zip: schemas/gschemas.compiled $(JS_FILES)
 	@# Check if the VERSION variable was passed and set version to it
 	@if [[ "$(VERSION)" != "" ]]; then \
 	  sed -i "s|  \"version\":.*|  \"version\": $(VERSION)|g" metadata.json; \
@@ -26,9 +27,13 @@ desktop-cube@schneegans.github.com.zip: $(JS_FILES)
 	
 	@echo "Packing zip file..."
 	@rm --force desktop-cube@schneegans.github.com.zip
-	@zip -r desktop-cube@schneegans.github.com.zip -- *.js metadata.json LICENSE
+	@zip -r desktop-cube@schneegans.github.com.zip -- *.js schemas/gschemas.compiled metadata.json LICENSE
 	
 	@#Check if the zip size is too big to be uploaded
 	@if [[ "$$(stat -c %s desktop-cube@schneegans.github.com.zip)" -gt 4096000 ]]; then \
 	  echo "ERROR! The extension is too big to be uploaded to the extensions website, keep it smaller than 4096 KB!"; exit 1; \
 	fi
+
+schemas/gschemas.compiled: schemas/org.gnome.shell.extensions.desktop-cube.gschema.xml
+	@echo "Compiling schemas..."
+	@glib-compile-schemas schemas
