@@ -1,3 +1,5 @@
 *~
 *.zip
 /schemas/gschemas.compiled
+/resources/desktop-cube.gresource
+/resources/desktop-cube.gresource.xml
