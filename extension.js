@@ -123,7 +123,7 @@ class Extension {
       // Our "cube" only covers 180°, if there are only two workspaces, it covers 90°.
       const maxAngle = (faceCount == 2 ? TWO_WORKSPACE_COVERAGE : CUBE_COVERAGE);
 
-      // That's the angle between consecutove workspaces.
+      // That's the angle between consecutive workspaces.
       const faceAngle = maxAngle / (faceCount - 1);
 
       // That's the z-distance from the cube faces to the rotation pivot.
