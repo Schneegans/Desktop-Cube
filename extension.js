@@ -30,13 +30,7 @@ const INACTIVE_SCALE = imports.ui.workspacesView.WORKSPACE_INACTIVE_SCALE;
 class Extension {
   // The constructor is called once when the extension is loaded, not enabled.
   constructor() {
-    this._origUpdateWorkspacesState = null;
-    this._origGetSpacing            = null;
-    this._origUpdateVisibility      = null;
-    this._lastWorkspaceWidth        = 0;
-
-    // Store a reference to the settings object.
-    this._settings = ExtensionUtils.getSettings();
+    this._lastWorkspaceWidth = 0;
   }
 
   // ------------------------------------------------------------------------ public stuff
@@ -45,10 +39,43 @@ class Extension {
   // from GNOME Tweaks, when you log in or when the screen is unlocked.
   enable() {
 
+    // Store a reference to the settings object.
+    this._settings = ExtensionUtils.getSettings();
+
     // We will monkey-patch these three methods. Let's store the original ones.
     this._origUpdateWorkspacesState = WorkspacesView.prototype._updateWorkspacesState;
     this._origGetSpacing            = WorkspacesView.prototype._getSpacing;
     this._origUpdateVisibility      = WorkspacesView.prototype._updateVisibility;
+
+    // We may also override these animation times.
+    this._origWorkspaceSwitchTime = imports.ui.workspacesView.WORKSPACE_SWITCH_TIME;
+    this._origToOverviewTime      = imports.ui.overview.ANIMATION_TIME;
+    this._origToAppDrawerTime = imports.ui.overviewControls.SIDE_CONTROLS_ANIMATION_TIME;
+
+    // Connect the animation times to our settings.
+    const loadAnimationTimes = () => {
+      {
+        const t = this._settings.get_int('overview-transition-time');
+        imports.ui.overview.ANIMATION_TIME = (t > 0 ? t : this._origToOverviewTime);
+      }
+      {
+        const t = this._settings.get_int('appgrid-transition-time');
+        imports.ui.overviewControls.SIDE_CONTROLS_ANIMATION_TIME =
+            (t > 0 ? t : this._origToAppDrawerTime);
+      }
+      {
+        const t = this._settings.get_int('workspace-transition-time');
+        imports.ui.workspacesView.WORKSPACE_SWITCH_TIME =
+            (t > 0 ? t : this._origWorkspaceSwitchTime);
+      }
+    };
+
+    this._settings.connect('changed::overview-transition-time', loadAnimationTimes);
+    this._settings.connect('changed::appgrid-transition-time', loadAnimationTimes);
+    this._settings.connect('changed::workspace-transition-time', loadAnimationTimes);
+
+    loadAnimationTimes();
+
 
     // We will use extensionThis to refer to the extension inside the patched methods of
     // the WorkspacesView.
@@ -271,6 +298,12 @@ class Extension {
     WorkspacesView.prototype._updateWorkspacesState = this._origUpdateWorkspacesState;
     WorkspacesView.prototype._getSpacing            = this._origGetSpacing;
     WorkspacesView.prototype._updateVisibility      = this._origUpdateVisibility;
+
+    imports.ui.workspacesView.WORKSPACE_SWITCH_TIME = this._origWorkspaceSwitchTime;
+    imports.ui.overview.ANIMATION_TIME              = this._origToOverviewTime;
+    imports.ui.overviewControls.SIDE_CONTROLS_ANIMATION_TIME = this._origToAppDrawerTime;
+
+    this._settings = null;
   }
 
   // ----------------------------------------------------------------------- private stuff

@@ -400,7 +400,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkLabel">
-                                    <property name="label" translatable="yes">Set to -1 to use GNOME Shell's default value.</property>
+                                    <property name="label" translatable="yes">Set to 0 to use GNOME Shell's default value.</property>
                                     <property name="xalign">0</property>
                                     <property name="halign">start</property>
                                     <property name="valign">center</property>
@@ -420,7 +420,7 @@
                                 <property name="adjustment">
                                   <object class="GtkAdjustment" id="overview-transition-time">
                                     <property name="upper">2000</property>
-                                    <property name="lower">-1</property>
+                                    <property name="lower">0</property>
                                     <property name="step-increment">1</property>
                                     <property name="page-increment">10</property>
                                   </object>
@@ -461,7 +461,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkLabel">
-                                    <property name="label" translatable="yes">Set to -1 to use GNOME Shell's default value.</property>
+                                    <property name="label" translatable="yes">Set to 0 to use GNOME Shell's default value.</property>
                                     <property name="xalign">0</property>
                                     <property name="halign">start</property>
                                     <property name="valign">center</property>
@@ -481,7 +481,7 @@
                                 <property name="adjustment">
                                   <object class="GtkAdjustment" id="appgrid-transition-time">
                                     <property name="upper">2000</property>
-                                    <property name="lower">-1</property>
+                                    <property name="lower">0</property>
                                     <property name="step-increment">1</property>
                                     <property name="page-increment">10</property>
                                   </object>
@@ -522,7 +522,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkLabel">
-                                    <property name="label" translatable="yes">Set to -1 to use GNOME Shell's default value.</property>
+                                    <property name="label" translatable="yes">Set to 0 to use GNOME Shell's default value.</property>
                                     <property name="xalign">0</property>
                                     <property name="halign">start</property>
                                     <property name="valign">center</property>
@@ -542,7 +542,7 @@
                                 <property name="adjustment">
                                   <object class="GtkAdjustment" id="workspace-transition-time">
                                     <property name="upper">2000</property>
-                                    <property name="lower">-1</property>
+                                    <property name="lower">0</property>
                                     <property name="step-increment">1</property>
                                     <property name="page-increment">10</property>
                                   </object>
