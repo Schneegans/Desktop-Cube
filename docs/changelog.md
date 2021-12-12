@@ -1,9 +1,19 @@
 # Changelog of the Desktop Cube Extension
 
 
+## [Desktop Cube 5](https://github.com/schneegans/Desktop-Cube/releases/tag/v5)
+
+**Release Date:** 2021-12-12
+
+#### New Features
+
+* A small settings dialog allows adjusting some settings regarding the cube's layout, appearance, and behavior.
+* It's now possible re-enable the unfold-to-desktop animation.
+* It's now possible to modify some animation times such as from desktop to overview, from overview to app drawer, and between workspaces.
+
 ## [Desktop Cube 4](https://github.com/schneegans/Desktop-Cube/releases/tag/v4)
 
-**Release Date:** TBD
+**Release Date:** 2021-12-09
 
 #### Enhancements
 
