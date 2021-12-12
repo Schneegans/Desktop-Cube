@@ -27,22 +27,16 @@
       <description>The pixel gap between background and windows.</description>
     </key>
 
-    <key name="looparound-gap" type="i">
-      <default>180</default>
-      <summary>Looparound Gap</summary>
-      <description>The angular gap between the last and the first workspace.</description>
-    </key>
-
-    <key name="min-corner-angle" type="i">
-      <default>90</default>
-      <summary>Min Corner Angle</summary>
-      <description>The minimum angle between adjacent workspace.</description>
-    </key>
-
     <key name="horizontal-stretch" type="i">
       <default>80</default>
       <summary>Horizontal Stretch</summary>
       <description>The widening factor which ensures that cube sides are visible from the front.</description>
+    </key>
+
+    <key name="last-first-gap" type="b">
+      <default>true</default>
+      <summary>Last First Gap</summary>
+      <description>Add a gap between last and first workspace.</description>
     </key>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

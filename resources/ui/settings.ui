@@ -60,7 +60,7 @@
                                 <property name="valign">center</property>
                                 <property name="adjustment">
                                   <object class="GtkAdjustment" id="workpace-separation">
-                                    <property name="upper">200</property>
+                                    <property name="upper">999</property>
                                     <property name="lower">0</property>
                                     <property name="step-increment">1</property>
                                     <property name="page-increment">10</property>
@@ -102,7 +102,7 @@
                                 <property name="valign">center</property>
                                 <property name="adjustment">
                                   <object class="GtkAdjustment" id="depth-separation">
-                                    <property name="upper">100</property>
+                                    <property name="upper">500</property>
                                     <property name="lower">0</property>
                                     <property name="step-increment">1</property>
                                     <property name="page-increment">10</property>
@@ -112,90 +112,6 @@
                             </child>
                             <child>
                               <object class="GtkButton" id="reset-depth-separation">
-                                <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text">Reset to Default Value</property>
-                                <style>
-                                  <class name="flat" />
-                                </style>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-
-                    <child>
-                      <object class="GtkListBoxRow">
-                        <property name="activatable">0</property>
-                        <child>
-                          <object class="GtkBox">
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="label" translatable="yes">Angular gap between last and first workspace</property>
-                                <property name="xalign">0</property>
-                                <property name="halign">start</property>
-                                <property name="valign">center</property>
-                                <property name="hexpand">1</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkSpinButton">
-                                <property name="halign">end</property>
-                                <property name="valign">center</property>
-                                <property name="adjustment">
-                                  <object class="GtkAdjustment" id="looparound-gap">
-                                    <property name="upper">350</property>
-                                    <property name="lower">0</property>
-                                    <property name="step-increment">1</property>
-                                    <property name="page-increment">10</property>
-                                  </object>
-                                </property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="reset-looparound-gap">
-                                <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text">Reset to Default Value</property>
-                                <style>
-                                  <class name="flat" />
-                                </style>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-
-                    <child>
-                      <object class="GtkListBoxRow">
-                        <property name="activatable">0</property>
-                        <child>
-                          <object class="GtkBox">
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="label" translatable="yes">Minimum angle between adjacent workspaces</property>
-                                <property name="xalign">0</property>
-                                <property name="halign">start</property>
-                                <property name="valign">center</property>
-                                <property name="hexpand">1</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkSpinButton">
-                                <property name="halign">end</property>
-                                <property name="valign">center</property>
-                                <property name="adjustment">
-                                  <object class="GtkAdjustment" id="min-corner-angle">
-                                    <property name="upper">180</property>
-                                    <property name="lower">0</property>
-                                    <property name="step-increment">1</property>
-                                    <property name="page-increment">10</property>
-                                  </object>
-                                </property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="reset-min-corner-angle">
                                 <property name="icon-name">edit-clear-symbolic</property>
                                 <property name="tooltip-text">Reset to Default Value</property>
                                 <style>
@@ -257,6 +173,58 @@
                             </child>
                             <child>
                               <object class="GtkButton" id="reset-horizontal-stretch">
+                                <property name="icon-name">edit-clear-symbolic</property>
+                                <property name="tooltip-text">Reset to Default Value</property>
+                                <style>
+                                  <class name="flat" />
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <child>
+                          <object class="GtkBox">
+                            <child>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">3</property>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="yes">Add a gap between last and first workspace</property>
+                                    <property name="xalign">0</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <property name="hexpand">1</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="yes">You cannot loop around in GNOME Shell anyways.</property>
+                                    <property name="xalign">0</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <property name="hexpand">1</property>
+                                    <style>
+                                      <class name="dim-label" />
+                                      <class name="caption" />
+                                    </style>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkSwitch" id="last-first-gap">
+                                <property name="halign">end</property>
+                                <property name="valign">center</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="reset-last-first-gap">
                                 <property name="icon-name">edit-clear-symbolic</property>
                                 <property name="tooltip-text">Reset to Default Value</property>
                                 <style>

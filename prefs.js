@@ -40,9 +40,8 @@ var PreferencesDialog = class PreferencesDialog {
     // Bind all properties.
     this._bindAdjustment('workpace-separation');
     this._bindAdjustment('depth-separation');
-    this._bindAdjustment('looparound-gap');
-    this._bindAdjustment('min-corner-angle');
     this._bindAdjustment('horizontal-stretch');
+    this._bindSwitch('last-first-gap');
     this._bindAdjustment('active-workpace-opacity');
     this._bindAdjustment('inactive-workpace-opacity');
     this._bindAdjustment('overview-transition-time');
