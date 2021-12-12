@@ -176,10 +176,10 @@ class Extension {
         // units behind the front face.
         w.pivot_point_z = -centerDepth;
 
-        // The rotation angle is transitioned proportional to overviewMode² to create the
-        // proper impression of folding.
+        // The rotation angle is transitioned proportional to cubeMode^1.5. This slows
+        // down the rotation a bit closer to the desktop and to the app drawer.
         w.rotation_angle_y =
-            cubeMode * (-this._scrollAdjustment.value + index) * faceAngle;
+            Math.pow(cubeMode, 1.5) * (-this._scrollAdjustment.value + index) * faceAngle;
 
         // Add some separation between background and windows (only in overview mode).
         let bgScale =
