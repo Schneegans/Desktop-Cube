@@ -27,36 +27,55 @@ const utils          = Me.imports.utils;
 // The scale of inactive workspaces in app grid mode.
 const INACTIVE_SCALE = imports.ui.workspacesView.WORKSPACE_INACTIVE_SCALE;
 
-const CUBE_COVERAGE          = 180;  // Complete angle covered by our "cube".
-const TWO_WORKSPACE_COVERAGE = 90;   // Angle covered if there are only two workspaces.
-const WORKSPACE_SEPARATION   = 80;   // The gap between adjacent workspaces.
-const ACTIVE_OPACITY         = 255;  // Opacity of the front face of the "cube".
-const INACTIVE_OPACITY       = 200;  // Opacity of all other faces.
-const DEPTH_SEPARATION       = 50;   // Distance between window previews and cube faces.
-const HORIZONTAL_STRETCH = 80;  // This moves next and previous workspaces a bit to the
-                                // left and right. This ensures that we can actually see
-                                // them if we look at the cube from the front. The value
-                                // is faded to zero if we have six or more workspaces.
-
 class Extension {
   // The constructor is called once when the extension is loaded, not enabled.
   constructor() {
-    this._origUpdateWorkspacesState = null;
-    this._origGetSpacing            = null;
-    this._origUpdateVisibility      = null;
-    this._lastWorkspaceWidth        = 0;
+    this._lastWorkspaceWidth = 0;
   }
 
-  // ----------------------------------------------------------------------.- public stuff
+  // ------------------------------------------------------------------------ public stuff
 
   // This function could be called after the extension is enabled, which could be done
   // from GNOME Tweaks, when you log in or when the screen is unlocked.
   enable() {
 
+    // Store a reference to the settings object.
+    this._settings = ExtensionUtils.getSettings();
+
     // We will monkey-patch these three methods. Let's store the original ones.
     this._origUpdateWorkspacesState = WorkspacesView.prototype._updateWorkspacesState;
     this._origGetSpacing            = WorkspacesView.prototype._getSpacing;
     this._origUpdateVisibility      = WorkspacesView.prototype._updateVisibility;
+
+    // We may also override these animation times.
+    this._origWorkspaceSwitchTime = imports.ui.workspacesView.WORKSPACE_SWITCH_TIME;
+    this._origToOverviewTime      = imports.ui.overview.ANIMATION_TIME;
+    this._origToAppDrawerTime = imports.ui.overviewControls.SIDE_CONTROLS_ANIMATION_TIME;
+
+    // Connect the animation times to our settings.
+    const loadAnimationTimes = () => {
+      {
+        const t = this._settings.get_int('overview-transition-time');
+        imports.ui.overview.ANIMATION_TIME = (t > 0 ? t : this._origToOverviewTime);
+      }
+      {
+        const t = this._settings.get_int('appgrid-transition-time');
+        imports.ui.overviewControls.SIDE_CONTROLS_ANIMATION_TIME =
+            (t > 0 ? t : this._origToAppDrawerTime);
+      }
+      {
+        const t = this._settings.get_int('workspace-transition-time');
+        imports.ui.workspacesView.WORKSPACE_SWITCH_TIME =
+            (t > 0 ? t : this._origWorkspaceSwitchTime);
+      }
+    };
+
+    this._settings.connect('changed::overview-transition-time', loadAnimationTimes);
+    this._settings.connect('changed::appgrid-transition-time', loadAnimationTimes);
+    this._settings.connect('changed::workspace-transition-time', loadAnimationTimes);
+
+    loadAnimationTimes();
+
 
     // We will use extensionThis to refer to the extension inside the patched methods of
     // the WorkspacesView.
@@ -93,7 +112,7 @@ class Extension {
       const overlapValue = -this._workspaces[0].get_preferred_width(box.get_size()[1])[1];
 
       // Blend between the negative overlap-spacing and the "normal" spacing value.
-      const cubeMode = 1 - this._fitModeAdjustment.value;
+      const cubeMode = extensionThis._getCubeMode(this);
       return Util.lerp(origValue, overlapValue, cubeMode);
     };
 
@@ -116,26 +135,37 @@ class Extension {
       let workspaceWidth = extensionThis._lastWorkspaceWidth;
       const bg           = this._workspaces[0]._background;
       if (bg.get_stage() && bg.allocation.get_width()) {
-        workspaceWidth = bg.allocation.get_width() + 2 * WORKSPACE_SEPARATION;
+        workspaceWidth = bg.allocation.get_width();
+        workspaceWidth += 2 * extensionThis._settings.get_int('workpace-separation');
         extensionThis._lastWorkspaceWidth = workspaceWidth;
       }
 
-      // Our "cube" only covers 180°, if there are only two workspaces, it covers 90°.
-      const maxAngle = (faceCount == 2 ? TWO_WORKSPACE_COVERAGE : CUBE_COVERAGE);
+      // Usually, the "cube" covers full 360°.
+      let fullAngle = 360;
 
-      // That's the angle between consecutove workspaces.
-      const faceAngle = maxAngle / (faceCount - 1);
+      // That's the angle between consecutive workspaces.
+      let faceAngle = fullAngle / faceCount;
+
+      // With this setting, our "cube" only covers 180°, if there are only two workspaces,
+      // it covers 90°. This prevents the affordance that it could be possible to switch
+      if (extensionThis._settings.get_boolean('last-first-gap')) {
+        fullAngle = (faceCount == 2 ? 90 : 180);
+        faceAngle = fullAngle / (faceCount - 1);
+      }
 
       // That's the z-distance from the cube faces to the rotation pivot.
-      const centerDepth = workspaceWidth / 2 / Math.tan(faceAngle * 0.5 * Math.PI / 180);
+      let centerDepth = workspaceWidth / 2;
+      if (faceAngle < 180) {
+        centerDepth /= Math.tan(faceAngle * 0.5 * Math.PI / 180);
+      }
 
       // Compute blending state from and to the overview, from and to the app grid, and
       // from and to the desktop mode. We will use cubeMode to fold and unfold the
       // cube, overviewMode to add some depth between windows and backgrounds, and
-      // appGridMode to attenuate the scaling effect of the active workspace.
-      const appGridMode  = this._fitModeAdjustment.value;
-      const overviewMode = this._overviewAdjustment.value - 2 * appGridMode;
-      const cubeMode     = 1 - appGridMode;
+      // appDrawerMode to attenuate the scaling effect of the active workspace.
+      const appDrawerMode = extensionThis._getAppDrawerMode(this);
+      const overviewMode  = extensionThis._getOverviewMode(this);
+      const cubeMode      = extensionThis._getCubeMode(this);
 
       // Now loop through all workspace and compute the individual rotations.
       this._workspaces.forEach((w, index) => {
@@ -146,31 +176,42 @@ class Extension {
         // units behind the front face.
         w.pivot_point_z = -centerDepth;
 
-        // The rotation angle is transitioned proportional to overviewMode² to create the
-        // proper impression of folding.
+        // The rotation angle is transitioned proportional to cubeMode^1.5. This slows
+        // down the rotation a bit closer to the desktop and to the app drawer.
         w.rotation_angle_y =
-            cubeMode * (-this._scrollAdjustment.value + index) * faceAngle;
+            Math.pow(cubeMode, 1.5) * (-this._scrollAdjustment.value + index) * faceAngle;
 
         // Add some separation between background and windows (only in overview mode).
-        w._background.translation_z = -overviewMode * DEPTH_SEPARATION;
+        let bgScale =
+            (centerDepth - extensionThis._settings.get_int('depth-separation')) /
+            centerDepth;
+        bgScale = Util.lerp(1, Math.max(0.1, bgScale), overviewMode);
+
+        w._background.pivot_point_z = -centerDepth;
+        w._background.set_pivot_point(0.5, 0.5);
+        w._background.scale_x = w._background.scale_y = w._background.scale_z = bgScale;
 
         // Distance to being the active workspace in [-1...0...1].
         const dist = Math.clamp(index - this._scrollAdjustment.value, -1, 1);
 
-        // Spread adjacent workspaces to make them a little visible even if we look at a
-        // four-sided cube from the front.
+        // This moves next and previous workspaces a bit to the left and right. This
+        // ensures that we can actually see them if we look at the cube from the front.
+        // The value is set to zero if we have five or more workspaces.
         if (faceCount <= 4) {
-          w.translation_x = dist * overviewMode * HORIZONTAL_STRETCH;
+          w.translation_x =
+              dist * overviewMode * extensionThis._settings.get_int('horizontal-stretch');
         } else {
           w.translation_x = 0;
         }
 
         // Update opacity only in overview mode.
-        const opacity = Util.lerp(ACTIVE_OPACITY, INACTIVE_OPACITY, Math.abs(dist));
-        w._background.set_opacity(Util.lerp(255, opacity, cubeMode));
+        const opacityA = extensionThis._settings.get_int('active-workpace-opacity');
+        const opacityB = extensionThis._settings.get_int('inactive-workpace-opacity');
+        const opacity  = Util.lerp(opacityA, opacityB, Math.abs(dist));
+        w._background.set_opacity(Util.lerp(255, opacity, overviewMode));
 
         // Update workspace scale only in app grid mode.
-        const scale = Util.lerp(1, INACTIVE_SCALE, Math.abs(dist) * appGridMode);
+        const scale = Util.lerp(1, INACTIVE_SCALE, Math.abs(dist) * appDrawerMode);
         w.set_scale(scale, scale);
       });
 
@@ -219,8 +260,8 @@ class Extension {
           const gamma = Math.abs(w.rotation_angle_y);
 
           // b is the length of vector from center of cube face to rotation center. This
-          // would be only centerDepth if the sides of the cube were not stretched
-          // horizontally by HORIZONTAL_STRETCH. Computed with law of cosines:
+          // would be only centerDepth if the sides of the cube were not spaced further
+          // apart horizontally by the "horizontal-stretch". Computed with law of cosines:
           // b²=d²+s²-2ds*cos(90+gamma).
           const s = Math.abs(w.translation_x);
           const d = centerDepth;
@@ -257,6 +298,36 @@ class Extension {
     WorkspacesView.prototype._updateWorkspacesState = this._origUpdateWorkspacesState;
     WorkspacesView.prototype._getSpacing            = this._origGetSpacing;
     WorkspacesView.prototype._updateVisibility      = this._origUpdateVisibility;
+
+    imports.ui.workspacesView.WORKSPACE_SWITCH_TIME = this._origWorkspaceSwitchTime;
+    imports.ui.overview.ANIMATION_TIME              = this._origToOverviewTime;
+    imports.ui.overviewControls.SIDE_CONTROLS_ANIMATION_TIME = this._origToAppDrawerTime;
+
+    this._settings = null;
+  }
+
+  // ----------------------------------------------------------------------- private stuff
+
+  // Returns a value between [0...1] blending between overview (0) and app grid mode (1).
+  _getAppDrawerMode(workspacesView) {
+    return workspacesView._fitModeAdjustment.value;
+  }
+
+  // Returns a value between [0...1] blending between desktop / app drawer mode (0) and
+  // overview mode (1).
+  _getOverviewMode(workspacesView) {
+    return workspacesView._overviewAdjustment.value -
+        2 * this._getAppDrawerMode(workspacesView);
+  }
+
+  // Returns a value between [0...1]. If it's 0, the cube should be unfolded, if it's 1,
+  // the cube should be drawn like, well, a cube :).
+  _getCubeMode(workspacesView) {
+    if (this._settings.get_boolean('unfold-to-desktop')) {
+      return this._getOverviewMode(workspacesView);
+    }
+
+    return 1 - this._getAppDrawerMode(workspacesView)
   }
 }
 

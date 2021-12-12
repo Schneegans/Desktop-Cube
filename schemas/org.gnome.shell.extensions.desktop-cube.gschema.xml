@@ -1,0 +1,87 @@
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!--,-.  ,-.  ,-.  ,  , , . -.  ,-.  ;-.     ,-. .  . ,-.  ,-.      Copyright (c) 2021 -->
+<!--|  \ |    (   ` | /    |   /   \ |  )   /    |  | |  ) |          Simon Schneegans -->
+<!--|  | |-    `-.  |<     |   |   | |-'    |    |  | |-<  |- Released under the GPLv3 -->
+<!--|  / |    .   ) | \    |   \   / |      \    |  | |  ) |     or later. See LICENSE -->
+<!--`-'  `-'  `-'  '  `   '    `-'  '       `-' `-` `-'  ` '-'       file for details. -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+
+  <schema path="/org/gnome/shell/extensions/desktop-cube/" id="org.gnome.shell.extensions.desktop-cube">
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- layout settings                                                               -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <key name="workpace-separation" type="i">
+      <default>80</default>
+      <summary>Workspace Separation</summary>
+      <description>The pixel gap between adjacent workspaces.</description>
+    </key>
+
+    <key name="depth-separation" type="i">
+      <default>50</default>
+      <summary>Depth Separation</summary>
+      <description>The pixel gap between background and windows.</description>
+    </key>
+
+    <key name="horizontal-stretch" type="i">
+      <default>80</default>
+      <summary>Horizontal Stretch</summary>
+      <description>The widening factor which ensures that cube sides are visible from the front.</description>
+    </key>
+
+    <key name="last-first-gap" type="b">
+      <default>true</default>
+      <summary>Last First Gap</summary>
+      <description>Add a gap between last and first workspace.</description>
+    </key>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- appearance settings                                                           -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <key name="active-workpace-opacity" type="i">
+      <default>255</default>
+      <summary>Active Workspace Opacity</summary>
+      <description>The opacity of the front facing workspace.</description>
+    </key>
+
+    <key name="inactive-workpace-opacity" type="i">
+      <default>200</default>
+      <summary>Inactive Workspace Opacity</summary>
+      <description>The opacity of the cube sides.</description>
+    </key>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- animation settings                                                            -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <key name="overview-transition-time" type="i">
+      <default>0</default>
+      <summary>Overview Transition Time</summary>
+      <description>Time for the transition from desktop to overview.</description>
+    </key>
+
+    <key name="appgrid-transition-time" type="i">
+      <default>0</default>
+      <summary>Appgrid Transition Time</summary>
+      <description>Time for the transition from overview to appgrid.</description>
+    </key>
+
+    <key name="workspace-transition-time" type="i">
+      <default>0</default>
+      <summary>Workspace Transition Time</summary>
+      <description>Time for the transition between workpaces.</description>
+    </key>
+
+    <key name="unfold-to-desktop" type="b">
+      <default>false</default>
+      <summary>Unfold to Desktop</summary>
+      <description>If true, the cube will unfold when transitioning to the desktop.</description>
+    </key>
+
+  </schema>
+</schemalist>
