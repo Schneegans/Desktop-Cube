@@ -23,7 +23,7 @@ var PreferencesDialog = class PreferencesDialog {
   // ------------------------------------------------------------ constructor / destructor
 
   constructor() {
-    // Load all of Fly-Pie's resources.
+    // Load all of our resources.
     this._resources = Gio.Resource.load(Me.path + '/resources/desktop-cube.gresource');
     Gio.resources_register(this._resources);
 
