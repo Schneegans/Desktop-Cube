@@ -197,14 +197,6 @@ class Extension {
         centerDepth /= Math.tan(faceAngle * 0.5 * Math.PI / 180);
       }
 
-      // Compute blending state from and to the overview, from and to the app grid, and
-      // from and to the desktop mode. We will use cubeMode to fold and unfold the
-      // cube, overviewMode to add some depth between windows and backgrounds, and
-      // appDrawerMode to attenuate the scaling effect of the active workspace.
-      const appDrawerMode = extensionThis._getAppDrawerMode(this);
-      const overviewMode  = extensionThis._getOverviewMode(this);
-      const cubeMode      = extensionThis._getCubeMode(this);
-
       // Now loop through all workspace and compute the individual rotations.
       this._workspaces.forEach((w, index) => {
         // First update the corner radii. Corners are only rounded in overview.
