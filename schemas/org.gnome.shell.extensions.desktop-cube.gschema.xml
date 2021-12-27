@@ -72,7 +72,7 @@
     </key>
 
     <key name="workspace-transition-time" type="i">
-      <default>0</default>
+      <default>500</default>
       <summary>Workspace Transition Time</summary>
       <description>Time for the transition between workpaces.</description>
     </key>
