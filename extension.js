@@ -153,6 +153,14 @@ class Extension {
         return;
       }
 
+      // Compute blending state from and to the overview, from and to the app grid, and
+      // from and to the desktop mode. We will use cubeMode to fold and unfold the
+      // cube, overviewMode to add some depth between windows and backgrounds, and
+      // appDrawerMode to attenuate the scaling effect of the active workspace.
+      const appDrawerMode = extensionThis._getAppDrawerMode(this);
+      const overviewMode  = extensionThis._getOverviewMode(this);
+      const cubeMode      = extensionThis._getCubeMode(this);
+
       // First we need the width of a single workspace. Simply calling
       // this._workspaces[0]._background.width does not work in all cases, as this method
       // seems to be called also when the background actor is not on the stage. As a hacky
@@ -162,7 +170,11 @@ class Extension {
       const bg           = this._workspaces[0]._background;
       if (bg.get_stage() && bg.allocation.get_width()) {
         workspaceWidth = bg.allocation.get_width();
-        workspaceWidth += 2 * extensionThis._settings.get_int('workpace-separation');
+
+        // Add gaps between workspaces in overview mode.
+        workspaceWidth +=
+            overviewMode * 2 * extensionThis._settings.get_int('workpace-separation');
+
         extensionThis._lastWorkspaceWidth = workspaceWidth;
       }
 
