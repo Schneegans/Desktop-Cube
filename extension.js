@@ -8,11 +8,13 @@
 
 'use strict';
 
+const Util             = imports.misc.util;
 const Main             = imports.ui.main;
 const OverviewControls = imports.ui.overviewControls;
 const WorkspacesView   = imports.ui.workspacesView.WorkspacesView;
 const FitMode          = imports.ui.workspacesView.FitMode;
-const Util             = imports.misc.util;
+const WorkspaceAnimationController =
+    imports.ui.workspaceAnimation.WorkspaceAnimationController;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me             = imports.misc.extensionUtils.getCurrentExtension();
@@ -46,11 +48,16 @@ class Extension {
     this._origUpdateWorkspacesState = WorkspacesView.prototype._updateWorkspacesState;
     this._origGetSpacing            = WorkspacesView.prototype._getSpacing;
     this._origUpdateVisibility      = WorkspacesView.prototype._updateVisibility;
+    this._origAnimateSwitch = WorkspaceAnimationController.prototype.animateSwitch;
 
     // We may also override these animation times.
     this._origWorkspaceSwitchTime = imports.ui.workspacesView.WORKSPACE_SWITCH_TIME;
     this._origToOverviewTime      = imports.ui.overview.ANIMATION_TIME;
     this._origToAppDrawerTime = imports.ui.overviewControls.SIDE_CONTROLS_ANIMATION_TIME;
+
+    // We will use extensionThis to refer to the extension inside the patched methods of
+    // the WorkspacesView.
+    const extensionThis = this;
 
     // Connect the animation times to our settings.
     const loadAnimationTimes = () => {
@@ -76,10 +83,26 @@ class Extension {
 
     loadAnimationTimes();
 
+    // Here, we extend the WorkspaceAnimationController's animateSwitch method in order to
+    // be able to modify the animation duration for switching workspaces in desktop mode.
+    // We have to do it like this since the time is hard-coded with a constant:
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L11
+    WorkspaceAnimationController.prototype.animateSwitch = function(...params) {
+      // Call the original method. This sets up the progress transitions which we tweak
+      // thereafter.
+      extensionThis._origAnimateSwitch.apply(this, params);
 
-    // We will use extensionThis to refer to the extension inside the patched methods of
-    // the WorkspacesView.
-    const extensionThis = this;
+      // We do not override this time if the cube is unfolded in desktop mode.
+      if (extensionThis._settings.get_boolean('unfold-to-desktop')) {
+        return;
+      }
+
+      // Now update the transition durations.
+      const duration = extensionThis._settings.get_int('workspace-transition-time');
+      for (const monitorGroup of this._switchData.monitors) {
+        monitorGroup.get_transition('progress').set_duration(duration);
+      }
+    };
 
     // Normally, all workspaces outside the current field-of-view are hidden. We want to
     // show all workspaces, so we patch this method. The original code is about here:
@@ -298,6 +321,7 @@ class Extension {
     WorkspacesView.prototype._updateWorkspacesState = this._origUpdateWorkspacesState;
     WorkspacesView.prototype._getSpacing            = this._origGetSpacing;
     WorkspacesView.prototype._updateVisibility      = this._origUpdateVisibility;
+    WorkspaceAnimationController.prototype.animateSwitch = this._origAnimateSwitch;
 
     imports.ui.workspacesView.WORKSPACE_SWITCH_TIME = this._origWorkspaceSwitchTime;
     imports.ui.overview.ANIMATION_TIME              = this._origToOverviewTime;
