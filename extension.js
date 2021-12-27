@@ -13,6 +13,7 @@ const Main             = imports.ui.main;
 const OverviewControls = imports.ui.overviewControls;
 const WorkspacesView   = imports.ui.workspacesView.WorkspacesView;
 const FitMode          = imports.ui.workspacesView.FitMode;
+const MonitorGroup     = imports.ui.workspaceAnimation.MonitorGroup;
 const WorkspaceAnimationController =
     imports.ui.workspaceAnimation.WorkspaceAnimationController;
 
@@ -48,7 +49,9 @@ class Extension {
     this._origUpdateWorkspacesState = WorkspacesView.prototype._updateWorkspacesState;
     this._origGetSpacing            = WorkspacesView.prototype._getSpacing;
     this._origUpdateVisibility      = WorkspacesView.prototype._updateVisibility;
+    this._origMonitorGroupInit      = MonitorGroup.prototype._init;
     this._origAnimateSwitch = WorkspaceAnimationController.prototype.animateSwitch;
+    this._origPrepSwitch = WorkspaceAnimationController.prototype._prepareWorkspaceSwitch;
 
     // We may also override these animation times.
     this._origWorkspaceSwitchTime = imports.ui.workspacesView.WORKSPACE_SWITCH_TIME;
@@ -311,6 +314,41 @@ class Extension {
         }
       }
     };
+
+    const makeWorkspaceSwitchCuboid = () => {
+      if (this._settings.get_boolean('unfold-to-desktop')) {
+        MonitorGroup.prototype._init = this._origMonitorGroupInit;
+        WorkspaceAnimationController.prototype._prepareWorkspaceSwitch =
+            this._origPrepSwitch;
+
+      } else {
+
+        WorkspaceAnimationController.prototype._prepareWorkspaceSwitch = function(
+            ...params) {
+          extensionThis._origPrepSwitch.apply(this, []);
+        };
+
+        MonitorGroup.prototype._init = function(...params) {
+          extensionThis._origMonitorGroupInit.apply(this, params);
+
+          this._container.connect('notify::x', () => {
+            this._container.translation_x = -this._container.x;
+
+            this._container.get_children().forEach((child, i) => {
+              child.set_pivot_point_z(-1200);
+              child.set_pivot_point(0.5, 0.5);
+              child.rotation_angle_y = (i - this.progress) * 90;
+              child.translation_x    = -child.x;
+            });
+          });
+        };
+      }
+    };
+
+    // The workspace-switch in desktop-mode (not in overview) looks like a cube onl when
+    // the unfold-to-desktop option is not set.
+    this._settings.connect('changed::unfold-to-desktop', makeWorkspaceSwitchCuboid);
+    makeWorkspaceSwitchCuboid();
   }
 
   // This function could be called after the extension is uninstalled, disabled in GNOME
@@ -321,7 +359,9 @@ class Extension {
     WorkspacesView.prototype._updateWorkspacesState = this._origUpdateWorkspacesState;
     WorkspacesView.prototype._getSpacing            = this._origGetSpacing;
     WorkspacesView.prototype._updateVisibility      = this._origUpdateVisibility;
+    MonitorGroup.prototype._init                    = this._origMonitorGroupInit;
     WorkspaceAnimationController.prototype.animateSwitch = this._origAnimateSwitch;
+    WorkspaceAnimationController.prototype._prepareWorkspaceSwitch = this._origPrepSwitch;
 
     imports.ui.workspacesView.WORKSPACE_SWITCH_TIME = this._origWorkspaceSwitchTime;
     imports.ui.overview.ANIMATION_TIME              = this._origToOverviewTime;
