@@ -8,7 +8,7 @@
 
 'use strict';
 
-const {Gio, Gtk} = imports.gi;
+const {Gio, Gtk, Gdk} = imports.gi;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me             = imports.misc.extensionUtils.getCurrentExtension();
@@ -48,6 +48,37 @@ var PreferencesDialog = class PreferencesDialog {
     this._bindAdjustment('appgrid-transition-time');
     this._bindAdjustment('workspace-transition-time');
     this._bindSwitch('unfold-to-desktop');
+
+    // Add a menu to the title bar of the preferences dialog.
+    this._widget.connect('realize', (widget) => {
+      const window = widget.get_root();
+
+      // Show the version number in the title bar.
+      window.set_title(`Desktop Cube ${Me.metadata.version}`);
+
+      // Add the menu.
+      const menu = this._builder.get_object('menu-button');
+      window.get_titlebar().pack_end(menu);
+
+      // Populate the actions.
+      const group = Gio.SimpleActionGroup.new();
+
+      const addAction = (name, uri) => {
+        const action = Gio.SimpleAction.new(name, null);
+        action.connect('activate', () => Gtk.show_uri(null, uri, Gdk.CURRENT_TIME));
+        group.add_action(action);
+      };
+
+      addAction('homepage', 'https://github.com/Schneegans/Desktop-Cube');
+      addAction('bugs', 'https://github.com/Schneegans/Desktop-Cube/issues');
+      addAction(
+          'donate-paypal',
+          'https://www.paypal.com/donate/?hosted_button_id=3F7UFL8KLVPXE');
+      addAction('donate-github', 'https://github.com/sponsors/Schneegans');
+
+      window.insert_action_group('prefs', group);
+    });
+
 
     // As we do not have something like a destructor, we just listen for the destroy
     // signal of our main widget.

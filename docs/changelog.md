@@ -8,6 +8,11 @@
 #### New Features
 
 * The transition between workspaces when switching in desktop mode now shows the "cube" as well.
+* Added a menu to the preferences dialog with links for bug reporting and donations.
+
+#### Other Enhancements
+
+* The extension's version number is now shown in the title of the preferencs dialog.
 
 
 ## [Desktop Cube 5](https://github.com/schneegans/Desktop-Cube/releases/tag/v5)
