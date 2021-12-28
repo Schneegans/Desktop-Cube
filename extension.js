@@ -168,7 +168,7 @@ class Extension {
       // we cannot get a new one...
       let workspaceWidth = extensionThis._lastWorkspaceWidth;
       const bg           = this._workspaces[0]._background;
-      if (bg.get_stage() && bg.allocation.get_width()) {
+      if (bg.get_stage() && bg.allocation.get_width() > 0) {
         workspaceWidth = bg.allocation.get_width();
 
         // Add gaps between workspaces in overview mode.
