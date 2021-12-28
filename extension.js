@@ -178,24 +178,11 @@ class Extension {
         extensionThis._lastWorkspaceWidth = workspaceWidth;
       }
 
-      // Usually, the "cube" covers full 360°.
-      let fullAngle = 360;
-
       // That's the angle between consecutive workspaces.
-      let faceAngle = fullAngle / faceCount;
-
-      // With this setting, our "cube" only covers 180°, if there are only two workspaces,
-      // it covers 90°. This prevents the affordance that it could be possible to switch
-      if (extensionThis._settings.get_boolean('last-first-gap')) {
-        fullAngle = (faceCount == 2 ? 90 : 180);
-        faceAngle = fullAngle / (faceCount - 1);
-      }
+      const faceAngle = extensionThis._getFaceAngle(faceCount);
 
       // That's the z-distance from the cube faces to the rotation pivot.
-      let centerDepth = workspaceWidth / 2;
-      if (faceAngle < 180) {
-        centerDepth /= Math.tan(faceAngle * 0.5 * Math.PI / 180);
-      }
+      const centerDepth = extensionThis._getCenterDist(workspaceWidth, faceAngle);
 
       // Now loop through all workspace and compute the individual rotations.
       this._workspaces.forEach((w, index) => {
@@ -250,18 +237,9 @@ class Extension {
       // front-facing workspaces the background is drawn behind the window previews. For
       // back-facing workspaces this order is swapped.
 
-      // The depth-sorting of cube faces is quite simple, we create a copy of the
-      // workspaces list and sort it by increasing rotation angle.
-      const workspaces = this._workspaces.slice();
-      workspaces.sort((a, b) => {
-        return Math.abs(a.rotation_angle_y) - Math.abs(b.rotation_angle_y);
-      });
-
-      // Then sort the children actors accordingly.
-      for (let i = 1; i < workspaces.length; i++) {
-        const w = workspaces[i];
-        w.get_parent().set_child_below_sibling(w, workspaces[i - 1]);
-      }
+      // The depth-sorting of cube faces is quite simple, we sort them by increasing
+      // rotation angle.
+      extensionThis._sortActorsByAngle(this._workspaces);
 
       // Now we compute wether the individual cube faces are front-facing or back-facing.
       // This is surprisingly difficult ... can this be simplified? Here, we compute the
@@ -319,7 +297,10 @@ class Extension {
       }
     };
 
+    // This lambda makes the transition between workspaces look like a rotating cube if
+    // the unfold-to-desktop option is not set.
     const makeWorkspaceSwitchCuboid = () => {
+      // Use original methods if the unfold-to-desktop option is set.
       if (this._settings.get_boolean('unfold-to-desktop')) {
         MonitorGroup.prototype._init = this._origMonitorGroupInit;
         WorkspaceAnimationController.prototype._prepareWorkspaceSwitch =
@@ -327,29 +308,60 @@ class Extension {
 
       } else {
 
-        WorkspaceAnimationController.prototype._prepareWorkspaceSwitch = function(
-            ...params) {
+        // This override looks kind of funny. It simply calls the original method without
+        // any arguments. Usually, GNOME Shell "skips" workspaces when switching to a
+        // workspace which is more than one workspace to the left or the right. This
+        // behavior is not desirable for thr cube, as it messes with your spatial memory.
+        // If no workspaceIndices are given to this method, all workspaces will be shown
+        // during the workspace switch.
+        // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L300
+        WorkspaceAnimationController.prototype._prepareWorkspaceSwitch = function() {
           extensionThis._origPrepSwitch.apply(this, []);
         };
 
+        // This override rotates the workspaces during the transition to look like cube
+        // faces. The original movement of the workspaces is implemented in the setter of
+        // the progress property. We do not touch this, as keeping track of this progress
+        // is rather important. Instead, we listen to position changes and tweak the
+        // transformation accordingly.
+        // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L135
         MonitorGroup.prototype._init = function(...params) {
+          // Call the original constructor.
           extensionThis._origMonitorGroupInit.apply(this, params);
 
+          // Rotate the faces if the positin changes.
           this._container.connect('notify::x', () => {
+            // First, we prevent any horizontal movement by countering the translation. We
+            // cannot simply set the x property to zero as this is used to track the
+            // progress.
             this._container.translation_x = -this._container.x;
 
-            this._container.get_children().forEach((child, i) => {
-              child.set_pivot_point_z(-1200);
+            // That's the desired angle between consecutive workspaces.
+            const faceAngle = extensionThis._getFaceAngle(this._workspaceGroups.length);
+
+            // That's the z-distance from the cube faces to the rotation pivot.
+            const centerDepth =
+                extensionThis._getCenterDist(this._workspaceGroups[0].width, faceAngle);
+
+            // Rotate the individual faces.
+            this._workspaceGroups.forEach((child, i) => {
+              child.set_pivot_point_z(-centerDepth);
               child.set_pivot_point(0.5, 0.5);
-              child.rotation_angle_y = (i - this.progress) * 90;
-              child.translation_x    = -child.x;
+              child.rotation_angle_y = (i - this.progress) * faceAngle;
+
+              // Counter any movement.
+              child.translation_x = -child.x;
             });
+
+            // The depth-sorting of cube faces is quite simple, we sort them by increasing
+            // rotation angle.
+            extensionThis._sortActorsByAngle(this._workspaceGroups);
           });
         };
       }
     };
 
-    // The workspace-switch in desktop-mode (not in overview) looks like a cube onl when
+    // The workspace-switch in desktop-mode (not in overview) looks like a cube only if
     // the unfold-to-desktop option is not set.
     this._settings.connect('changed::unfold-to-desktop', makeWorkspaceSwitchCuboid);
     makeWorkspaceSwitchCuboid();
@@ -396,6 +408,46 @@ class Extension {
     }
 
     return 1 - this._getAppDrawerMode(workspacesView)
+  }
+
+  // Returns the angle between consecutive workspaces.
+  _getFaceAngle(faceCount) {
+
+    // With this setting, our "cube" only covers 180°, if there are only two workspaces,
+    // it covers 90°. This prevents the affordance that it could be possible to switch
+    // from the last ot the first workspace.
+    if (this._settings.get_boolean('last-first-gap')) {
+      return (faceCount == 2 ? 90 : 180) / (faceCount - 1);
+    }
+
+    // Else the "cube" covers 360°.
+    return 360.0 / faceCount;
+  }
+
+  // Returns the z-distance from the cube faces to the rotation pivot.
+  _getCenterDist(workspaceWidth, faceAngle) {
+    let centerDepth = workspaceWidth / 2;
+    if (faceAngle < 180) {
+      centerDepth /= Math.tan(faceAngle * 0.5 * Math.PI / 180);
+    }
+    return centerDepth;
+  }
+
+  // This sorts the given list of children actors (which are supposed to be attached to
+  // the same parent) by increasing rotation-y angle. This is used for depth-sorting, as
+  // cube faces which are less rotated, are in front of others.
+  _sortActorsByAngle(actors) {
+    // First create a copy of the actors list and sort it by increasing rotation angle.
+    const copy = actors.slice();
+    copy.sort((a, b) => {
+      return Math.abs(a.rotation_angle_y) - Math.abs(b.rotation_angle_y);
+    });
+
+    // Then sort the children actors accordingly.
+    for (let i = 1; i < copy.length; i++) {
+      const w = copy[i];
+      w.get_parent().set_child_below_sibling(w, copy[i - 1]);
+    }
   }
 }
 
