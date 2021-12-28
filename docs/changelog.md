@@ -14,6 +14,10 @@
 
 * The extension's version number is now shown in the title of the preferencs dialog.
 
+#### Bug Fixes
+
+* Fixed a non-critical warning about `-Infinity`.
+
 
 ## [Desktop Cube 5](https://github.com/schneegans/Desktop-Cube/releases/tag/v5)
 
