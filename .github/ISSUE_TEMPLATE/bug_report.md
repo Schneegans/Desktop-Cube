@@ -28,5 +28,5 @@ A clear and concise description of what you expected to happen.
 ## System
 _Please complete the following information:_
  - Linux distribution [e.g. Ubuntu 21.04]
- - Desktop Cube version [e.g. Desktop Cube, or commit SHA]
+ - Desktop Cube version [e.g. Desktop Cube 5, or commit SHA]
  - GNOME Shell version: [e.g. 40.1]
