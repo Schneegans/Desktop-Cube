@@ -1,6 +1,15 @@
 # Changelog of the Desktop Cube Extension
 
 
+## [Desktop Cube 6](https://github.com/schneegans/Desktop-Cube/releases/tag/v6)
+
+**Release Date:** TBD
+
+#### New Features
+
+* The transition between workspaces when switching in desktop mode now shows the "cube" as well.
+
+
 ## [Desktop Cube 5](https://github.com/schneegans/Desktop-Cube/releases/tag/v5)
 
 **Release Date:** 2021-12-12
