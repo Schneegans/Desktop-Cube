@@ -329,8 +329,8 @@ class Extension {
           // Call the original constructor.
           extensionThis._origMonitorGroupInit.apply(this, params);
 
-          // Rotate the faces if the positin changes.
-          this._container.connect('notify::x', () => {
+          // Rotate the faces if the progress changes.
+          this.connect('notify::progress', () => {
             // First, we prevent any horizontal movement by countering the translation. We
             // cannot simply set the x property to zero as this is used to track the
             // progress.
