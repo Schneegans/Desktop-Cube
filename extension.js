@@ -437,16 +437,16 @@ class Extension {
   // the same parent) by increasing rotation-y angle. This is used for depth-sorting, as
   // cube faces which are less rotated, are in front of others.
   _sortActorsByAngle(actors) {
-    // First create a copy of the actors list and sort it by increasing rotation angle.
+    // First create a copy of the actors list and sort it by decreasing rotation angle.
     const copy = actors.slice();
     copy.sort((a, b) => {
-      return Math.abs(a.rotation_angle_y) - Math.abs(b.rotation_angle_y);
+      return Math.abs(b.rotation_angle_y) - Math.abs(a.rotation_angle_y);
     });
 
     // Then sort the children actors accordingly.
-    for (let i = 1; i < copy.length; i++) {
-      const w = copy[i];
-      w.get_parent().set_child_below_sibling(w, copy[i - 1]);
+    const parent = actors[0].get_parent();
+    for (let i = 0; i < copy.length; i++) {
+      parent.set_child_at_index(copy[i], -1);
     }
   }
 }
