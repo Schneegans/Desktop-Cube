@@ -3,7 +3,7 @@
 
 ## [Desktop Cube 6](https://github.com/schneegans/Desktop-Cube/releases/tag/v6)
 
-**Release Date:** TBD
+**Release Date:** 2021-12-29
 
 #### New Features
 
