@@ -1,6 +1,14 @@
 # Changelog of the Desktop Cube Extension
 
 
+## [Desktop Cube 7](https://github.com/schneegans/Desktop-Cube/releases/tag/v7)
+
+**Release Date:** 2021-12-29
+
+#### Bug Fixes
+
+* Fixed cuboid desktop transitions when using touchpad gestures.
+
 ## [Desktop Cube 6](https://github.com/schneegans/Desktop-Cube/releases/tag/v6)
 
 **Release Date:** 2021-12-29

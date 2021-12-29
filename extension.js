@@ -50,6 +50,7 @@ class Extension {
     this._origGetSpacing            = WorkspacesView.prototype._getSpacing;
     this._origUpdateVisibility      = WorkspacesView.prototype._updateVisibility;
     this._origMonitorGroupInit      = MonitorGroup.prototype._init;
+    this._origUpdateSwipeForMonitor = MonitorGroup.prototype.updateSwipeForMonitor;
     this._origAnimateSwitch = WorkspaceAnimationController.prototype.animateSwitch;
     this._origPrepSwitch = WorkspaceAnimationController.prototype._prepareWorkspaceSwitch;
 
@@ -322,41 +323,51 @@ class Extension {
         // This override rotates the workspaces during the transition to look like cube
         // faces. The original movement of the workspaces is implemented in the setter of
         // the progress property. We do not touch this, as keeping track of this progress
-        // is rather important. Instead, we listen to position changes and tweak the
+        // is rather important. Instead, we listen to progress changes and tweak the
         // transformation accordingly.
+        // This lambda is called in two places (further down), once for updates of the
+        // progress property, once for updates during gesture swipes. The latter does not
+        // trigger notify signals of the former for some reason...
+        const updateMonitorGroup = (group) => {
+          // First, we prevent any horizontal movement by countering the translation. We
+          // cannot simply set the x property to zero as this is used to track the
+          // progress.
+          group._container.translation_x = -group._container.x;
+
+          // That's the desired angle between consecutive workspaces.
+          const faceAngle = extensionThis._getFaceAngle(group._workspaceGroups.length);
+
+          // That's the z-distance from the cube faces to the rotation pivot.
+          const centerDepth =
+              extensionThis._getCenterDist(group._workspaceGroups[0].width, faceAngle);
+
+          // Rotate the individual faces.
+          group._workspaceGroups.forEach((child, i) => {
+            child.set_pivot_point_z(-centerDepth);
+            child.set_pivot_point(0.5, 0.5);
+            child.rotation_angle_y = (i - group.progress) * faceAngle;
+
+            // Counter any movement.
+            child.translation_x = -child.x;
+          });
+
+          // The depth-sorting of cube faces is quite simple, we sort them by increasing
+          // rotation angle.
+          extensionThis._sortActorsByAngle(group._workspaceGroups);
+        };
+
+        // Call the method above whenever a gesture is active.
+        // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L265
+        MonitorGroup.prototype.updateSwipeForMonitor = function(...params) {
+          extensionThis._origUpdateSwipeForMonitor.apply(this, params);
+          updateMonitorGroup(this);
+        };
+
+        // Call the method above whenever the transition progress changes.
         // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L135
         MonitorGroup.prototype._init = function(...params) {
-          // Call the original constructor.
           extensionThis._origMonitorGroupInit.apply(this, params);
-
-          // Rotate the faces if the progress changes.
-          this.connect('notify::progress', () => {
-            // First, we prevent any horizontal movement by countering the translation. We
-            // cannot simply set the x property to zero as this is used to track the
-            // progress.
-            this._container.translation_x = -this._container.x;
-
-            // That's the desired angle between consecutive workspaces.
-            const faceAngle = extensionThis._getFaceAngle(this._workspaceGroups.length);
-
-            // That's the z-distance from the cube faces to the rotation pivot.
-            const centerDepth =
-                extensionThis._getCenterDist(this._workspaceGroups[0].width, faceAngle);
-
-            // Rotate the individual faces.
-            this._workspaceGroups.forEach((child, i) => {
-              child.set_pivot_point_z(-centerDepth);
-              child.set_pivot_point(0.5, 0.5);
-              child.rotation_angle_y = (i - this.progress) * faceAngle;
-
-              // Counter any movement.
-              child.translation_x = -child.x;
-            });
-
-            // The depth-sorting of cube faces is quite simple, we sort them by increasing
-            // rotation angle.
-            extensionThis._sortActorsByAngle(this._workspaceGroups);
-          });
+          this.connect_after('notify::progress', () => updateMonitorGroup(this));
         };
       }
     };
@@ -376,6 +387,7 @@ class Extension {
     WorkspacesView.prototype._getSpacing            = this._origGetSpacing;
     WorkspacesView.prototype._updateVisibility      = this._origUpdateVisibility;
     MonitorGroup.prototype._init                    = this._origMonitorGroupInit;
+    MonitorGroup.prototype.updateSwipeForMonitor    = this._origUpdateSwipeForMonitor;
     WorkspaceAnimationController.prototype.animateSwitch = this._origAnimateSwitch;
     WorkspaceAnimationController.prototype._prepareWorkspaceSwitch = this._origPrepSwitch;
 
