@@ -2,7 +2,7 @@
   <img src ="docs/pics/teaser.gif" />
 </p>
 
-# Desktop Cube for GNOME Shell
+# A Desktop Cube for GNOME Shell
 
   <a href="https://github.com/Schneegans/Desktop-Cube/actions"><img src="https://github.com/Schneegans/Desktop-Cube/workflows/Checks/badge.svg?branch=main" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg?labelColor=303030" /></a>
@@ -17,7 +17,6 @@ For a list of things changed in previous releases, you can have a look at the [c
 
 ## 💞 These People _love_ this Extension
 
-Do you want to show that you love it too? You may <a href="https://github.com/sponsors/Schneegans">become a sponsor for as little as 1$ / month</a>!
 While coding new features is the most awesome way to contribute, providing financial support will help me stay motivated to invest my spare time to keep the project alive in the future.
 
 <h3 align="center">🥇 Current Gold Sponsors</h3>
@@ -40,6 +39,9 @@ While coding new features is the most awesome way to contribute, providing finan
 <p align="center">
 </p>
 -->
+
+Do you want to show that you love it too? You may <a href="https://github.com/sponsors/Schneegans">become a sponsor for as little as 1$ / month</a>!
+If you like this extension, you may also want to try one of my other extensions: [🔥 Burn-My-Windows](https://github.com/Schneegans/Burn-My-Windows) or [🍰 Fly-Pie](https://github.com/Schneegans/Fly-Pie/)!
 
 ## ⬇️ Installation
 
