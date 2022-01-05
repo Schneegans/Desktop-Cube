@@ -15,17 +15,33 @@ As we already have the awesome [Compiz-alike windows efffects](https://extension
 
 For a list of things changed in previous releases, you can have a look at the [changelog](docs/changelog.md)!
 
-## :revolving_hearts: Supporters 
+## 💞 These People _love_ this Extension
 
-<p align="center">
-  <a href="https://github.com/castrojo"><strong>Jorge Castro</strong></a><br><br>
-  <a href="https://github.com/sponsors/Schneegans">Be the next!</a><br><br>
-</p>
-
+Do you want to show that you love it too? You may <a href="https://github.com/sponsors/Schneegans">become a sponsor for as little as 1$ / month</a>!
 While coding new features is the most awesome way to contribute, providing financial support will help me stay motivated to invest my spare time to keep the project alive in the future.
 
+<h3 align="center">🥇 Current Gold Sponsors</h3>
+<p align="center">
+<a href="https://github.com/dennis1248">Dennis ten Hoove</a><br>
+</p>
 
-## Installation
+<h3 align="center">🥈 Current Silver Sponsors</h3>
+<p align="center">
+  <a href="https://github.com/castrojo">Jorge Castro</a>
+</p>
+
+<h3 align="center">🥉 Current Bronze Sponsors</h3>
+<p align="center">
+  <a href="https://github.com/sponsors/Schneegans">Be the first!</a>
+</p>
+
+<!--
+<h3 align="center">🏅 Previous Sponsors and One-Time Donators</h3>
+<p align="center">
+</p>
+-->
+
+## ⬇️ Installation
 
 You can either install the Desktop Cube extension from extensions.gnome.org (a), download a stable release
 from GitHub (b) or clone the latest version directly with `git` (c).
