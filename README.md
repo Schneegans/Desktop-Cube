@@ -11,7 +11,7 @@
 
 When I started using Linux more than a decade ago, it was because of the 3D desktop cube of Compiz.
 Even if this was a pretty useless feature, I am still missing it today.
-As we already have the awesome [Compiz-alike windows efffects](https://extensions.gnome.org/extension/2950/compiz-alike-windows-effect/), I thought it was time to revive 3D workspaces as well!
+As we already have the awesome [Compiz-alike windows effects](https://extensions.gnome.org/extension/2950/compiz-alike-windows-effect/), I thought it was time to revive 3D workspaces as well!
 
 For a list of things changed in previous releases, you can have a look at the [changelog](docs/changelog.md)!
 
