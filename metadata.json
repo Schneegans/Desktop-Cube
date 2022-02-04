@@ -6,7 +6,8 @@
     "settings-schema": "org.gnome.shell.extensions.desktop-cube",
     "shell-version": [
         "40",
-        "41"
+        "41",
+        "42"
     ],
     "url": "https://github.com/Schneegans/Desktop-Cube",
     "version": 8
