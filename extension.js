@@ -8,18 +8,110 @@
 
 'use strict';
 
-const Util             = imports.misc.util;
-const Main             = imports.ui.main;
-const OverviewControls = imports.ui.overviewControls;
-const WorkspacesView   = imports.ui.workspacesView.WorkspacesView;
-const FitMode          = imports.ui.workspacesView.FitMode;
-const MonitorGroup     = imports.ui.workspaceAnimation.MonitorGroup;
+const {Clutter, GObject, Shell, St} = imports.gi;
+
+const Util              = imports.misc.util;
+const Main              = imports.ui.main;
+const OverviewControls  = imports.ui.overviewControls;
+const TouchSwipeGesture = imports.ui.swipeTracker.TouchSwipeGesture;
+const SwipeTracker      = imports.ui.swipeTracker.SwipeTracker;
+const WorkspacesView    = imports.ui.workspacesView.WorkspacesView;
+const FitMode           = imports.ui.workspacesView.FitMode;
+const MonitorGroup      = imports.ui.workspaceAnimation.MonitorGroup;
 const WorkspaceAnimationController =
     imports.ui.workspaceAnimation.WorkspaceAnimationController;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me             = imports.misc.extensionUtils.getCurrentExtension();
 const utils          = Me.imports.utils;
+
+// TouchSwipeGesture
+// https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/swipeTracker.js#L213
+// clang-format off
+const CubeDragGesture =
+  GObject.registerClass({
+    Properties: {
+      'distance': GObject.ParamSpec.double(
+        'distance', 'distance', 'distance', GObject.ParamFlags.READWRITE, 0, Infinity, 0),
+      'pitch': GObject.ParamSpec.double(
+        'pitch', 'pitch', 'pitch', GObject.ParamFlags.READWRITE, 0, 1, 0),
+      },
+      Signals: {
+        'begin':  {param_types: [GObject.TYPE_UINT, GObject.TYPE_DOUBLE, GObject.TYPE_DOUBLE]},
+        'update': {param_types: [GObject.TYPE_UINT, GObject.TYPE_DOUBLE, GObject.TYPE_DOUBLE]},
+        'end':    {param_types: [GObject.TYPE_UINT, GObject.TYPE_DOUBLE]},
+        'cancel': {param_types: [GObject.TYPE_UINT, GObject.TYPE_DOUBLE]},
+      },
+    },
+    class CubeDragGesture extends Clutter.GestureAction {
+      // clang-format on
+      _init(mode) {
+        super._init();
+        this.set_n_touch_points(1);
+        this.set_threshold_trigger_edge(Clutter.GestureTriggerEdge.AFTER);
+
+        this._mode     = mode;
+        this._distance = global.screen_height;
+
+        this._lastX  = 0;
+        this._startY = 0;
+      }
+
+      vfunc_gesture_prepare(actor) {
+        if (!super.vfunc_gesture_prepare(actor)) return false;
+
+        if (this._mode != Main.actionMode) return false;
+
+        const time                  = this.get_last_event(0).get_time();
+        const [xPress, yPress]      = this.get_press_coords(0);
+        [this._lastX, this._startY] = this.get_motion_coords(0);
+
+        this.pitch = 0;
+
+        if (Main.actionMode == Shell.ActionMode.NORMAL) {
+          global.begin_modal(0, 0);
+        }
+
+        this.emit('begin', time, xPress, yPress);
+        return true;
+      }
+
+      vfunc_gesture_progress(_actor) {
+        const [x, y] = this.get_motion_coords(0);
+
+        const deltaX = x - this._lastX;
+
+        this.pitch = (this._startY - y) / global.screen_height;
+
+        this._lastX = x;
+
+        const time = this.get_last_event(0).get_time();
+
+        this.emit('update', time, -deltaX, this.distance);
+
+        return true;
+      }
+
+      vfunc_gesture_end(_actor) {
+        if (Main.actionMode == Shell.ActionMode.NORMAL) {
+          global.end_modal(0);
+        }
+
+        const time = this.get_last_event(0).get_time();
+        this.emit('end', time, this.distance);
+      }
+
+      vfunc_gesture_cancel(_actor) {
+        if (Main.actionMode == Shell.ActionMode.NORMAL) {
+          global.end_modal(0);
+        }
+
+        const time = Clutter.get_current_event_time();
+        this.emit('cancel', time, this.distance);
+      }
+    });
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // This extensions modifies three methods of the WorkspacesView class of GNOME Shell.   //
@@ -185,6 +277,10 @@ class Extension {
       // That's the z-distance from the cube faces to the rotation pivot.
       const centerDepth = extensionThis._getCenterDist(workspaceWidth, faceAngle);
 
+      this.pivot_point_z = -centerDepth;
+      this.set_pivot_point(0.5, 0.5);
+      this.rotation_angle_x = extensionThis._overviewModePitch.value * 50;
+
       // Now loop through all workspace and compute the individual rotations.
       this._workspaces.forEach((w, index) => {
         // First update the corner radii. Corners are only rounded in overview.
@@ -341,6 +437,10 @@ class Extension {
           const centerDepth =
               extensionThis._getCenterDist(group._workspaceGroups[0].width, faceAngle);
 
+          group._container.pivot_point_z = -centerDepth;
+          group._container.set_pivot_point(0.5, 0.5);
+          group._container.rotation_angle_x = extensionThis._normalModePitch.value * 50;
+
           // Rotate the individual faces.
           group._workspaceGroups.forEach((child, i) => {
             child.set_pivot_point_z(-centerDepth);
@@ -376,6 +476,47 @@ class Extension {
     // the unfold-to-desktop option is not set.
     this._settings.connect('changed::unfold-to-desktop', makeWorkspaceSwitchCuboid);
     makeWorkspaceSwitchCuboid();
+
+    const addDragGesture = (actor, tracker, mode) => {
+      const gesture = new CubeDragGesture(mode);
+      gesture.connect('begin', tracker._beginGesture.bind(tracker));
+      gesture.connect('update', tracker._updateGesture.bind(tracker));
+      gesture.connect('end', tracker._endTouchGesture.bind(tracker));
+      gesture.connect('cancel', tracker._cancelTouchGesture.bind(tracker));
+      tracker.bind_property('enabled', gesture, 'enabled', 0);
+      tracker.bind_property('distance', gesture, 'distance', 0);
+      actor.add_action(gesture);
+
+      const adjustment = new St.Adjustment({actor: actor, lower: -1, upper: 1});
+      gesture.bind_property('pitch', adjustment, 'value', 0);
+
+      tracker.connect('end', (g, duration) => {
+        adjustment.remove_transition('value');
+        adjustment.ease(0, {
+          duration: duration,
+          mode: Clutter.AnimationMode.EASE_OUT_CUBIC,
+        });
+      });
+
+      return adjustment;
+    };
+
+    // For switching workspaces in desktop mode.
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L286
+    this._normalModePitch = addDragGesture(
+        global.stage, Main.wm._workspaceAnimation._swipeTracker, Shell.ActionMode.NORMAL);
+
+    // For switching workspaces in overview mode.
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L858
+    this._overviewModePitch = addDragGesture(
+        Main.layoutManager.overviewGroup,
+        Main.overview._overview._controls._workspacesDisplay._swipeTracker,
+        Shell.ActionMode.OVERVIEW);
+
+    this._overviewModePitch.connect('notify::value', () => {
+      Main.overview._overview._controls._workspacesDisplay._overviewAdjustment.notify(
+          'value');
+    });
   }
 
   // This function could be called after the extension is uninstalled, disabled in GNOME
