@@ -23,7 +23,7 @@ const WorkspaceAnimationController =
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me             = imports.misc.extensionUtils.getCurrentExtension();
-const utils          = Me.imports.utils;
+const utils          = Me.imports.src.utils;
 
 // TouchSwipeGesture
 // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/swipeTracker.js#L213
