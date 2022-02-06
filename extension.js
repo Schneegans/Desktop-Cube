@@ -89,26 +89,7 @@ class Extension {
 
     loadAnimationTimes();
 
-    // Here, we extend the WorkspaceAnimationController's animateSwitch method in order to
-    // be able to modify the animation duration for switching workspaces in desktop mode.
-    // We have to do it like this since the time is hard-coded with a constant:
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L11
-    WorkspaceAnimationController.prototype.animateSwitch = function(...params) {
-      // Call the original method. This sets up the progress transitions which we tweak
-      // thereafter.
-      extensionThis._origAnimateSwitch.apply(this, params);
-
-      // We do not override this time if the cube is unfolded in desktop mode.
-      if (extensionThis._settings.get_boolean('unfold-to-desktop')) {
-        return;
-      }
-
-      // Now update the transition durations.
-      const duration = extensionThis._settings.get_int('workspace-transition-time');
-      for (const monitorGroup of this._switchData.monitors) {
-        monitorGroup.get_transition('progress').set_duration(duration);
-      }
-    };
+    // --------------------------------------------------------------- cubify the overview
 
     // Normally, all workspaces outside the current field-of-view are hidden. We want to
     // show all workspaces, so we patch this method. The original code is about here:
@@ -304,88 +285,90 @@ class Extension {
       }
     };
 
-    // This lambda makes the transition between workspaces look like a rotating cube if
-    // the unfold-to-desktop option is not set.
-    const makeWorkspaceSwitchCuboid = () => {
-      // Use original methods if the unfold-to-desktop option is set.
-      if (this._settings.get_boolean('unfold-to-desktop')) {
-        MonitorGroup.prototype._init = this._origMonitorGroupInit;
-        WorkspaceAnimationController.prototype._prepareWorkspaceSwitch =
-            this._origPrepSwitch;
+    // ------------------------------------------- cubify workspace-switch in desktop mode
 
-      } else {
+    // Here, we extend the WorkspaceAnimationController's animateSwitch method in order to
+    // be able to modify the animation duration for switching workspaces in desktop mode.
+    // We have to do it like this since the time is hard-coded with a constant:
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L11
+    WorkspaceAnimationController.prototype.animateSwitch = function(...params) {
+      // Call the original method. This sets up the progress transitions which we tweak
+      // thereafter.
+      extensionThis._origAnimateSwitch.apply(this, params);
 
-        // This override looks kind of funny. It simply calls the original method without
-        // any arguments. Usually, GNOME Shell "skips" workspaces when switching to a
-        // workspace which is more than one workspace to the left or the right. This
-        // behavior is not desirable for thr cube, as it messes with your spatial memory.
-        // If no workspaceIndices are given to this method, all workspaces will be shown
-        // during the workspace switch.
-        // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L300
-        WorkspaceAnimationController.prototype._prepareWorkspaceSwitch = function() {
-          extensionThis._origPrepSwitch.apply(this, []);
-        };
-
-        // This override rotates the workspaces during the transition to look like cube
-        // faces. The original movement of the workspaces is implemented in the setter of
-        // the progress property. We do not touch this, as keeping track of this progress
-        // is rather important. Instead, we listen to progress changes and tweak the
-        // transformation accordingly.
-        // This lambda is called in two places (further down), once for updates of the
-        // progress property, once for updates during gesture swipes. The latter does not
-        // trigger notify signals of the former for some reason...
-        const updateMonitorGroup = (group) => {
-          // First, we prevent any horizontal movement by countering the translation. We
-          // cannot simply set the x property to zero as this is used to track the
-          // progress.
-          group._container.translation_x = -group._container.x;
-
-          // That's the desired angle between consecutive workspaces.
-          const faceAngle = extensionThis._getFaceAngle(group._workspaceGroups.length);
-
-          // That's the z-distance from the cube faces to the rotation pivot.
-          const centerDepth =
-              extensionThis._getCenterDist(group._workspaceGroups[0].width, faceAngle);
-
-          group._container.pivot_point_z = -centerDepth;
-          group._container.set_pivot_point(0.5, 0.5);
-          group._container.rotation_angle_x = extensionThis._normalModePitch.value * 50;
-
-          // Rotate the individual faces.
-          group._workspaceGroups.forEach((child, i) => {
-            child.set_pivot_point_z(-centerDepth);
-            child.set_pivot_point(0.5, 0.5);
-            child.rotation_angle_y = (i - group.progress) * faceAngle;
-
-            // Counter any movement.
-            child.translation_x = -child.x;
-          });
-
-          // The depth-sorting of cube faces is quite simple, we sort them by increasing
-          // rotation angle.
-          extensionThis._sortActorsByAngle(group._workspaceGroups);
-        };
-
-        // Call the method above whenever a gesture is active.
-        // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L265
-        MonitorGroup.prototype.updateSwipeForMonitor = function(...params) {
-          extensionThis._origUpdateSwipeForMonitor.apply(this, params);
-          updateMonitorGroup(this);
-        };
-
-        // Call the method above whenever the transition progress changes.
-        // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L135
-        MonitorGroup.prototype._init = function(...params) {
-          extensionThis._origMonitorGroupInit.apply(this, params);
-          this.connect_after('notify::progress', () => updateMonitorGroup(this));
-        };
+      // Now update the transition durations.
+      const duration = extensionThis._settings.get_int('workspace-transition-time');
+      for (const monitorGroup of this._switchData.monitors) {
+        monitorGroup.get_transition('progress').set_duration(duration);
       }
     };
 
-    // The workspace-switch in desktop-mode (not in overview) looks like a cube only if
-    // the unfold-to-desktop option is not set.
-    this._settings.connect('changed::unfold-to-desktop', makeWorkspaceSwitchCuboid);
-    makeWorkspaceSwitchCuboid();
+    // This override looks kind of funny. It simply calls the original method without
+    // any arguments. Usually, GNOME Shell "skips" workspaces when switching to a
+    // workspace which is more than one workspace to the left or the right. This
+    // behavior is not desirable for thr cube, as it messes with your spatial memory.
+    // If no workspaceIndices are given to this method, all workspaces will be shown
+    // during the workspace switch.
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L300
+    WorkspaceAnimationController.prototype._prepareWorkspaceSwitch = function() {
+      extensionThis._origPrepSwitch.apply(this, []);
+    };
+
+    // This override rotates the workspaces during the transition to look like cube
+    // faces. The original movement of the workspaces is implemented in the setter of
+    // the progress property. We do not touch this, as keeping track of this progress
+    // is rather important. Instead, we listen to progress changes and tweak the
+    // transformation accordingly.
+    // This lambda is called in two places (further down), once for updates of the
+    // progress property, once for updates during gesture swipes. The latter does not
+    // trigger notify signals of the former for some reason...
+    const updateMonitorGroup = (group) => {
+      // First, we prevent any horizontal movement by countering the translation. We
+      // cannot simply set the x property to zero as this is used to track the
+      // progress.
+      group._container.translation_x = -group._container.x;
+
+      // That's the desired angle between consecutive workspaces.
+      const faceAngle = extensionThis._getFaceAngle(group._workspaceGroups.length);
+
+      // That's the z-distance from the cube faces to the rotation pivot.
+      const centerDepth =
+          extensionThis._getCenterDist(group._workspaceGroups[0].width, faceAngle);
+
+      group._container.pivot_point_z = -centerDepth;
+      group._container.set_pivot_point(0.5, 0.5);
+      group._container.rotation_angle_x = extensionThis._normalModePitch.value * 50;
+
+      // Rotate the individual faces.
+      group._workspaceGroups.forEach((child, i) => {
+        child.set_pivot_point_z(-centerDepth);
+        child.set_pivot_point(0.5, 0.5);
+        child.rotation_angle_y = (i - group.progress) * faceAngle;
+
+        // Counter any movement.
+        child.translation_x = -child.x;
+      });
+
+      // The depth-sorting of cube faces is quite simple, we sort them by increasing
+      // rotation angle.
+      extensionThis._sortActorsByAngle(group._workspaceGroups);
+    };
+
+    // Call the method above whenever a gesture is active.
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L265
+    MonitorGroup.prototype.updateSwipeForMonitor = function(...params) {
+      extensionThis._origUpdateSwipeForMonitor.apply(this, params);
+      updateMonitorGroup(this);
+    };
+
+    // Call the method above whenever the transition progress changes.
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L135
+    MonitorGroup.prototype._init = function(...params) {
+      extensionThis._origMonitorGroupInit.apply(this, params);
+      this.connect_after('notify::progress', () => updateMonitorGroup(this));
+    };
+
+    // -------------------------------------------------- enable cube rotation by dragging
 
     const addDragGesture = (actor, tracker, mode) => {
       const gesture = new DragGesture(mode);
@@ -466,10 +449,6 @@ class Extension {
   // Returns a value between [0...1]. If it's 0, the cube should be unfolded, if it's 1,
   // the cube should be drawn like, well, a cube :).
   _getCubeMode(workspacesView) {
-    if (this._settings.get_boolean('unfold-to-desktop')) {
-      return this._getOverviewMode(workspacesView);
-    }
-
     return 1 - this._getAppDrawerMode(workspacesView)
   }
 

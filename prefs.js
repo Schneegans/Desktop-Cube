@@ -47,7 +47,6 @@ var PreferencesDialog = class PreferencesDialog {
     this._bindAdjustment('overview-transition-time');
     this._bindAdjustment('appgrid-transition-time');
     this._bindAdjustment('workspace-transition-time');
-    this._bindSwitch('unfold-to-desktop');
 
     // Add a menu to the title bar of the preferences dialog.
     this._widget.connect('realize', (widget) => {

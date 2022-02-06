@@ -77,11 +77,5 @@
       <description>Time for the transition between workpaces.</description>
     </key>
 
-    <key name="unfold-to-desktop" type="b">
-      <default>false</default>
-      <summary>Unfold to Desktop</summary>
-      <description>If true, the cube will unfold when transitioning to the desktop.</description>
-    </key>
-
   </schema>
 </schemalist>

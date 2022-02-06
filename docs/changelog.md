@@ -1,6 +1,14 @@
 # Changelog of the Desktop Cube Extension
 
 
+## [Desktop Cube 8](https://github.com/schneegans/Desktop-Cube/releases/tag/v8)
+
+**Release Date:** TBD
+
+#### Other Changes
+
+* Removed the unfold-to-desktop option as we now have cuboid workspace transitions everywhere.
+
 ## [Desktop Cube 7](https://github.com/schneegans/Desktop-Cube/releases/tag/v7)
 
 **Release Date:** 2021-12-29
