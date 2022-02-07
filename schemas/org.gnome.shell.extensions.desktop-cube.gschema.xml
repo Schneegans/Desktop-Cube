@@ -40,6 +40,22 @@
     </key>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- behavior settings                                                             -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <key name="drag-rotation-overview-mode" type="b">
+      <default>true</default>
+      <summary>Drag Rotation Overview Mode</summary>
+      <description>Overview: Rotate the cube with the left mouse button.</description>
+    </key>
+
+    <key name="drag-rotation-desktop-mode" type="b">
+      <default>true</default>
+      <summary>Drag Rotation Desktop Mode</summary>
+      <description>Desktop: Rotate the cube with the left mouse button.</description>
+    </key>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- appearance settings                                                           -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 

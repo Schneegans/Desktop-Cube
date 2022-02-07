@@ -42,6 +42,8 @@ var PreferencesDialog = class PreferencesDialog {
     this._bindAdjustment('depth-separation');
     this._bindAdjustment('horizontal-stretch');
     this._bindSwitch('last-first-gap');
+    this._bindSwitch('drag-rotation-overview-mode');
+    this._bindSwitch('drag-rotation-desktop-mode');
     this._bindAdjustment('active-workpace-opacity');
     this._bindAdjustment('inactive-workpace-opacity');
     this._bindAdjustment('overview-transition-time');

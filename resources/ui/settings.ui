@@ -53,7 +53,103 @@
               <object class="GtkLabel">
                 <property name="margin-top">30</property>
                 <property name="margin-bottom">10</property>
-                <property name="label">Layout</property>
+                <property name="label" translatable="yes">Behavior</property>
+                <property name="xalign">0</property>
+                <style>
+                  <class name="title-4" />
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkFrame">
+                <child>
+                  <object class="GtkListBox">
+                    <property name="selection-mode">none</property>
+                    <property name="show-separators">1</property>
+                    <style>
+                      <class name="rich-list" />
+                    </style>
+
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <child>
+                          <object class="GtkBox">
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label" translatable="yes">Click and drag the overview to rotate the cube</property>
+                                <property name="xalign">0</property>
+                                <property name="wrap">1</property>
+                                <property name="halign">start</property>
+                                <property name="valign">center</property>
+                                <property name="hexpand">1</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkSwitch" id="drag-rotation-overview-mode">
+                                <property name="halign">end</property>
+                                <property name="valign">center</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="reset-drag-rotation-overview-mode">
+                                <property name="icon-name">edit-clear-symbolic</property>
+                                <property name="tooltip-text">Reset to Default Value</property>
+                                <style>
+                                  <class name="flat" />
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <child>
+                          <object class="GtkBox">
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label" translatable="yes">Click and drag the desktop to rotate the cube</property>
+                                <property name="xalign">0</property>
+                                <property name="wrap">1</property>
+                                <property name="halign">start</property>
+                                <property name="valign">center</property>
+                                <property name="hexpand">1</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkSwitch" id="drag-rotation-desktop-mode">
+                                <property name="halign">end</property>
+                                <property name="valign">center</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="reset-drag-rotation-desktop-mode">
+                                <property name="icon-name">edit-clear-symbolic</property>
+                                <property name="tooltip-text">Reset to Default Value</property>
+                                <style>
+                                  <class name="flat" />
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+
+                  </object>
+                </child>
+              </object>
+            </child>
+
+
+            <child>
+              <object class="GtkLabel">
+                <property name="margin-top">30</property>
+                <property name="margin-bottom">10</property>
+                <property name="label" translatable="yes">Layout</property>
                 <property name="xalign">0</property>
                 <style>
                   <class name="title-4" />
@@ -277,7 +373,7 @@
               <object class="GtkLabel">
                 <property name="margin-top">30</property>
                 <property name="margin-bottom">10</property>
-                <property name="label">Appearance</property>
+                <property name="label" translatable="yes">Appearance</property>
                 <property name="xalign">0</property>
                 <style>
                   <class name="title-4" />
@@ -392,7 +488,7 @@
               <object class="GtkLabel">
                 <property name="margin-top">30</property>
                 <property name="margin-bottom">10</property>
-                <property name="label">Animations</property>
+                <property name="label" translatable="yes">Animations</property>
                 <property name="xalign">0</property>
                 <style>
                   <class name="title-4" />

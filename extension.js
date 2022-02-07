@@ -8,7 +8,7 @@
 
 'use strict';
 
-const {Clutter, Shell, St} = imports.gi;
+const {Clutter, GObject, Shell, St} = imports.gi;
 
 const Util           = imports.misc.util;
 const Main           = imports.ui.main;
@@ -24,13 +24,15 @@ const utils          = Me.imports.src.utils;
 const DragGesture    = Me.imports.src.DragGesture.DragGesture;
 
 //////////////////////////////////////////////////////////////////////////////////////////
-// This extensions modifies three methods of the WorkspacesView class of GNOME Shell.   //
-// By doing this, it tweaks the positioning of workspaces in overview mode to make them //
-// look like cube faces.                                                                //
+// This extensions tweaks the positioning of workspaces in overview mode and while      //
+// switching workspaces in desktop mode to make them look like cube faces.              //
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // The scale of inactive workspaces in app grid mode.
 const INACTIVE_SCALE = imports.ui.workspacesView.WORKSPACE_INACTIVE_SCALE;
+
+// Maximum degrees the cube can be rotated up and down.
+const MAX_VERTICAL_ROTATION = 50;
 
 class Extension {
   // The constructor is called once when the extension is loaded, not enabled.
@@ -168,9 +170,13 @@ class Extension {
       // That's the z-distance from the cube faces to the rotation pivot.
       const centerDepth = extensionThis._getCenterDist(workspaceWidth, faceAngle);
 
-      this.pivot_point_z = -centerDepth;
-      this.set_pivot_point(0.5, 0.5);
-      this.rotation_angle_x = extensionThis._overviewModePitch.value * 50;
+      // Apply vertical rotation if required.
+      if (extensionThis._overviewDragGesture) {
+        this.pivot_point_z = -centerDepth;
+        this.set_pivot_point(0.5, 0.5);
+        this.rotation_angle_x = extensionThis._overviewDragGesture.pitchAdjustment.value *
+            MAX_VERTICAL_ROTATION;
+      }
 
       // Now loop through all workspace and compute the individual rotations.
       this._workspaces.forEach((w, index) => {
@@ -335,9 +341,14 @@ class Extension {
       const centerDepth =
           extensionThis._getCenterDist(group._workspaceGroups[0].width, faceAngle);
 
-      group._container.pivot_point_z = -centerDepth;
-      group._container.set_pivot_point(0.5, 0.5);
-      group._container.rotation_angle_x = extensionThis._normalModePitch.value * 50;
+      // Apply vertical rotation if required.
+      if (extensionThis._desktopDragGesture) {
+        group._container.pivot_point_z = -centerDepth;
+        group._container.set_pivot_point(0.5, 0.5);
+        group._container.rotation_angle_x =
+            extensionThis._desktopDragGesture.pitchAdjustment.value *
+            MAX_VERTICAL_ROTATION;
+      }
 
       // Rotate the individual faces.
       group._workspaceGroups.forEach((child, i) => {
@@ -370,45 +381,38 @@ class Extension {
 
     // -------------------------------------------------- enable cube rotation by dragging
 
-    const addDragGesture = (actor, tracker, mode) => {
-      const gesture = new DragGesture(mode);
-      gesture.connect('begin', tracker._beginGesture.bind(tracker));
-      gesture.connect('update', tracker._updateGesture.bind(tracker));
-      gesture.connect('end', tracker._endTouchGesture.bind(tracker));
-      gesture.connect('cancel', tracker._cancelTouchGesture.bind(tracker));
-      tracker.bind_property('enabled', gesture, 'enabled', 0);
-      tracker.bind_property('distance', gesture, 'distance', 0);
-      actor.add_action(gesture);
+    // In GNOME Shell, SwipeTrackers are used all over the place to capture swipe
+    // gestures. There's one for entering the overview, one for switching workspaces in
+    // desktop mode, one for switching workspaces in overview mode, one for horizontal
+    // scrolling in the app drawer, and many more. The ones used for workspace-switching
+    // usually do not respond to single-click dragging but only to multi-touch gestures.
+    // We want to be able to rotate the cube with the left mouse button, so we add an
+    // additional gesture to these two SwipeTracker instances tracking single-click drags.
 
-      const adjustment = new St.Adjustment({actor: actor, lower: -1, upper: 1});
-      gesture.bind_property('pitch', adjustment, 'value', 0);
+    // Add single-click drag gesture to the overview's SwipeTracker.
+    if (this._settings.get_boolean('drag-rotation-overview-mode')) {
+      this._addOverviewDragGesture();
+    }
 
-      tracker.connect('end', (g, duration) => {
-        adjustment.remove_transition('value');
-        adjustment.ease(0, {
-          duration: duration,
-          mode: Clutter.AnimationMode.EASE_OUT_CUBIC,
-        });
-      });
+    this._settings.connect('changed::drag-rotation-overview-mode', () => {
+      if (this._settings.get_boolean('drag-rotation-overview-mode')) {
+        this._addOverviewDragGesture();
+      } else {
+        this._removeOverviewDragGesture();
+      }
+    });
 
-      return adjustment;
-    };
+    // Add single-click drag gesture to the desktop's SwipeTracker.
+    if (this._settings.get_boolean('drag-rotation-desktop-mode')) {
+      this._addDesktopDragGesture();
+    }
 
-    // For switching workspaces in desktop mode.
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L286
-    this._normalModePitch = addDragGesture(
-        global.stage, Main.wm._workspaceAnimation._swipeTracker, Shell.ActionMode.NORMAL);
-
-    // For switching workspaces in overview mode.
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L858
-    this._overviewModePitch = addDragGesture(
-        Main.layoutManager.overviewGroup,
-        Main.overview._overview._controls._workspacesDisplay._swipeTracker,
-        Shell.ActionMode.OVERVIEW);
-
-    this._overviewModePitch.connect('notify::value', () => {
-      Main.overview._overview._controls._workspacesDisplay._overviewAdjustment.notify(
-          'value');
+    this._settings.connect('changed::drag-rotation-desktop-mode', () => {
+      if (this._settings.get_boolean('drag-rotation-desktop-mode')) {
+        this._addDesktopDragGesture();
+      } else {
+        this._removeDesktopDragGesture();
+      }
     });
   }
 
@@ -428,6 +432,9 @@ class Extension {
     imports.ui.workspacesView.WORKSPACE_SWITCH_TIME = this._origWorkspaceSwitchTime;
     imports.ui.overview.ANIMATION_TIME              = this._origToOverviewTime;
     imports.ui.overviewControls.SIDE_CONTROLS_ANIMATION_TIME = this._origToAppDrawerTime;
+
+    this._removeDesktopDragGesture();
+    this._removeOverviewDragGesture();
 
     this._settings = null;
   }
@@ -489,6 +496,112 @@ class Extension {
     const parent = actors[0].get_parent();
     for (let i = 0; i < copy.length; i++) {
       parent.set_child_at_index(copy[i], -1);
+    }
+  }
+
+  // This creates a custom drag gesture and adds it to the given SwipeTracker. The swipe
+  // tracker will now also respond to horizontal drags. The additional gesture also
+  // reports vertical drag movements via the "pitch" property. This method returns an
+  // object containing the gesture, an St.Adjustment which will contain this pitch value,
+  // and a connection ID which is used by _removeDragGesture() to clean up. When the
+  // SwipeTracker's gesture ends, the St.Adjustment's value will be eased to zero.
+  _addDragGesture(actor, tracker, mode) {
+    const gesture = new DragGesture(mode);
+    gesture.connect('begin', tracker._beginGesture.bind(tracker));
+    gesture.connect('update', tracker._updateGesture.bind(tracker));
+    gesture.connect('end', tracker._endTouchGesture.bind(tracker));
+    gesture.connect('cancel', tracker._cancelTouchGesture.bind(tracker));
+    tracker.bind_property(
+        'enabled', gesture, 'enabled', GObject.BindingFlags.SYNC_CREATE);
+    tracker.bind_property(
+        'distance', gesture, 'distance', GObject.BindingFlags.SYNC_CREATE);
+    actor.add_action_with_name('cube-drag-action', gesture);
+
+    // Connect the gesture's pitch property to an adjustment.
+    const pitch = new St.Adjustment({actor: actor, lower: -1, upper: 1});
+    gesture.bind_property('pitch', pitch, 'value', 0);
+
+    // Ease the adjustment to zero if the SwipeTracker reports an ended gesture.
+    const gestureEndID = tracker.connect('end', (g, duration) => {
+      pitch.remove_transition('value');
+      pitch.ease(0, {
+        duration: duration,
+        mode: Clutter.AnimationMode.EASE_OUT_CUBIC,
+      });
+    });
+
+    return {gesture: gesture, pitchAdjustment: pitch, trackerConnection: gestureEndID};
+  }
+
+  // Removes a single-click drag gesture created earlier via _addDragGesture(). The info
+  // parameter should be the object returned by _addDragGesture().
+  _removeDragGesture(actor, tracker, info) {
+    actor.remove_action_by_name('cube-drag-action');
+    tracker.disconnect(info.trackerConnection);
+  }
+
+  // Calls _addDragGesture() for the SwipeTracker and actor responsible for
+  // workspace-switching in desktop mode.
+  _addDesktopDragGesture() {
+    // The SwipeTracker for switching workspaces in desktop mode is created here:
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L286
+    const tracker = Main.wm._workspaceAnimation._swipeTracker;
+    const actor   = global.stage;
+    const mode    = Shell.ActionMode.NORMAL;
+
+    this._desktopDragGesture = this._addDragGesture(actor, tracker, mode);
+  }
+
+  // Calls _addDragGesture() for the SwipeTracker and actor responsible for
+  // workspace-switching in overview mode.
+  _addOverviewDragGesture() {
+    // The SwipeTracker for switching workspaces in overview mode is created here:
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L858
+    const tracker = Main.overview._overview._controls._workspacesDisplay._swipeTracker;
+    const actor   = Main.layoutManager.overviewGroup;
+    const mode    = Shell.ActionMode.OVERVIEW;
+
+    this._overviewDragGesture = this._addDragGesture(actor, tracker, mode);
+
+    // Here's a small thing required: The SwipeTracker will control the
+    // _overviewAdjustment of the WorkspacesDisplay. However, only horizontal swipes will
+    // update this adjustment. If only the pitch of our new gesture is changed (e.g. the
+    // user moved the mouse only vertically), the _overviewAdjustment will not change and
+    // therefore the workspaces will not been redrawn. Here we force redrawing by
+    // notifying changes if the pitch value changes.
+    this._overviewDragGesture.pitchAdjustment.connect('notify::value', () => {
+      Main.overview._overview._controls._workspacesDisplay._overviewAdjustment.notify(
+          'value');
+    });
+  }
+
+  // Calls _removeDragGesture() for the SwipeTracker and actor responsible for
+  // workspace-switching in desktop mode.
+  _removeDesktopDragGesture() {
+    if (this._desktopDragGesture) {
+      // The SwipeTracker for switching workspaces in desktop mode is created here:
+      // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L286
+      const tracker = Main.wm._workspaceAnimation._swipeTracker;
+      const actor   = global.stage;
+
+      this._removeDragGesture(actor, tracker, this._desktopDragGesture);
+
+      delete this._desktopDragGesture;
+    }
+  }
+
+  // Calls _removeDragGesture() for the SwipeTracker and actor responsible for
+  // workspace-switching in overview mode.
+  _removeOverviewDragGesture() {
+    if (this._overviewDragGesture) {
+      // The SwipeTracker for switching workspaces in overview mode is created here:
+      // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L858
+      const tracker = Main.overview._overview._controls._workspacesDisplay._swipeTracker;
+      const actor   = Main.layoutManager.overviewGroup;
+
+      this._removeDragGesture(actor, tracker, this._overviewDragGesture);
+
+      delete this._overviewDragGesture;
     }
   }
 }
