@@ -62,11 +62,15 @@ const DragGesture =
         this._startY = 0;
       }
 
+      // Called before the gesture actually starts, it can abort the gesture by returning
+      // false.
       vfunc_gesture_prepare(actor) {
         if (!super.vfunc_gesture_prepare(actor)) {
           return false;
         }
 
+        // Abort if the gesture is not meant for the current action mode (e.g. either
+        // Shell.ActionMode.OVERVIEW or Shell.ActionMode.NORMAL).
         if (this._mode != Main.actionMode) {
           return false;
         }
@@ -88,6 +92,7 @@ const DragGesture =
           }
         }
 
+        // Store the start coordinates of the gesture.
         const time                  = this.get_last_event(0).get_time();
         const [xPress, yPress]      = this.get_press_coords(0);
         [this._lastX, this._startY] = this.get_motion_coords(0);
@@ -98,22 +103,24 @@ const DragGesture =
         return true;
       }
 
+      // Called on pointer or touch-movement events.
       vfunc_gesture_progress(_actor) {
+
+        // Compute the horizontal movement relative to the last call.
         const [x, y] = this.get_motion_coords(0);
-
         const deltaX = x - this._lastX;
+        this._lastX  = x;
 
+        // Compute the accumulated pitch relative to the screen height.
         this.pitch = (this._startY - y) / global.screen_height;
 
-        this._lastX = x;
-
         const time = this.get_last_event(0).get_time();
-
         this.emit('update', time, -deltaX, this.distance);
 
         return true;
       }
 
+      // Called when the gesture is ended by the user.
       vfunc_gesture_end(_actor) {
 
         // Cancel the ongoing grab in desktop mode.
@@ -125,6 +132,7 @@ const DragGesture =
         this.emit('end', time, this.distance);
       }
 
+      // Called when the gesture is canceled by some event.
       vfunc_gesture_cancel(_actor) {
 
         // Cancel the ongoing grab in desktop mode.
