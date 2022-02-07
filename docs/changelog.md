@@ -5,6 +5,13 @@
 
 **Release Date:** TBD
 
+#### New Features
+
+* It is now possible to **rotate the cube by single-click dragging**! This works in two places:
+  * In the **overview**: Click any non-interactive area (e.g. the workspace background) and start dragging. You will be able to switch workspaces by horizontal movement, and you can look "into" the cube by rotating it up and down.
+  * On the **desktop**: Simply click any free space on you desktop and start dragging the cube!
+
+
 #### Other Changes
 
 * Removed the unfold-to-desktop option as we now have cuboid workspace transitions everywhere.
