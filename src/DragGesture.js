@@ -55,9 +55,7 @@ const DragGesture =
         this.set_n_touch_points(1);
         this.set_threshold_trigger_edge(Clutter.GestureTriggerEdge.AFTER);
 
-        this._mode     = mode;
-        this._distance = global.screen_height;
-
+        this._mode   = mode;
         this._lastX  = 0;
         this._startY = 0;
       }
