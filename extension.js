@@ -523,11 +523,15 @@ class Extension {
     const pitch = new St.Adjustment({actor: actor, lower: -1, upper: 1});
     gesture.bind_property('pitch', pitch, 'value', 0);
 
-    // Ease the adjustment to zero if the SwipeTracker reports an ended gesture.
+    // Ease the pitch adjustment to zero if the SwipeTracker reports an ended gesture.
+    // This ensures that the cube smoothly rotates back when released. The end-signal
+    // returns a suitable duration for this, however this depends on the horizontal
+    // rotation required to move the cube back. Here, we compute a duration required for
+    // the vertical rotation and use the maximum of both values for the final easing.
     const gestureEndID = tracker.connect('end', (g, duration) => {
       pitch.remove_transition('value');
       pitch.ease(0, {
-        duration: duration,
+        duration: Math.max(500 * Math.abs(pitch.value), duration),
         mode: Clutter.AnimationMode.EASE_OUT_CUBIC,
       });
     });
