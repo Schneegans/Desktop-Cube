@@ -170,7 +170,8 @@ class Extension {
       // That's the z-distance from the cube faces to the rotation pivot.
       const centerDepth = extensionThis._getCenterDist(workspaceWidth, faceAngle);
 
-      // Apply vertical rotation if required.
+      // Apply vertical rotation if required. This comes from the pitch value of the
+      // modified SwipeTracker created by _addOverviewDragGesture() further below.
       if (extensionThis._overviewDragGesture) {
         this.pivot_point_z = -centerDepth;
         this.set_pivot_point(0.5, 0.5);
@@ -341,7 +342,8 @@ class Extension {
       const centerDepth =
           extensionThis._getCenterDist(group._workspaceGroups[0].width, faceAngle);
 
-      // Apply vertical rotation if required.
+      // Apply vertical rotation if required. This comes from the pitch value of the
+      // modified SwipeTracker created by _addDesktopDragGesture() further below.
       if (extensionThis._desktopDragGesture) {
         group._container.pivot_point_z = -centerDepth;
         group._container.set_pivot_point(0.5, 0.5);
