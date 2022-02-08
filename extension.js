@@ -175,8 +175,7 @@ class Extension {
       if (extensionThis._overviewDragGesture) {
         this.pivot_point_z = -centerDepth;
         this.set_pivot_point(0.5, 0.5);
-        this.rotation_angle_x = extensionThis._overviewDragGesture.pitchAdjustment.value *
-            MAX_VERTICAL_ROTATION;
+        this.rotation_angle_x = extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
       }
 
       // Now loop through all workspace and compute the individual rotations.
@@ -348,8 +347,7 @@ class Extension {
         group._container.pivot_point_z = -centerDepth;
         group._container.set_pivot_point(0.5, 0.5);
         group._container.rotation_angle_x =
-            extensionThis._desktopDragGesture.pitchAdjustment.value *
-            MAX_VERTICAL_ROTATION;
+            extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
       }
 
       // Rotate the individual faces.
@@ -383,6 +381,11 @@ class Extension {
 
     // -------------------------------------------------- enable cube rotation by dragging
 
+    // Usually, in GNOME Shell 40+, workspaces are move horizontally. We tweaked this to
+    // look like a horizontal rotation above. To store the current vertical rotation, we
+    // use the adjustment below.
+    this._pitch = new St.Adjustment({actor: global.stage, lower: -1, upper: 1});
+
     // In GNOME Shell, SwipeTrackers are used all over the place to capture swipe
     // gestures. There's one for entering the overview, one for switching workspaces in
     // desktop mode, one for switching workspaces in overview mode, one for horizontal
@@ -414,6 +417,19 @@ class Extension {
         this._addDesktopDragGesture();
       } else {
         this._removeDesktopDragGesture();
+      }
+    });
+
+    // The overview's SwipeTracker will control the _overviewAdjustment of the
+    // WorkspacesDisplay. However, only horizontal swipes will update this adjustment. If
+    // only our pitch adjustment is changed (e.g. the user moved the mouse only
+    // vertically), the _overviewAdjustment will not change and therefore the workspaces
+    // will not been redrawn. Here we force redrawing by notifying changes if the pitch
+    // value changes.
+    this._pitch.connect('notify::value', () => {
+      if (Main.actionMode == Shell.ActionMode.OVERVIEW) {
+        Main.overview._overview._controls._workspacesDisplay._overviewAdjustment.notify(
+            'value');
       }
     });
   }
@@ -519,9 +535,8 @@ class Extension {
         'distance', gesture, 'distance', GObject.BindingFlags.SYNC_CREATE);
     actor.add_action_with_name('cube-drag-action', gesture);
 
-    // Connect the gesture's pitch property to an adjustment.
-    const pitch = new St.Adjustment({actor: actor, lower: -1, upper: 1});
-    gesture.bind_property('pitch', pitch, 'value', 0);
+    // Connect the gesture's pitch property to the pitch adjustment.
+    gesture.bind_property('pitch', this._pitch, 'value', 0);
 
     // Ease the pitch adjustment to zero if the SwipeTracker reports an ended gesture.
     // This ensures that the cube smoothly rotates back when released. The end-signal
@@ -529,14 +544,14 @@ class Extension {
     // rotation required to move the cube back. Here, we compute a duration required for
     // the vertical rotation and use the maximum of both values for the final easing.
     const gestureEndID = tracker.connect('end', (g, duration) => {
-      pitch.remove_transition('value');
-      pitch.ease(0, {
-        duration: Math.max(500 * Math.abs(pitch.value), duration),
+      this._pitch.remove_transition('value');
+      this._pitch.ease(0, {
+        duration: Math.max(500 * Math.abs(this._pitch.value), duration),
         mode: Clutter.AnimationMode.EASE_OUT_CUBIC,
       });
     });
 
-    return {gesture: gesture, pitchAdjustment: pitch, trackerConnection: gestureEndID};
+    return {gesture: gesture, trackerConnection: gestureEndID};
   }
 
   // Removes a single-click drag gesture created earlier via _addDragGesture(). The info
@@ -568,17 +583,6 @@ class Extension {
     const mode    = Shell.ActionMode.OVERVIEW;
 
     this._overviewDragGesture = this._addDragGesture(actor, tracker, mode);
-
-    // Here's a small thing required: The SwipeTracker will control the
-    // _overviewAdjustment of the WorkspacesDisplay. However, only horizontal swipes will
-    // update this adjustment. If only the pitch of our new gesture is changed (e.g. the
-    // user moved the mouse only vertically), the _overviewAdjustment will not change and
-    // therefore the workspaces will not been redrawn. Here we force redrawing by
-    // notifying changes if the pitch value changes.
-    this._overviewDragGesture.pitchAdjustment.connect('notify::value', () => {
-      Main.overview._overview._controls._workspacesDisplay._overviewAdjustment.notify(
-          'value');
-    });
   }
 
   // Calls _removeDragGesture() for the SwipeTracker and actor responsible for
