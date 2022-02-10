@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-10 08:29+0100\n"
+"POT-Creation-Date: 2022-02-10 08:48+0100\n"
 "PO-Revision-Date: 2022-02-10 07:37+0000\n"
 "Last-Translator: Simon Schneegans <code@simonschneegans.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/desktop-cube/core/"
@@ -53,8 +53,8 @@ msgstr "Klicken und ziehen Sie die Übersicht, um den Würfel zu drehen"
 #: resources/ui/settings.ui:426 resources/ui/settings.ui:470
 #: resources/ui/settings.ui:558 resources/ui/settings.ui:619
 #: resources/ui/settings.ui:680
-msgid "Reset to Default Value"
-msgstr "Auf Standardwert zurücksetzen"
+msgid "Reset to default value"
+msgstr ""
 
 #: resources/ui/settings.ui:113
 msgid "Click and drag the desktop to rotate the cube"
@@ -65,7 +65,7 @@ msgid "Layout"
 msgstr "Layout"
 
 #: resources/ui/settings.ui:179
-msgid "Add a gap between last and first workspace"
+msgid "Gap between last and first workspace"
 msgstr ""
 
 #: resources/ui/settings.ui:188
@@ -120,3 +120,6 @@ msgstr ""
 #: resources/ui/settings.ui:641
 msgid "Transition time between workspaces [ms]"
 msgstr ""
+
+#~ msgid "Reset to Default Value"
+#~ msgstr "Auf Standardwert zurücksetzen"
