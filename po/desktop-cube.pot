@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-10 08:29+0100\n"
+"POT-Creation-Date: 2022-02-10 08:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,7 +51,7 @@ msgstr ""
 #: resources/ui/settings.ui:426 resources/ui/settings.ui:470
 #: resources/ui/settings.ui:558 resources/ui/settings.ui:619
 #: resources/ui/settings.ui:680
-msgid "Reset to Default Value"
+msgid "Reset to default value"
 msgstr ""
 
 #: resources/ui/settings.ui:113
@@ -63,7 +63,7 @@ msgid "Layout"
 msgstr ""
 
 #: resources/ui/settings.ui:179
-msgid "Add a gap between last and first workspace"
+msgid "Gap between last and first workspace"
 msgstr ""
 
 #: resources/ui/settings.ui:188
