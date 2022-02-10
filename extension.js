@@ -350,11 +350,30 @@ class Extension {
             extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
       }
 
+      // This is zero if we are facing a workspace and one if we look directly at an edge
+      // between adjacent workspaces.
+      // We also want to "zoomOut" the cube if its rotated up or down.
+      let zoomOutFactor = 1.0 - 2.0 * Math.abs(group.progress % 1 - 0.5);
+      zoomOutFactor     = Math.max(zoomOutFactor, Math.abs(this._pitch.value));
+
+      // Compute the required offset away from the camera so that the cube's corners stay
+      // behind the original workspace faces during he rotation.
+      const centerCornerDist = Math.sqrt(
+          Math.pow(centerDepth, 2) + Math.pow(group._workspaceGroups[0].width / 2, 2));
+      const zOffset = zoomOutFactor * (centerCornerDist - centerDepth);
+
       // Rotate the individual faces.
       group._workspaceGroups.forEach((child, i) => {
         child.set_pivot_point_z(-centerDepth);
         child.set_pivot_point(0.5, 0.5);
-        child.rotation_angle_y = (i - group.progress) * faceAngle;
+        child.rotation_angle_y   = (i - group.progress) * faceAngle;
+        child.z_position         = -zOffset;
+        child.clip_to_allocation = false;
+
+        const windowCount = child.get_children().length;
+        child.get_children().forEach((window, j) => {
+          window.z_position = windowCount > 1 ? zOffset * j / (windowCount - 1) : 0;
+        });
 
         // Counter any movement.
         child.translation_x = -child.x;
