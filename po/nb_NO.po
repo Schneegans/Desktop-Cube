@@ -8,41 +8,44 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-10 08:48+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-02-11 11:55+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
+"desktop-cube/core/nb_NO/>\n"
 "Language: nb_NO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: resources/ui/settings.ui:8
 msgid "Visit Homepage"
-msgstr ""
+msgstr "Besøk hjemmesiden"
 
 #: resources/ui/settings.ui:12
 msgid "Report a Bug"
-msgstr ""
+msgstr "Innrapporter en feil"
 
 #: resources/ui/settings.ui:18
 msgid "Donate"
-msgstr ""
+msgstr "Doner"
 
 #: resources/ui/settings.ui:20
 msgid "Via PayPal"
-msgstr ""
+msgstr "Med PayPal"
 
 #: resources/ui/settings.ui:24
 msgid "Via GitHub"
-msgstr ""
+msgstr "Via GitHub"
 
 #: resources/ui/settings.ui:56
 msgid "Behavior"
-msgstr ""
+msgstr "Oppførsel"
 
 #: resources/ui/settings.ui:79
 msgid "Click and drag the overview to rotate the cube"
-msgstr ""
+msgstr "Klikk og dra oversikten for å rotere kuben"
 
 #: resources/ui/settings.ui:96 resources/ui/settings.ui:130
 #: resources/ui/settings.ui:210 resources/ui/settings.ui:252
@@ -51,69 +54,71 @@ msgstr ""
 #: resources/ui/settings.ui:558 resources/ui/settings.ui:619
 #: resources/ui/settings.ui:680
 msgid "Reset to default value"
-msgstr ""
+msgstr "Tilbakestill til forvalgt verdi"
 
 #: resources/ui/settings.ui:113
 msgid "Click and drag the desktop to rotate the cube"
-msgstr ""
+msgstr "Klikk og dra skrivebordet for å rotere kuben"
 
 #: resources/ui/settings.ui:152
 msgid "Layout"
-msgstr ""
+msgstr "Oppsett"
 
 #: resources/ui/settings.ui:179
 msgid "Gap between last and first workspace"
-msgstr ""
+msgstr "Mellomrom mellom siste og første arbeidsområde"
 
 #: resources/ui/settings.ui:188
+#, fuzzy
 msgid "You cannot loop around in GNOME Shell anyways."
-msgstr ""
+msgstr "Du kan ikke snurre rundt i GNOME Shell uansett."
 
 #: resources/ui/settings.ui:228
+#, fuzzy
 msgid "Gap between adjacent workspaces"
-msgstr ""
+msgstr "Mellomrom mellom tilkransende arbeidsområder"
 
 #: resources/ui/settings.ui:270
 msgid "Separation between background and windows"
-msgstr ""
+msgstr "Inndeling mellom bakgrunner og vinduer"
 
 #: resources/ui/settings.ui:316
 msgid "Horizontal stretching of the cube"
-msgstr ""
+msgstr "Vannrett strekking av kuben"
 
 #: resources/ui/settings.ui:325
 msgid "This ensures that you can see the cube's sides from the front."
-msgstr ""
+msgstr "Dette sørger for at du kan se kubens siden forfra."
 
 #: resources/ui/settings.ui:376
 msgid "Appearance"
-msgstr ""
+msgstr "Utseende"
 
 #: resources/ui/settings.ui:400
 msgid "Opacity of the active workspace"
-msgstr ""
+msgstr "Dekkevne for aktivt arbeidsområde"
 
 #: resources/ui/settings.ui:444
 msgid "Opacity of inactive workspaces"
-msgstr ""
+msgstr "Dekkevne for inaktive arbeidsområder"
 
 #: resources/ui/settings.ui:491
 msgid "Animations"
-msgstr ""
+msgstr "Animasjoner"
 
 #: resources/ui/settings.ui:519
 msgid "Transition time from desktop to overview [ms]"
-msgstr ""
+msgstr "Overgangstid fra skrivebord til oversikte [ms]"
 
 #: resources/ui/settings.ui:528 resources/ui/settings.ui:589
 #: resources/ui/settings.ui:650
 msgid "Set to 0 to use GNOME Shell's default value."
-msgstr ""
+msgstr "Sett til 0 for å bruke GNOME Shell sin forvalgte verdi."
 
 #: resources/ui/settings.ui:580
 msgid "Transition time from overview to app drawer [ms]"
-msgstr ""
+msgstr "Overgangstid fra oversikt til programskuff [ms]"
 
 #: resources/ui/settings.ui:641
 msgid "Transition time between workspaces [ms]"
-msgstr ""
+msgstr "Overgangstid mellom arbeidsområder [ms]"
