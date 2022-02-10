@@ -8,41 +8,44 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-10 08:29+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-02-10 07:37+0000\n"
+"Last-Translator: Simon Schneegans <code@simonschneegans.de>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/desktop-cube/core/"
+"de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: resources/ui/settings.ui:8
 msgid "Visit Homepage"
-msgstr ""
+msgstr "Homepage besuchen"
 
 #: resources/ui/settings.ui:12
 msgid "Report a Bug"
-msgstr ""
+msgstr "Fehler melden"
 
 #: resources/ui/settings.ui:18
 msgid "Donate"
-msgstr ""
+msgstr "Spenden"
 
 #: resources/ui/settings.ui:20
 msgid "Via PayPal"
-msgstr ""
+msgstr "Mit PayPal"
 
 #: resources/ui/settings.ui:24
 msgid "Via GitHub"
-msgstr ""
+msgstr "Mit GitHub"
 
 #: resources/ui/settings.ui:56
 msgid "Behavior"
-msgstr ""
+msgstr "Verhalten"
 
 #: resources/ui/settings.ui:79
 msgid "Click and drag the overview to rotate the cube"
-msgstr ""
+msgstr "Klicken und ziehen Sie die Übersicht, um den Würfel zu drehen"
 
 #: resources/ui/settings.ui:96 resources/ui/settings.ui:130
 #: resources/ui/settings.ui:210 resources/ui/settings.ui:252
@@ -51,15 +54,15 @@ msgstr ""
 #: resources/ui/settings.ui:558 resources/ui/settings.ui:619
 #: resources/ui/settings.ui:680
 msgid "Reset to Default Value"
-msgstr ""
+msgstr "Auf Standardwert zurücksetzen"
 
 #: resources/ui/settings.ui:113
 msgid "Click and drag the desktop to rotate the cube"
-msgstr ""
+msgstr "Klicken und ziehen Sie die Arbeitsfläche, um den Würfel zu drehen"
 
 #: resources/ui/settings.ui:152
 msgid "Layout"
-msgstr ""
+msgstr "Layout"
 
 #: resources/ui/settings.ui:179
 msgid "Add a gap between last and first workspace"
