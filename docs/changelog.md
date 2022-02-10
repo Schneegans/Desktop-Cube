@@ -11,10 +11,13 @@
   * In the **overview**: Click any non-interactive area (e.g. the workspace background) and start dragging. You will be able to switch workspaces by horizontal movement, and you can look "into" the cube by rotating it up and down.
   * On the **desktop**: Simply click any free space on you desktop and start dragging the cube!
 
-
 #### Other Changes
 
 * Removed the unfold-to-desktop option as we now have cuboid workspace transitions everywhere.
+
+#### Bug Fixes
+
+* Fixed some depth sorting issues. Especially when transitioning from window picker state to app drawer state, the windows were sometimes drawn behind the workspace backgrounds.
 
 ## [Desktop Cube 7](https://github.com/schneegans/Desktop-Cube/releases/tag/v7)
 
