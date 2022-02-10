@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-10 08:48+0100\n"
-"PO-Revision-Date: 2022-02-10 07:37+0000\n"
+"PO-Revision-Date: 2022-02-10 07:58+0000\n"
 "Last-Translator: Simon Schneegans <code@simonschneegans.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/desktop-cube/core/"
 "de/>\n"
@@ -54,7 +54,7 @@ msgstr "Klicken und ziehen Sie die Übersicht, um den Würfel zu drehen"
 #: resources/ui/settings.ui:558 resources/ui/settings.ui:619
 #: resources/ui/settings.ui:680
 msgid "Reset to default value"
-msgstr ""
+msgstr "Auf Standardwert zurücksetzen"
 
 #: resources/ui/settings.ui:113
 msgid "Click and drag the desktop to rotate the cube"
@@ -66,60 +66,64 @@ msgstr "Layout"
 
 #: resources/ui/settings.ui:179
 msgid "Gap between last and first workspace"
-msgstr ""
+msgstr "Abstand zwischen letzter und erster Arbeitsfläche"
 
 #: resources/ui/settings.ui:188
 msgid "You cannot loop around in GNOME Shell anyways."
 msgstr ""
+"Man kann in GNOME Shell sowieso nicht von der letzten zur ersten "
+"Arbeitsfläche wechseln."
 
 #: resources/ui/settings.ui:228
 msgid "Gap between adjacent workspaces"
-msgstr ""
+msgstr "Abstand zwischen benachbarten Arbeitsflächen"
 
 #: resources/ui/settings.ui:270
 msgid "Separation between background and windows"
-msgstr ""
+msgstr "Abstand zwischen Hintergrund und Fenstern"
 
 #: resources/ui/settings.ui:316
 msgid "Horizontal stretching of the cube"
-msgstr ""
+msgstr "Horizontale Streckung des Würfels"
 
 #: resources/ui/settings.ui:325
 msgid "This ensures that you can see the cube's sides from the front."
 msgstr ""
+"So ist sichergestellt, dass man die Seiten des Würfels von vorne sehen kann."
 
 #: resources/ui/settings.ui:376
 msgid "Appearance"
-msgstr ""
+msgstr "Erscheinungsbild"
 
 #: resources/ui/settings.ui:400
 msgid "Opacity of the active workspace"
-msgstr ""
+msgstr "Deckkraft der aktiven Arbeitsfläche"
 
 #: resources/ui/settings.ui:444
 msgid "Opacity of inactive workspaces"
-msgstr ""
+msgstr "Deckkraft der inaktiven Arbeitsflächen"
 
 #: resources/ui/settings.ui:491
 msgid "Animations"
-msgstr ""
+msgstr "Animationen"
 
 #: resources/ui/settings.ui:519
 msgid "Transition time from desktop to overview [ms]"
-msgstr ""
+msgstr "Animationszeit vom Desktop zur Übersicht [ms]"
 
 #: resources/ui/settings.ui:528 resources/ui/settings.ui:589
 #: resources/ui/settings.ui:650
 msgid "Set to 0 to use GNOME Shell's default value."
 msgstr ""
+"Setzen Sie den Wert auf 0, um den Standardwert von GNOME Shell zu verwenden."
 
 #: resources/ui/settings.ui:580
 msgid "Transition time from overview to app drawer [ms]"
-msgstr ""
+msgstr "Animationszeit von der Übersicht zur App-Auswahl [ms]"
 
 #: resources/ui/settings.ui:641
 msgid "Transition time between workspaces [ms]"
-msgstr ""
+msgstr "Animationszeit zwischen Arbeitsflächen [ms]"
 
 #~ msgid "Reset to Default Value"
 #~ msgstr "Auf Standardwert zurücksetzen"
