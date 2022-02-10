@@ -124,8 +124,10 @@ var PreferencesDialog = class PreferencesDialog {
   }
 }
 
-// Nothing to do for now...
-function init() {}
+// This is used for setting up the translations.
+function init() {
+  ExtensionUtils.initTranslations();
+}
 
 // This function is called when the preferences window is created to build and return a
 // Gtk widget. We create a new instance of the PreferencesDialog class each time this
