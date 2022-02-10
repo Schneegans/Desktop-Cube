@@ -8,7 +8,7 @@
 
 'use strict';
 
-const {Clutter, GObject, Shell, St} = imports.gi;
+const {Clutter, Graphene, GObject, Shell, St} = imports.gi;
 
 const Util           = imports.misc.util;
 const Main           = imports.ui.main;
@@ -235,59 +235,10 @@ class Extension {
       // rotation angle.
       extensionThis._sortActorsByAngle(this._workspaces);
 
-      // Now we compute wether the individual cube faces are front-facing or back-facing.
-      // This is surprisingly difficult ... can this be simplified? Here, we compute the
-      // angle between the vectors (camera -> cube face) and (rotation center -> cube
-      // face). If this is > 90° it's front-facing.
-
-      // First, compute distance of virtual camera to the front workspaces plane.
-      const camDist = Main.layoutManager.monitors[this._monitorIndex].height /
-          (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180));
-
-      // Then loop through all workspaces.
+      // Now we sort the children of the individual workspaces (e.g. the background actor
+      // and the window clones) by their orthogonal distance to the virtual camera.
       for (let i = 0; i < this._workspaces.length; i++) {
-        const w = this._workspaces[i];
-
-        if (w.rotation_angle_y == 0) {
-
-          // Special case: The workspace is directly in front of us.
-          w.set_child_below_sibling(w._background, null);
-
-        } else {
-
-          // a is the length of vector from camera to rotation center.
-          const a = camDist + centerDepth;
-
-          // Enclosed angle between the a and b.
-          const gamma = Math.abs(w.rotation_angle_y);
-
-          // b is the length of vector from center of cube face to rotation center. This
-          // would be only centerDepth if the sides of the cube were not spaced further
-          // apart horizontally by the "horizontal-stretch". Computed with law of cosines:
-          // b²=d²+s²-2ds*cos(90+gamma).
-          const s = Math.abs(w.translation_x);
-          const d = centerDepth;
-          const b = Math.sqrt(
-              d * d + s * s - 2 * d * s * Math.cos((90 + gamma) * Math.PI / 180));
-
-          // Length of vector from virtual camera to center of the cube face. Computed
-          // with law of cosines: c²=a²+b²-2ab*cos(gamma).
-          const c =
-              Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(gamma * Math.PI / 180));
-
-          // Enclosed angle between vector from virtual camera to center of the cube face
-          // and from center of cube face to rotation center. Computed with the Law of
-          // cosines again: alpha=acos((b²+c²-a²)(2bc))
-          const alpha = Math.acos((b * b + c * c - a * a) / (2 * b * c)) * 180 / Math.PI;
-
-          // Draw the background actor first if it's a front-facing cube side. Draw it
-          // last if it's a back-facing cube side.
-          if (alpha > 90) {
-            w.set_child_below_sibling(w._background, null);
-          } else {
-            w.set_child_above_sibling(w._background, null);
-          }
-        }
+        extensionThis._sortActorsByPlaneDist(this._workspaces[i].get_children());
       }
     };
 
@@ -530,6 +481,72 @@ class Extension {
     });
 
     // Then sort the children actors accordingly.
+    const parent = actors[0].get_parent();
+    for (let i = 0; i < copy.length; i++) {
+      parent.set_child_at_index(copy[i], -1);
+    }
+  }
+
+  // This sorts the given list of children actors (which are supposed to be attached to
+  // the same parent) by increasing orthogonal distance to the camera. To do this, the
+  // camera position is projected onto the plane defined by the actor and the absolute
+  // distance from the camera to its projected position is computed. This is used for
+  // depth-sorting a list of parallel actors.
+  _sortActorsByPlaneDist(actors) {
+
+    // First, compute distance of virtual camera to the front workspace plane.
+    const camera = new Graphene.Point3D({
+      x: global.stage.width / 2,
+      y: global.stage.height / 2,
+      z: global.stage.height /
+          (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180))
+    });
+
+    // Create a list of the orthogonal distances to the camera for each actor.
+    const distances = actors.map((a, i) => {
+      // A point on the actor plane.
+      const onActor = a.apply_relative_transform_to_point(
+          null, new Graphene.Point3D({x: 0, y: 0, z: 0}));
+
+      // A point one unit above the actor plane.
+      const aboveActor = a.apply_relative_transform_to_point(
+          null, new Graphene.Point3D({x: 0, y: 0, z: 1000}));
+
+      // The normal vector on the actor plane.
+      const normal = new Graphene.Point3D({
+        x: aboveActor.x - onActor.x,
+        y: aboveActor.y - onActor.y,
+        z: aboveActor.z - onActor.z,
+      });
+
+      const length =
+          Math.sqrt(normal.x * normal.x + normal.y * normal.y + normal.z * normal.z);
+      normal.x /= length;
+      normal.y /= length;
+      normal.z /= length;
+
+      onActor.x -= camera.x;
+      onActor.y -= camera.y;
+      onActor.z -= camera.z;
+
+      // Return the length of the projected vector.
+      return {
+        index: i,
+        distance: onActor.x * normal.x + onActor.y * normal.y + onActor.z * normal.z
+      };
+    });
+
+    // Sort by decreasing distance.
+    distances.sort((a, b) => {
+      return Math.abs(b.distance) - Math.abs(a.distance);
+    });
+
+    // Then use this to create a sorted list of actors.
+    const copy = distances.map(e => {
+      return actors[e.index];
+    });
+
+    // Finally, sort the children actors accordingly.
     const parent = actors[0].get_parent();
     for (let i = 0; i < copy.length; i++) {
       parent.set_child_at_index(copy[i], -1);
