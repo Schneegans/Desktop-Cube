@@ -321,13 +321,27 @@ class Extension {
         child.z_position         = -zOffset;
         child.clip_to_allocation = false;
 
-        const windowCount = child.get_children().length;
-        child.get_children().forEach((window, j) => {
-          window.z_position = windowCount > 1 ? zOffset * j / (windowCount - 1) : 0;
-        });
-
-        // Counter any movement.
+        // Counter the horizontal movement.
         child.translation_x = -child.x;
+
+        // Now we add some depth separation between the window clones. We get the stacking
+        // order from the global window list. If zOffset becomes too small, the depth
+        // sorting becomes non-deterministic.
+        if (zOffset > 0.001) {
+          const windowActors = global.get_window_actors().filter(
+              w => child._shouldShowWindow(w.meta_window));
+
+          // Distribute the window clones translation_z values between zero and zOffset.
+          windowActors.forEach((windowActor, j) => {
+            const record = child._windowRecords.find(r => r.windowActor === windowActor);
+            record.clone.translation_z = zOffset * (j + 1) / windowActors.length;
+          });
+
+          // Now sort the window clones and the background actor according to the
+          // orthogonal distance of the actor planes to the camera. This ensures proper
+          // depth sorting.
+          extensionThis._sortActorsByPlaneDist(child.get_children());
+        }
       });
 
       // The depth-sorting of cube faces is quite simple, we sort them by increasing
