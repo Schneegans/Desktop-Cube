@@ -93,7 +93,7 @@
                             <child>
                               <object class="GtkButton" id="reset-drag-rotation-overview-mode">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to default value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -127,7 +127,7 @@
                             <child>
                               <object class="GtkButton" id="reset-drag-rotation-desktop-mode">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to default value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -176,7 +176,7 @@
                                 <property name="spacing">3</property>
                                 <child>
                                   <object class="GtkLabel">
-                                    <property name="label" translatable="yes">Add a gap between last and first workspace</property>
+                                    <property name="label" translatable="yes">Gap between last and first workspace</property>
                                     <property name="xalign">0</property>
                                     <property name="halign">start</property>
                                     <property name="valign">center</property>
@@ -207,7 +207,7 @@
                             <child>
                               <object class="GtkButton" id="reset-last-first-gap">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to default value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -249,7 +249,7 @@
                             <child>
                               <object class="GtkButton" id="reset-workpace-separation">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to default value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -291,7 +291,7 @@
                             <child>
                               <object class="GtkButton" id="reset-depth-separation">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to default value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -352,7 +352,7 @@
                             <child>
                               <object class="GtkButton" id="reset-horizontal-stretch">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to default value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -423,7 +423,7 @@
                             <child>
                               <object class="GtkButton" id="reset-active-workpace-opacity">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to default value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -467,7 +467,7 @@
                             <child>
                               <object class="GtkButton" id="reset-inactive-workpace-opacity">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to default value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -555,7 +555,7 @@
                             <child>
                               <object class="GtkButton" id="reset-overview-transition-time">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to default value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -616,7 +616,7 @@
                             <child>
                               <object class="GtkButton" id="reset-appgrid-transition-time">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to default value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -677,7 +677,7 @@
                             <child>
                               <object class="GtkButton" id="reset-workspace-transition-time">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to default value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
