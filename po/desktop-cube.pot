@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-10 08:14+0100\n"
+"POT-Creation-Date: 2022-02-10 08:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,6 +43,15 @@ msgstr ""
 
 #: resources/ui/settings.ui:79
 msgid "Click and drag the overview to rotate the cube"
+msgstr ""
+
+#: resources/ui/settings.ui:96 resources/ui/settings.ui:130
+#: resources/ui/settings.ui:210 resources/ui/settings.ui:252
+#: resources/ui/settings.ui:294 resources/ui/settings.ui:355
+#: resources/ui/settings.ui:426 resources/ui/settings.ui:470
+#: resources/ui/settings.ui:558 resources/ui/settings.ui:619
+#: resources/ui/settings.ui:680
+msgid "Reset to Default Value"
 msgstr ""
 
 #: resources/ui/settings.ui:113
