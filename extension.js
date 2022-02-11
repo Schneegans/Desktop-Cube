@@ -305,7 +305,7 @@ class Extension {
       // between adjacent workspaces.
       // We also want to "zoomOut" the cube if its rotated up or down.
       let zoomOutFactor = 1.0 - 2.0 * Math.abs(group.progress % 1 - 0.5);
-      zoomOutFactor     = Math.max(zoomOutFactor, Math.abs(this._pitch.value));
+      zoomOutFactor = Math.max(zoomOutFactor * 0.5, 2.0 * Math.abs(this._pitch.value));
 
       // Compute the required offset away from the camera so that the cube's corners stay
       // behind the original workspace faces during he rotation.
@@ -323,6 +323,9 @@ class Extension {
 
         // Counter the horizontal movement.
         child.translation_x = -child.x;
+
+        // Make cube transparent during vertical rotations.
+        child._background.opacity = 255 * (1.0 - Math.abs(extensionThis._pitch.value));
 
         // Now we add some depth separation between the window clones. We get the stacking
         // order from the global window list. If zOffset becomes too small, the depth
