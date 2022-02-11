@@ -1,6 +1,14 @@
 # Changelog of the Desktop Cube Extension
 
 
+## [Desktop Cube 8](https://github.com/schneegans/Desktop-Cube/releases/tag/v8)
+
+**Release Date:** TBD
+
+#### Other Enhancements
+
+* The README now shows the current lines of code and the current comment percentage using my [dynamic-badges-action](https://github.com/Schneegans/dynamic-badges-action).
+
 ## [Desktop Cube 7](https://github.com/schneegans/Desktop-Cube/releases/tag/v7)
 
 **Release Date:** 2021-12-29
