@@ -5,6 +5,10 @@
 
 **Release Date:** TBD
 
+#### New Features
+
+* Added an about-dialog which shows all translators and sponsors.
+
 #### Other Enhancements
 
 * The README now shows the current lines of code and the current comment percentage using my [dynamic-badges-action](https://github.com/Schneegans/dynamic-badges-action).
