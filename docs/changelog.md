@@ -10,6 +10,8 @@
 * It is now possible to **rotate the cube by single-click dragging**! This works in two places:
   * In the **overview**: Click any non-interactive area (e.g. the workspace background) and start dragging. You will be able to switch workspaces by horizontal movement, and you can look "into" the cube by rotating it up and down.
   * On the **desktop**: Simply click any free space on you desktop and start dragging the cube!
+* **Cube Explosion:** If you rotate the cube vertically (both in desktop or overview mode), the cube will be scaled down and the depth separation between windows will be increased.
+* **Depth Variance in Overview:** During rotations, window clones in the overview are not all drawn at the same depth.
 
 #### Other Changes
 
