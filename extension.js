@@ -184,6 +184,14 @@ class Extension {
         this.rotation_angle_x = extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
       }
 
+      // During rotations, the cube is scaled down and the windows are "exploded". If we
+      // are directly facing a cube side, the strengths of both effects are approaching
+      // zero. The strengths of both effects are small during horizontal rotations to make
+      // workspace-switching not so obtrusive. However, during vertical rotations, the
+      // effects are stronger.
+      const [depthOffset, explode] = extensionThis._getExplodeFactors(
+          this._scrollAdjustment.value, extensionThis._pitch.value, centerDepth);
+
       // Now loop through all workspace and compute the individual rotations.
       this._workspaces.forEach((w, index) => {
         // First update the corner radii. Corners are only rounded in overview.
@@ -192,6 +200,9 @@ class Extension {
         // Now update the rotation of the cube face. The rotation center is -centerDepth
         // units behind the front face.
         w.pivot_point_z = -centerDepth;
+
+        // Make cube smaller during rotations.
+        w.translation_z = -depthOffset;
 
         // The rotation angle is transitioned proportional to cubeMode^1.5. This slows
         // down the rotation a bit closer to the desktop and to the app drawer.
@@ -230,6 +241,25 @@ class Extension {
         // Update workspace scale only in app grid mode.
         const scale = Util.lerp(1, INACTIVE_SCALE, Math.abs(dist) * appDrawerMode);
         w.set_scale(scale, scale);
+
+        // Now we add some depth separation between the window clones. If the explode
+        // factor becomes too small, the depth sorting becomes non-deterministic.
+        if (explode > 0.001) {
+
+          const sortedActors = w._container.layout_manager._sortedWindows;
+
+          // Distribute the window clones translation_z values between zero and
+          // explode.
+          sortedActors.forEach((windowActor, j) => {
+            windowActor.translation_z = explode * (j + 1) / sortedActors.length;
+          });
+
+          // Now sort the window clones according to the orthogonal distance of the actor
+          // planes to the camera. This ensures proper depth sorting.
+          if (sortedActors.length > 0) {
+            extensionThis._sortActorsByPlaneDist(w._container.get_children());
+          }
+        }
       });
 
       // The remainder of this method cares about proper depth sorting. First, we sort the
@@ -312,38 +342,8 @@ class Extension {
       // zero. The strengths of both effects are small during horizontal rotations to make
       // workspace-switching not so obtrusive. However, during vertical rotations, the
       // effects are stronger.
-
-      // These are zero if we are facing a workspace and one if we look directly at an
-      // edge between adjacent workspaces or if the cube is rotated vertically
-      // respectively.
-      const hFactor = 1.0 - 2.0 * Math.abs(group.progress % 1 - 0.5);
-      const vFactor = Math.abs(extensionThis._pitch.value);
-
-      // For horizontal rotations, we want to scale the cube (or rather move it backwards)
-      // a tiny bit to reveal a bit of parallax. However, if we have many cube sides, this
-      // looks weird, so we reduce the effect there. We use the offset which would make
-      // the cube's corners stay behind the original workspace faces during he rotation.
-      const wsWidth      = group._workspaceGroups[0].width;
-      const wsHeight     = group._workspaceGroups[0].height;
-      const cornerDist   = Math.sqrt(Math.pow(centerDepth, 2) + Math.pow(wsWidth / 2, 2));
-      const hDepthOffset = MAX_PARALLAX_H_ROTATION * (cornerDist - centerDepth);
-
-      // The explode factor is set to the hDepthOffset value to make the front-most
-      // window stay at a constant depth.
-      const hExplode = hDepthOffset;
-
-      // For vertical rotations, we move the cube backwards to reveal everything. The
-      // maximum explode width is set to half of the workspace size.
-      const vExplode = Math.max(wsWidth, wsHeight) / 2;
-      const diameter = 2 * (vExplode + centerDepth);
-      const camDist =
-          wsHeight / (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180));
-      const vDepthOffset =
-          (1 + PADDING_V_ROTATION) * diameter * camDist / wsWidth - centerDepth;
-
-      // Use current maximum of both values.
-      const depthOffset = Math.max(hFactor * hDepthOffset, vFactor * vDepthOffset);
-      const explode     = Math.max(hFactor * hExplode, vFactor * vExplode);
+      const [depthOffset, explode] = extensionThis._getExplodeFactors(
+          group.progress, extensionThis._pitch.value, centerDepth);
 
       // Rotate the individual faces.
       group._workspaceGroups.forEach((child, i) => {
@@ -360,8 +360,8 @@ class Extension {
         child._background.opacity = 255 * (1.0 - Math.abs(extensionThis._pitch.value));
 
         // Now we add some depth separation between the window clones. We get the stacking
-        // order from the global window list. If explode becomes too small, the depth
-        // sorting becomes non-deterministic.
+        // order from the global window list. If the explode factor becomes too small, the
+        // depth sorting becomes non-deterministic.
         if (explode > 0.001) {
           const windowActors = global.get_window_actors().filter(w => {
             return child._shouldShowWindow(w.meta_window);
@@ -602,6 +602,48 @@ class Extension {
     for (let i = 0; i < copy.length; i++) {
       parent.set_child_at_index(copy[i], -1);
     }
+  }
+
+  // During rotations, the cube is scaled down and the windows are "exploded". If we
+  // are directly facing a cube side, the strengths of both effects are approaching
+  // zero. The strengths of both effects are small during horizontal rotations to make
+  // workspace-switching not so obtrusive. However, during vertical rotations, the
+  // effects are stronger.
+  _getExplodeFactors(hRotation, vRotation, centerDepth) {
+
+    // These are zero if we are facing a workspace and one if we look directly at an
+    // edge between adjacent workspaces or if the cube is rotated vertically
+    // respectively.
+    const hFactor = 1.0 - 2.0 * Math.abs(hRotation % 1 - 0.5);
+    const vFactor = Math.abs(vRotation);
+
+    // For horizontal rotations, we want to scale the cube (or rather move it backwards)
+    // a tiny bit to reveal a bit of parallax. However, if we have many cube sides, this
+    // looks weird, so we reduce the effect there. We use the offset which would make
+    // the cube's corners stay behind the original workspace faces during he rotation.
+    const width        = global.screen_width;
+    const height       = global.screen_height;
+    const cornerDist   = Math.sqrt(Math.pow(centerDepth, 2) + Math.pow(width / 2, 2));
+    const hDepthOffset = MAX_PARALLAX_H_ROTATION * (cornerDist - centerDepth);
+
+    // The explode factor is set to the hDepthOffset value to make the front-most
+    // window stay at a constant depth.
+    const hExplode = hDepthOffset;
+
+    // For vertical rotations, we move the cube backwards to reveal everything. The
+    // maximum explode width is set to half of the workspace size.
+    const vExplode = Math.max(width, height) / 2;
+    const diameter = 2 * (vExplode + centerDepth);
+    const camDist =
+        height / (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180));
+    const vDepthOffset =
+        (1 + PADDING_V_ROTATION) * diameter * camDist / width - centerDepth;
+
+    // Use current maximum of both values.
+    const depthOffset = Math.max(hFactor * hDepthOffset, vFactor * vDepthOffset);
+    const explode     = Math.max(hFactor * hExplode, vFactor * vExplode);
+
+    return [depthOffset, explode];
   }
 
   // This creates a custom drag gesture and adds it to the given SwipeTracker. The swipe
