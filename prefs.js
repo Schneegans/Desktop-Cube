@@ -39,11 +39,13 @@ var PreferencesDialog = class PreferencesDialog {
 
     // Bind all properties.
     this._bindAdjustment('workpace-separation');
-    this._bindAdjustment('depth-separation');
     this._bindAdjustment('horizontal-stretch');
+    this._bindAdjustment('window-parallax');
     this._bindSwitch('last-first-gap');
-    this._bindSwitch('drag-rotation-overview-mode');
-    this._bindSwitch('drag-rotation-desktop-mode');
+    this._bindSwitch('enable-desktop-dragging');
+    this._bindSwitch('enable-panel-dragging');
+    this._bindSwitch('enable-overview-dragging');
+    this._bindSwitch('do-explode');
     this._bindAdjustment('active-workpace-opacity');
     this._bindAdjustment('inactive-workpace-opacity');
     this._bindAdjustment('overview-transition-time');

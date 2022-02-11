@@ -34,9 +34,6 @@ const INACTIVE_SCALE = imports.ui.workspacesView.WORKSPACE_INACTIVE_SCALE;
 // Maximum degrees the cube can be rotated up and down.
 const MAX_VERTICAL_ROTATION = 50;
 
-// The cube will explode this much during horizontal rotations in desktop mode.
-const MAX_PARALLAX_H_ROTATION = 0.5;
-
 // Spacing to the screen sides of the vertically rotated cube.
 const PADDING_V_ROTATION = 0.2;
 
@@ -178,11 +175,9 @@ class Extension {
 
       // Apply vertical rotation if required. This comes from the pitch value of the
       // modified SwipeTracker created by _addOverviewDragGesture() further below.
-      if (extensionThis._overviewDragGesture) {
-        this.pivot_point_z = -centerDepth;
-        this.set_pivot_point(0.5, 0.5);
-        this.rotation_angle_x = extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
-      }
+      this.pivot_point_z = -centerDepth;
+      this.set_pivot_point(0.5, 0.5);
+      this.rotation_angle_x = extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
 
       // During rotations, the cube is scaled down and the windows are "exploded". If we
       // are directly facing a cube side, the strengths of both effects are approaching
@@ -208,16 +203,6 @@ class Extension {
         // down the rotation a bit closer to the desktop and to the app drawer.
         w.rotation_angle_y =
             Math.pow(cubeMode, 1.5) * (-this._scrollAdjustment.value + index) * faceAngle;
-
-        // Add some separation between background and windows (only in overview mode).
-        let bgScale =
-            (centerDepth - extensionThis._settings.get_int('depth-separation')) /
-            centerDepth;
-        bgScale = Util.lerp(1, Math.max(0.1, bgScale), overviewMode);
-
-        w._background.pivot_point_z = -centerDepth;
-        w._background.set_pivot_point(0.5, 0.5);
-        w._background.scale_x = w._background.scale_y = w._background.scale_z = bgScale;
 
         // Distance to being the active workspace in [-1...0...1].
         const dist = Math.clamp(index - this._scrollAdjustment.value, -1, 1);
@@ -255,27 +240,24 @@ class Extension {
           });
 
           // Now sort the window clones according to the orthogonal distance of the actor
-          // planes to the camera. This ensures proper depth sorting.
+          // planes to the camera. This ensures proper depth sorting among the window
+          // clones.
           if (sortedActors.length > 0) {
             extensionThis._sortActorsByPlaneDist(w._container.get_children());
           }
         }
+
+        // Now we sort the children of the workspace (e.g. the background actor
+        // and the container for the window clones) by their orthogonal distance to the
+        // virtual camera. We add a tiny translation to the window-clone container to
+        // allow for proper sorting.
+        w._container.translation_z = 1;
+        extensionThis._sortActorsByPlaneDist(w.get_children());
       });
 
-      // The remainder of this method cares about proper depth sorting. First, we sort the
-      // workspaces so that they are drawn back-to-front. Thereafter, we ensure that for
-      // front-facing workspaces the background is drawn behind the window previews. For
-      // back-facing workspaces this order is swapped.
-
       // The depth-sorting of cube faces is quite simple, we sort them by increasing
-      // rotation angle.
+      // rotation angle so that they are drawn back-to-front.
       extensionThis._sortActorsByAngle(this._workspaces);
-
-      // Now we sort the children of the individual workspaces (e.g. the background actor
-      // and the window clones) by their orthogonal distance to the virtual camera.
-      for (let i = 0; i < this._workspaces.length; i++) {
-        extensionThis._sortActorsByPlaneDist(this._workspaces[i].get_children());
-      }
     };
 
     // ------------------------------------------- cubify workspace-switch in desktop mode
@@ -330,12 +312,10 @@ class Extension {
 
       // Apply vertical rotation if required. This comes from the pitch value of the
       // modified SwipeTracker created by _addDesktopDragGesture() further below.
-      if (extensionThis._desktopDragGesture) {
-        group._container.pivot_point_z = -centerDepth;
-        group._container.set_pivot_point(0.5, 0.5);
-        group._container.rotation_angle_x =
-            extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
-      }
+      group._container.pivot_point_z = -centerDepth;
+      group._container.set_pivot_point(0.5, 0.5);
+      group._container.rotation_angle_x =
+          extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
 
       // During rotations, the cube is scaled down and the windows are "exploded". If we
       // are directly facing a cube side, the strengths of both effects are approaching
@@ -415,31 +395,46 @@ class Extension {
     // We want to be able to rotate the cube with the left mouse button, so we add an
     // additional gesture to these two SwipeTracker instances tracking single-click drags.
 
-    // Add single-click drag gesture to the overview's SwipeTracker.
-    if (this._settings.get_boolean('drag-rotation-overview-mode')) {
+    // Add single-click drag gesture to the desktop.
+    if (this._settings.get_boolean('enable-desktop-dragging')) {
+      this._addDesktopDragGesture();
+    }
+
+    this._settings.connect('changed::enable-desktop-dragging', () => {
+      if (this._settings.get_boolean('enable-desktop-dragging')) {
+        this._addDesktopDragGesture();
+      } else {
+        this._removeDesktopDragGesture();
+      }
+    });
+
+    // Add single-click drag gesture to the panel.
+    if (this._settings.get_boolean('enable-panel-dragging')) {
+      this._addPanelDragGesture();
+    }
+
+    this._settings.connect('changed::enable-panel-dragging', () => {
+      if (this._settings.get_boolean('enable-panel-dragging')) {
+        this._addPanelDragGesture();
+      } else {
+        this._removePanelDragGesture();
+      }
+    });
+
+    // Add single-click drag gesture to the overview.
+    if (this._settings.get_boolean('enable-overview-dragging')) {
       this._addOverviewDragGesture();
     }
 
-    this._settings.connect('changed::drag-rotation-overview-mode', () => {
-      if (this._settings.get_boolean('drag-rotation-overview-mode')) {
+    this._settings.connect('changed::enable-overview-dragging', () => {
+      if (this._settings.get_boolean('enable-overview-dragging')) {
         this._addOverviewDragGesture();
       } else {
         this._removeOverviewDragGesture();
       }
     });
 
-    // Add single-click drag gesture to the desktop's SwipeTracker.
-    if (this._settings.get_boolean('drag-rotation-desktop-mode')) {
-      this._addDesktopDragGesture();
-    }
 
-    this._settings.connect('changed::drag-rotation-desktop-mode', () => {
-      if (this._settings.get_boolean('drag-rotation-desktop-mode')) {
-        this._addDesktopDragGesture();
-      } else {
-        this._removeDesktopDragGesture();
-      }
-    });
 
     // The overview's SwipeTracker will control the _overviewAdjustment of the
     // WorkspacesDisplay. However, only horizontal swipes will update this adjustment. If
@@ -473,6 +468,7 @@ class Extension {
     imports.ui.overviewControls.SIDE_CONTROLS_ANIMATION_TIME = this._origToAppDrawerTime;
 
     this._removeDesktopDragGesture();
+    this._removePanelDragGesture();
     this._removeOverviewDragGesture();
 
     this._settings = null;
@@ -621,10 +617,11 @@ class Extension {
     // a tiny bit to reveal a bit of parallax. However, if we have many cube sides, this
     // looks weird, so we reduce the effect there. We use the offset which would make
     // the cube's corners stay behind the original workspace faces during he rotation.
-    const width        = global.screen_width;
-    const height       = global.screen_height;
-    const cornerDist   = Math.sqrt(Math.pow(centerDepth, 2) + Math.pow(width / 2, 2));
-    const hDepthOffset = MAX_PARALLAX_H_ROTATION * (cornerDist - centerDepth);
+    const width      = global.screen_width;
+    const height     = global.screen_height;
+    const cornerDist = Math.sqrt(Math.pow(centerDepth, 2) + Math.pow(width / 2, 2));
+    const hDepthOffset =
+        this._settings.get_double('window-parallax') * (cornerDist - centerDepth);
 
     // The explode factor is set to the hDepthOffset value to make the front-most
     // window stay at a constant depth.
@@ -632,7 +629,8 @@ class Extension {
 
     // For vertical rotations, we move the cube backwards to reveal everything. The
     // maximum explode width is set to half of the workspace size.
-    const vExplode = Math.max(width, height) / 2;
+    const vExplode =
+        this._settings.get_boolean('do-explode') ? Math.max(width, height) / 2 : 0;
     const diameter = 2 * (vExplode + centerDepth);
     const camDist =
         height / (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180));
@@ -691,15 +689,36 @@ class Extension {
   }
 
   // Calls _addDragGesture() for the SwipeTracker and actor responsible for
-  // workspace-switching in desktop mode.
+  // workspace-switching in desktop mode when dragging on the background.
   _addDesktopDragGesture() {
     // The SwipeTracker for switching workspaces in desktop mode is created here:
     // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L286
     const tracker = Main.wm._workspaceAnimation._swipeTracker;
-    const actor   = global.stage;
+    const actor   = Main.layoutManager._backgroundGroup;
     const mode    = Shell.ActionMode.NORMAL;
 
+    // We have to make the background reactive. Make sure to store the current state so
+    // that we can reset it later.
+    this._origBackgroundGroupReactivity = actor.reactive;
+    actor.reactive                      = true;
+
     this._desktopDragGesture = this._addDragGesture(actor, tracker, mode);
+  }
+
+  // Calls _addDragGesture() for the SwipeTracker and actor responsible for
+  // workspace-switching in desktop mode when dragging on the panel.
+  _addPanelDragGesture() {
+    // The SwipeTracker for switching workspaces in desktop mode is created here:
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L286
+    const tracker = Main.wm._workspaceAnimation._swipeTracker;
+    const actor   = Main.panel;
+    const mode    = Shell.ActionMode.NORMAL;
+
+    // We have to prevent moving fullscreen windows when dragging.
+    this._origPanelTryDragWindow = actor._tryDragWindow;
+    actor._tryDragWindow = () => Clutter.EVENT_PROPAGATE;
+
+    this._panelDragGesture = this._addDragGesture(actor, tracker, mode);
   }
 
   // Calls _addDragGesture() for the SwipeTracker and actor responsible for
@@ -715,17 +734,38 @@ class Extension {
   }
 
   // Calls _removeDragGesture() for the SwipeTracker and actor responsible for
-  // workspace-switching in desktop mode.
+  // workspace-switching in desktop mode when dragging on the background.
   _removeDesktopDragGesture() {
     if (this._desktopDragGesture) {
       // The SwipeTracker for switching workspaces in desktop mode is created here:
       // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L286
       const tracker = Main.wm._workspaceAnimation._swipeTracker;
-      const actor   = global.stage;
+      const actor   = Main.layoutManager._backgroundGroup;
+
+      // Make sure to restore the original state.
+      actor.reactive = this._origBackgroundGroupReactivity;
 
       this._removeDragGesture(actor, tracker, this._desktopDragGesture);
 
       delete this._desktopDragGesture;
+    }
+  }
+
+  // Calls _removeDragGesture() for the SwipeTracker and actor responsible for
+  // workspace-switching in desktop mode when dragging on the panel.
+  _removePanelDragGesture() {
+    if (this._panelDragGesture) {
+      // The SwipeTracker for switching workspaces in desktop mode is created here:
+      // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L286
+      const tracker = Main.wm._workspaceAnimation._swipeTracker;
+      const actor   = Main.panel;
+
+      // Make sure to restore the original state.
+      actor._tryDragWindow = this._origPanelTryDragWindow;
+
+      this._removeDragGesture(actor, tracker, this._panelDragGesture);
+
+      delete this._panelDragGesture;
     }
   }
 
