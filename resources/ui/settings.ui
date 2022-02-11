@@ -34,6 +34,12 @@
         </item>
       </submenu>
     </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">About the Desktop-Cube</attribute>
+        <attribute name="action">prefs.about</attribute>
+      </item>
+    </section>
   </menu>
 
   <object class="GtkMenuButton" id="menu-button">
