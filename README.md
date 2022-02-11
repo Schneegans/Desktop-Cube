@@ -2,12 +2,15 @@
   <img src ="docs/pics/teaser.gif" />
 </p>
 
-# A Desktop Cube for GNOME Shell
+<h1 align="center">A Desktop Cube for GNOME Shell</h1>
 
+<p align="center">
+  <a href="https://extensions.gnome.org/extension/4648/desktop-cube/"><img src="https://img.shields.io/badge/Download-extensions.gnome.org-e67f4d.svg?logo=gnome&logoColor=lightgrey&labelColor=303030" /></a><br/>
   <a href="https://github.com/Schneegans/Desktop-Cube/actions"><img src="https://github.com/Schneegans/Desktop-Cube/workflows/Checks/badge.svg?branch=main" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg?labelColor=303030" /></a>
-  <a href="https://extensions.gnome.org/extension/4648/desktop-cube/"><img src="https://img.shields.io/badge/Download-extensions.gnome.org-e67f4d.svg?logo=gnome&logoColor=lightgrey&labelColor=303030" /></a>
-
+  <a href="scripts/cloc.sh"><img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Schneegans/66479de801ea8e0f6a1cf084cd37ffe8/raw/loc.json" /></a>
+  <a href="scripts/cloc.sh"><img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Schneegans/66479de801ea8e0f6a1cf084cd37ffe8/raw/comments.json" /></a>
+</p>
 
 When I started using Linux more than a decade ago, it was because of the 3D desktop cube of Compiz.
 Even if this was a pretty useless feature, I am still missing it today.

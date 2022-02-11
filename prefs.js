@@ -9,6 +9,7 @@
 'use strict';
 
 const {Gio, Gtk, Gdk} = imports.gi;
+const ByteArray       = imports.byteArray;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me             = imports.misc.extensionUtils.getCurrentExtension();
@@ -30,6 +31,9 @@ var PreferencesDialog = class PreferencesDialog {
     // Load the user interface file.
     this._builder = new Gtk.Builder();
     this._builder.add_from_resource(`/ui/settings.ui`);
+
+    // Make sure custom icons are found.
+    Gtk.IconTheme.get_for_display(Gdk.Display.get_default()).add_resource_path('/img');
 
     // This is our top-level widget which we will return later.
     this._widget = this._builder.get_object('settings-widget');
@@ -72,12 +76,53 @@ var PreferencesDialog = class PreferencesDialog {
         group.add_action(action);
       };
 
-      addAction('homepage', 'https://github.com/Schneegans/Desktop-Cube');
-      addAction('bugs', 'https://github.com/Schneegans/Desktop-Cube/issues');
-      addAction(
-          'donate-paypal',
-          'https://www.paypal.com/donate/?hosted_button_id=3F7UFL8KLVPXE');
+      // clang-format off
+      addAction('homepage',      'https://github.com/Schneegans/Desktop-Cube');
+      addAction('changelog',     'https://github.com/Schneegans/Desktop-Cube/blob/main/docs/changelog.md');
+      addAction('translate',     'https://hosted.weblate.org/engage/desktop-cube/');
+      addAction('bugs',          'https://github.com/Schneegans/Desktop-Cube/issues');
+      addAction('donate-paypal', 'https://www.paypal.com/donate/?hosted_button_id=3F7UFL8KLVPXE');
       addAction('donate-github', 'https://github.com/sponsors/Schneegans');
+      // clang-format on
+
+      // Add the about dialog.
+      const aboutAction = Gio.SimpleAction.new('about', null);
+      aboutAction.connect('activate', () => {
+        // The JSON report format from weblate is a bit weird. Here we extract all
+        // unique names from the translation report.
+        const translators = new Set();
+        this._getJSONResource('/credits/translators.json').forEach(i => {
+          for (const j of Object.values(i)) {
+            j.forEach(k => translators.add(k[1]));
+          }
+        });
+
+        const sponsors = this._getJSONResource('/credits/sponsors.json');
+
+        const dialog = new Gtk.AboutDialog({transient_for: window, modal: true});
+        dialog.set_logo_icon_name('desktop-cube-symbolic');
+        dialog.set_program_name(`Desktop-Cube ${Me.metadata.version}`);
+        dialog.set_website('https://github.com/Schneegans/Desktop-Cube');
+        dialog.set_authors(['Simon Schneegans']);
+        dialog.set_copyright('© 2022 Simon Schneegans');
+        dialog.set_translator_credits([...translators].join('\n'));
+        if (sponsors.gold.length > 0) {
+          dialog.add_credit_section('Gold Sponsors', sponsors.gold);
+        }
+        if (sponsors.silver.length > 0) {
+          dialog.add_credit_section('Silver Sponsors', sponsors.silver);
+        }
+        if (sponsors.bronze.length > 0) {
+          dialog.add_credit_section('Bronze Sponsors', sponsors.bronze);
+        }
+        if (sponsors.past.length > 0) {
+          dialog.add_credit_section('Past Sponsors', sponsors.past);
+        }
+        dialog.set_license_type(Gtk.License.GPL_3_0);
+
+        dialog.show();
+      });
+      group.add_action(aboutAction);
 
       window.insert_action_group('prefs', group);
     });
@@ -123,6 +168,14 @@ var PreferencesDialog = class PreferencesDialog {
     resetButton.connect('clicked', () => {
       this._settings.reset(settingsKey);
     });
+  }
+
+  // Reads the contents of a JSON file contained in the global resources archive. The data
+  // is parsed and returned as a JavaScript object / array.
+  _getJSONResource(path) {
+    const data   = Gio.resources_lookup_data(path, 0);
+    const string = ByteArray.toString(ByteArray.fromGBytes(data));
+    return JSON.parse(string);
   }
 }
 
