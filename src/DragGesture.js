@@ -10,6 +10,7 @@
 
 const {Clutter, GObject, Shell} = imports.gi;
 
+const Util          = imports.misc.util;
 const Main          = imports.ui.main;
 const ControlsState = imports.ui.overviewControls.ControlsState;
 
@@ -106,11 +107,15 @@ const DragGesture =
 
         // Compute the horizontal movement relative to the last call.
         const [x, y] = this.get_motion_coords(0);
-        const deltaX = x - this._lastX;
+        let deltaX   = x - this._lastX;
         this._lastX  = x;
 
         // Compute the accumulated pitch relative to the screen height.
         this.pitch = (this._startY - y) / global.screen_height;
+
+        // Increase horizontal movement if the cube is rotated vertically.
+        deltaX *= Util.lerp(
+            1.0, global.workspaceManager.get_n_workspaces(), Math.abs(this.pitch));
 
         const time = this.get_last_event(0).get_time();
         this.emit('update', time, -deltaX, this.distance);
