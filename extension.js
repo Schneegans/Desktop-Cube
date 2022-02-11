@@ -34,6 +34,12 @@ const INACTIVE_SCALE = imports.ui.workspacesView.WORKSPACE_INACTIVE_SCALE;
 // Maximum degrees the cube can be rotated up and down.
 const MAX_VERTICAL_ROTATION = 50;
 
+// The cube will explode this much during horizontal rotations in desktop mode.
+const MAX_PARALLAX_H_ROTATION = 0.5;
+
+// Spacing to the screen sides of the vertically rotated cube.
+const PADDING_V_ROTATION = 0.2;
+
 class Extension {
   // The constructor is called once when the extension is loaded, not enabled.
   constructor() {
@@ -301,24 +307,50 @@ class Extension {
             extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
       }
 
-      // This is zero if we are facing a workspace and one if we look directly at an edge
-      // between adjacent workspaces.
-      // We also want to "zoomOut" the cube if its rotated up or down.
-      let zoomOutFactor = 1.0 - 2.0 * Math.abs(group.progress % 1 - 0.5);
-      zoomOutFactor = Math.max(zoomOutFactor * 0.5, 2.0 * Math.abs(this._pitch.value));
+      // During rotations, the cube is scaled down and the windows are "exploded". If we
+      // are directly facing a cube side, the strengths of both effects are approaching
+      // zero. The strengths of both effects are small during horizontal rotations to make
+      // workspace-switching not so obtrusive. However, during vertical rotations, the
+      // effects are stronger.
 
-      // Compute the required offset away from the camera so that the cube's corners stay
-      // behind the original workspace faces during he rotation.
-      const centerCornerDist = Math.sqrt(
-          Math.pow(centerDepth, 2) + Math.pow(group._workspaceGroups[0].width / 2, 2));
-      const zOffset = zoomOutFactor * (centerCornerDist - centerDepth);
+      // These are zero if we are facing a workspace and one if we look directly at an
+      // edge between adjacent workspaces or if the cube is rotated vertically
+      // respectively.
+      const hFactor = 1.0 - 2.0 * Math.abs(group.progress % 1 - 0.5);
+      const vFactor = Math.abs(extensionThis._pitch.value);
+
+      // For horizontal rotations, we want to scale the cube (or rather move it backwards)
+      // a tiny bit to reveal a bit of parallax. However, if we have many cube sides, this
+      // looks weird, so we reduce the effect there. We use the offset which would make
+      // the cube's corners stay behind the original workspace faces during he rotation.
+      const wsWidth      = group._workspaceGroups[0].width;
+      const wsHeight     = group._workspaceGroups[0].height;
+      const cornerDist   = Math.sqrt(Math.pow(centerDepth, 2) + Math.pow(wsWidth / 2, 2));
+      const hDepthOffset = MAX_PARALLAX_H_ROTATION * (cornerDist - centerDepth);
+
+      // The explode factor is set to the hDepthOffset value to make the front-most
+      // window stay at a constant depth.
+      const hExplode = hDepthOffset;
+
+      // For vertical rotations, we move the cube backwards to reveal everything. The
+      // maximum explode width is set to half of the workspace size.
+      const vExplode = Math.max(wsWidth, wsHeight) / 2;
+      const diameter = 2 * (vExplode + centerDepth);
+      const camDist =
+          wsHeight / (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180));
+      const vDepthOffset =
+          (1 + PADDING_V_ROTATION) * diameter * camDist / wsWidth - centerDepth;
+
+      // Use current maximum of both values.
+      const depthOffset = Math.max(hFactor * hDepthOffset, vFactor * vDepthOffset);
+      const explode     = Math.max(hFactor * hExplode, vFactor * vExplode);
 
       // Rotate the individual faces.
       group._workspaceGroups.forEach((child, i) => {
         child.set_pivot_point_z(-centerDepth);
         child.set_pivot_point(0.5, 0.5);
         child.rotation_angle_y   = (i - group.progress) * faceAngle;
-        child.z_position         = -zOffset;
+        child.translation_z      = -depthOffset;
         child.clip_to_allocation = false;
 
         // Counter the horizontal movement.
@@ -328,16 +360,18 @@ class Extension {
         child._background.opacity = 255 * (1.0 - Math.abs(extensionThis._pitch.value));
 
         // Now we add some depth separation between the window clones. We get the stacking
-        // order from the global window list. If zOffset becomes too small, the depth
+        // order from the global window list. If explode becomes too small, the depth
         // sorting becomes non-deterministic.
-        if (zOffset > 0.001) {
-          const windowActors = global.get_window_actors().filter(
-              w => child._shouldShowWindow(w.meta_window));
+        if (explode > 0.001) {
+          const windowActors = global.get_window_actors().filter(w => {
+            return child._shouldShowWindow(w.meta_window);
+          });
 
-          // Distribute the window clones translation_z values between zero and zOffset.
+          // Distribute the window clones translation_z values between zero and
+          // explode.
           windowActors.forEach((windowActor, j) => {
             const record = child._windowRecords.find(r => r.windowActor === windowActor);
-            record.clone.translation_z = zOffset * (j + 1) / windowActors.length;
+            record.clone.translation_z = explode * (j + 1) / windowActors.length;
           });
 
           // Now sort the window clones and the background actor according to the
