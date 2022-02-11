@@ -69,12 +69,14 @@ var PreferencesDialog = class PreferencesDialog {
         group.add_action(action);
       };
 
-      addAction('homepage', 'https://github.com/Schneegans/Desktop-Cube');
-      addAction('bugs', 'https://github.com/Schneegans/Desktop-Cube/issues');
-      addAction(
-          'donate-paypal',
-          'https://www.paypal.com/donate/?hosted_button_id=3F7UFL8KLVPXE');
+      // clang-format off
+      addAction('homepage',      'https://github.com/Schneegans/Desktop-Cube');
+      addAction('changelog',     'https://github.com/Schneegans/Desktop-Cube/blob/main/docs/changelog.md');
+      addAction('translate',     'https://hosted.weblate.org/engage/desktop-cube/');
+      addAction('bugs',          'https://github.com/Schneegans/Desktop-Cube/issues');
+      addAction('donate-paypal', 'https://www.paypal.com/donate/?hosted_button_id=3F7UFL8KLVPXE');
       addAction('donate-github', 'https://github.com/sponsors/Schneegans');
+      // clang-format on
 
       window.insert_action_group('prefs', group);
     });
