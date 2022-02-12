@@ -125,7 +125,7 @@
                             <child>
                               <object class="GtkButton" id="reset-last-first-gap">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to default value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -221,7 +221,7 @@
                             <child>
                               <object class="GtkButton" id="reset-window-parallax">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to default value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -560,7 +560,7 @@
                             <child>
                               <object class="GtkButton" id="reset-enable-overview-dragging">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to default value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -707,7 +707,7 @@
                             <child>
                               <object class="GtkButton" id="reset-active-workpace-opacity">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to default value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
