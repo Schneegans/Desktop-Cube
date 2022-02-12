@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-12 13:20+0100\n"
-"PO-Revision-Date: 2022-02-12 12:20+0000\n"
+"PO-Revision-Date: 2022-02-12 12:21+0000\n"
 "Last-Translator: Simon Schneegans <code@simonschneegans.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/desktop-cube/core/"
 "de/>\n"
@@ -124,7 +124,7 @@ msgstr "Animationszeit zwischen Arbeitsflächen [ms]"
 
 #: resources/ui/settings.ui:428
 msgid "Desktop Options"
-msgstr ""
+msgstr "Desktop-Optionen"
 
 #: resources/ui/settings.ui:451
 msgid "Click and drag the desktop to rotate the cube"
@@ -136,7 +136,7 @@ msgstr "Klicken Sie und ziehen Sie das Panel zum Drehen"
 
 #: resources/ui/settings.ui:523
 msgid "Overview Options"
-msgstr ""
+msgstr "Übersichts-Optionen"
 
 #: resources/ui/settings.ui:546
 msgid "Click and drag the overview to rotate the cube"
