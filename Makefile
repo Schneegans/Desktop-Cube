@@ -1,9 +1,13 @@
 SHELL := /bin/bash
 
 JS_FILES = $(shell find -type f -and \( -name "*.js" \))
+UI_FILES = $(shell find -type f -and \( -name "*.ui" \))
 RESOURCE_FILES = $(shell find resources -mindepth 2 -type f)
 
-.PHONY: zip install uninstall clean
+LOCALES_PO = $(wildcard po/*.po)
+LOCALES_MO = $(patsubst po/%.po,locale/%/LC_MESSAGES/desktop-cube.mo,$(LOCALES_PO))
+
+.PHONY: zip install uninstall all-po pot clean
 
 zip: desktop-cube@schneegans.github.com.zip
 
@@ -14,23 +18,31 @@ install: desktop-cube@schneegans.github.com.zip
 uninstall:
 	gnome-extensions uninstall "desktop-cube@schneegans.github.com"
 
+all-po: $(LOCALES_PO)
+
+pot: $(JS_FILES) $(UI_FILES)
+	@echo "Generating 'desktop-cube.pot'..."
+	@xgettext --from-code=UTF-8 \
+			  --add-comments=Translators \
+			  --copyright-holder="Simon Schneegans" \
+			  --package-name="Desktop-Cube" \
+			  --output=po/desktop-cube.pot \
+			  $(JS_FILES) $(UI_FILES)
+
 clean:
 	rm -rf \
 	desktop-cube@schneegans.github.com.zip \
 	resources/desktop-cube.gresource \
 	resources/desktop-cube.gresource.xml \
-	schemas/gschemas.compiled
+	schemas/gschemas.compiled \
+	locale \
+	ui/*.ui~ \
+	po/*.po~
 
-desktop-cube@schneegans.github.com.zip: schemas/gschemas.compiled resources/desktop-cube.gresource $(JS_FILES)
-	@# Check if the VERSION variable was passed and set version to it
-	@if [[ "$(VERSION)" != "" ]]; then \
-	  sed -i "s|  \"version\":.*|  \"version\": $(VERSION)|g" metadata.json; \
-	fi
-	@# TODO Maybe echo version number of the release that was built, in order to facilitate double-checking before publishing it?
-	
+desktop-cube@schneegans.github.com.zip: schemas/gschemas.compiled resources/desktop-cube.gresource $(JS_FILES) $(LOCALES_MO)
 	@echo "Packing zip file..."
 	@rm --force desktop-cube@schneegans.github.com.zip
-	@zip -r desktop-cube@schneegans.github.com.zip -- *.js src/*.js resources/desktop-cube.gresource schemas/gschemas.compiled metadata.json LICENSE
+	@zip -r desktop-cube@schneegans.github.com.zip -- *.js src/*.js resources/desktop-cube.gresource schemas/gschemas.compiled $(LOCALES_MO) metadata.json LICENSE
 	
 	@#Check if the zip size is too big to be uploaded
 	@if [[ "$$(stat -c %s desktop-cube@schneegans.github.com.zip)" -gt 4096000 ]]; then \
@@ -49,3 +61,14 @@ resources/desktop-cube.gresource.xml: $(RESOURCE_FILES)
 schemas/gschemas.compiled: schemas/org.gnome.shell.extensions.desktop-cube.gschema.xml
 	@echo "Compiling schemas..."
 	@glib-compile-schemas schemas
+
+locale/%/LC_MESSAGES/desktop-cube.mo: po/%.po
+	@echo "Compiling $@"
+	@mkdir -p locale/$*/LC_MESSAGES
+	@msgfmt -c -o $@ $<
+
+po/%.po:
+	@echo "Updating $@"
+	msgmerge --previous --update $@ po/desktop-cube.pot
+	@# Output translation progress
+	@msgfmt --check --verbose --output-file=/dev/null $@
