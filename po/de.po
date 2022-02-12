@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-12 12:55+0100\n"
+"POT-Creation-Date: 2022-02-12 13:12+0100\n"
 "PO-Revision-Date: 2022-02-12 12:13+0000\n"
 "Last-Translator: Simon Schneegans <code@simonschneegans.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/desktop-cube/core/"
@@ -72,8 +72,8 @@ msgid "General Options"
 msgstr "Allgemeine Optionen"
 
 #: resources/ui/settings.ui:97
-msgid "Add a gap between last and first workspace"
-msgstr ""
+msgid "Gap between last and first workspace"
+msgstr "Abstand zwischen letzter und erster Arbeitsfläche"
 
 #: resources/ui/settings.ui:106
 msgid "You cannot loop around in GNOME Shell anyways."
@@ -167,9 +167,6 @@ msgstr "Deckkraft der inaktiven Arbeitsflächen"
 
 #~ msgid "Layout"
 #~ msgstr "Layout"
-
-#~ msgid "Gap between last and first workspace"
-#~ msgstr "Abstand zwischen letzter und erster Arbeitsfläche"
 
 #~ msgid "Separation between background and windows"
 #~ msgstr "Abstand zwischen Hintergrund und Fenstern"
