@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-12 13:12+0100\n"
+"POT-Creation-Date: 2022-02-12 13:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -117,7 +117,7 @@ msgid "Transition time between workspaces [ms]"
 msgstr ""
 
 #: resources/ui/settings.ui:428
-msgid "Desktop Cube"
+msgid "Desktop Options"
 msgstr ""
 
 #: resources/ui/settings.ui:451
@@ -129,7 +129,7 @@ msgid "Click and drag the panel to rotate the cube"
 msgstr ""
 
 #: resources/ui/settings.ui:523
-msgid "Overview Cube"
+msgid "Overview Options"
 msgstr ""
 
 #: resources/ui/settings.ui:546
