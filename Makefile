@@ -30,7 +30,7 @@ desktop-cube@schneegans.github.com.zip: schemas/gschemas.compiled resources/desk
 	
 	@echo "Packing zip file..."
 	@rm --force desktop-cube@schneegans.github.com.zip
-	@zip -r desktop-cube@schneegans.github.com.zip -- *.js resources/desktop-cube.gresource schemas/gschemas.compiled metadata.json LICENSE
+	@zip -r desktop-cube@schneegans.github.com.zip -- *.js src/*.js resources/desktop-cube.gresource schemas/gschemas.compiled metadata.json LICENSE
 	
 	@#Check if the zip size is too big to be uploaded
 	@if [[ "$$(stat -c %s desktop-cube@schneegans.github.com.zip)" -gt 4096000 ]]; then \

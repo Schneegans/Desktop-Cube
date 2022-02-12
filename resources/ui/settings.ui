@@ -67,7 +67,7 @@
               <object class="GtkLabel">
                 <property name="margin-top">30</property>
                 <property name="margin-bottom">10</property>
-                <property name="label">Layout</property>
+                <property name="label" translatable="yes">General Options</property>
                 <property name="xalign">0</property>
                 <style>
                   <class name="title-4" />
@@ -83,39 +83,6 @@
                     <style>
                       <class name="rich-list" />
                     </style>
-
-                    <child>
-                      <object class="GtkListBoxRow">
-                        <child>
-                          <object class="GtkBox">
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="label" translatable="yes">Unfold the cube during transition to desktop</property>
-                                <property name="xalign">0</property>
-                                <property name="halign">start</property>
-                                <property name="valign">center</property>
-                                <property name="hexpand">1</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkSwitch" id="unfold-to-desktop">
-                                <property name="halign">end</property>
-                                <property name="valign">center</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="reset-unfold-to-desktop">
-                                <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text">Reset to Default Value</property>
-                                <style>
-                                  <class name="flat" />
-                                </style>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
 
                     <child>
                       <object class="GtkListBoxRow">
@@ -158,7 +125,7 @@
                             <child>
                               <object class="GtkButton" id="reset-last-first-gap">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -171,91 +138,6 @@
 
                     <child>
                       <object class="GtkListBoxRow">
-                        <property name="activatable">0</property>
-                        <child>
-                          <object class="GtkBox">
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="label" translatable="yes">Gap between adjacent workspaces</property>
-                                <property name="xalign">0</property>
-                                <property name="halign">start</property>
-                                <property name="valign">center</property>
-                                <property name="hexpand">1</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkSpinButton">
-                                <property name="halign">end</property>
-                                <property name="valign">center</property>
-                                <property name="adjustment">
-                                  <object class="GtkAdjustment" id="workpace-separation">
-                                    <property name="upper">999</property>
-                                    <property name="lower">0</property>
-                                    <property name="step-increment">1</property>
-                                    <property name="page-increment">10</property>
-                                  </object>
-                                </property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="reset-workpace-separation">
-                                <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text">Reset to Default Value</property>
-                                <style>
-                                  <class name="flat" />
-                                </style>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-
-                    <child>
-                      <object class="GtkListBoxRow">
-                        <property name="activatable">0</property>
-                        <child>
-                          <object class="GtkBox">
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="label" translatable="yes">Separation between background and windows</property>
-                                <property name="xalign">0</property>
-                                <property name="halign">start</property>
-                                <property name="valign">center</property>
-                                <property name="hexpand">1</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkSpinButton">
-                                <property name="halign">end</property>
-                                <property name="valign">center</property>
-                                <property name="adjustment">
-                                  <object class="GtkAdjustment" id="depth-separation">
-                                    <property name="upper">999</property>
-                                    <property name="lower">0</property>
-                                    <property name="step-increment">1</property>
-                                    <property name="page-increment">10</property>
-                                  </object>
-                                </property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="reset-depth-separation">
-                                <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text">Reset to Default Value</property>
-                                <style>
-                                  <class name="flat" />
-                                </style>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-
-                    <child>
-                      <object class="GtkListBoxRow">
-                        <property name="activatable">0</property>
                         <child>
                           <object class="GtkBox">
                             <child>
@@ -264,7 +146,7 @@
                                 <property name="spacing">3</property>
                                 <child>
                                   <object class="GtkLabel">
-                                    <property name="label" translatable="yes">Horizontal stretching of the cube</property>
+                                    <property name="label" translatable="yes">Explode cube on vertical rotations</property>
                                     <property name="xalign">0</property>
                                     <property name="halign">start</property>
                                     <property name="valign">center</property>
@@ -273,7 +155,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkLabel">
-                                    <property name="label" translatable="yes">This ensures that you can see the cube's sides from the front.</property>
+                                    <property name="label" translatable="yes">Rotate the cube up or down to show the 3D structure.</property>
                                     <property name="xalign">0</property>
                                     <property name="halign">start</property>
                                     <property name="valign">center</property>
@@ -287,94 +169,15 @@
                               </object>
                             </child>
                             <child>
-                              <object class="GtkSpinButton">
+                              <object class="GtkSwitch" id="do-explode">
                                 <property name="halign">end</property>
                                 <property name="valign">center</property>
-                                <property name="adjustment">
-                                  <object class="GtkAdjustment" id="horizontal-stretch">
-                                    <property name="upper">999</property>
-                                    <property name="lower">0</property>
-                                    <property name="step-increment">1</property>
-                                    <property name="page-increment">10</property>
-                                  </object>
-                                </property>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkButton" id="reset-horizontal-stretch">
+                              <object class="GtkButton" id="reset-do-explode">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text">Reset to Default Value</property>
-                                <style>
-                                  <class name="flat" />
-                                </style>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-
-                  </object>
-                </child>
-              </object>
-            </child>
-
-
-            <child>
-              <object class="GtkLabel">
-                <property name="margin-top">30</property>
-                <property name="margin-bottom">10</property>
-                <property name="label">Appearance</property>
-                <property name="xalign">0</property>
-                <style>
-                  <class name="title-4" />
-                </style>
-              </object>
-            </child>
-            <child>
-              <object class="GtkFrame">
-                <child>
-                  <object class="GtkListBox">
-                    <property name="selection-mode">none</property>
-                    <property name="show-separators">1</property>
-                    <style>
-                      <class name="rich-list" />
-                    </style>
-
-                    <child>
-                      <object class="GtkListBoxRow">
-                        <property name="activatable">0</property>
-                        <child>
-                          <object class="GtkBox">
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="label" translatable="yes">Opacity of the active workspace</property>
-                                <property name="xalign">0</property>
-                                <property name="halign">start</property>
-                                <property name="valign">center</property>
-                                <property name="hexpand">1</property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkScale">
-                                <property name="halign">end</property>
-                                <property name="valign">center</property>
-                                <property name="draw-value">0</property>
-                                <property name="width-request">150</property>
-                                <property name="adjustment">
-                                  <object class="GtkAdjustment" id="active-workpace-opacity">
-                                    <property name="upper">255</property>
-                                    <property name="lower">0</property>
-                                    <property name="step-increment">1</property>
-                                    <property name="page-increment">10</property>
-                                  </object>
-                                </property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="reset-active-workpace-opacity">
-                                <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -392,7 +195,7 @@
                           <object class="GtkBox">
                             <child>
                               <object class="GtkLabel">
-                                <property name="label" translatable="yes">Opacity of inactive workspaces</property>
+                                <property name="label" translatable="yes">Window parallax effect</property>
                                 <property name="xalign">0</property>
                                 <property name="halign">start</property>
                                 <property name="valign">center</property>
@@ -406,19 +209,19 @@
                                 <property name="draw-value">0</property>
                                 <property name="width-request">150</property>
                                 <property name="adjustment">
-                                  <object class="GtkAdjustment" id="inactive-workpace-opacity">
-                                    <property name="upper">255</property>
+                                  <object class="GtkAdjustment" id="window-parallax">
+                                    <property name="upper">1</property>
                                     <property name="lower">0</property>
-                                    <property name="step-increment">1</property>
-                                    <property name="page-increment">10</property>
+                                    <property name="step-increment">0.1</property>
+                                    <property name="page-increment">0.2</property>
                                   </object>
                                 </property>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkButton" id="reset-inactive-workpace-opacity">
+                              <object class="GtkButton" id="reset-window-parallax">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -428,33 +231,6 @@
                         </child>
                       </object>
                     </child>
-
-                  </object>
-                </child>
-              </object>
-            </child>
-
-
-            <child>
-              <object class="GtkLabel">
-                <property name="margin-top">30</property>
-                <property name="margin-bottom">10</property>
-                <property name="label">Animations</property>
-                <property name="xalign">0</property>
-                <style>
-                  <class name="title-4" />
-                </style>
-              </object>
-            </child>
-            <child>
-              <object class="GtkFrame">
-                <child>
-                  <object class="GtkListBox">
-                    <property name="selection-mode">none</property>
-                    <property name="show-separators">1</property>
-                    <style>
-                      <class name="rich-list" />
-                    </style>
 
                     <child>
                       <object class="GtkListBoxRow">
@@ -506,7 +282,7 @@
                             <child>
                               <object class="GtkButton" id="reset-overview-transition-time">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -567,7 +343,7 @@
                             <child>
                               <object class="GtkButton" id="reset-appgrid-transition-time">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -628,7 +404,7 @@
                             <child>
                               <object class="GtkButton" id="reset-workspace-transition-time">
                                 <property name="icon-name">edit-clear-symbolic</property>
-                                <property name="tooltip-text">Reset to Default Value</property>
+                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
                                 <style>
                                   <class name="flat" />
                                 </style>
@@ -644,6 +420,352 @@
               </object>
             </child>
 
+
+            <child>
+              <object class="GtkLabel">
+                <property name="margin-top">30</property>
+                <property name="margin-bottom">10</property>
+                <property name="label" translatable="yes">Desktop Cube</property>
+                <property name="xalign">0</property>
+                <style>
+                  <class name="title-4" />
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkFrame">
+                <child>
+                  <object class="GtkListBox">
+                    <property name="selection-mode">none</property>
+                    <property name="show-separators">1</property>
+                    <style>
+                      <class name="rich-list" />
+                    </style>
+
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <child>
+                          <object class="GtkBox">
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label" translatable="yes">Click and drag the desktop to rotate the cube</property>
+                                <property name="xalign">0</property>
+                                <property name="wrap">1</property>
+                                <property name="halign">start</property>
+                                <property name="valign">center</property>
+                                <property name="hexpand">1</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkSwitch" id="enable-desktop-dragging">
+                                <property name="halign">end</property>
+                                <property name="valign">center</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="reset-enable-desktop-dragging">
+                                <property name="icon-name">edit-clear-symbolic</property>
+                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <style>
+                                  <class name="flat" />
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <child>
+                          <object class="GtkBox">
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label" translatable="yes">Click and drag the panel to rotate the cube</property>
+                                <property name="xalign">0</property>
+                                <property name="wrap">1</property>
+                                <property name="halign">start</property>
+                                <property name="valign">center</property>
+                                <property name="hexpand">1</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkSwitch" id="enable-panel-dragging">
+                                <property name="halign">end</property>
+                                <property name="valign">center</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="reset-enable-panel-dragging">
+                                <property name="icon-name">edit-clear-symbolic</property>
+                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <style>
+                                  <class name="flat" />
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+              </object>
+            </child>
+
+
+            <child>
+              <object class="GtkLabel">
+                <property name="margin-top">30</property>
+                <property name="margin-bottom">10</property>
+                <property name="label" translatable="yes">Overview Cube</property>
+                <property name="xalign">0</property>
+                <style>
+                  <class name="title-4" />
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkFrame">
+                <child>
+                  <object class="GtkListBox">
+                    <property name="selection-mode">none</property>
+                    <property name="show-separators">1</property>
+                    <style>
+                      <class name="rich-list" />
+                    </style>
+
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <child>
+                          <object class="GtkBox">
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label" translatable="yes">Click and drag the overview to rotate the cube</property>
+                                <property name="xalign">0</property>
+                                <property name="wrap">1</property>
+                                <property name="halign">start</property>
+                                <property name="valign">center</property>
+                                <property name="hexpand">1</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkSwitch" id="enable-overview-dragging">
+                                <property name="halign">end</property>
+                                <property name="valign">center</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="reset-enable-overview-dragging">
+                                <property name="icon-name">edit-clear-symbolic</property>
+                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <style>
+                                  <class name="flat" />
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="activatable">0</property>
+                        <child>
+                          <object class="GtkBox">
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label" translatable="yes">Gap between adjacent workspaces</property>
+                                <property name="xalign">0</property>
+                                <property name="halign">start</property>
+                                <property name="valign">center</property>
+                                <property name="hexpand">1</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkSpinButton">
+                                <property name="halign">end</property>
+                                <property name="valign">center</property>
+                                <property name="adjustment">
+                                  <object class="GtkAdjustment" id="workpace-separation">
+                                    <property name="upper">999</property>
+                                    <property name="lower">0</property>
+                                    <property name="step-increment">1</property>
+                                    <property name="page-increment">10</property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="reset-workpace-separation">
+                                <property name="icon-name">edit-clear-symbolic</property>
+                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <style>
+                                  <class name="flat" />
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="activatable">0</property>
+                        <child>
+                          <object class="GtkBox">
+                            <child>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">3</property>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="yes">Horizontal stretching of the cube</property>
+                                    <property name="xalign">0</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <property name="hexpand">1</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="yes">This ensures that you can see the cube's sides from the front.</property>
+                                    <property name="xalign">0</property>
+                                    <property name="halign">start</property>
+                                    <property name="valign">center</property>
+                                    <property name="hexpand">1</property>
+                                    <style>
+                                      <class name="dim-label" />
+                                      <class name="caption" />
+                                    </style>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkSpinButton">
+                                <property name="halign">end</property>
+                                <property name="valign">center</property>
+                                <property name="adjustment">
+                                  <object class="GtkAdjustment" id="horizontal-stretch">
+                                    <property name="upper">999</property>
+                                    <property name="lower">0</property>
+                                    <property name="step-increment">1</property>
+                                    <property name="page-increment">10</property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="reset-horizontal-stretch">
+                                <property name="icon-name">edit-clear-symbolic</property>
+                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <style>
+                                  <class name="flat" />
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="activatable">0</property>
+                        <child>
+                          <object class="GtkBox">
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label" translatable="yes">Opacity of the active workspace</property>
+                                <property name="xalign">0</property>
+                                <property name="halign">start</property>
+                                <property name="valign">center</property>
+                                <property name="hexpand">1</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkScale">
+                                <property name="halign">end</property>
+                                <property name="valign">center</property>
+                                <property name="draw-value">0</property>
+                                <property name="width-request">150</property>
+                                <property name="adjustment">
+                                  <object class="GtkAdjustment" id="active-workpace-opacity">
+                                    <property name="upper">255</property>
+                                    <property name="lower">0</property>
+                                    <property name="step-increment">1</property>
+                                    <property name="page-increment">10</property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="reset-active-workpace-opacity">
+                                <property name="icon-name">edit-clear-symbolic</property>
+                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <style>
+                                  <class name="flat" />
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="activatable">0</property>
+                        <child>
+                          <object class="GtkBox">
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label" translatable="yes">Opacity of inactive workspaces</property>
+                                <property name="xalign">0</property>
+                                <property name="halign">start</property>
+                                <property name="valign">center</property>
+                                <property name="hexpand">1</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkScale">
+                                <property name="halign">end</property>
+                                <property name="valign">center</property>
+                                <property name="draw-value">0</property>
+                                <property name="width-request">150</property>
+                                <property name="adjustment">
+                                  <object class="GtkAdjustment" id="inactive-workpace-opacity">
+                                    <property name="upper">255</property>
+                                    <property name="lower">0</property>
+                                    <property name="step-increment">1</property>
+                                    <property name="page-increment">10</property>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="reset-inactive-workpace-opacity">
+                                <property name="icon-name">edit-clear-symbolic</property>
+                                <property name="tooltip-text" translatable="yes">Reset to Default Value</property>
+                                <style>
+                                  <class name="flat" />
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+              </object>
+            </child>
 
           </object>
         </child>

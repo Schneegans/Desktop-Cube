@@ -12,25 +12,13 @@
   <schema path="/org/gnome/shell/extensions/desktop-cube/" id="org.gnome.shell.extensions.desktop-cube">
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <!-- layout settings                                                               -->
+    <!-- general settings                                                              -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <key name="workpace-separation" type="i">
-      <default>80</default>
-      <summary>Workspace Separation</summary>
-      <description>The pixel gap between adjacent workspaces.</description>
-    </key>
-
-    <key name="depth-separation" type="i">
-      <default>50</default>
-      <summary>Depth Separation</summary>
-      <description>The pixel gap between background and windows.</description>
-    </key>
-
-    <key name="horizontal-stretch" type="i">
-      <default>80</default>
-      <summary>Horizontal Stretch</summary>
-      <description>The widening factor which ensures that cube sides are visible from the front.</description>
+    <key name="window-parallax" type="d">
+      <default>0.5</default>
+      <summary>Window Parallax</summary>
+      <description>The strength of the parallax effect of windows.</description>
     </key>
 
     <key name="last-first-gap" type="b">
@@ -39,25 +27,11 @@
       <description>Add a gap between last and first workspace.</description>
     </key>
 
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <!-- appearance settings                                                           -->
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-    <key name="active-workpace-opacity" type="i">
-      <default>255</default>
-      <summary>Active Workspace Opacity</summary>
-      <description>The opacity of the front facing workspace.</description>
+    <key name="do-explode" type="b">
+      <default>true</default>
+      <summary>Do Explode</summary>
+      <description>Explode the cube on vertical rotations.</description>
     </key>
-
-    <key name="inactive-workpace-opacity" type="i">
-      <default>200</default>
-      <summary>Inactive Workspace Opacity</summary>
-      <description>The opacity of the cube sides.</description>
-    </key>
-
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <!-- animation settings                                                            -->
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <key name="overview-transition-time" type="i">
       <default>0</default>
@@ -72,15 +46,59 @@
     </key>
 
     <key name="workspace-transition-time" type="i">
-      <default>500</default>
+      <default>0</default>
       <summary>Workspace Transition Time</summary>
       <description>Time for the transition between workpaces.</description>
     </key>
 
-    <key name="unfold-to-desktop" type="b">
-      <default>false</default>
-      <summary>Unfold to Desktop</summary>
-      <description>If true, the cube will unfold when transitioning to the desktop.</description>
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- desktop cube settings                                                         -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <key name="enable-desktop-dragging" type="b">
+      <default>true</default>
+      <summary>Enable Desktop Dragging</summary>
+      <description>Desktop: Rotate the cube with the left mouse button.</description>
+    </key>
+
+    <key name="enable-panel-dragging" type="b">
+      <default>true</default>
+      <summary>Enable Panel Dragging</summary>
+      <description>Panel: Rotate the cube with the left mouse button.</description>
+    </key>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- overview cube settings                                                        -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <key name="enable-overview-dragging" type="b">
+      <default>true</default>
+      <summary>Enable Overview Dragging</summary>
+      <description>Overview: Rotate the cube with the left mouse button.</description>
+    </key>
+
+    <key name="workpace-separation" type="i">
+      <default>80</default>
+      <summary>Workspace Separation</summary>
+      <description>The pixel gap between adjacent workspaces.</description>
+    </key>
+
+    <key name="horizontal-stretch" type="i">
+      <default>80</default>
+      <summary>Horizontal Stretch</summary>
+      <description>The widening factor which ensures that cube sides are visible from the front.</description>
+    </key>
+
+    <key name="active-workpace-opacity" type="i">
+      <default>255</default>
+      <summary>Active Workspace Opacity</summary>
+      <description>The opacity of the front facing workspace.</description>
+    </key>
+
+    <key name="inactive-workpace-opacity" type="i">
+      <default>200</default>
+      <summary>Inactive Workspace Opacity</summary>
+      <description>The opacity of the cube sides.</description>
     </key>
 
   </schema>
