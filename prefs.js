@@ -11,6 +11,8 @@
 const {Gio, Gtk, Gdk} = imports.gi;
 const ByteArray       = imports.byteArray;
 
+const _ = imports.gettext.domain('desktop-cube').gettext;
+
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me             = imports.misc.extensionUtils.getCurrentExtension();
 const utils          = Me.imports.src.utils;
@@ -107,16 +109,16 @@ var PreferencesDialog = class PreferencesDialog {
         dialog.set_copyright('© 2022 Simon Schneegans');
         dialog.set_translator_credits([...translators].join('\n'));
         if (sponsors.gold.length > 0) {
-          dialog.add_credit_section('Gold Sponsors', sponsors.gold);
+          dialog.add_credit_section(_('Gold Sponsors'), sponsors.gold);
         }
         if (sponsors.silver.length > 0) {
-          dialog.add_credit_section('Silver Sponsors', sponsors.silver);
+          dialog.add_credit_section(_('Silver Sponsors'), sponsors.silver);
         }
         if (sponsors.bronze.length > 0) {
-          dialog.add_credit_section('Bronze Sponsors', sponsors.bronze);
+          dialog.add_credit_section(_('Bronze Sponsors'), sponsors.bronze);
         }
         if (sponsors.past.length > 0) {
-          dialog.add_credit_section('Past Sponsors', sponsors.past);
+          dialog.add_credit_section(_('Past Sponsors'), sponsors.past);
         }
         dialog.set_license_type(Gtk.License.GPL_3_0);
 
