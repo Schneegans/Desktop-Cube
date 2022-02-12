@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-12 13:12+0100\n"
-"PO-Revision-Date: 2022-02-12 12:13+0000\n"
+"PO-Revision-Date: 2022-02-12 12:20+0000\n"
 "Last-Translator: Simon Schneegans <code@simonschneegans.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/desktop-cube/core/"
 "de/>\n"
@@ -93,15 +93,16 @@ msgstr "Auf Standardwert zurücksetzen"
 
 #: resources/ui/settings.ui:149
 msgid "Explode cube on vertical rotations"
-msgstr ""
+msgstr "Würfel bei vertikalen Drehungen explodieren lassen"
 
 #: resources/ui/settings.ui:158
 msgid "Rotate the cube up or down to show the 3D structure."
 msgstr ""
+"Drehen Sie den Würfel nach oben oder unten, um die 3D-Struktur zu zeigen."
 
 #: resources/ui/settings.ui:198
 msgid "Window parallax effect"
-msgstr ""
+msgstr "Fenster-Parallax-Effekt"
 
 #: resources/ui/settings.ui:246
 msgid "Transition time from desktop to overview [ms]"
@@ -123,7 +124,7 @@ msgstr "Animationszeit zwischen Arbeitsflächen [ms]"
 
 #: resources/ui/settings.ui:428
 msgid "Desktop Cube"
-msgstr ""
+msgstr "Desktop-Würfel"
 
 #: resources/ui/settings.ui:451
 msgid "Click and drag the desktop to rotate the cube"
@@ -131,11 +132,11 @@ msgstr "Klicken und ziehen Sie die Arbeitsfläche, um den Würfel zu drehen"
 
 #: resources/ui/settings.ui:485
 msgid "Click and drag the panel to rotate the cube"
-msgstr ""
+msgstr "Klicken Sie und ziehen Sie das Panel zum Drehen"
 
 #: resources/ui/settings.ui:523
 msgid "Overview Cube"
-msgstr ""
+msgstr "Würfel im Übersichtsmodus"
 
 #: resources/ui/settings.ui:546
 msgid "Click and drag the overview to rotate the cube"
