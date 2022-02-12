@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-12 13:12+0100\n"
+"POT-Creation-Date: 2022-02-12 13:20+0100\n"
 "PO-Revision-Date: 2022-02-11 11:55+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/desktop-"
@@ -120,7 +120,7 @@ msgid "Transition time between workspaces [ms]"
 msgstr "Overgangstid mellom arbeidsområder [ms]"
 
 #: resources/ui/settings.ui:428
-msgid "Desktop Cube"
+msgid "Desktop Options"
 msgstr ""
 
 #: resources/ui/settings.ui:451
@@ -132,7 +132,7 @@ msgid "Click and drag the panel to rotate the cube"
 msgstr ""
 
 #: resources/ui/settings.ui:523
-msgid "Overview Cube"
+msgid "Overview Options"
 msgstr ""
 
 #: resources/ui/settings.ui:546
