@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-12 12:55+0100\n"
-"PO-Revision-Date: 2022-02-10 07:58+0000\n"
+"PO-Revision-Date: 2022-02-12 12:13+0000\n"
 "Last-Translator: Simon Schneegans <code@simonschneegans.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/desktop-cube/core/"
 "de/>\n"
@@ -21,19 +21,19 @@ msgstr ""
 
 #: prefs.js:112
 msgid "Gold Sponsors"
-msgstr ""
+msgstr "Gold-Sponsoren"
 
 #: prefs.js:115
 msgid "Silver Sponsors"
-msgstr ""
+msgstr "Silber-Sponsoren"
 
 #: prefs.js:118
 msgid "Bronze Sponsors"
-msgstr ""
+msgstr "Bronze-Sponsoren"
 
 #: prefs.js:121
 msgid "Past Sponsors"
-msgstr ""
+msgstr "Ehemalige Sponsoren"
 
 #: resources/ui/settings.ui:8
 msgid "Visit Homepage"
@@ -41,7 +41,7 @@ msgstr "Homepage besuchen"
 
 #: resources/ui/settings.ui:12
 msgid "View Changelog"
-msgstr ""
+msgstr "Changelog anzeigen"
 
 #: resources/ui/settings.ui:18
 msgid "Report a Bug"
@@ -49,7 +49,7 @@ msgstr "Fehler melden"
 
 #: resources/ui/settings.ui:22
 msgid "Translate"
-msgstr ""
+msgstr "Übersetzen"
 
 #: resources/ui/settings.ui:26
 msgid "Donate"
@@ -65,11 +65,11 @@ msgstr "Mit GitHub"
 
 #: resources/ui/settings.ui:39
 msgid "About the Desktop-Cube"
-msgstr ""
+msgstr "Über den Desktop-Würfel"
 
 #: resources/ui/settings.ui:70
 msgid "General Options"
-msgstr ""
+msgstr "Allgemeine Optionen"
 
 #: resources/ui/settings.ui:97
 msgid "Add a gap between last and first workspace"
