@@ -425,7 +425,7 @@
               <object class="GtkLabel">
                 <property name="margin-top">30</property>
                 <property name="margin-bottom">10</property>
-                <property name="label" translatable="yes">Desktop Cube</property>
+                <property name="label" translatable="yes">Desktop Options</property>
                 <property name="xalign">0</property>
                 <style>
                   <class name="title-4" />
@@ -520,7 +520,7 @@
               <object class="GtkLabel">
                 <property name="margin-top">30</property>
                 <property name="margin-bottom">10</property>
-                <property name="label" translatable="yes">Overview Cube</property>
+                <property name="label" translatable="yes">Overview Options</property>
                 <property name="xalign">0</property>
                 <style>
                   <class name="title-4" />
