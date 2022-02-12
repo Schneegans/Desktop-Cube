@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-10 08:48+0100\n"
+"POT-Creation-Date: 2022-02-12 12:55+0100\n"
 "PO-Revision-Date: 2022-02-11 11:55+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
-"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
-"desktop-cube/core/nb_NO/>\n"
+"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/desktop-"
+"cube/core/nb_NO/>\n"
 "Language: nb_NO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,106 +19,161 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.11-dev\n"
 
+#: prefs.js:112
+msgid "Gold Sponsors"
+msgstr ""
+
+#: prefs.js:115
+msgid "Silver Sponsors"
+msgstr ""
+
+#: prefs.js:118
+msgid "Bronze Sponsors"
+msgstr ""
+
+#: prefs.js:121
+msgid "Past Sponsors"
+msgstr ""
+
 #: resources/ui/settings.ui:8
 msgid "Visit Homepage"
 msgstr "Besøk hjemmesiden"
 
 #: resources/ui/settings.ui:12
+msgid "View Changelog"
+msgstr ""
+
+#: resources/ui/settings.ui:18
 msgid "Report a Bug"
 msgstr "Innrapporter en feil"
 
-#: resources/ui/settings.ui:18
+#: resources/ui/settings.ui:22
+msgid "Translate"
+msgstr ""
+
+#: resources/ui/settings.ui:26
 msgid "Donate"
 msgstr "Doner"
 
-#: resources/ui/settings.ui:20
+#: resources/ui/settings.ui:28
 msgid "Via PayPal"
 msgstr "Med PayPal"
 
-#: resources/ui/settings.ui:24
+#: resources/ui/settings.ui:32
 msgid "Via GitHub"
 msgstr "Via GitHub"
 
-#: resources/ui/settings.ui:56
-msgid "Behavior"
-msgstr "Oppførsel"
+#: resources/ui/settings.ui:39
+msgid "About the Desktop-Cube"
+msgstr ""
 
-#: resources/ui/settings.ui:79
-msgid "Click and drag the overview to rotate the cube"
-msgstr "Klikk og dra oversikten for å rotere kuben"
+#: resources/ui/settings.ui:70
+msgid "General Options"
+msgstr ""
 
-#: resources/ui/settings.ui:96 resources/ui/settings.ui:130
-#: resources/ui/settings.ui:210 resources/ui/settings.ui:252
-#: resources/ui/settings.ui:294 resources/ui/settings.ui:355
-#: resources/ui/settings.ui:426 resources/ui/settings.ui:470
-#: resources/ui/settings.ui:558 resources/ui/settings.ui:619
-#: resources/ui/settings.ui:680
-msgid "Reset to default value"
-msgstr "Tilbakestill til forvalgt verdi"
+#: resources/ui/settings.ui:97
+msgid "Add a gap between last and first workspace"
+msgstr ""
 
-#: resources/ui/settings.ui:113
-msgid "Click and drag the desktop to rotate the cube"
-msgstr "Klikk og dra skrivebordet for å rotere kuben"
-
-#: resources/ui/settings.ui:152
-msgid "Layout"
-msgstr "Oppsett"
-
-#: resources/ui/settings.ui:179
-msgid "Gap between last and first workspace"
-msgstr "Mellomrom mellom siste og første arbeidsområde"
-
-#: resources/ui/settings.ui:188
+#: resources/ui/settings.ui:106
 #, fuzzy
 msgid "You cannot loop around in GNOME Shell anyways."
 msgstr "Du kan ikke snurre rundt i GNOME Shell uansett."
 
-#: resources/ui/settings.ui:228
+#: resources/ui/settings.ui:128 resources/ui/settings.ui:180
+#: resources/ui/settings.ui:224 resources/ui/settings.ui:285
+#: resources/ui/settings.ui:346 resources/ui/settings.ui:407
+#: resources/ui/settings.ui:468 resources/ui/settings.ui:502
+#: resources/ui/settings.ui:563 resources/ui/settings.ui:605
+#: resources/ui/settings.ui:666 resources/ui/settings.ui:710
+#: resources/ui/settings.ui:754
+msgid "Reset to default value"
+msgstr "Tilbakestill til forvalgt verdi"
+
+#: resources/ui/settings.ui:149
+msgid "Explode cube on vertical rotations"
+msgstr ""
+
+#: resources/ui/settings.ui:158
+msgid "Rotate the cube up or down to show the 3D structure."
+msgstr ""
+
+#: resources/ui/settings.ui:198
+msgid "Window parallax effect"
+msgstr ""
+
+#: resources/ui/settings.ui:246
+msgid "Transition time from desktop to overview [ms]"
+msgstr "Overgangstid fra skrivebord til oversikte [ms]"
+
+#: resources/ui/settings.ui:255 resources/ui/settings.ui:316
+#: resources/ui/settings.ui:377
+msgid "Set to 0 to use GNOME Shell's default value."
+msgstr "Sett til 0 for å bruke GNOME Shell sin forvalgte verdi."
+
+#: resources/ui/settings.ui:307
+msgid "Transition time from overview to app drawer [ms]"
+msgstr "Overgangstid fra oversikt til programskuff [ms]"
+
+#: resources/ui/settings.ui:368
+msgid "Transition time between workspaces [ms]"
+msgstr "Overgangstid mellom arbeidsområder [ms]"
+
+#: resources/ui/settings.ui:428
+msgid "Desktop Cube"
+msgstr ""
+
+#: resources/ui/settings.ui:451
+msgid "Click and drag the desktop to rotate the cube"
+msgstr "Klikk og dra skrivebordet for å rotere kuben"
+
+#: resources/ui/settings.ui:485
+msgid "Click and drag the panel to rotate the cube"
+msgstr ""
+
+#: resources/ui/settings.ui:523
+msgid "Overview Cube"
+msgstr ""
+
+#: resources/ui/settings.ui:546
+msgid "Click and drag the overview to rotate the cube"
+msgstr "Klikk og dra oversikten for å rotere kuben"
+
+#: resources/ui/settings.ui:581
 #, fuzzy
 msgid "Gap between adjacent workspaces"
 msgstr "Mellomrom mellom tilkransende arbeidsområder"
 
-#: resources/ui/settings.ui:270
-msgid "Separation between background and windows"
-msgstr "Inndeling mellom bakgrunner og vinduer"
-
-#: resources/ui/settings.ui:316
+#: resources/ui/settings.ui:627
 msgid "Horizontal stretching of the cube"
 msgstr "Vannrett strekking av kuben"
 
-#: resources/ui/settings.ui:325
+#: resources/ui/settings.ui:636
 msgid "This ensures that you can see the cube's sides from the front."
 msgstr "Dette sørger for at du kan se kubens siden forfra."
 
-#: resources/ui/settings.ui:376
-msgid "Appearance"
-msgstr "Utseende"
-
-#: resources/ui/settings.ui:400
+#: resources/ui/settings.ui:684
 msgid "Opacity of the active workspace"
 msgstr "Dekkevne for aktivt arbeidsområde"
 
-#: resources/ui/settings.ui:444
+#: resources/ui/settings.ui:728
 msgid "Opacity of inactive workspaces"
 msgstr "Dekkevne for inaktive arbeidsområder"
 
-#: resources/ui/settings.ui:491
-msgid "Animations"
-msgstr "Animasjoner"
+#~ msgid "Behavior"
+#~ msgstr "Oppførsel"
 
-#: resources/ui/settings.ui:519
-msgid "Transition time from desktop to overview [ms]"
-msgstr "Overgangstid fra skrivebord til oversikte [ms]"
+#~ msgid "Layout"
+#~ msgstr "Oppsett"
 
-#: resources/ui/settings.ui:528 resources/ui/settings.ui:589
-#: resources/ui/settings.ui:650
-msgid "Set to 0 to use GNOME Shell's default value."
-msgstr "Sett til 0 for å bruke GNOME Shell sin forvalgte verdi."
+#~ msgid "Gap between last and first workspace"
+#~ msgstr "Mellomrom mellom siste og første arbeidsområde"
 
-#: resources/ui/settings.ui:580
-msgid "Transition time from overview to app drawer [ms]"
-msgstr "Overgangstid fra oversikt til programskuff [ms]"
+#~ msgid "Separation between background and windows"
+#~ msgstr "Inndeling mellom bakgrunner og vinduer"
 
-#: resources/ui/settings.ui:641
-msgid "Transition time between workspaces [ms]"
-msgstr "Overgangstid mellom arbeidsområder [ms]"
+#~ msgid "Appearance"
+#~ msgstr "Utseende"
+
+#~ msgid "Animations"
+#~ msgstr "Animasjoner"
