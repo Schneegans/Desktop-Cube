@@ -10,11 +10,21 @@
 * It is now possible to **rotate the cube by single-click dragging**! This works in two places:
   * In the **overview**: Click any non-interactive area (e.g. the workspace background) and start dragging. You will be able to switch workspaces by horizontal movement, and you can look "into" the cube by rotating it up and down.
   * On the **desktop**: Simply click any free space on you desktop and start dragging the cube!
+* **Cube Explosion:** If you rotate the cube vertically (both in desktop or overview mode), the cube will be scaled down and the depth separation between windows will be increased.
+* **Depth Variance in Overview:** During rotations, window clones in the overview are not all drawn at the same depth.
 * **Translations!** It is now possible to [translate the preferences dialog](https://hosted.weblate.org/engage/desktop-cube/).
+* Added an about-dialog which shows all translators and sponsors.
 
 #### Other Changes
 
 * Removed the unfold-to-desktop option as we now have cuboid workspace transitions everywhere.
+* The README now shows the current lines of code and the current comment percentage using my [dynamic-badges-action](https://github.com/Schneegans/dynamic-badges-action).
+
+#### Bug Fixes
+
+* Fixed the workspace size in the overview. The active workspace should now be drawn at the same size as without the extension.
+* Fixed some depth sorting issues. Especially when transitioning from window picker state to app drawer state, the windows were sometimes drawn behind the workspace backgrounds.
+
 
 ## [Desktop Cube 7](https://github.com/schneegans/Desktop-Cube/releases/tag/v7)
 
