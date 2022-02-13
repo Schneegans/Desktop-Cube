@@ -34,7 +34,7 @@ const utils          = Me.imports.src.utils;
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // clang-format off
-const DragGesture =
+var DragGesture =
   GObject.registerClass({
       Properties: {
         'distance': GObject.ParamSpec.double(
