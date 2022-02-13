@@ -19,6 +19,7 @@
 #### Other Changes
 
 * Removed the unfold-to-desktop option as we now have cuboid workspace transitions everywhere.
+* **Add advanced CI tests:** For each commit to `main`, it is now tested whether the extension can be installed and if the preferences dialog can be shown on GNOME Shell 40 and 41. Both, X11 and Wayland are checked. 
 * The README now shows the current lines of code and the current comment percentage using my [dynamic-badges-action](https://github.com/Schneegans/dynamic-badges-action).
 
 #### Bug Fixes
