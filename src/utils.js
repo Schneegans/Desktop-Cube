@@ -8,6 +8,9 @@
 
 'use strict';
 
+const Config               = imports.misc.config;
+const [GS_MAJOR, GS_MINOR] = Config.PACKAGE_VERSION.split('.');
+
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me             = imports.misc.extensionUtils.getCurrentExtension();
 
@@ -29,4 +32,24 @@ function debug(message) {
   const extensionRoot = stack[0].indexOf(Me.metadata.uuid);
 
   log('[' + stack[0].slice(extensionRoot) + '] ' + message);
+}
+
+// This method returns true if the current GNOME Shell version matches the given
+// arguments.
+function shellVersionIs(major, minor) {
+  return GS_MAJOR == major && GS_MINOR == minor;
+}
+
+// This method returns true if the current GNOME Shell version is at least as high as the
+// given arguments.
+function shellVersionIsAtLeast(major, minor) {
+  if (GS_MAJOR > major) {
+    return true;
+  }
+
+  if (GS_MAJOR == major) {
+    return GS_MINOR >= minor;
+  }
+
+  return false;
 }
