@@ -43,5 +43,5 @@ function shellVersionIs(major) {
 // This method returns true if the current GNOME Shell version is at least as high as the
 // given argument.
 function shellVersionIsAtLeast(major) {
-  return GS_MAJOR <= major;
+  return GS_MAJOR >= major;
 }
