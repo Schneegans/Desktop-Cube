@@ -50,100 +50,119 @@ var DragGesture =
       },
     },
     class DragGesture extends Clutter.GestureAction {
-      // clang-format on
-      _init(mode) {
-        super._init();
-        this.set_n_touch_points(1);
-        this.set_threshold_trigger_edge(Clutter.GestureTriggerEdge.AFTER);
+  // clang-format on
+  _init(mode) {
+    super._init();
+    this.set_n_touch_points(1);
+    this.set_threshold_trigger_edge(Clutter.GestureTriggerEdge.AFTER);
 
-        this._mode   = mode;
-        this._lastX  = 0;
-        this._startY = 0;
+    this._mode   = mode;
+    this._lastX  = 0;
+    this._startY = 0;
+  }
+
+  // Called before the gesture actually starts, it can abort the gesture by returning
+  // false.
+  vfunc_gesture_prepare(actor) {
+    if (!super.vfunc_gesture_prepare(actor)) {
+      return false;
+    }
+
+    // Abort if the gesture is not meant for the current action mode (e.g. either
+    // Shell.ActionMode.OVERVIEW or Shell.ActionMode.NORMAL).
+    if (this._mode != Main.actionMode) {
+      return false;
+    }
+
+    // In the overview, we only want to switch workspaces by dragging when in
+    // window-picker state.
+    if (Main.actionMode == Shell.ActionMode.OVERVIEW) {
+      if (Main.overview._overview.controls._stateAdjustment.value !=
+          ControlsState.WINDOW_PICKER) {
+        return false;
       }
+    }
 
-      // Called before the gesture actually starts, it can abort the gesture by returning
-      // false.
-      vfunc_gesture_prepare(actor) {
-        if (!super.vfunc_gesture_prepare(actor)) {
-          return false;
-        }
-
-        // Abort if the gesture is not meant for the current action mode (e.g. either
-        // Shell.ActionMode.OVERVIEW or Shell.ActionMode.NORMAL).
-        if (this._mode != Main.actionMode) {
-          return false;
-        }
-
-        // In the overview, we only want to switch workspaces by dragging when in
-        // window-picker state.
-        if (Main.actionMode == Shell.ActionMode.OVERVIEW) {
-          if (Main.overview._overview.controls._stateAdjustment.value !=
-              ControlsState.WINDOW_PICKER) {
-            return false;
-          }
-        }
-
-        // When starting a drag in desktop mode, we grab the input so that we can move the
-        // pointer across windows without loosing the input events.
-        if (Main.actionMode == Shell.ActionMode.NORMAL) {
-          if (!global.begin_modal(0, 0)) {
-            return false;
-          }
-        }
-
-        // Store the start coordinates of the gesture.
-        const time                  = this.get_last_event(0).get_time();
-        const [xPress, yPress]      = this.get_press_coords(0);
-        [this._lastX, this._startY] = this.get_motion_coords(0);
-
-        this.pitch = 0;
-
-        this.emit('begin', time, xPress, yPress);
-        return true;
+    // When starting a drag in desktop mode, we grab the input so that we can move the
+    // pointer across windows without loosing the input events.
+    if (Main.actionMode == Shell.ActionMode.NORMAL) {
+      if (!this._grab(actor)) {
+        return false;
       }
+    }
 
-      // Called on pointer or touch-movement events.
-      vfunc_gesture_progress(_actor) {
+    // Store the start coordinates of the gesture.
+    const time                  = this.get_last_event(0).get_time();
+    const [xPress, yPress]      = this.get_press_coords(0);
+    [this._lastX, this._startY] = this.get_motion_coords(0);
 
-        // Compute the horizontal movement relative to the last call.
-        const [x, y] = this.get_motion_coords(0);
-        let deltaX   = x - this._lastX;
-        this._lastX  = x;
+    this.pitch = 0;
 
-        // Compute the accumulated pitch relative to the screen height.
-        this.pitch = (this._startY - y) / global.screen_height;
+    this.emit('begin', time, xPress, yPress);
+    return true;
+  }
 
-        // Increase horizontal movement if the cube is rotated vertically.
-        deltaX *= Util.lerp(
-            1.0, global.workspaceManager.get_n_workspaces(), Math.abs(this.pitch));
+  // Called on pointer or touch-movement events.
+  vfunc_gesture_progress(_actor) {
 
-        const time = this.get_last_event(0).get_time();
-        this.emit('update', time, -deltaX, this.distance);
+    // Compute the horizontal movement relative to the last call.
+    const [x, y] = this.get_motion_coords(0);
+    let deltaX   = x - this._lastX;
+    this._lastX  = x;
 
-        return true;
-      }
+    // Compute the accumulated pitch relative to the screen height.
+    this.pitch = (this._startY - y) / global.screen_height;
 
-      // Called when the gesture is ended by the user.
-      vfunc_gesture_end(_actor) {
+    // Increase horizontal movement if the cube is rotated vertically.
+    deltaX *=
+        Util.lerp(1.0, global.workspaceManager.get_n_workspaces(), Math.abs(this.pitch));
 
-        // Cancel the ongoing grab in desktop mode.
-        if (Main.actionMode == Shell.ActionMode.NORMAL) {
-          global.end_modal(0);
-        }
+    const time = this.get_last_event(0).get_time();
+    this.emit('update', time, -deltaX, this.distance);
 
-        const time = this.get_last_event(0).get_time();
-        this.emit('end', time, this.distance);
-      }
+    return true;
+  }
 
-      // Called when the gesture is canceled by some event.
-      vfunc_gesture_cancel(_actor) {
+  // Called when the gesture is ended by the user.
+  vfunc_gesture_end(_actor) {
 
-        // Cancel the ongoing grab in desktop mode.
-        if (Main.actionMode == Shell.ActionMode.NORMAL) {
-          global.end_modal(0);
-        }
+    // Cancel the ongoing grab in desktop mode.
+    if (Main.actionMode == Shell.ActionMode.NORMAL) {
+      this._ungrab();
+    }
 
-        const time = Clutter.get_current_event_time();
-        this.emit('cancel', time, this.distance);
-      }
-    });
+    const time = this.get_last_event(0).get_time();
+    this.emit('end', time, this.distance);
+  }
+
+  // Called when the gesture is canceled by some event.
+  vfunc_gesture_cancel(_actor) {
+
+    // Cancel the ongoing grab in desktop mode.
+    if (Main.actionMode == Shell.ActionMode.NORMAL) {
+      this._ungrab();
+    }
+
+    const time = Clutter.get_current_event_time();
+    this.emit('cancel', time, this.distance);
+  }
+
+  // Makes sure that all events from the pointing device we received last input from is
+  // passed to the given actor. This is used to ensure that we do not "loose" the touch
+  // buttons will dragging them around.
+  _grab(actor) {
+    if (utils.shellVersionIsAtLeast(42, 0)) {
+      this.get_device(0).grab(actor);
+    }
+    return global.begin_modal(0, 0);
+  }
+
+  // Releases a grab created with the method above.
+  _ungrab() {
+    if (utils.shellVersionIsAtLeast(42, 0)) {
+      this.get_device(0).ungrab();
+    }
+
+    global.end_modal(0);
+  }
+});
