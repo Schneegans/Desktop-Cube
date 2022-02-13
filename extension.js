@@ -697,6 +697,9 @@ class Extension {
     let actor     = Main.layoutManager._backgroundGroup;
     const mode    = Shell.ActionMode.NORMAL;
 
+    // for some reason, adding the gesture to the BackgroundGroup does not work on GNOME
+    // Shell 42. However, it works with the BackgroundActor. On GNOME Shell 40 and 41,
+    // it's the other way around...
     if (utils.shellVersionIsAtLeast(42)) {
       actor = actor.get_children()[0];
     }
@@ -746,6 +749,7 @@ class Extension {
       const tracker = Main.wm._workspaceAnimation._swipeTracker;
       let actor     = Main.layoutManager._backgroundGroup;
 
+      // See comment in _addDesktopDragGesture().
       if (utils.shellVersionIsAtLeast(42)) {
         actor = actor.get_children()[0];
       }

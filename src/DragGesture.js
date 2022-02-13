@@ -151,9 +151,12 @@ var DragGesture =
   // passed to the given actor. This is used to ensure that we do not "loose" the touch
   // buttons will dragging them around.
   _grab(actor) {
+
+    // On GNOME Shell 42, we have to grab the device. Why? I do not know...
     if (utils.shellVersionIsAtLeast(42)) {
       this.get_device(0).grab(actor);
     }
+
     return global.begin_modal(0, 0);
   }
 
