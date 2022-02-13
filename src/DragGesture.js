@@ -151,7 +151,7 @@ var DragGesture =
   // passed to the given actor. This is used to ensure that we do not "loose" the touch
   // buttons will dragging them around.
   _grab(actor) {
-    if (utils.shellVersionIsAtLeast(42, 0)) {
+    if (utils.shellVersionIsAtLeast(42)) {
       this.get_device(0).grab(actor);
     }
     return global.begin_modal(0, 0);
@@ -159,7 +159,7 @@ var DragGesture =
 
   // Releases a grab created with the method above.
   _ungrab() {
-    if (utils.shellVersionIsAtLeast(42, 0)) {
+    if (utils.shellVersionIsAtLeast(42)) {
       this.get_device(0).ungrab();
     }
 

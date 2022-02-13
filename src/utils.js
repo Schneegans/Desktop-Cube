@@ -8,8 +8,8 @@
 
 'use strict';
 
-const Config               = imports.misc.config;
-const [GS_MAJOR, GS_MINOR] = Config.PACKAGE_VERSION.split('.');
+const Config     = imports.misc.config;
+const [GS_MAJOR] = Config.PACKAGE_VERSION.split('.');
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me             = imports.misc.extensionUtils.getCurrentExtension();
@@ -35,21 +35,13 @@ function debug(message) {
 }
 
 // This method returns true if the current GNOME Shell version matches the given
-// arguments.
-function shellVersionIs(major, minor) {
-  return GS_MAJOR == major && GS_MINOR == minor;
+// argument.
+function shellVersionIs(major) {
+  return GS_MAJOR == major;
 }
 
 // This method returns true if the current GNOME Shell version is at least as high as the
-// given arguments.
-function shellVersionIsAtLeast(major, minor) {
-  if (GS_MAJOR > major) {
-    return true;
-  }
-
-  if (GS_MAJOR == major) {
-    return GS_MINOR >= minor;
-  }
-
-  return false;
+// given argument.
+function shellVersionIsAtLeast(major) {
+  return GS_MAJOR <= major;
 }
