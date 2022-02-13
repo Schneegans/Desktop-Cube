@@ -8,18 +8,18 @@
 #### New Features
 
 * It is now possible to **rotate the cube by single-click dragging**! This works in three places (all of them can be enabled or disabled in the settings):
-  * In the **overview**: Click any non-interactive area (e.g. the workspace background) and start dragging. You will be able to switch workspaces by horizontal movement, and you can look "into" the cube by rotating it up and down.
+  * In the **overview**: Click any non-interactive area (e.g. the background) and start dragging. You will be able to switch workspaces by horizontal movement, and you can look "into" the cube by rotating it up and down.
   * On the **desktop**: Simply click any free space on you desktop and start dragging the cube!
   * On the **panel**: Simply click on the panel and start dragging!
 * **Cube Explosion:** If you rotate the cube vertically (both in desktop or overview mode), the cube will be scaled down and the depth separation between windows will be increased.
 * **Depth Variance in Overview:** During rotations, window clones in the overview are not all drawn at the same depth.
 * **Translations!** It is now possible to [translate the preferences dialog](https://hosted.weblate.org/engage/desktop-cube/).
-* Added an about-dialog which shows all translators and sponsors.
+* An **about-dialog** has been added which shows all translators and sponsors.
 
 #### Other Changes
 
 * Removed the unfold-to-desktop option as we now have cuboid workspace transitions everywhere.
-* **Add advanced CI tests:** For each commit to `main`, it is now tested whether the extension can be installed and if the preferences dialog can be shown on GNOME Shell 40 and 41. Both, X11 and Wayland are checked. 
+* **Added advanced CI tests:** For each commit to `main`, it is now tested whether the extension can be installed and if the preferences dialog can be shown on GNOME Shell 40 and 41. Both, X11 and Wayland are checked. 
 * The README now shows the current lines of code and the current comment percentage using my [dynamic-badges-action](https://github.com/Schneegans/dynamic-badges-action).
 
 #### Bug Fixes
