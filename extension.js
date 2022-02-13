@@ -694,13 +694,17 @@ class Extension {
     // The SwipeTracker for switching workspaces in desktop mode is created here:
     // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L286
     const tracker = Main.wm._workspaceAnimation._swipeTracker;
-    const actor   = Main.layoutManager._backgroundGroup;
+    let actor     = Main.layoutManager._backgroundGroup;
     const mode    = Shell.ActionMode.NORMAL;
+
+    if (utils.shellVersionIsAtLeast(42)) {
+      actor = actor.get_children()[0];
+    }
 
     // We have to make the background reactive. Make sure to store the current state so
     // that we can reset it later.
-    this._origBackgroundGroupReactivity = actor.reactive;
-    actor.reactive                      = true;
+    this._origBackgroundReactivity = actor.reactive;
+    actor.reactive                 = true;
 
     this._desktopDragGesture = this._addDragGesture(actor, tracker, mode);
   }
@@ -740,10 +744,14 @@ class Extension {
       // The SwipeTracker for switching workspaces in desktop mode is created here:
       // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L286
       const tracker = Main.wm._workspaceAnimation._swipeTracker;
-      const actor   = Main.layoutManager._backgroundGroup;
+      let actor     = Main.layoutManager._backgroundGroup;
+
+      if (utils.shellVersionIsAtLeast(42)) {
+        actor = actor.get_children()[0];
+      }
 
       // Make sure to restore the original state.
-      actor.reactive = this._origBackgroundGroupReactivity;
+      actor.reactive = this._origBackgroundReactivity;
 
       this._removeDragGesture(actor, tracker, this._desktopDragGesture);
 
