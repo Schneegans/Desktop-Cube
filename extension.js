@@ -643,7 +643,14 @@ class Extension {
     const depthOffset = Math.max(hFactor * hDepthOffset, vFactor * vDepthOffset);
     const explode     = Math.max(hFactor * hExplode, vFactor * vExplode);
 
-    return [depthOffset, explode];
+    // Do not explode the cube in app drawer state. The stateAdjustment is...
+    // ... 0 on the desktop
+    // ... 1 in the window picker
+    // ... 2 in the app drawer
+    const windowPickerFactor =
+        Math.min(1.0, 2.0 - Main.overview._overview.controls._stateAdjustment.value);
+
+    return [depthOffset * windowPickerFactor, explode * windowPickerFactor];
   }
 
   // This creates a custom drag gesture and adds it to the given SwipeTracker. The swipe
