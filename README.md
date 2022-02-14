@@ -30,6 +30,7 @@ While coding new features is the most awesome way to contribute, providing finan
 
 <h3 align="center">🥈 Current Silver Sponsors</h3>
 <p align="center">
+  <a href="https://twitter.com/tjiiik">tj3k</a><br>
   <a href="https://github.com/castrojo">Jorge Castro</a>
 </p>
 
