@@ -351,7 +351,9 @@ class Extension {
           // explode.
           windowActors.forEach((windowActor, j) => {
             const record = child._windowRecords.find(r => r.windowActor === windowActor);
-            record.clone.translation_z = explode * (j + 1) / windowActors.length;
+            if (record) {
+              record.clone.translation_z = explode * (j + 1) / windowActors.length;
+            }
           });
 
           // Now sort the window clones and the background actor according to the
