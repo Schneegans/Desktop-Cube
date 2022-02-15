@@ -27,6 +27,7 @@
 
 * Fixed the workspace size in the overview. The active workspace should now be drawn at the same size as without the extension.
 * Fixed some depth sorting issues. Especially when transitioning from window picker state to app drawer state, the windows were sometimes drawn behind the workspace backgrounds.
+* Improved the performance of transition from overview to app-drawer.
 
 
 ## [Desktop Cube 7](https://github.com/schneegans/Desktop-Cube/releases/tag/v7)
