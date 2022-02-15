@@ -142,6 +142,13 @@ class Extension {
         return;
       }
 
+      // Sometimes, this method is called twice a frame. This seems not so useful, we skip
+      // any doubled calls.
+      if (this._lastCalledFrame == global.stage.get_frame_counter()) {
+        return;
+      }
+      this._lastCalledFrame = global.stage.get_frame_counter();
+
       // Compute blending state from and to the overview, from and to the app grid, and
       // from and to the desktop mode. We will use cubeMode to fold and unfold the
       // cube, overviewMode to add some depth between windows and backgrounds, and
@@ -435,8 +442,6 @@ class Extension {
         this._removeOverviewDragGesture();
       }
     });
-
-
 
     // The overview's SwipeTracker will control the _overviewAdjustment of the
     // WorkspacesDisplay. However, only horizontal swipes will update this adjustment. If
