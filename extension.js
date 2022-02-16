@@ -14,7 +14,6 @@ const Util           = imports.misc.util;
 const Main           = imports.ui.main;
 const WorkspacesView = imports.ui.workspacesView.WorkspacesView;
 const FitMode        = imports.ui.workspacesView.FitMode;
-const MonitorGroup   = imports.ui.workspaceAnimation.MonitorGroup;
 const WorkspaceAnimationController =
     imports.ui.workspaceAnimation.WorkspaceAnimationController;
 
@@ -27,9 +26,6 @@ const DragGesture    = Me.imports.src.DragGesture.DragGesture;
 // This extensions tweaks the positioning of workspaces in overview mode and while      //
 // switching workspaces in desktop mode to make them look like cube faces.              //
 //////////////////////////////////////////////////////////////////////////////////////////
-
-// The scale of inactive workspaces in app grid mode.
-const INACTIVE_SCALE = imports.ui.workspacesView.WORKSPACE_INACTIVE_SCALE;
 
 // Maximum degrees the cube can be rotated up and down.
 const MAX_VERTICAL_ROTATION = 50;
@@ -56,8 +52,6 @@ class Extension {
     this._origUpdateWorkspacesState = WorkspacesView.prototype._updateWorkspacesState;
     this._origGetSpacing            = WorkspacesView.prototype._getSpacing;
     this._origUpdateVisibility      = WorkspacesView.prototype._updateVisibility;
-    this._origMonitorGroupInit      = MonitorGroup.prototype._init;
-    this._origUpdateSwipeForMonitor = MonitorGroup.prototype.updateSwipeForMonitor;
     this._origAnimateSwitch = WorkspaceAnimationController.prototype.animateSwitch;
     this._origPrepSwitch = WorkspaceAnimationController.prototype._prepareWorkspaceSwitch;
 
@@ -230,8 +224,12 @@ class Extension {
         const opacity  = Util.lerp(opacityA, opacityB, Math.abs(dist));
         w._background.set_opacity(Util.lerp(255, opacity, overviewMode));
 
-        // Update workspace scale only in app grid mode.
-        const scale = Util.lerp(1, INACTIVE_SCALE, Math.abs(dist) * appDrawerMode);
+        // Update workspace scale only in app grid mode. The 0.94 is supposed to be the
+        // same value as the WORKSPACE_INACTIVE_SCALE defined here:
+        // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L21
+        // As this is defined as 'const', we cannot access it here. But the exact value
+        // also not really matters...
+        const scale = Util.lerp(1, 0.94, Math.abs(dist) * appDrawerMode);
         w.set_scale(scale, scale);
 
         // Now we add some depth separation between the window clones. If the explode
@@ -283,17 +281,6 @@ class Extension {
       for (const monitorGroup of this._switchData.monitors) {
         monitorGroup.get_transition('progress').set_duration(duration);
       }
-    };
-
-    // This override looks kind of funny. It simply calls the original method without
-    // any arguments. Usually, GNOME Shell "skips" workspaces when switching to a
-    // workspace which is more than one workspace to the left or the right. This
-    // behavior is not desirable for thr cube, as it messes with your spatial memory.
-    // If no workspaceIndices are given to this method, all workspaces will be shown
-    // during the workspace switch.
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L300
-    WorkspaceAnimationController.prototype._prepareWorkspaceSwitch = function() {
-      extensionThis._origPrepSwitch.apply(this, []);
     };
 
     // This override rotates the workspaces during the transition to look like cube
@@ -375,18 +362,31 @@ class Extension {
       extensionThis._sortActorsByAngle(group._workspaceGroups);
     };
 
-    // Call the method above whenever a gesture is active.
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L265
-    MonitorGroup.prototype.updateSwipeForMonitor = function(...params) {
-      extensionThis._origUpdateSwipeForMonitor.apply(this, params);
-      updateMonitorGroup(this);
-    };
+    // Whenever a workspace-switch is about to happen, we tweak the MonitorGroup class a
+    // bit to arrange the workspaces in a cube-like fashion. We have to adjust to parts of
+    // the code as the automatic transitions (e.g. when switching with key combinations)
+    // are handled differently than the gesture based switches.
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L300
+    WorkspaceAnimationController.prototype._prepareWorkspaceSwitch = function() {
+      // Here, we call the original method without any arguments. Usually, GNOME Shell
+      // "skips" workspaces when switching to a workspace which is more than one workspace
+      // to the left or the right. This behavior is not desirable for thr cube, as it
+      // messes with your spatial memory. If no workspaceIndices are given to this method,
+      // all workspaces will be shown during the workspace switch.
+      extensionThis._origPrepSwitch.apply(this, []);
 
-    // Call the method above whenever the transition progress changes.
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L135
-    MonitorGroup.prototype._init = function(...params) {
-      extensionThis._origMonitorGroupInit.apply(this, params);
-      this.connect_after('notify::progress', () => updateMonitorGroup(this));
+      // Now tweak the monitor groups.
+      this._switchData.monitors.forEach(m => {
+        // Call the method above whenever the transition progress changes.
+        m.connect('notify::progress', () => updateMonitorGroup(m));
+
+        // Call the method above whenever a gesture is active.
+        const orig              = m.updateSwipeForMonitor;
+        m.updateSwipeForMonitor = function(progress, baseMonitorGroup) {
+          orig.apply(m, [progress, baseMonitorGroup]);
+          updateMonitorGroup(m);
+        };
+      });
     };
 
     // -------------------------------------------------- enable cube rotation by dragging
@@ -465,8 +465,6 @@ class Extension {
     WorkspacesView.prototype._updateWorkspacesState = this._origUpdateWorkspacesState;
     WorkspacesView.prototype._getSpacing            = this._origGetSpacing;
     WorkspacesView.prototype._updateVisibility      = this._origUpdateVisibility;
-    MonitorGroup.prototype._init                    = this._origMonitorGroupInit;
-    MonitorGroup.prototype.updateSwipeForMonitor    = this._origUpdateSwipeForMonitor;
     WorkspaceAnimationController.prototype.animateSwitch = this._origAnimateSwitch;
     WorkspaceAnimationController.prototype._prepareWorkspaceSwitch = this._origPrepSwitch;
 
