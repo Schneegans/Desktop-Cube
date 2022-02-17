@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-17 11:15+0100\n"
-"PO-Revision-Date: 2022-02-13 12:42+0000\n"
+"PO-Revision-Date: 2022-02-17 11:22+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/desktop-cube/core/"
 "nl/>\n"
@@ -78,6 +78,8 @@ msgstr "Ruimte tussen laatste en eerste werkblad"
 #: resources/ui/settings.ui:106
 msgid "You cannot switch from the last to the first workspace anyways."
 msgstr ""
+"U kunt bovendien toch niet van het laatste naar het eerste werkblad "
+"overschakelen."
 
 #: resources/ui/settings.ui:128 resources/ui/settings.ui:180
 #: resources/ui/settings.ui:224 resources/ui/settings.ui:285
