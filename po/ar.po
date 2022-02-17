@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-17 11:15+0100\n"
-"PO-Revision-Date: 2022-02-17 11:35+0100\n"
+"PO-Revision-Date: 2022-02-17 11:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
@@ -99,7 +99,7 @@ msgstr "دُرْ المكعب الي الاعلي او الي الاسفل لا�
 
 #: resources/ui/settings.ui:198
 msgid "Window parallax effect"
-msgstr "تأثير النوافذ المتوازية"
+msgstr "مؤثر العمق للنوافذ"
 
 #: resources/ui/settings.ui:246
 msgid "Transition time from desktop to overview [ms]"
