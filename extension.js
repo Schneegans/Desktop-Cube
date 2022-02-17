@@ -278,8 +278,10 @@ class Extension {
 
       // Now update the transition durations.
       const duration = extensionThis._settings.get_int('workspace-transition-time');
-      for (const monitorGroup of this._switchData.monitors) {
-        monitorGroup.get_transition('progress').set_duration(duration);
+      if (duration > 0) {
+        for (const monitorGroup of this._switchData.monitors) {
+          monitorGroup.get_transition('progress').set_duration(duration);
+        }
       }
     };
 
