@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-12 13:20+0100\n"
+"POT-Creation-Date: 2022-02-17 11:15+0100\n"
 "PO-Revision-Date: 2022-02-17 10:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,7 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
 "X-Generator: Poedit 3.0.1\n"
 
 #: prefs.js:112
@@ -75,8 +76,8 @@ msgid "Gap between last and first workspace"
 msgstr "الفراغ بين اخر واول مساحة عمل"
 
 #: resources/ui/settings.ui:106
-msgid "You cannot loop around in GNOME Shell anyways."
-msgstr "لا يمكنك ان تتجول حول Gnome Shell عموما"
+msgid "You cannot switch from the last to the first workspace anyways."
+msgstr ""
 
 #: resources/ui/settings.ui:128 resources/ui/settings.ui:180
 #: resources/ui/settings.ui:224 resources/ui/settings.ui:285
@@ -102,7 +103,9 @@ msgstr "تأثير النوافذ المتوازية"
 
 #: resources/ui/settings.ui:246
 msgid "Transition time from desktop to overview [ms]"
-msgstr "الوقت المستغرق للانتقال من وضعية سطح المكتب الي وضعية النظرة العامة [ميللي ثانية]"
+msgstr ""
+"الوقت المستغرق للانتقال من وضعية سطح المكتب الي وضعية النظرة العامة [ميللي "
+"ثانية]"
 
 #: resources/ui/settings.ui:255 resources/ui/settings.ui:316
 #: resources/ui/settings.ui:377
@@ -111,7 +114,9 @@ msgstr "اكتب 0 لاستخدام العيار الافتراضي لدي Gnome
 
 #: resources/ui/settings.ui:307
 msgid "Transition time from overview to app drawer [ms]"
-msgstr "الوقت المستغرق للانتقال من وضعية النظرة العامة الي وضعية قائمة البرامج [ميللي ثانية]"
+msgstr ""
+"الوقت المستغرق للانتقال من وضعية النظرة العامة الي وضعية قائمة البرامج "
+"[ميللي ثانية]"
 
 #: resources/ui/settings.ui:368
 msgid "Transition time between workspaces [ms]"
@@ -156,3 +161,6 @@ msgstr "عتمة مساحات العمل المفعلة"
 #: resources/ui/settings.ui:728
 msgid "Opacity of inactive workspaces"
 msgstr "عتمة مساحات العمل الغير المفعلة"
+
+#~ msgid "You cannot loop around in GNOME Shell anyways."
+#~ msgstr "لا يمكنك ان تتجول حول Gnome Shell عموما"
