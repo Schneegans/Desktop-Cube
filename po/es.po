@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-17 11:15+0100\n"
-"PO-Revision-Date: 2022-02-17 09:33+0000\n"
+"PO-Revision-Date: 2022-02-19 11:54+0000\n"
 "Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/desktop-cube/"
 "core/es/>\n"
@@ -78,6 +78,7 @@ msgstr "Espacio entre el último y el primer espacio de trabajo"
 #: resources/ui/settings.ui:106
 msgid "You cannot switch from the last to the first workspace anyways."
 msgstr ""
+"No puede cambiar del último al primer espacio de trabajo de todos modos."
 
 #: resources/ui/settings.ui:128 resources/ui/settings.ui:180
 #: resources/ui/settings.ui:224 resources/ui/settings.ui:285
