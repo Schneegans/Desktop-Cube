@@ -13,6 +13,7 @@ const {Clutter, GObject, Shell} = imports.gi;
 const Util          = imports.misc.util;
 const Main          = imports.ui.main;
 const ControlsState = imports.ui.overviewControls.ControlsState;
+const Workspace     = imports.ui.workspace.Workspace;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me             = imports.misc.extensionUtils.getCurrentExtension();
@@ -75,7 +76,10 @@ var DragGesture =
     // Once the input is grabbed, events are delivered directly to the actor, so we have
     // also to connect to the normal "event" signal.
     this._actorConnection = actor.connect('event', (a, e) => {
-      return this._handleEvent(e);
+      if (this._grabOngoing) {
+        return this._handleEvent(e);
+      }
+      return Clutter.EVENT_PROPAGATE;
     });
   }
 
@@ -107,8 +111,15 @@ var DragGesture =
     if (event.type() == Clutter.EventType.BUTTON_PRESS ||
         event.type() == Clutter.EventType.TOUCH_BEGIN) {
 
-      this._clickPos = event.get_coords();
-      this._state    = State.PENDING;
+      // Here's a minor hack: In the overview, there are some draggable things like window
+      // previews which "compete" with this gesture. Sometimes, the cube is dragged,
+      // sometimes the window previews. So we make sure that we do only start the gesture
+      // for events which originate from the given actor or from a workspace's background.
+      if (event.get_source() == this._actor ||
+          event.get_source().get_parent() instanceof Workspace) {
+        this._clickPos = event.get_coords();
+        this._state    = State.PENDING;
+      }
 
       return Clutter.EVENT_PROPAGATE;
     }
@@ -128,13 +139,6 @@ var DragGesture =
       // pointer is moved enough.
       if (this._state == State.PENDING) {
 
-        // Here's a minor hack: In the overview, the draggable window previews "compete"
-        // with this gesture. Sometimes, the cube is dragged, sometimes the window
-        // previews. So we make sure that we do not attempt to start the gesture for
-        // events which originate from a window preview.
-        if (event.get_source() instanceof Shell.WindowPreview) {
-          return Clutter.EVENT_PROPAGATE;
-        }
 
         const threshold = Clutter.Settings.get_default().dnd_drag_threshold;
 
@@ -223,6 +227,7 @@ var DragGesture =
     // Before, we needed to grab the device and enter modal mode.
     if (global.begin_modal(0, 0)) {
       device.grab(this._actor);
+      this._grabOngoing = true;
       return true;
     }
 
@@ -236,6 +241,7 @@ var DragGesture =
     } else {
       global.end_modal(0);
       device.ungrab();
+      this._grabOngoing = false;
     }
   }
 });
