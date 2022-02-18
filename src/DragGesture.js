@@ -71,6 +71,12 @@ var DragGesture =
     this._actorConnection = actor.connect('captured-event', (a, e) => {
       return this._handleEvent(e);
     });
+
+    // Once the input is grabbed, events are delivered directly to the actor, so we have
+    // also to connect to the normal "event" signal.
+    this._actorConnection = actor.connect('event', (a, e) => {
+      return this._handleEvent(e);
+    });
   }
 
   // Disconnects from the actor.
@@ -138,7 +144,7 @@ var DragGesture =
           // When starting a drag in desktop mode, we grab the input so that we can move
           // the pointer across windows without loosing the input events.
           if (Main.actionMode == Shell.ActionMode.NORMAL) {
-            if (!this._grab()) {
+            if (!this._grab(event.get_device())) {
               return Clutter.EVENT_PROPAGATE;
             }
           }
@@ -186,7 +192,7 @@ var DragGesture =
 
         // Cancel the ongoing grab in desktop mode.
         if (Main.actionMode == Shell.ActionMode.NORMAL) {
-          this._ungrab();
+          this._ungrab(event.get_device());
         }
 
         this.emit('end', event.get_time(), this.distance);
@@ -206,7 +212,7 @@ var DragGesture =
   // Makes sure that all events from the pointing device we received last input from is
   // passed to the given actor. This is used to ensure that we do not "loose" the touch
   // buttons will dragging them around.
-  _grab() {
+  _grab(device) {
 
     // On GNOME Shell 42, there's a new API.
     if (utils.shellVersionIsAtLeast(42)) {
@@ -214,15 +220,22 @@ var DragGesture =
       return this._lastGrab != null;
     }
 
-    return global.begin_modal(0, 0);
+    // Before, we needed to grab the device and enter modal mode.
+    if (global.begin_modal(0, 0)) {
+      device.grab(this._actor);
+      return true;
+    }
+
+    return false;
   }
 
   // Releases a grab created with the method above.
-  _ungrab() {
+  _ungrab(device) {
     if (utils.shellVersionIsAtLeast(42)) {
       this._lastGrab.dismiss();
     } else {
       global.end_modal(0);
+      device.ungrab();
     }
   }
 });
