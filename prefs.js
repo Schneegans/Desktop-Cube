@@ -108,12 +108,13 @@ var PreferencesDialog = class PreferencesDialog {
       };
 
       // clang-format off
-      addAction('homepage',      'https://github.com/Schneegans/Desktop-Cube');
-      addAction('changelog',     'https://github.com/Schneegans/Desktop-Cube/blob/main/docs/changelog.md');
-      addAction('translate',     'https://hosted.weblate.org/engage/desktop-cube/');
-      addAction('bugs',          'https://github.com/Schneegans/Desktop-Cube/issues');
-      addAction('donate-paypal', 'https://www.paypal.com/donate/?hosted_button_id=3F7UFL8KLVPXE');
-      addAction('donate-github', 'https://github.com/sponsors/Schneegans');
+      addAction('homepage',         'https://github.com/Schneegans/Desktop-Cube');
+      addAction('changelog',        'https://github.com/Schneegans/Desktop-Cube/blob/main/docs/changelog.md');
+      addAction('translate',        'https://hosted.weblate.org/engage/desktop-cube/');
+      addAction('bugs',             'https://github.com/Schneegans/Desktop-Cube/issues');
+      addAction('donate-paypal',    'https://www.paypal.com/donate/?hosted_button_id=3F7UFL8KLVPXE');
+      addAction('donate-github',    'https://github.com/sponsors/Schneegans');
+      addAction('donate-liberapay', 'https://liberapay.com/Schneegans');
       // clang-format on
 
       // Add the about dialog.

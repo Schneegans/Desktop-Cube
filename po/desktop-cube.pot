@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-12 13:20+0100\n"
+"POT-Creation-Date: 2022-02-17 11:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,7 +74,7 @@ msgid "Gap between last and first workspace"
 msgstr ""
 
 #: resources/ui/settings.ui:106
-msgid "You cannot loop around in GNOME Shell anyways."
+msgid "You cannot switch from the last to the first workspace anyways."
 msgstr ""
 
 #: resources/ui/settings.ui:128 resources/ui/settings.ui:180

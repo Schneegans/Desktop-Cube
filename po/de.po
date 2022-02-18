@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-12 13:20+0100\n"
+"POT-Creation-Date: 2022-02-17 11:15+0100\n"
 "PO-Revision-Date: 2022-02-12 12:21+0000\n"
 "Last-Translator: Simon Schneegans <code@simonschneegans.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/desktop-cube/core/"
@@ -76,10 +76,8 @@ msgid "Gap between last and first workspace"
 msgstr "Abstand zwischen letzter und erster Arbeitsfläche"
 
 #: resources/ui/settings.ui:106
-msgid "You cannot loop around in GNOME Shell anyways."
+msgid "You cannot switch from the last to the first workspace anyways."
 msgstr ""
-"Man kann in GNOME Shell sowieso nicht von der letzten zur ersten "
-"Arbeitsfläche wechseln."
 
 #: resources/ui/settings.ui:128 resources/ui/settings.ui:180
 #: resources/ui/settings.ui:224 resources/ui/settings.ui:285
@@ -162,6 +160,11 @@ msgstr "Deckkraft der aktiven Arbeitsfläche"
 #: resources/ui/settings.ui:728
 msgid "Opacity of inactive workspaces"
 msgstr "Deckkraft der inaktiven Arbeitsflächen"
+
+#~ msgid "You cannot loop around in GNOME Shell anyways."
+#~ msgstr ""
+#~ "Man kann in GNOME Shell sowieso nicht von der letzten zur ersten "
+#~ "Arbeitsfläche wechseln."
 
 #~ msgid "Desktop Cube"
 #~ msgstr "Desktop-Würfel"
