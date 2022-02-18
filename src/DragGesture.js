@@ -115,7 +115,8 @@ var DragGesture =
       // previews which "compete" with this gesture. Sometimes, the cube is dragged,
       // sometimes the window previews. So we make sure that we do only start the gesture
       // for events which originate from the given actor or from a workspace's background.
-      if (event.get_source() == this._actor ||
+      if (Main.actionMode != Shell.ActionMode.OVERVIEW ||
+          event.get_source() == this._actor ||
           event.get_source().get_parent() instanceof Workspace) {
         this._clickPos = event.get_coords();
         this._state    = State.PENDING;
