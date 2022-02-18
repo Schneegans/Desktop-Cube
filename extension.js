@@ -665,16 +665,14 @@ class Extension {
   // and a connection ID which is used by _removeDragGesture() to clean up. When the
   // SwipeTracker's gesture ends, the St.Adjustment's value will be eased to zero.
   _addDragGesture(actor, tracker, mode) {
-    const gesture = new DragGesture(mode);
+    const gesture = new DragGesture(actor, mode);
     gesture.connect('begin', tracker._beginGesture.bind(tracker));
     gesture.connect('update', tracker._updateGesture.bind(tracker));
     gesture.connect('end', tracker._endTouchGesture.bind(tracker));
-    gesture.connect('cancel', tracker._cancelTouchGesture.bind(tracker));
     tracker.bind_property(
         'enabled', gesture, 'enabled', GObject.BindingFlags.SYNC_CREATE);
     tracker.bind_property(
         'distance', gesture, 'distance', GObject.BindingFlags.SYNC_CREATE);
-    actor.add_action_with_name('cube-drag-action', gesture);
 
     // Connect the gesture's pitch property to the pitch adjustment.
     gesture.bind_property('pitch', this._pitch, 'value', 0);
@@ -692,14 +690,21 @@ class Extension {
       });
     });
 
-    return {gesture: gesture, trackerConnection: gestureEndID};
+    // We return all things which are required to remove the gesture again. This can be
+    // done with the _removeDragGesture() method below.
+    return {
+      actor: actor,
+      tracker: tracker,
+      gesture: gesture,
+      trackerConnection: gestureEndID
+    };
   }
 
   // Removes a single-click drag gesture created earlier via _addDragGesture(). The info
   // parameter should be the object returned by _addDragGesture().
-  _removeDragGesture(actor, tracker, info) {
-    actor.remove_action_by_name('cube-drag-action');
-    tracker.disconnect(info.trackerConnection);
+  _removeDragGesture(info) {
+    info.gesture.destroy();
+    info.tracker.disconnect(info.trackerConnection);
   }
 
   // Calls _addDragGesture() for the SwipeTracker and actor responsible for
@@ -710,13 +715,6 @@ class Extension {
     const tracker = Main.wm._workspaceAnimation._swipeTracker;
     let actor     = Main.layoutManager._backgroundGroup;
     const mode    = Shell.ActionMode.NORMAL;
-
-    // for some reason, adding the gesture to the BackgroundGroup does not work on GNOME
-    // Shell 42. However, it works with the BackgroundActor. On GNOME Shell 40 and 41,
-    // it's the other way around...
-    if (utils.shellVersionIsAtLeast(42)) {
-      actor = actor.get_children()[0];
-    }
 
     // We have to make the background reactive. Make sure to store the current state so
     // that we can reset it later.
@@ -758,20 +756,11 @@ class Extension {
   // workspace-switching in desktop mode when dragging on the background.
   _removeDesktopDragGesture() {
     if (this._desktopDragGesture) {
-      // The SwipeTracker for switching workspaces in desktop mode is created here:
-      // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L286
-      const tracker = Main.wm._workspaceAnimation._swipeTracker;
-      let actor     = Main.layoutManager._backgroundGroup;
-
-      // See comment in _addDesktopDragGesture().
-      if (utils.shellVersionIsAtLeast(42)) {
-        actor = actor.get_children()[0];
-      }
 
       // Make sure to restore the original state.
-      actor.reactive = this._origBackgroundReactivity;
+      this._desktopDragGesture.actor.reactive = this._origBackgroundReactivity;
 
-      this._removeDragGesture(actor, tracker, this._desktopDragGesture);
+      this._removeDragGesture(this._desktopDragGesture);
 
       delete this._desktopDragGesture;
     }
@@ -781,15 +770,11 @@ class Extension {
   // workspace-switching in desktop mode when dragging on the panel.
   _removePanelDragGesture() {
     if (this._panelDragGesture) {
-      // The SwipeTracker for switching workspaces in desktop mode is created here:
-      // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L286
-      const tracker = Main.wm._workspaceAnimation._swipeTracker;
-      const actor   = Main.panel;
 
       // Make sure to restore the original state.
-      actor._tryDragWindow = this._origPanelTryDragWindow;
+      this._panelDragGesture.actor._tryDragWindow = this._origPanelTryDragWindow;
 
-      this._removeDragGesture(actor, tracker, this._panelDragGesture);
+      this._removeDragGesture(this._panelDragGesture);
 
       delete this._panelDragGesture;
     }
@@ -799,12 +784,7 @@ class Extension {
   // workspace-switching in overview mode.
   _removeOverviewDragGesture() {
     if (this._overviewDragGesture) {
-      // The SwipeTracker for switching workspaces in overview mode is created here:
-      // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L858
-      const tracker = Main.overview._overview._controls._workspacesDisplay._swipeTracker;
-      const actor   = Main.layoutManager.overviewGroup;
-
-      this._removeDragGesture(actor, tracker, this._overviewDragGesture);
+      this._removeDragGesture(this._overviewDragGesture);
 
       delete this._overviewDragGesture;
     }

@@ -24,14 +24,20 @@ const utils          = Me.imports.src.utils;
 // one for switching workspaces in overview mode, one for horizontal scrolling in the   //
 // app drawer, and many more. The ones used for workspace-switching usually do not      //
 // respond to single-click dragging but only to multi-touch gestures. We want to be     //
-// able to rotate the cube with the left mouse button, so we add an additional gesture  //
-// to these two SwipeTracker instances tracking single-click drags. The gesture is      //
-// loosely based on the TouchSwipeGesture defined here:                                 //
+// able to rotate the cube with the left mouse button, so we add the gesture defined    //
+// below to these two SwipeTracker instances (this is done by the _addDragGesture() of  //
+// the extension class). The gesture is loosely based on the gesture defined here:      //
 // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/swipeTracker.js#L213    //
 // It behaves the same in the regard that it reports update events for horizontal       //
 // movements. However, it stores vertical movements as well and makes this accessible   //
 // via the "pitch" property. This is then used for vertical rotations of the cube.      //
 //////////////////////////////////////////////////////////////////////////////////////////
+
+const State = {
+  INACTIVE: 0,  // The state will change to PENDING as soon as there is a mouse click.
+  PENDING: 1,   // There was a click, but not enough movement to trigger the gesture.
+  ACTIVE: 2     // The gesture has been triggered and is in progress.
+};
 
 // clang-format off
 var DragGesture =
@@ -46,32 +52,39 @@ var DragGesture =
         'begin':  {param_types: [GObject.TYPE_UINT, GObject.TYPE_DOUBLE, GObject.TYPE_DOUBLE]},
         'update': {param_types: [GObject.TYPE_UINT, GObject.TYPE_DOUBLE, GObject.TYPE_DOUBLE]},
         'end':    {param_types: [GObject.TYPE_UINT, GObject.TYPE_DOUBLE]},
-        'cancel': {param_types: [GObject.TYPE_UINT, GObject.TYPE_DOUBLE]},
       },
     },
-    class DragGesture extends Clutter.GestureAction {
+    class DragGesture extends GObject.Object {
   // clang-format on
-  _init(mode) {
+  _init(actor, mode) {
     super._init();
-    this.set_n_touch_points(1);
-    this.set_threshold_trigger_edge(Clutter.GestureTriggerEdge.AFTER);
 
-    this._mode   = mode;
-    this._lastX  = 0;
-    this._startY = 0;
+    this._actor = actor;
+    this._state = State.INACTIVE;
+    this._mode  = mode;
+
+    // We listen to the 'captured-event' to be able to intercept some other actions. The
+    // main problem is the long-press action of the desktop background actor. This
+    // swallows any click events preventing us from dragging the desktop background.
+    // By connecting to 'captured-event', we have to extra-careful to propagate any event
+    // we are not interested in.
+    this._actorConnection = actor.connect('captured-event', (a, e) => {
+      return this._handleEvent(e);
+    });
   }
 
-  // Called before the gesture actually starts, it can abort the gesture by returning
-  // false.
-  vfunc_gesture_prepare(actor) {
-    if (!super.vfunc_gesture_prepare(actor)) {
-      return false;
-    }
+  // Disconnects from the actor.
+  destroy() {
+    this._actor.disconnect(this._actorConnection);
+  }
+
+  // This is called on every captured event.
+  _handleEvent(event) {
 
     // Abort if the gesture is not meant for the current action mode (e.g. either
     // Shell.ActionMode.OVERVIEW or Shell.ActionMode.NORMAL).
     if (this._mode != Main.actionMode) {
-      return false;
+      return Clutter.EVENT_PROPAGATE;
     }
 
     // In the overview, we only want to switch workspaces by dragging when in
@@ -79,82 +92,126 @@ var DragGesture =
     if (Main.actionMode == Shell.ActionMode.OVERVIEW) {
       if (Main.overview._overview.controls._stateAdjustment.value !=
           ControlsState.WINDOW_PICKER) {
-        return false;
+        return Clutter.EVENT_PROPAGATE;
       }
     }
 
-    // When starting a drag in desktop mode, we grab the input so that we can move the
-    // pointer across windows without loosing the input events.
-    if (Main.actionMode == Shell.ActionMode.NORMAL) {
-      if (!this._grab(actor)) {
-        return false;
+    // When a mouse button is pressed or a touch event starts, we store the corresponding
+    // position. The gesture is maybe triggered later, if the pointer was moved a little.
+    if (event.type() == Clutter.EventType.BUTTON_PRESS ||
+        event.type() == Clutter.EventType.TOUCH_BEGIN) {
+
+      this._clickPos = event.get_coords();
+      this._state    = State.PENDING;
+
+      return Clutter.EVENT_PROPAGATE;
+    }
+
+    // Abort the pending state if the pointer leaves the actor.
+    if (event.type() == Clutter.EventType.LEAVE && this._state == State.PENDING) {
+      this._state = State.INACTIVE;
+      return Clutter.EVENT_PROPAGATE;
+    }
+
+    if (event.type() == Clutter.EventType.MOTION ||
+        event.type() == Clutter.EventType.TOUCH_UPDATE) {
+
+      const currentPos = event.get_coords();
+
+      // If we are in the pending state, the gesture may be triggered as soon as the
+      // pointer is moved enough.
+      if (this._state == State.PENDING) {
+
+        // Here's a minor hack: In the overview, the draggable window previews "compete"
+        // with this gesture. Sometimes, the cube is dragged, sometimes the window
+        // previews. So we make sure that we do not attempt to start the gesture for
+        // events which originate from a window preview.
+        if (event.get_source() instanceof Shell.WindowPreview) {
+          return Clutter.EVENT_PROPAGATE;
+        }
+
+        const threshold = Clutter.Settings.get_default().dnd_drag_threshold;
+
+        if (Math.abs(currentPos[0] - this._clickPos[0]) > threshold ||
+            Math.abs(currentPos[1] - this._clickPos[1]) > threshold) {
+
+          // When starting a drag in desktop mode, we grab the input so that we can move
+          // the pointer across windows without loosing the input events.
+          if (Main.actionMode == Shell.ActionMode.NORMAL) {
+            if (!this._grab()) {
+              return Clutter.EVENT_PROPAGATE;
+            }
+          }
+
+          this._state                 = State.ACTIVE;
+          [this._lastX, this._startY] = currentPos;
+          this.pitch                  = 0;
+          this.emit('begin', event.get_time(), currentPos[0], currentPos[1]);
+        }
+
+        // Even if the gesture started, we propagate the event so that any other
+        // gestures may wait for long-presses are canceled properly.
+        return Clutter.EVENT_PROPAGATE;
       }
+
+      // In the active state, we report updates on each movement.
+      if (this._state == State.ACTIVE) {
+
+        // Compute the horizontal movement relative to the last call.
+        let deltaX  = currentPos[0] - this._lastX;
+        this._lastX = currentPos[0];
+
+        // Compute the accumulated pitch relative to the screen height.
+        this.pitch = (this._startY - currentPos[1]) / global.screen_height;
+
+        // Increase horizontal movement if the cube is rotated vertically.
+        deltaX *= Util.lerp(
+            1.0, global.workspaceManager.get_n_workspaces(), Math.abs(this.pitch));
+
+        this.emit('update', event.get_time(), -deltaX, this.distance);
+
+        return Clutter.EVENT_STOP;
+      }
+
+      return Clutter.EVENT_PROPAGATE;
     }
 
-    // Store the start coordinates of the gesture.
-    const time                  = this.get_last_event(0).get_time();
-    const [xPress, yPress]      = this.get_press_coords(0);
-    [this._lastX, this._startY] = this.get_motion_coords(0);
+    // As soon as the mouse button is released or the touch event ends, we quit the
+    // gesture.
+    if (event.type() == Clutter.EventType.BUTTON_RELEASE ||
+        event.type() == Clutter.EventType.TOUCH_END) {
 
-    this.pitch = 0;
+      // If the gesture was active, report an end event.
+      if (this._state == State.ACTIVE) {
 
-    this.emit('begin', time, xPress, yPress);
-    return true;
-  }
+        // Cancel the ongoing grab in desktop mode.
+        if (Main.actionMode == Shell.ActionMode.NORMAL) {
+          this._ungrab();
+        }
 
-  // Called on pointer or touch-movement events.
-  vfunc_gesture_progress(_actor) {
+        this.emit('end', event.get_time(), this.distance);
+        this._state = State.INACTIVE;
 
-    // Compute the horizontal movement relative to the last call.
-    const [x, y] = this.get_motion_coords(0);
-    let deltaX   = x - this._lastX;
-    this._lastX  = x;
+        return Clutter.EVENT_STOP;
+      }
 
-    // Compute the accumulated pitch relative to the screen height.
-    this.pitch = (this._startY - y) / global.screen_height;
-
-    // Increase horizontal movement if the cube is rotated vertically.
-    deltaX *=
-        Util.lerp(1.0, global.workspaceManager.get_n_workspaces(), Math.abs(this.pitch));
-
-    const time = this.get_last_event(0).get_time();
-    this.emit('update', time, -deltaX, this.distance);
-
-    return true;
-  }
-
-  // Called when the gesture is ended by the user.
-  vfunc_gesture_end(_actor) {
-
-    // Cancel the ongoing grab in desktop mode.
-    if (Main.actionMode == Shell.ActionMode.NORMAL) {
-      this._ungrab();
+      // If the gesture was in pending state, set it to inactive again.
+      this._state = State.INACTIVE;
+      return Clutter.EVENT_PROPAGATE;
     }
 
-    const time = this.get_last_event(0).get_time();
-    this.emit('end', time, this.distance);
-  }
-
-  // Called when the gesture is canceled by some event.
-  vfunc_gesture_cancel(_actor) {
-
-    // Cancel the ongoing grab in desktop mode.
-    if (Main.actionMode == Shell.ActionMode.NORMAL) {
-      this._ungrab();
-    }
-
-    const time = Clutter.get_current_event_time();
-    this.emit('cancel', time, this.distance);
+    return Clutter.EVENT_PROPAGATE;
   }
 
   // Makes sure that all events from the pointing device we received last input from is
   // passed to the given actor. This is used to ensure that we do not "loose" the touch
   // buttons will dragging them around.
-  _grab(actor) {
+  _grab() {
 
-    // On GNOME Shell 42, we have to grab the device. Why? I do not know...
+    // On GNOME Shell 42, there's a new API.
     if (utils.shellVersionIsAtLeast(42)) {
-      this.get_device(0).grab(actor);
+      this._lastGrab = global.stage.grab(this._actor);
+      return this._lastGrab != null;
     }
 
     return global.begin_modal(0, 0);
@@ -163,9 +220,9 @@ var DragGesture =
   // Releases a grab created with the method above.
   _ungrab() {
     if (utils.shellVersionIsAtLeast(42)) {
-      this.get_device(0).ungrab();
+      this._lastGrab.dismiss();
+    } else {
+      global.end_modal(0);
     }
-
-    global.end_modal(0);
   }
 });
