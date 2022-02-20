@@ -11,6 +11,14 @@
 const {Gio, Gtk, Gdk} = imports.gi;
 const ByteArray       = imports.byteArray;
 
+// libadwaita is available starting with GNOME Shell 42.
+let Adw = null;
+try {
+  Adw = imports.gi.Adw;
+} catch (e) {
+  // Nothing to do.
+}
+
 const _ = imports.gettext.domain('desktop-cube').gettext;
 
 const ExtensionUtils = imports.misc.extensionUtils;
@@ -37,8 +45,21 @@ var PreferencesDialog = class PreferencesDialog {
     // Make sure custom icons are found.
     Gtk.IconTheme.get_for_display(Gdk.Display.get_default()).add_resource_path('/img');
 
-    // This is our top-level widget which we will return later.
-    this._widget = this._builder.get_object('settings-widget');
+    // This is our top-level widget which we will return later. Starting with GNOME Shell
+    // 42, the preferences window already has a built-in scrolled window. For older
+    // versions, we have to add this manually.
+    if (utils.shellVersionIsAtLeast(42)) {
+      this._widget = this._builder.get_object('settings-widget');
+    } else {
+      this._widget = new Gtk.ScrolledWindow();
+
+      const box         = this._builder.get_object('settings-widget');
+      box.margin_start  = 30;
+      box.margin_end    = 30;
+      box.margin_top    = 30;
+      box.margin_bottom = 30;
+      this._widget.set_child(box);
+    }
 
     // Store a reference to the settings object.
     this._settings = ExtensionUtils.getSettings();
@@ -63,11 +84,19 @@ var PreferencesDialog = class PreferencesDialog {
       const window = widget.get_root();
 
       // Show the version number in the title bar.
-      window.set_title(`Desktop Cube ${Me.metadata.version}`);
+      window.title = `Desktop Cube ${Me.metadata.version}`;
 
-      // Add the menu.
+      // Add the menu to the title bar
       const menu = this._builder.get_object('menu-button');
-      window.get_titlebar().pack_end(menu);
+
+      // Starting with GNOME Shell 42, we have to hack our way through the widget tree of
+      // the Adw.PreferencesWindow...
+      if (utils.shellVersionIsAtLeast(42)) {
+        const header = this._findWidgetByType(window.get_content(), Adw.HeaderBar);
+        header.pack_end(menu);
+      } else {
+        window.get_titlebar().pack_end(menu);
+      }
 
       // Populate the actions.
       const group = Gio.SimpleActionGroup.new();
@@ -179,6 +208,19 @@ var PreferencesDialog = class PreferencesDialog {
     const data   = Gio.resources_lookup_data(path, 0);
     const string = ByteArray.toString(ByteArray.fromGBytes(data));
     return JSON.parse(string);
+  }
+
+  // This traverses the widget tree below the given parent recursively and returns the
+  // first widget of the given type.
+  _findWidgetByType(parent, type) {
+    for (const child of [...parent]) {
+      if (child instanceof type) return child;
+
+      const match = this._findWidgetByType(child, type);
+      if (match) return match;
+    }
+
+    return null;
   }
 }
 

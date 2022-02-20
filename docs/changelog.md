@@ -15,7 +15,7 @@
 * **Depth Variance in Overview:** During rotations, window clones in the overview are not all drawn at the same depth.
 * **Translations!** It is now possible to [translate the preferences dialog](https://hosted.weblate.org/engage/desktop-cube/).
 * An **about-dialog** has been added which shows all translators and sponsors.
-* Experimental support for GNOME Shell 42. Please [report any bugs you find](https://github.com/Schneegans/Desktop-Cube/issues)!
+* Initial support for GNOME Shell 42. Please [report any bugs you find](https://github.com/Schneegans/Desktop-Cube/issues)!
 
 #### Other Changes
 
