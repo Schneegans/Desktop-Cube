@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-17 11:15+0100\n"
+"POT-Creation-Date: 2022-02-18 20:58+0100\n"
 "PO-Revision-Date: 2022-02-17 11:22+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/desktop-cube/core/"
@@ -19,19 +19,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.11-dev\n"
 
-#: prefs.js:112
+#: prefs.js:142
 msgid "Gold Sponsors"
 msgstr "Gouden sponsoren"
 
-#: prefs.js:115
+#: prefs.js:145
 msgid "Silver Sponsors"
 msgstr "Zilveren sponsoren"
 
-#: prefs.js:118
+#: prefs.js:148
 msgid "Bronze Sponsors"
 msgstr "Bronzen sponsoren"
 
-#: prefs.js:121
+#: prefs.js:151
 msgid "Past Sponsors"
 msgstr "Voormalige sponsoren"
 
@@ -55,110 +55,108 @@ msgstr "Vertalen"
 msgid "Donate"
 msgstr "Doneren"
 
-#: resources/ui/settings.ui:28
-msgid "Via PayPal"
-msgstr "Via PayPal"
-
-#: resources/ui/settings.ui:32
-msgid "Via GitHub"
-msgstr "Via GitHub"
-
-#: resources/ui/settings.ui:39
+#: resources/ui/settings.ui:43
 msgid "About the Desktop-Cube"
 msgstr "Over Bureaubladkubus"
 
-#: resources/ui/settings.ui:70
+#: resources/ui/settings.ui:61
 msgid "General Options"
 msgstr "Algemene voorkeuren"
 
-#: resources/ui/settings.ui:97
+#: resources/ui/settings.ui:88
 msgid "Gap between last and first workspace"
 msgstr "Ruimte tussen laatste en eerste werkblad"
 
-#: resources/ui/settings.ui:106
+#: resources/ui/settings.ui:97
 msgid "You cannot switch from the last to the first workspace anyways."
 msgstr ""
 "U kunt bovendien toch niet van het laatste naar het eerste werkblad "
 "overschakelen."
 
-#: resources/ui/settings.ui:128 resources/ui/settings.ui:180
-#: resources/ui/settings.ui:224 resources/ui/settings.ui:285
-#: resources/ui/settings.ui:346 resources/ui/settings.ui:407
-#: resources/ui/settings.ui:468 resources/ui/settings.ui:502
-#: resources/ui/settings.ui:563 resources/ui/settings.ui:605
-#: resources/ui/settings.ui:666 resources/ui/settings.ui:710
-#: resources/ui/settings.ui:754
+#: resources/ui/settings.ui:119 resources/ui/settings.ui:171
+#: resources/ui/settings.ui:215 resources/ui/settings.ui:276
+#: resources/ui/settings.ui:337 resources/ui/settings.ui:398
+#: resources/ui/settings.ui:459 resources/ui/settings.ui:493
+#: resources/ui/settings.ui:554 resources/ui/settings.ui:596
+#: resources/ui/settings.ui:657 resources/ui/settings.ui:701
+#: resources/ui/settings.ui:745
 msgid "Reset to default value"
 msgstr "Standaardwaarde herstellen"
 
-#: resources/ui/settings.ui:149
+#: resources/ui/settings.ui:140
 msgid "Explode cube on vertical rotations"
 msgstr "Kubus uiteen laten vallen na verticaal draaien"
 
-#: resources/ui/settings.ui:158
+#: resources/ui/settings.ui:149
 msgid "Rotate the cube up or down to show the 3D structure."
 msgstr "Draai de kubus omhoog of omlaag zodat de 3D-structuur zichtbaar wordt."
 
-#: resources/ui/settings.ui:198
+#: resources/ui/settings.ui:189
 msgid "Window parallax effect"
 msgstr "Bewegingsvervaging"
 
-#: resources/ui/settings.ui:246
+#: resources/ui/settings.ui:237
 msgid "Transition time from desktop to overview [ms]"
 msgstr "Overgangstijd tussen bureaublad en overzicht [in ms]"
 
-#: resources/ui/settings.ui:255 resources/ui/settings.ui:316
-#: resources/ui/settings.ui:377
+#: resources/ui/settings.ui:246 resources/ui/settings.ui:307
+#: resources/ui/settings.ui:368
 msgid "Set to 0 to use GNOME Shell's default value."
 msgstr "Stel in op 0 om de standaardwaarde van GNOME Shell te gebruiken."
 
-#: resources/ui/settings.ui:307
+#: resources/ui/settings.ui:298
 msgid "Transition time from overview to app drawer [ms]"
 msgstr "Overgangstijd tussen venster- en toepassingenoverzicht [in ms]"
 
-#: resources/ui/settings.ui:368
+#: resources/ui/settings.ui:359
 msgid "Transition time between workspaces [ms]"
 msgstr "Overgangstijd tussen werkbladschakeling [in ms]"
 
-#: resources/ui/settings.ui:428
+#: resources/ui/settings.ui:419
 msgid "Desktop Options"
 msgstr "Bureaubladvoorkeuren"
 
-#: resources/ui/settings.ui:451
+#: resources/ui/settings.ui:442
 msgid "Click and drag the desktop to rotate the cube"
 msgstr "Kubus draaien door te slepen vanaf het bureaublad"
 
-#: resources/ui/settings.ui:485
+#: resources/ui/settings.ui:476
 msgid "Click and drag the panel to rotate the cube"
 msgstr "Kubus draaien door te slepen vanaf de bovenbalk"
 
-#: resources/ui/settings.ui:523
+#: resources/ui/settings.ui:514
 msgid "Overview Options"
 msgstr "Overzichtsvoorkeuren"
 
-#: resources/ui/settings.ui:546
+#: resources/ui/settings.ui:537
 msgid "Click and drag the overview to rotate the cube"
 msgstr "Kubus draaien door te slepen vanaf het overzicht"
 
-#: resources/ui/settings.ui:581
+#: resources/ui/settings.ui:572
 msgid "Gap between adjacent workspaces"
 msgstr "Ruimte tussen aangrenzende werkbladen"
 
-#: resources/ui/settings.ui:627
+#: resources/ui/settings.ui:618
 msgid "Horizontal stretching of the cube"
 msgstr "Horizontale kubusuitrekking"
 
-#: resources/ui/settings.ui:636
+#: resources/ui/settings.ui:627
 msgid "This ensures that you can see the cube's sides from the front."
 msgstr "Deze optie zorgt er voor dat u alle kubuszijden van voren kunt zien."
 
-#: resources/ui/settings.ui:684
+#: resources/ui/settings.ui:675
 msgid "Opacity of the active workspace"
 msgstr "Doorzichtigheid van actief werkblad"
 
-#: resources/ui/settings.ui:728
+#: resources/ui/settings.ui:719
 msgid "Opacity of inactive workspaces"
 msgstr "Doorzichtigheid van inactieve werkbladen"
+
+#~ msgid "Via PayPal"
+#~ msgstr "Via PayPal"
+
+#~ msgid "Via GitHub"
+#~ msgstr "Via GitHub"
 
 #~ msgid "You cannot loop around in GNOME Shell anyways."
 #~ msgstr ""
