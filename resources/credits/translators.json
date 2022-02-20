@@ -1,19 +1,46 @@
 [
   {
-    "German": [
-      [
-        "code@simonschneegans.de",
-        "Simon Schneegans",
-        25
-      ]
-    ]
-  },
-  {
     "Norwegian Bokm\u00e5l": [
       [
         "epost@anotheragency.no",
         "Allan Nordh\u00f8y",
-        27
+        34
+      ]
+    ]
+  },
+  {
+    "Dutch": [
+      [
+        "vistausss@fastmail.com",
+        "Heimen Stoffels",
+        39
+      ]
+    ]
+  },
+  {
+    "German": [
+      [
+        "code@simonschneegans.de",
+        "Simon Schneegans",
+        31
+      ]
+    ]
+  },
+  {
+    "French": [
+      [
+        "schotte.clement@hotmail.fr",
+        "Cl\u00e9ment Schotte",
+        34
+      ]
+    ]
+  },
+  {
+    "Spanish": [
+      [
+        "oscfdezdz@tuta.io",
+        "\u00d3scar Fern\u00e1ndez D\u00edaz",
+        39
       ]
     ]
   }
