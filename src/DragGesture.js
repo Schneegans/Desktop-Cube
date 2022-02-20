@@ -134,12 +134,18 @@ var DragGesture =
     if (event.type() == Clutter.EventType.MOTION ||
         event.type() == Clutter.EventType.TOUCH_UPDATE) {
 
+      // If the mouse button is not pressed, we are not interested in the event.
+      if (event.type() == Clutter.EventType.MOTION &&
+          (event.get_state() & Clutter.ModifierType.BUTTON1_MASK) == 0) {
+        this._state = State.INACTIVE;
+        return Clutter.EVENT_PROPAGATE;
+      }
+
       const currentPos = event.get_coords();
 
       // If we are in the pending state, the gesture may be triggered as soon as the
       // pointer is moved enough.
       if (this._state == State.PENDING) {
-
 
         const threshold = Clutter.Settings.get_default().dnd_drag_threshold;
 
