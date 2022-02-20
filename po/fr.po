@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-17 11:15+0100\n"
+"POT-Creation-Date: 2022-02-18 20:58+0100\n"
 "PO-Revision-Date: 2022-02-19 11:54+0000\n"
 "Last-Translator: Clément Schotte <schotte.clement@hotmail.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/desktop-cube/core/"
@@ -19,19 +19,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 4.11-dev\n"
 
-#: prefs.js:112
+#: prefs.js:142
 msgid "Gold Sponsors"
 msgstr "Soutiens Or"
 
-#: prefs.js:115
+#: prefs.js:145
 msgid "Silver Sponsors"
 msgstr "Soutiens Argent"
 
-#: prefs.js:118
+#: prefs.js:148
 msgid "Bronze Sponsors"
 msgstr "Soutiens Bronze"
 
-#: prefs.js:121
+#: prefs.js:151
 msgid "Past Sponsors"
 msgstr "Anciens Soutiens"
 
@@ -55,107 +55,106 @@ msgstr "Traduire"
 msgid "Donate"
 msgstr "Faire une Donation"
 
-#: resources/ui/settings.ui:28
-msgid "Via PayPal"
-msgstr "Via PayPal"
-
-#: resources/ui/settings.ui:32
-msgid "Via GitHub"
-msgstr "Via GitHub"
-
-#: resources/ui/settings.ui:39
+#: resources/ui/settings.ui:43
 msgid "About the Desktop-Cube"
 msgstr "À Propos de Desktop-Cube"
 
-#: resources/ui/settings.ui:70
+#: resources/ui/settings.ui:61
 msgid "General Options"
 msgstr "Options Générales"
 
-#: resources/ui/settings.ui:97
+#: resources/ui/settings.ui:88
 msgid "Gap between last and first workspace"
 msgstr "Espace entre le dernier et premier espace de travail"
 
-#: resources/ui/settings.ui:106
+#: resources/ui/settings.ui:97
 msgid "You cannot switch from the last to the first workspace anyways."
 msgstr ""
 "Vous ne pouvez de toutes façons pas passer du dernier au premier espace de "
 "travail."
 
-#: resources/ui/settings.ui:128 resources/ui/settings.ui:180
-#: resources/ui/settings.ui:224 resources/ui/settings.ui:285
-#: resources/ui/settings.ui:346 resources/ui/settings.ui:407
-#: resources/ui/settings.ui:468 resources/ui/settings.ui:502
-#: resources/ui/settings.ui:563 resources/ui/settings.ui:605
-#: resources/ui/settings.ui:666 resources/ui/settings.ui:710
-#: resources/ui/settings.ui:754
+#: resources/ui/settings.ui:119 resources/ui/settings.ui:171
+#: resources/ui/settings.ui:215 resources/ui/settings.ui:276
+#: resources/ui/settings.ui:337 resources/ui/settings.ui:398
+#: resources/ui/settings.ui:459 resources/ui/settings.ui:493
+#: resources/ui/settings.ui:554 resources/ui/settings.ui:596
+#: resources/ui/settings.ui:657 resources/ui/settings.ui:701
+#: resources/ui/settings.ui:745
 msgid "Reset to default value"
 msgstr "Réinitialiser aux valeurs par défaut"
 
-#: resources/ui/settings.ui:149
+#: resources/ui/settings.ui:140
 msgid "Explode cube on vertical rotations"
 msgstr "Éclater le cube lors des rotations verticales"
 
-#: resources/ui/settings.ui:158
+#: resources/ui/settings.ui:149
 msgid "Rotate the cube up or down to show the 3D structure."
-msgstr "Faites pivoter le cube en haut ou en bas pour afficher la structure 3D."
+msgstr ""
+"Faites pivoter le cube en haut ou en bas pour afficher la structure 3D."
 
-#: resources/ui/settings.ui:198
+#: resources/ui/settings.ui:189
 msgid "Window parallax effect"
 msgstr "Effet de parallaxe des fenêtres"
 
-#: resources/ui/settings.ui:246
+#: resources/ui/settings.ui:237
 msgid "Transition time from desktop to overview [ms]"
 msgstr "Temps de transition du bureau à la vue d'ensemble [ms]"
 
-#: resources/ui/settings.ui:255 resources/ui/settings.ui:316
-#: resources/ui/settings.ui:377
+#: resources/ui/settings.ui:246 resources/ui/settings.ui:307
+#: resources/ui/settings.ui:368
 msgid "Set to 0 to use GNOME Shell's default value."
 msgstr "Entrez 0 pour utiliser la valeur par défaut de GNOME Shell."
 
-#: resources/ui/settings.ui:307
+#: resources/ui/settings.ui:298
 msgid "Transition time from overview to app drawer [ms]"
 msgstr "Temps de transition de la vue d'ensemble au tiroir d'applications [ms]"
 
-#: resources/ui/settings.ui:368
+#: resources/ui/settings.ui:359
 msgid "Transition time between workspaces [ms]"
 msgstr "Temps de transition entre les espaces de travail [ms]"
 
-#: resources/ui/settings.ui:428
+#: resources/ui/settings.ui:419
 msgid "Desktop Options"
 msgstr "Options du Bureau"
 
-#: resources/ui/settings.ui:451
+#: resources/ui/settings.ui:442
 msgid "Click and drag the desktop to rotate the cube"
 msgstr "Cliquer et faire glisser le bureau pour pivoter le cube"
 
-#: resources/ui/settings.ui:485
+#: resources/ui/settings.ui:476
 msgid "Click and drag the panel to rotate the cube"
 msgstr "Cliquer et faire glisser le panneau pour pivoter le cube"
 
-#: resources/ui/settings.ui:523
+#: resources/ui/settings.ui:514
 msgid "Overview Options"
 msgstr "Options de la Vue d'Ensemble"
 
-#: resources/ui/settings.ui:546
+#: resources/ui/settings.ui:537
 msgid "Click and drag the overview to rotate the cube"
 msgstr "Cliquer et faire glisser la vue d'ensemble pour faire pivoter le cube"
 
-#: resources/ui/settings.ui:581
+#: resources/ui/settings.ui:572
 msgid "Gap between adjacent workspaces"
 msgstr "Espace vide entre les espaces de travail adjacents"
 
-#: resources/ui/settings.ui:627
+#: resources/ui/settings.ui:618
 msgid "Horizontal stretching of the cube"
 msgstr "Étirement horizontal du cube"
 
-#: resources/ui/settings.ui:636
+#: resources/ui/settings.ui:627
 msgid "This ensures that you can see the cube's sides from the front."
 msgstr "Cela garantit que vous pouvez voir les côtés du cube depuis l'avant."
 
-#: resources/ui/settings.ui:684
+#: resources/ui/settings.ui:675
 msgid "Opacity of the active workspace"
 msgstr "Opacité de l'espace de travail actif"
 
-#: resources/ui/settings.ui:728
+#: resources/ui/settings.ui:719
 msgid "Opacity of inactive workspaces"
 msgstr "Opacité des espaces de travail inactifs"
+
+#~ msgid "Via PayPal"
+#~ msgstr "Via PayPal"
+
+#~ msgid "Via GitHub"
+#~ msgstr "Via GitHub"
