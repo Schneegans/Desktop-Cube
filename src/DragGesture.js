@@ -141,7 +141,7 @@ var DragGesture =
       if (this._state != State.INACTIVE && event.type() == Clutter.EventType.MOTION &&
           (event.get_state() & Clutter.ModifierType.BUTTON1_MASK) == 0) {
 
-        utils.debug('abort gesture');
+        utils.debug('ignore gesture');
         this._cancel();
         return Clutter.EVENT_PROPAGATE;
       }
@@ -218,6 +218,7 @@ var DragGesture =
       }
 
       // If the gesture was in pending state, set it to inactive again.
+      utils.debug('abort gesture');
       this._cancel();
 
       return Clutter.EVENT_PROPAGATE;
