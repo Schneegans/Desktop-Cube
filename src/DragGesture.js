@@ -69,14 +69,14 @@ var DragGesture =
     // swallows any click events preventing us from dragging the desktop background.
     // By connecting to 'captured-event', we have to extra-careful to propagate any event
     // we are not interested in.
-    this._actorConnection = actor.connect('captured-event', (a, e) => {
+    this._actorConnection1 = actor.connect('captured-event', (a, e) => {
       return this._handleEvent(e);
     });
 
     // Once the input is grabbed, events are delivered directly to the actor, so we have
     // also to connect to the normal "event" signal.
-    this._actorConnection = actor.connect('event', (a, e) => {
-      if (this._grabOngoing) {
+    this._actorConnection2 = actor.connect('event', (a, e) => {
+      if (this._lastGrab) {
         return this._handleEvent(e);
       }
       return Clutter.EVENT_PROPAGATE;
@@ -85,7 +85,8 @@ var DragGesture =
 
   // Disconnects from the actor.
   destroy() {
-    this._actor.disconnect(this._actorConnection);
+    this._actor.disconnect(this._actorConnection1);
+    this._actor.disconnect(this._actorConnection2);
   }
 
   // This is called on every captured event.
@@ -127,7 +128,7 @@ var DragGesture =
 
     // Abort the pending state if the pointer leaves the actor.
     if (event.type() == Clutter.EventType.LEAVE && this._state == State.PENDING) {
-      this._state = State.INACTIVE;
+      this._cancel();
       return Clutter.EVENT_PROPAGATE;
     }
 
@@ -135,9 +136,10 @@ var DragGesture =
         event.type() == Clutter.EventType.TOUCH_UPDATE) {
 
       // If the mouse button is not pressed, we are not interested in the event.
-      if (event.type() == Clutter.EventType.MOTION &&
+      if (this._state != State.INACTIVE && event.type() == Clutter.EventType.MOTION &&
           (event.get_state() & Clutter.ModifierType.BUTTON1_MASK) == 0) {
-        this._state = State.INACTIVE;
+
+        this._cancel();
         return Clutter.EVENT_PROPAGATE;
       }
 
@@ -201,23 +203,29 @@ var DragGesture =
       // If the gesture was active, report an end event.
       if (this._state == State.ACTIVE) {
 
-        // Cancel the ongoing grab in desktop mode.
-        if (Main.actionMode == Shell.ActionMode.NORMAL) {
-          this._ungrab(event.get_device());
-        }
+        this._cancel();
 
         this.emit('end', event.get_time(), this.distance);
-        this._state = State.INACTIVE;
 
         return Clutter.EVENT_STOP;
       }
 
       // If the gesture was in pending state, set it to inactive again.
-      this._state = State.INACTIVE;
+      this._cancel();
+
       return Clutter.EVENT_PROPAGATE;
     }
 
     return Clutter.EVENT_PROPAGATE;
+  }
+
+  // This aborts any ongoing grab and resets the current state to inactive.
+  _cancel() {
+    if (this._lastGrab) {
+      this._ungrab();
+    }
+
+    this._state = State.INACTIVE;
   }
 
   // Makes sure that all events from the pointing device we received last input from is
@@ -234,7 +242,7 @@ var DragGesture =
     // Before, we needed to grab the device and enter modal mode.
     if (global.begin_modal(0, 0)) {
       device.grab(this._actor);
-      this._grabOngoing = true;
+      this._lastGrab = device;
       return true;
     }
 
@@ -242,13 +250,13 @@ var DragGesture =
   }
 
   // Releases a grab created with the method above.
-  _ungrab(device) {
+  _ungrab() {
     if (utils.shellVersionIsAtLeast(42)) {
       this._lastGrab.dismiss();
     } else {
+      this._lastGrab.ungrab();
       global.end_modal(0);
-      device.ungrab();
-      this._grabOngoing = false;
     }
+    this._lastGrab = null;
   }
 });
