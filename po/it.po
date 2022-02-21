@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-18 20:58+0100\n"
-"PO-Revision-Date: 2022-02-17 11:56+0100\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2022-02-22 23:57+0000\n"
+"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/desktop-cube/"
+"core/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: prefs.js:142
 msgid "Gold Sponsors"
@@ -40,11 +41,11 @@ msgstr "Visita la pagina principale"
 
 #: resources/ui/settings.ui:12
 msgid "View Changelog"
-msgstr "Mostra il Changelog"
+msgstr "Visualizza registro modifiche"
 
 #: resources/ui/settings.ui:18
 msgid "Report a Bug"
-msgstr "Riporta un bug"
+msgstr "Segnala un errore"
 
 #: resources/ui/settings.ui:22
 msgid "Translate"
@@ -60,16 +61,17 @@ msgstr "Su Desktop-Cube"
 
 #: resources/ui/settings.ui:61
 msgid "General Options"
-msgstr "Opzioni Generali"
+msgstr "Opzioni generali"
 
 #: resources/ui/settings.ui:88
 msgid "Gap between last and first workspace"
-msgstr "Spazio tra l'ultimo workspace e il primo"
+msgstr "Spazio tra l'ultimo spazio di lavoro e il primo"
 
 #: resources/ui/settings.ui:97
 msgid "You cannot switch from the last to the first workspace anyways."
 msgstr ""
-"Comunque non potrai passare direttamente dall'ultimo al primo workspace."
+"Comunque non potrai passare direttamente dall'ultimo al primo spazio di "
+"lavoro."
 
 #: resources/ui/settings.ui:119 resources/ui/settings.ui:171
 #: resources/ui/settings.ui:215 resources/ui/settings.ui:276
