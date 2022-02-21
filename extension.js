@@ -137,11 +137,16 @@ class Extension {
       }
 
       // Sometimes, this method is called twice a frame. This seems not so useful, we skip
-      // any doubled calls.
-      if (this._lastCalledFrame == global.stage.get_frame_counter()) {
+      // any doubled calls. The only difference should be caused by these three
+      // adjustments. They are the basis for all positioning.
+      if (this._lastFitModeAdjustment == this._fitModeAdjustment.value &&
+          this._lastOverviewAdjustment == this._overviewAdjustment.value &&
+          this._lastScrollAdjustment == this._scrollAdjustment.value) {
         return;
       }
-      this._lastCalledFrame = global.stage.get_frame_counter();
+      this._lastFitModeAdjustment  = this._fitModeAdjustment.value;
+      this._lastOverviewAdjustment = this._overviewAdjustment.value;
+      this._lastScrollAdjustment   = this._scrollAdjustment.value;
 
       // Compute blending state from and to the overview, from and to the app grid, and
       // from and to the desktop mode. We will use cubeMode to fold and unfold the
