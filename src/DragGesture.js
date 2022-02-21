@@ -119,6 +119,7 @@ var DragGesture =
       if (Main.actionMode != Shell.ActionMode.OVERVIEW ||
           event.get_source() == this._actor ||
           event.get_source().get_parent() instanceof Workspace) {
+        utils.debug('waiting for movements...');
         this._clickPos = event.get_coords();
         this._state    = State.PENDING;
       }
@@ -128,6 +129,7 @@ var DragGesture =
 
     // Abort the pending state if the pointer leaves the actor.
     if (event.type() == Clutter.EventType.LEAVE && this._state == State.PENDING) {
+      utils.debug('abort waiting');
       this._cancel();
       return Clutter.EVENT_PROPAGATE;
     }
@@ -139,6 +141,7 @@ var DragGesture =
       if (this._state != State.INACTIVE && event.type() == Clutter.EventType.MOTION &&
           (event.get_state() & Clutter.ModifierType.BUTTON1_MASK) == 0) {
 
+        utils.debug('ignore gesture');
         this._cancel();
         return Clutter.EVENT_PROPAGATE;
       }
@@ -154,10 +157,13 @@ var DragGesture =
         if (Math.abs(currentPos[0] - this._clickPos[0]) > threshold ||
             Math.abs(currentPos[1] - this._clickPos[1]) > threshold) {
 
+          utils.debug('begin gesture');
+
           // When starting a drag in desktop mode, we grab the input so that we can move
           // the pointer across windows without loosing the input events.
           if (Main.actionMode == Shell.ActionMode.NORMAL) {
             if (!this._grab(event.get_device())) {
+              utils.debug('grab failed.');
               return Clutter.EVENT_PROPAGATE;
             }
           }
@@ -205,12 +211,14 @@ var DragGesture =
 
         this._cancel();
 
+        utils.debug('end gesture');
         this.emit('end', event.get_time(), this.distance);
 
         return Clutter.EVENT_STOP;
       }
 
       // If the gesture was in pending state, set it to inactive again.
+      utils.debug('abort gesture');
       this._cancel();
 
       return Clutter.EVENT_PROPAGATE;
@@ -232,6 +240,7 @@ var DragGesture =
   // passed to the given actor. This is used to ensure that we do not "loose" the touch
   // buttons will dragging them around.
   _grab(device) {
+    utils.debug('_grab');
 
     // On GNOME Shell 42, there's a new API.
     if (utils.shellVersionIsAtLeast(42)) {
@@ -251,6 +260,7 @@ var DragGesture =
 
   // Releases a grab created with the method above.
   _ungrab() {
+    utils.debug('_ungrab');
     if (utils.shellVersionIsAtLeast(42)) {
       this._lastGrab.dismiss();
     } else {
