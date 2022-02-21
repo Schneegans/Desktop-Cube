@@ -8,7 +8,7 @@
 
 'use strict';
 
-const {Clutter, GObject, Shell, GLib} = imports.gi;
+const {Clutter, GObject, Shell} = imports.gi;
 
 const Util          = imports.misc.util;
 const Main          = imports.ui.main;
