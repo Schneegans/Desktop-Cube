@@ -8,7 +8,7 @@
 
 'use strict';
 
-const {Clutter, GObject, Shell} = imports.gi;
+const {Clutter, GObject, Meta, Shell} = imports.gi;
 
 const Util          = imports.misc.util;
 const Main          = imports.ui.main;
@@ -107,6 +107,14 @@ var DragGesture =
       }
     }
 
+    // Ignore touch events on X11. On X11, we get emulated pointer events.
+    if (!Meta.is_wayland_compositor() &&
+        (event.type() == Clutter.EventType.TOUCH_BEGIN ||
+         event.type() == Clutter.EventType.TOUCH_UPDATE ||
+         event.type() == Clutter.EventType.TOUCH_END)) {
+      return Clutter.EVENT_PROPAGATE;
+    }
+
     // When a mouse button is pressed or a touch event starts, we store the corresponding
     // position. The gesture is maybe triggered later, if the pointer was moved a little.
     if (event.type() == Clutter.EventType.BUTTON_PRESS ||
@@ -134,8 +142,8 @@ var DragGesture =
       return Clutter.EVENT_PROPAGATE;
     }
 
-    if (event.type() == Clutter.EventType.MOTION ||
-        event.type() == Clutter.EventType.TOUCH_UPDATE) {
+    // As soon as the pointer is moved a bit, the drag action becomes active.
+    if (this._eventIsMotion(event)) {
 
       // If the mouse button is not pressed, we are not interested in the event.
       if (this._state != State.INACTIVE && event.type() == Clutter.EventType.MOTION &&
@@ -162,7 +170,11 @@ var DragGesture =
           // When starting a drag in desktop mode, we grab the input so that we can move
           // the pointer across windows without loosing the input events.
           if (Main.actionMode == Shell.ActionMode.NORMAL) {
-            if (!this._grab(event.get_device())) {
+            const sequence = event.type() == Clutter.EventType.TOUCH_UPDATE ?
+                event.get_event_sequence() :
+                null;
+
+            if (!this._grab(event.get_device(), sequence)) {
               utils.debug('grab failed.');
               return Clutter.EVENT_PROPAGATE;
             }
@@ -203,8 +215,7 @@ var DragGesture =
 
     // As soon as the mouse button is released or the touch event ends, we quit the
     // gesture.
-    if (event.type() == Clutter.EventType.BUTTON_RELEASE ||
-        event.type() == Clutter.EventType.TOUCH_END) {
+    if (this._eventIsRelease(event)) {
 
       // If the gesture was active, report an end event.
       if (this._state == State.ACTIVE) {
@@ -239,7 +250,7 @@ var DragGesture =
   // Makes sure that all events from the pointing device we received last input from is
   // passed to the given actor. This is used to ensure that we do not "loose" the touch
   // buttons will dragging them around.
-  _grab(device) {
+  _grab(device, sequence) {
     utils.debug('_grab');
 
     // On GNOME Shell 42, there's a new API.
@@ -250,7 +261,12 @@ var DragGesture =
 
     // Before, we needed to grab the device and enter modal mode.
     if (global.begin_modal(0, 0)) {
-      device.grab(this._actor);
+      if (sequence) {
+        device.sequence_grab(sequence, this._actor);
+        this._grabbedSequence = sequence;
+      } else {
+        device.grab(this._actor);
+      }
       this._lastGrab = device;
       return true;
     }
@@ -264,9 +280,39 @@ var DragGesture =
     if (utils.shellVersionIsAtLeast(42)) {
       this._lastGrab.dismiss();
     } else {
-      this._lastGrab.ungrab();
+      if (this._grabbedSequence) {
+        this._lastGrab.sequence_ungrab(this._grabbedSequence);
+        this._grabbedSequence = null;
+      } else {
+        this._lastGrab.ungrab();
+      }
       global.end_modal(0);
     }
     this._lastGrab = null;
+  }
+
+  // This is borrowed from here:
+  // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/dnd.js#L214
+  _eventIsRelease(event) {
+    if (event.type() == Clutter.EventType.BUTTON_RELEASE) {
+      const buttonMask = Clutter.ModifierType.BUTTON1_MASK |
+          Clutter.ModifierType.BUTTON2_MASK | Clutter.ModifierType.BUTTON3_MASK;
+      // We only obey the last button release from the device, other buttons may get
+      // pressed / released during the drag.
+      return (event.get_state() & buttonMask) == 0;
+    } else if (event.type() == Clutter.EventType.TOUCH_END) {
+      // For touch, we only obey the pointer emulating sequence.
+      return global.display.is_pointer_emulating_sequence(event.get_event_sequence());
+    }
+
+    return false;
+  }
+
+  // This is borrowed from here:
+  // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/dnd.js#L259
+  _eventIsMotion(event) {
+    return event.type() == Clutter.EventType.MOTION ||
+        (event.type() == Clutter.EventType.TOUCH_UPDATE &&
+         global.display.is_pointer_emulating_sequence(event.get_event_sequence()));
   }
 });
