@@ -11,8 +11,9 @@
   * In the **overview**: Click any non-interactive area (e.g. the background) and start dragging. You will be able to switch workspaces by horizontal movement, and you can look "into" the cube by rotating it up and down.
   * On the **desktop**: Simply click any free space on you desktop and start dragging the cube!
   * On the **panel**: Simply click on the panel and start dragging!
-* **Cube Explosion:** If you rotate the cube vertically (both in desktop or overview mode), the cube will be scaled down and the depth separation between windows will be increased.
-* **Depth Variance in Overview:** During rotations, window clones in the overview are not all drawn at the same depth.
+* **Cube Explosion**: If you rotate the cube vertically (both in desktop or overview mode), the cube will be scaled down and the depth separation between windows will be increased.
+* **Depth Variance in Overview**: During rotations, window clones in the overview are not all drawn at the same depth.
+* Proper **touch-screen support**: Rotating the works well on touch-screen devices. Especially the rotate-by-dragging the panel works very well in this case: Just slide a finger from the top edge of the screen and then rotate left and right!
 * **Translations!** It is now possible to [translate the preferences dialog](https://hosted.weblate.org/engage/desktop-cube/).
 * An **about-dialog** has been added which shows all translators and sponsors.
 * Initial support for GNOME Shell 42. Please [report any bugs you find](https://github.com/Schneegans/Desktop-Cube/issues)!
@@ -20,7 +21,7 @@
 #### Other Changes
 
 * Removed the unfold-to-desktop option as we now have cuboid workspace transitions everywhere.
-* **Added advanced CI tests:** For each commit to `main`, it is now tested whether the extension can be installed and if the preferences dialog can be shown on GNOME Shell 40 and 41. Both, X11 and Wayland are checked. 
+* **Added advanced CI tests:** For each commit to `main`, it is now tested whether the extension can be installed and if the preferences dialog can be shown on GNOME Shell 40 and 41. Both, X11 and Wayland are checked.
 * The README now shows the current lines of code and the current comment percentage using my [dynamic-badges-action](https://github.com/Schneegans/dynamic-badges-action).
 * Added [Liberapay](https://liberapay.com/Schneegans) to the sponsorship options.
 
