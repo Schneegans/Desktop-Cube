@@ -13,8 +13,16 @@
   * On the **panel**: Simply click on the panel and start dragging!
 * **Cube Explosion**: If you rotate the cube vertically (both in desktop or overview mode), the cube will be scaled down and the depth separation between windows will be increased.
 * **Depth Variance in Overview**: During rotations, window clones in the overview are not all drawn at the same depth.
-* Proper **touch-screen support**: Rotating the works well on touch-screen devices. Especially the rotate-by-dragging the panel works very well in this case: Just slide a finger from the top edge of the screen and then rotate left and right!
-* **Translations!** It is now possible to [translate the preferences dialog](https://hosted.weblate.org/engage/desktop-cube/).
+* Proper **touch-screen support**: Rotating the cube works well on touch-screen devices. Especially the rotate-by-dragging-the-panel works very well in this case: Just slide a finger from the top edge of the screen and then rotate left and right!
+* **Translations!** It is now possible to [translate the preferences dialog](https://hosted.weblate.org/engage/desktop-cube/). We already have those languages included (thanks to all the translators!):
+  * Arabic
+  * Dutch
+  * English
+  * French
+  * German
+  * Italian
+  * Norwegian Bokmål
+  * Spanish
 * An **about-dialog** has been added which shows all translators and sponsors.
 * Initial support for GNOME Shell 42. Please [report any bugs you find](https://github.com/Schneegans/Desktop-Cube/issues)!
 
