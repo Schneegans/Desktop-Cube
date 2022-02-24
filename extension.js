@@ -138,17 +138,19 @@ class Extension {
 
       // During the transitions to / from the app drawer, this method is called twice a
       // frame. This seems not so useful (and degrades performance a lot), we skip any
-      // doubled calls. The only difference should be caused by these three adjustments.
+      // doubled calls. The only difference should be caused by these four adjustments.
       // They are the basis for all positioning. And the number of workspaces.
       if (this._lastFitModeAdjustment == this._fitModeAdjustment.value &&
           this._lastOverviewAdjustment == this._overviewAdjustment.value &&
           this._lastScrollAdjustment == this._scrollAdjustment.value &&
+          this._lastPitchValue == extensionThis._pitch.value &&
           this._lastNumberOfWorkspaces == global.workspace_manager.n_workspaces) {
         return;
       }
       this._lastFitModeAdjustment  = this._fitModeAdjustment.value;
       this._lastOverviewAdjustment = this._overviewAdjustment.value;
       this._lastScrollAdjustment   = this._scrollAdjustment.value;
+      this._lastPitchValue         = extensionThis._pitch.value;
       this._lastNumberOfWorkspaces = global.workspace_manager.n_workspaces;
 
       // Compute blending state from and to the overview, from and to the app grid, and
