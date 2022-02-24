@@ -136,22 +136,18 @@ class Extension {
         return;
       }
 
-      // During the transitions to / from the app drawer, this method is called twice a
-      // frame. This seems not so useful (and degrades performance a lot), we skip any
-      // doubled calls. The only difference should be caused by these four adjustments.
-      // They are the basis for all positioning. And the number of workspaces.
-      if (this._lastFitModeAdjustment == this._fitModeAdjustment.value &&
-          this._lastOverviewAdjustment == this._overviewAdjustment.value &&
-          this._lastScrollAdjustment == this._scrollAdjustment.value &&
-          this._lastPitchValue == extensionThis._pitch.value &&
-          this._lastNumberOfWorkspaces == global.workspace_manager.n_workspaces) {
+      // Here's a minor hack to improve the performance: During the transitions to / from
+      // the app drawer, this._updateWorkspacesState is called twice a frame. Once from
+      // the notify handler of this._fitModeAdjustment and thereafter once from the notify
+      // handler of this._overviewAdjustment. As this seems not so useful (and degrades
+      // performance a lot), we skip the first call. I am not aware of any cases where
+      // this._fitModeAdjustment is changed without any of the over adjustments to change
+      // as well...
+      // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L109
+      // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L45
+      if ((new Error()).stack.includes('fitModeNotify')) {
         return;
       }
-      this._lastFitModeAdjustment  = this._fitModeAdjustment.value;
-      this._lastOverviewAdjustment = this._overviewAdjustment.value;
-      this._lastScrollAdjustment   = this._scrollAdjustment.value;
-      this._lastPitchValue         = extensionThis._pitch.value;
-      this._lastNumberOfWorkspaces = global.workspace_manager.n_workspaces;
 
       // Compute blending state from and to the overview, from and to the app grid, and
       // from and to the desktop mode. We will use cubeMode to fold and unfold the
