@@ -408,6 +408,19 @@ class Extension {
     // use the adjustment below.
     this._pitch = new St.Adjustment({actor: global.stage, lower: -1, upper: 1});
 
+    // The overview's SwipeTracker will control the _overviewAdjustment of the
+    // WorkspacesDisplay. However, only horizontal swipes will update this adjustment. If
+    // only our pitch adjustment is changed (e.g. the user moved the mouse only
+    // vertically), the _overviewAdjustment will not change and therefore the workspaces
+    // will not been redrawn. Here we force redrawing by notifying changes if the pitch
+    // value changes.
+    this._pitch.connect('notify::value', () => {
+      if (Main.actionMode == Shell.ActionMode.OVERVIEW) {
+        Main.overview._overview._controls._workspacesDisplay._overviewAdjustment.notify(
+            'value');
+      }
+    });
+
     // In GNOME Shell, SwipeTrackers are used all over the place to capture swipe
     // gestures. There's one for entering the overview, one for switching workspaces in
     // desktop mode, one for switching workspaces in overview mode, one for horizontal
@@ -452,19 +465,6 @@ class Extension {
         this._addOverviewDragGesture();
       } else {
         this._removeOverviewDragGesture();
-      }
-    });
-
-    // The overview's SwipeTracker will control the _overviewAdjustment of the
-    // WorkspacesDisplay. However, only horizontal swipes will update this adjustment. If
-    // only our pitch adjustment is changed (e.g. the user moved the mouse only
-    // vertically), the _overviewAdjustment will not change and therefore the workspaces
-    // will not been redrawn. Here we force redrawing by notifying changes if the pitch
-    // value changes.
-    this._pitch.connect('notify::value', () => {
-      if (Main.actionMode == Shell.ActionMode.OVERVIEW) {
-        Main.overview._overview._controls._workspacesDisplay._overviewAdjustment.notify(
-            'value');
       }
     });
   }
@@ -679,8 +679,6 @@ class Extension {
     gesture.connect('begin', tracker._beginGesture.bind(tracker));
     gesture.connect('update', tracker._updateGesture.bind(tracker));
     gesture.connect('end', tracker._endTouchGesture.bind(tracker));
-    tracker.bind_property(
-        'enabled', gesture, 'enabled', GObject.BindingFlags.SYNC_CREATE);
     tracker.bind_property(
         'distance', gesture, 'distance', GObject.BindingFlags.SYNC_CREATE);
 
