@@ -136,17 +136,20 @@ class Extension {
         return;
       }
 
-      // Sometimes, this method is called twice a frame. This seems not so useful, we skip
-      // any doubled calls. The only difference should be caused by these three
-      // adjustments. They are the basis for all positioning.
+      // During the transitions to / from the app drawer, this method is called twice a
+      // frame. This seems not so useful (and degrades performance a lot), we skip any
+      // doubled calls. The only difference should be caused by these three adjustments.
+      // They are the basis for all positioning. And the number of workspaces.
       if (this._lastFitModeAdjustment == this._fitModeAdjustment.value &&
           this._lastOverviewAdjustment == this._overviewAdjustment.value &&
-          this._lastScrollAdjustment == this._scrollAdjustment.value) {
+          this._lastScrollAdjustment == this._scrollAdjustment.value &&
+          this._lastNumberOfWorkspaces == global.workspace_manager.n_workspaces) {
         return;
       }
       this._lastFitModeAdjustment  = this._fitModeAdjustment.value;
       this._lastOverviewAdjustment = this._overviewAdjustment.value;
       this._lastScrollAdjustment   = this._scrollAdjustment.value;
+      this._lastNumberOfWorkspaces = global.workspace_manager.n_workspaces;
 
       // Compute blending state from and to the overview, from and to the app grid, and
       // from and to the desktop mode. We will use cubeMode to fold and unfold the
