@@ -3,7 +3,7 @@
 
 ## [Desktop Cube 8](https://github.com/schneegans/Desktop-Cube/releases/tag/v8)
 
-**Release Date:** TBD
+**Release Date:** 2022-02-25
 
 #### New Features
 
