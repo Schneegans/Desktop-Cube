@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-18 20:58+0100\n"
-"PO-Revision-Date: 2022-02-22 23:57+0000\n"
+"PO-Revision-Date: 2022-02-27 17:57+0000\n"
 "Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/desktop-cube/core/"
 "de/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.11.1-dev\n"
 
 #: prefs.js:142
 msgid "Gold Sponsors"
@@ -70,6 +70,7 @@ msgstr "Abstand zwischen letzter und erster Arbeitsfläche"
 #: resources/ui/settings.ui:97
 msgid "You cannot switch from the last to the first workspace anyways."
 msgstr ""
+"Sie können ohnehin nicht vom letzten zum ersten Arbeitsbereich wechseln."
 
 #: resources/ui/settings.ui:119 resources/ui/settings.ui:171
 #: resources/ui/settings.ui:215 resources/ui/settings.ui:276
