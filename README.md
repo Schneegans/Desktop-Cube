@@ -1,5 +1,5 @@
 <p align="center">
-  <img src ="docs/pics/teaser.jpg" />
+  <a href="https://www.youtube.com/watch?v=J7pdnkv7v1A"><img src ="docs/pics/teaser.jpg" /></a>
 </p>
 
 <h1 align="center">A Desktop Cube for GNOME Shell</h1>
