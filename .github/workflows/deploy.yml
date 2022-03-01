@@ -6,7 +6,7 @@ on:
       - '**'
 
 jobs:
-  source_code:
+  extension_bundle:
     name: Extension Bundle
     runs-on: ubuntu-latest
     steps:
