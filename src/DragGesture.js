@@ -167,8 +167,8 @@ var DragGesture =
           // the pointer across windows without loosing the input events.
           if (Main.actionMode == Shell.ActionMode.NORMAL) {
             const sequence = event.type() == Clutter.EventType.TOUCH_UPDATE ?
-                event.get_event_sequence() :
-                null;
+              event.get_event_sequence() :
+              null;
 
             if (!this._grab(event.get_device(), sequence)) {
               return Clutter.EVENT_PROPAGATE;
@@ -197,8 +197,8 @@ var DragGesture =
         this.pitch = (this._startY - currentPos[1]) / global.screen_height;
 
         // Increase horizontal movement if the cube is rotated vertically.
-        deltaX *= Util.lerp(
-            1.0, global.workspaceManager.get_n_workspaces(), Math.abs(this.pitch));
+        deltaX *= Util.lerp(1.0, global.workspaceManager.get_n_workspaces(),
+                            Math.abs(this.pitch));
 
         this.emit('update', event.get_time(), -deltaX, this.distance);
 
@@ -287,7 +287,7 @@ var DragGesture =
   _eventIsRelease(event) {
     if (event.type() == Clutter.EventType.BUTTON_RELEASE) {
       const buttonMask = Clutter.ModifierType.BUTTON1_MASK |
-          Clutter.ModifierType.BUTTON2_MASK | Clutter.ModifierType.BUTTON3_MASK;
+        Clutter.ModifierType.BUTTON2_MASK | Clutter.ModifierType.BUTTON3_MASK;
       // We only obey the last button release from the device, other buttons may get
       // pressed / released during the drag.
       return (event.get_state() & buttonMask) == 0;
@@ -303,7 +303,7 @@ var DragGesture =
   // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/dnd.js#L259
   _eventIsMotion(event) {
     return event.type() == Clutter.EventType.MOTION ||
-        (event.type() == Clutter.EventType.TOUCH_UPDATE &&
-         global.display.is_pointer_emulating_sequence(event.get_event_sequence()));
+      (event.type() == Clutter.EventType.TOUCH_UPDATE &&
+       global.display.is_pointer_emulating_sequence(event.get_event_sequence()));
   }
 });

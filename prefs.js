@@ -192,9 +192,8 @@ var PreferencesDialog = class PreferencesDialog {
   // Connects any widget's property to a settings key. The widget must have the same ID as
   // the settings key. It also binds the corresponding reset button.
   _bind(settingsKey, property) {
-    this._settings.bind(
-        settingsKey, this._builder.get_object(settingsKey), property,
-        Gio.SettingsBindFlags.DEFAULT);
+    this._settings.bind(settingsKey, this._builder.get_object(settingsKey), property,
+                        Gio.SettingsBindFlags.DEFAULT);
 
     const resetButton = this._builder.get_object('reset-' + settingsKey);
     resetButton.connect('clicked', () => {

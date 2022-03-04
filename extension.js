@@ -15,7 +15,7 @@ const Main           = imports.ui.main;
 const WorkspacesView = imports.ui.workspacesView.WorkspacesView;
 const FitMode        = imports.ui.workspacesView.FitMode;
 const WorkspaceAnimationController =
-    imports.ui.workspaceAnimation.WorkspaceAnimationController;
+  imports.ui.workspaceAnimation.WorkspaceAnimationController;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me             = imports.misc.extensionUtils.getCurrentExtension();
@@ -73,12 +73,12 @@ class Extension {
       {
         const t = this._settings.get_int('appgrid-transition-time');
         imports.ui.overviewControls.SIDE_CONTROLS_ANIMATION_TIME =
-            (t > 0 ? t : this._origToAppDrawerTime);
+          (t > 0 ? t : this._origToAppDrawerTime);
       }
       {
         const t = this._settings.get_int('workspace-transition-time');
         imports.ui.workspacesView.WORKSPACE_SWITCH_TIME =
-            (t > 0 ? t : this._origWorkspaceSwitchTime);
+          (t > 0 ? t : this._origWorkspaceSwitchTime);
       }
     };
 
@@ -111,7 +111,7 @@ class Extension {
     WorkspacesView.prototype._getSpacing = function(box, fitMode, vertical) {
       // We use the "normal" workspace spacing in desktop and app-grid mode.
       const origValue =
-          extensionThis._origGetSpacing.apply(this, [box, fitMode, vertical]);
+        extensionThis._origGetSpacing.apply(this, [box, fitMode, vertical]);
 
       if (fitMode == FitMode.ALL) {
         return origValue;
@@ -169,7 +169,7 @@ class Extension {
 
         // Add gaps between workspaces in overview mode.
         workspaceWidth +=
-            overviewMode * 2 * extensionThis._settings.get_int('workpace-separation');
+          overviewMode * 2 * extensionThis._settings.get_int('workpace-separation');
 
         extensionThis._lastWorkspaceWidth = workspaceWidth;
       }
@@ -192,7 +192,7 @@ class Extension {
       // workspace-switching not so obtrusive. However, during vertical rotations, the
       // effects are stronger.
       const [depthOffset, explode] = extensionThis._getExplodeFactors(
-          this._scrollAdjustment.value, extensionThis._pitch.value, centerDepth);
+        this._scrollAdjustment.value, extensionThis._pitch.value, centerDepth);
 
       // Now loop through all workspace and compute the individual rotations.
       this._workspaces.forEach((w, index) => {
@@ -209,7 +209,7 @@ class Extension {
         // The rotation angle is transitioned proportional to cubeMode^1.5. This slows
         // down the rotation a bit closer to the desktop and to the app drawer.
         w.rotation_angle_y =
-            Math.pow(cubeMode, 1.5) * (-this._scrollAdjustment.value + index) * faceAngle;
+          Math.pow(cubeMode, 1.5) * (-this._scrollAdjustment.value + index) * faceAngle;
 
         // Distance to being the active workspace in [-1...0...1].
         const dist = Math.clamp(index - this._scrollAdjustment.value, -1, 1);
@@ -219,7 +219,7 @@ class Extension {
         // The value is set to zero if we have five or more workspaces.
         if (faceCount <= 4) {
           w.translation_x =
-              dist * overviewMode * extensionThis._settings.get_int('horizontal-stretch');
+            dist * overviewMode * extensionThis._settings.get_int('horizontal-stretch');
         } else {
           w.translation_x = 0;
         }
@@ -310,14 +310,14 @@ class Extension {
 
       // That's the z-distance from the cube faces to the rotation pivot.
       const centerDepth =
-          extensionThis._getCenterDist(group._workspaceGroups[0].width, faceAngle);
+        extensionThis._getCenterDist(group._workspaceGroups[0].width, faceAngle);
 
       // Apply vertical rotation if required. This comes from the pitch value of the
       // modified SwipeTracker created by _addDesktopDragGesture() further below.
       group._container.pivot_point_z = -centerDepth;
       group._container.set_pivot_point(0.5, 0.5);
       group._container.rotation_angle_x =
-          extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
+        extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
 
       // During rotations, the cube is scaled down and the windows are "exploded". If we
       // are directly facing a cube side, the strengths of both effects are approaching
@@ -325,7 +325,7 @@ class Extension {
       // workspace-switching not so obtrusive. However, during vertical rotations, the
       // effects are stronger.
       const [depthOffset, explode] = extensionThis._getExplodeFactors(
-          group.progress, extensionThis._pitch.value, centerDepth);
+        group.progress, extensionThis._pitch.value, centerDepth);
 
       // Rotate the individual faces.
       group._workspaceGroups.forEach((child, i) => {
@@ -413,7 +413,7 @@ class Extension {
     this._pitch.connect('notify::value', () => {
       if (Main.actionMode == Shell.ActionMode.OVERVIEW) {
         Main.overview._overview._controls._workspacesDisplay._overviewAdjustment.notify(
-            'value');
+          'value');
       }
     });
 
@@ -498,7 +498,7 @@ class Extension {
   // overview mode (1).
   _getOverviewMode(workspacesView) {
     return workspacesView._overviewAdjustment.value -
-        2 * this._getAppDrawerMode(workspacesView);
+      2 * this._getAppDrawerMode(workspacesView);
   }
 
   // Returns a value between [0...1]. If it's 0, the cube should be unfolded, if it's 1,
@@ -559,18 +559,18 @@ class Extension {
       x: global.stage.width / 2,
       y: global.stage.height / 2,
       z: global.stage.height /
-          (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180))
+        (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180))
     });
 
     // Create a list of the orthogonal distances to the camera for each actor.
     const distances = actors.map((a, i) => {
       // A point on the actor plane.
       const onActor = a.apply_relative_transform_to_point(
-          null, new Graphene.Point3D({x: 0, y: 0, z: 0}));
+        null, new Graphene.Point3D({x: 0, y: 0, z: 0}));
 
       // A point one unit above the actor plane.
       const aboveActor = a.apply_relative_transform_to_point(
-          null, new Graphene.Point3D({x: 0, y: 0, z: 1000}));
+        null, new Graphene.Point3D({x: 0, y: 0, z: 1000}));
 
       // The normal vector on the actor plane.
       const normal = new Graphene.Point3D({
@@ -580,7 +580,7 @@ class Extension {
       });
 
       const length =
-          Math.sqrt(normal.x * normal.x + normal.y * normal.y + normal.z * normal.z);
+        Math.sqrt(normal.x * normal.x + normal.y * normal.y + normal.z * normal.z);
       normal.x /= length;
       normal.y /= length;
       normal.z /= length;
@@ -634,7 +634,7 @@ class Extension {
     const height     = global.screen_height;
     const cornerDist = Math.sqrt(Math.pow(centerDepth, 2) + Math.pow(width / 2, 2));
     const hDepthOffset =
-        this._settings.get_double('window-parallax') * (cornerDist - centerDepth);
+      this._settings.get_double('window-parallax') * (cornerDist - centerDepth);
 
     // The explode factor is set to the hDepthOffset value to make the front-most
     // window stay at a constant depth.
@@ -643,12 +643,12 @@ class Extension {
     // For vertical rotations, we move the cube backwards to reveal everything. The
     // maximum explode width is set to half of the workspace size.
     const vExplode =
-        this._settings.get_boolean('do-explode') ? Math.max(width, height) / 2 : 0;
+      this._settings.get_boolean('do-explode') ? Math.max(width, height) / 2 : 0;
     const diameter = 2 * (vExplode + centerDepth);
     const camDist =
-        height / (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180));
+      height / (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180));
     const vDepthOffset =
-        (1 + PADDING_V_ROTATION) * diameter * camDist / width - centerDepth;
+      (1 + PADDING_V_ROTATION) * diameter * camDist / width - centerDepth;
 
     // Use current maximum of both values.
     const depthOffset = Math.max(hFactor * hDepthOffset, vFactor * vDepthOffset);
@@ -659,7 +659,7 @@ class Extension {
     // ... 1 in the window picker
     // ... 2 in the app drawer
     const windowPickerFactor =
-        Math.min(1.0, 2.0 - Main.overview._overview.controls._stateAdjustment.value);
+      Math.min(1.0, 2.0 - Main.overview._overview.controls._stateAdjustment.value);
 
     return [depthOffset * windowPickerFactor, explode * windowPickerFactor];
   }
@@ -675,8 +675,8 @@ class Extension {
     gesture.connect('begin', tracker._beginGesture.bind(tracker));
     gesture.connect('update', tracker._updateGesture.bind(tracker));
     gesture.connect('end', tracker._endTouchGesture.bind(tracker));
-    tracker.bind_property(
-        'distance', gesture, 'distance', GObject.BindingFlags.SYNC_CREATE);
+    tracker.bind_property('distance', gesture, 'distance',
+                          GObject.BindingFlags.SYNC_CREATE);
 
     // Connect the gesture's pitch property to the pitch adjustment.
     gesture.bind_property('pitch', this._pitch, 'value', 0);
