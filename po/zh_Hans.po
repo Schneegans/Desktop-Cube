@@ -8,25 +8,31 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-18 20:58+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-03-05 23:57+0000\n"
+"Last-Translator: 刘韬 <lyuutau@outlook.com>\n"
+"Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
+"desktop-cube/core/zh_Hans/>\n"
 "Language: zh_Hans\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: prefs.js:142
+#, fuzzy
 msgid "Gold Sponsors"
-msgstr ""
+msgstr "金牌赞助商"
 
 #: prefs.js:145
+#, fuzzy
 msgid "Silver Sponsors"
-msgstr ""
+msgstr "银牌赞助商"
 
 #: prefs.js:148
+#, fuzzy
 msgid "Bronze Sponsors"
-msgstr ""
+msgstr "铜牌赞助商"
 
 #: prefs.js:151
 msgid "Past Sponsors"
@@ -34,7 +40,7 @@ msgstr ""
 
 #: resources/ui/settings.ui:8
 msgid "Visit Homepage"
-msgstr ""
+msgstr "访问主页"
 
 #: resources/ui/settings.ui:12
 msgid "View Changelog"
@@ -46,11 +52,11 @@ msgstr ""
 
 #: resources/ui/settings.ui:22
 msgid "Translate"
-msgstr ""
+msgstr "翻译"
 
 #: resources/ui/settings.ui:26
 msgid "Donate"
-msgstr ""
+msgstr "捐赠"
 
 #: resources/ui/settings.ui:43
 msgid "About the Desktop-Cube"
