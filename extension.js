@@ -21,6 +21,7 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me             = imports.misc.extensionUtils.getCurrentExtension();
 const utils          = Me.imports.src.utils;
 const DragGesture    = Me.imports.src.DragGesture.DragGesture;
+const Skybox         = Me.imports.src.Skybox.Skybox;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // This extensions tweaks the positioning of workspaces in overview mode and while      //
@@ -48,12 +49,13 @@ class Extension {
     // Store a reference to the settings object.
     this._settings = ExtensionUtils.getSettings();
 
-    // We will monkey-patch these three methods. Let's store the original ones.
+    // We will monkey-patch these methods. Let's store the original ones.
     this._origUpdateWorkspacesState = WorkspacesView.prototype._updateWorkspacesState;
     this._origGetSpacing            = WorkspacesView.prototype._getSpacing;
     this._origUpdateVisibility      = WorkspacesView.prototype._updateVisibility;
     this._origAnimateSwitch = WorkspaceAnimationController.prototype.animateSwitch;
     this._origPrepSwitch = WorkspaceAnimationController.prototype._prepareWorkspaceSwitch;
+    this._origFinalSwitch = WorkspaceAnimationController.prototype._finishWorkspaceSwitch;
 
     // We may also override these animation times.
     this._origWorkspaceSwitchTime = imports.ui.workspacesView.WORKSPACE_SWITCH_TIME;
@@ -368,6 +370,12 @@ class Extension {
       // The depth-sorting of cube faces is quite simple, we sort them by increasing
       // rotation angle.
       extensionThis._sortActorsByAngle(group._workspaceGroups);
+
+      // Update horizontal rotation of the background panorama during workspace switches.
+      if (this._skybox) {
+        this._skybox.yaw =
+          2 * Math.PI * group.progress / global.workspaceManager.get_n_workspaces();
+      }
     };
 
     // Whenever a workspace-switch is about to happen, we tweak the MonitorGroup class a
@@ -395,6 +403,23 @@ class Extension {
           updateMonitorGroup(m);
         };
       });
+
+      // Make sure that the background panorama is drawn above the window group during a
+      // workspace switch.
+      if (extensionThis._skybox) {
+        extensionThis._skybox.get_parent().remove_child(extensionThis._skybox);
+        Main.uiGroup.insert_child_above(extensionThis._skybox, global.window_group);
+      }
+    };
+
+    // Re-attach the background panorama to the stage once the workspace switch is done.
+    WorkspaceAnimationController.prototype._finishWorkspaceSwitch = function(...params) {
+      extensionThis._origFinalSwitch.apply(this, params);
+
+      if (extensionThis._skybox) {
+        extensionThis._skybox.get_parent().remove_child(extensionThis._skybox);
+        global.stage.insert_child_below(extensionThis._skybox, null);
+      }
     };
 
     // -------------------------------------------------- enable cube rotation by dragging
@@ -463,6 +488,60 @@ class Extension {
         this._removeOverviewDragGesture();
       }
     });
+
+
+    // -------------------------------------------------------------------- add the skybox
+
+    // This is called whenever the skybox texture setting is changed.
+    const updateSkybox = () => {
+      // First, delete the existing skybox.
+      if (this._skybox) {
+        this._skybox.destroy();
+        delete this._skybox;
+      }
+
+      const file = this._settings.get_string('background-panorama');
+
+      // Then, load a new one (if any).
+      if (file != '') {
+        try {
+          this._skybox = new Skybox(file);
+
+          // We add the skybox below everything.
+          global.stage.insert_child_below(this._skybox, null);
+
+          // Make sure that the skybox covers the entire stage.
+          global.stage.bind_property('width', this._skybox, 'width',
+                                     GObject.BindingFlags.SYNC_CREATE);
+          global.stage.bind_property('height', this._skybox, 'height',
+                                     GObject.BindingFlags.SYNC_CREATE);
+
+        } catch (error) {
+          utils.debug('Failed to set skybox: ' + error);
+        }
+      }
+    };
+
+    // Update the skybox whenever the corresponding setting is changed.
+    this._settings.connect('changed::background-panorama', updateSkybox);
+    updateSkybox();
+
+    // Update vertical rotation of the background panorama.
+    this._pitch.connect('notify::value', () => {
+      if (this._skybox) {
+        this._skybox.pitch = (this._pitch.value * MAX_VERTICAL_ROTATION) * Math.PI / 180;
+      }
+    });
+
+    // Update horizontal rotation of the background panorama during workspace switches in
+    // the overview.
+    Main.overview._overview.controls._workspaceAdjustment.connect('notify::value', () => {
+      if (this._skybox) {
+        this._skybox.yaw = 2 * Math.PI *
+          Main.overview._overview.controls._workspaceAdjustment.value /
+          global.workspaceManager.get_n_workspaces();
+      }
+    });
   }
 
   // This function could be called after the extension is uninstalled, disabled in GNOME
@@ -475,6 +554,7 @@ class Extension {
     WorkspacesView.prototype._updateVisibility      = this._origUpdateVisibility;
     WorkspaceAnimationController.prototype.animateSwitch = this._origAnimateSwitch;
     WorkspaceAnimationController.prototype._prepareWorkspaceSwitch = this._origPrepSwitch;
+    WorkspaceAnimationController.prototype._finishWorkspaceSwitch = this._origFinalSwitch;
 
     imports.ui.workspacesView.WORKSPACE_SWITCH_TIME = this._origWorkspaceSwitchTime;
     imports.ui.overview.ANIMATION_TIME              = this._origToOverviewTime;
@@ -485,6 +565,8 @@ class Extension {
     this._removeOverviewDragGesture();
 
     this._settings = null;
+
+    this._skybox.destroy();
   }
 
   // ----------------------------------------------------------------------- private stuff
