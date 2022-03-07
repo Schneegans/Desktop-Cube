@@ -234,6 +234,60 @@
                         <property name="spacing">3</property>
                         <child>
                           <object class="GtkLabel">
+                            <property name="label" translatable="yes">Background panorama</property>
+                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
+                            <property name="valign">center</property>
+                            <property name="hexpand">1</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label" translatable="yes">See tooltip of the button for some hints.</property>
+                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
+                            <property name="valign">center</property>
+                            <property name="hexpand">1</property>
+                            <style>
+                              <class name="dim-label" />
+                              <class name="caption" />
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="DesktopCubeImageChooserButton" id="background-panorama">
+                        <property name="tooltip-text" translatable="yes">You can use any image here. For best results, it should be a 360° panorama in the equirectangular projection. A good source for such panoramas is polyhaven.com/hdris. Be sure to download the tone-mapped JPEG versions!</property>
+                        <property name="halign">end</property>
+                        <property name="valign">center</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="reset-background-panorama">
+                        <property name="icon-name">edit-clear-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Reset to default value</property>
+                        <style>
+                          <class name="flat" />
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkListBoxRow">
+                <property name="activatable">0</property>
+                <child>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">3</property>
+                        <child>
+                          <object class="GtkLabel">
                             <property name="label" translatable="yes">Transition time from desktop to overview [ms]</property>
                             <property name="xalign">0</property>
                             <property name="halign">start</property>
