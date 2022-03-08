@@ -730,6 +730,11 @@ class Extension {
   // depth-sorting a list of parallel actors.
   _sortActorsByPlaneDist(actors) {
 
+    // Sanity check.
+    if (actors.length <= 1) {
+      return;
+    }
+
     // First, compute distance of virtual camera to the front workspace plane.
     const camera = new Graphene.Point3D({
       x: global.stage.width / 2,
