@@ -8,10 +8,11 @@
 
 'use strict';
 
-const {Clutter, Graphene, GObject, Shell, St} = imports.gi;
+const {Clutter, Graphene, GObject, Shell, St, Meta} = imports.gi;
 
 const Util           = imports.misc.util;
 const Main           = imports.ui.main;
+const Layout         = imports.ui.layout;
 const WorkspacesView = imports.ui.workspacesView.WorkspacesView;
 const FitMode        = imports.ui.workspacesView.FitMode;
 const WorkspaceAnimationController =
@@ -542,6 +543,82 @@ class Extension {
           global.workspaceManager.get_n_workspaces();
       }
     });
+
+
+    // ----------------------------------------------- enable edge-drag workspace-switches
+
+    // We add two Meta.Barriers, one at each side of the stage. If the pointer hits one of
+    // these with enough pressure while dragging a window, we initiate a workspace-switch.
+    this._pressureBarrier = new Layout.PressureBarrier(
+      Layout.HOT_CORNER_PRESSURE_THRESHOLD, Layout.HOT_CORNER_PRESSURE_TIMEOUT,
+      Shell.ActionMode.NORMAL);
+
+    // The barriers are re-created whenever the size of stage changes.
+    const createBarriers = () => {
+      if (this._leftBarrier) {
+        this._pressureBarrier.removeBarrier(this._leftBarrier);
+        this._leftBarrier.destroy();
+      }
+
+      if (this._rightBarrier) {
+        this._pressureBarrier.removeBarrier(this._rightBarrier);
+        this._rightBarrier.destroy();
+      }
+
+      this._leftBarrier = new Meta.Barrier({
+        display: global.display,
+        x1: 0,
+        x2: 0,
+        y1: 0,
+        y2: global.stage.height,
+        directions: Meta.BarrierDirection.POSITIVE_X,
+      });
+
+      this._rightBarrier = new Meta.Barrier({
+        display: global.display,
+        x1: global.stage.width,
+        x2: global.stage.width,
+        y1: 0,
+        y2: global.stage.height,
+        directions: Meta.BarrierDirection.NEGATIVE_X,
+      });
+
+      this._pressureBarrier.addBarrier(this._leftBarrier);
+      this._pressureBarrier.addBarrier(this._rightBarrier);
+    };
+
+    // Re-create the barriers whenever the stage's allocation is changed.
+    this._stageAllocationID = global.stage.connect('notify::allocation', createBarriers);
+    createBarriers();
+
+    // When the pressure barrier is triggered, the corresponding setting is enabled, and a
+    // window is currently dragged, we move the dragged window to the adjacent workspace
+    // and activate it as well.
+    this._pressureBarrier.connect('trigger', () => {
+      if (this._draggedWindow &&
+          this._settings.get_boolean('enable-window-drag-rotation')) {
+
+        const direction = this._leftBarrier._isHit ? Meta.MotionDirection.LEFT :
+                                                     Meta.MotionDirection.RIGHT;
+        Main.wm.actionMoveWindow(
+          this._draggedWindow,
+          global.workspace_manager.get_active_workspace().get_neighbor(direction));
+      }
+    });
+
+    // Keep a reference to the currently dragged window.
+    global.display.connect('grab-op-begin', (d, win, op) => {
+      if (op == Meta.GrabOp.MOVING) {
+        this._draggedWindow = win;
+      }
+    });
+
+    // Release the reference to the currently dragged window.
+    global.display.connect('grab-op-end', (d, win, op) => {
+      if (op == Meta.GrabOp.MOVING) {
+        this._draggedWindow = null;
+      }
+    });
   }
 
   // This function could be called after the extension is uninstalled, disabled in GNOME
@@ -560,13 +637,30 @@ class Extension {
     imports.ui.overview.ANIMATION_TIME              = this._origToOverviewTime;
     imports.ui.overviewControls.SIDE_CONTROLS_ANIMATION_TIME = this._origToAppDrawerTime;
 
+    // Remove all drag-to-rotate gestures.
     this._removeDesktopDragGesture();
     this._removePanelDragGesture();
     this._removeOverviewDragGesture();
 
-    this._settings = null;
+    // Clean up skybox.
+    if (this._skybox) {
+      this._skybox.destroy();
+      this._skybox = null;
+    }
 
-    this._skybox.destroy();
+    // Clean up the edge-workspace-switching.
+    global.stage.disconnect(this._stageAllocationID);
+
+    this._pressureBarrier.destroy();
+    this._leftBarrier.destroy();
+    this._rightBarrier.destroy();
+
+    this._pressureBarrier = null;
+    this._leftBarrier     = null;
+    this._rightBarrier    = null;
+
+    // Make sure that the settings object is freed.
+    this._settings = null;
   }
 
   // ----------------------------------------------------------------------- private stuff
@@ -635,6 +729,11 @@ class Extension {
   // distance from the camera to its projected position is computed. This is used for
   // depth-sorting a list of parallel actors.
   _sortActorsByPlaneDist(actors) {
+
+    // Sanity check.
+    if (actors.length <= 1) {
+      return;
+    }
 
     // First, compute distance of virtual camera to the front workspace plane.
     const camera = new Graphene.Point3D({

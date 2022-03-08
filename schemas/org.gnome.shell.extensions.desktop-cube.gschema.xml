@@ -73,6 +73,12 @@
       <description>Panel: Rotate the cube with the left mouse button.</description>
     </key>
 
+    <key name="enable-window-drag-rotation" type="b">
+      <default>true</default>
+      <summary>Enable Window Drag Rotation</summary>
+      <description>Switch workspaces when dragging a window over the screen's edge.</description>
+    </key>
+
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- overview cube settings                                                        -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

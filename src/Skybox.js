@@ -134,12 +134,10 @@ var Skybox = GObject.registerClass({
     // Forward the yaw and pitch values.
     this.bind_property('yaw', this._effect, 'yaw', GObject.BindingFlags.NONE);
     this.bind_property('pitch', this._effect, 'pitch', GObject.BindingFlags.NONE);
-  }
 
-  destroy() {
     // Revert to the original overview background appearance.
-    Main.uiGroup.remove_style_class_name('desktop-cube-panorama-enabled');
-
-    super.destroy();
+    this.connect('destroy', () => {
+      Main.uiGroup.remove_style_class_name('desktop-cube-panorama-enabled');
+    });
   }
 });
