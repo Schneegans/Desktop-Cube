@@ -21,9 +21,10 @@ try {
 
 const _ = imports.gettext.domain('desktop-cube').gettext;
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me             = imports.misc.extensionUtils.getCurrentExtension();
-const utils          = Me.imports.src.utils;
+const ExtensionUtils     = imports.misc.extensionUtils;
+const Me                 = imports.misc.extensionUtils.getCurrentExtension();
+const utils              = Me.imports.src.utils;
+const ImageChooserButton = Me.imports.src.ImageChooserButton;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // For now, the preferences dialog of this extension is very simple. In the future, if  //
@@ -37,6 +38,9 @@ var PreferencesDialog = class PreferencesDialog {
     // Load all of our resources.
     this._resources = Gio.Resource.load(Me.path + '/resources/desktop-cube.gresource');
     Gio.resources_register(this._resources);
+
+    // Register our custom widgets.
+    ImageChooserButton.registerWidget();
 
     // Load the user interface file.
     this._builder = new Gtk.Builder();
@@ -68,6 +72,7 @@ var PreferencesDialog = class PreferencesDialog {
     this._bindAdjustment('workpace-separation');
     this._bindAdjustment('horizontal-stretch');
     this._bindAdjustment('window-parallax');
+    this._bindImageChooserButton('background-panorama');
     this._bindSwitch('last-first-gap');
     this._bindSwitch('enable-desktop-dragging');
     this._bindSwitch('enable-panel-dragging');
@@ -176,6 +181,12 @@ var PreferencesDialog = class PreferencesDialog {
   }
 
   // ----------------------------------------------------------------------- private stuff
+
+  // Connects a DesktopCubeImageChooserButton (or anything else which has a 'file'
+  // property) to a settings key. It also binds the corresponding reset button.
+  _bindImageChooserButton(settingsKey) {
+    this._bind(settingsKey, 'file');
+  }
 
   // Connects a Gtk.Adjustment (or anything else which has a 'value' property) to a
   // settings key. It also binds the corresponding reset button.

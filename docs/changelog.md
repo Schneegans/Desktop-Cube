@@ -1,6 +1,14 @@
 # Changelog of the Desktop Cube Extension
 
 
+## [Desktop Cube 9](https://github.com/schneegans/Desktop-Cube/releases/tag/v9)
+
+**Release Date:** TBD
+
+#### New Features
+
+* **Skyboxes**: You can now set an image as background panorama! For best results, the image should be a 360° panorama in the equirectangular projection. A good source for such panoramas is [polyhaven.com/hdris](https://polyhaven.com/hdris). Be sure to download the tone-mapped JPEG versions!
+
 ## [Desktop Cube 8](https://github.com/schneegans/Desktop-Cube/releases/tag/v8)
 
 **Release Date:** 2022-02-25

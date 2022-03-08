@@ -1,0 +1,23 @@
+/* ///////////////////////////////////////////////////////////////////////////////////////
+// ,-.  ,--.  ,-.  ,  , ,---.  ,-.  ;-.     ,-. .  . ,-.  ,--.       Copyright (c) 2021 //
+// |  \ |    (   ` | /    |   /   \ |  )   /    |  | |  ) |            Simon Schneegans //
+// |  | |-    `-.  |<     |   |   | |-'    |    |  | |-<  |-   Released under the GPLv3 //
+// |  / |    .   ) | \    |   \   / |      \    |  | |  ) |       or later. See LICENSE //
+// `-'  `--'  `-'  '  `   '    `-'  '       `-' `--` `-'  `--'        file for details. //
+/////////////////////////////////////////////////////////////////////////////////////// */
+
+/*
+This ensures that the overview background is transparent, so that the background
+panorama becomes visible.
+*/
+.desktop-cube-panorama-enabled #overviewGroup {
+    background: transparent;
+}
+
+/*
+This ensures that the background during workspace switches becomes transparent, so that
+the background panorama becomes visible.
+*/
+.desktop-cube-panorama-enabled .workspace-animation {
+    background-color: transparent;
+}

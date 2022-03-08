@@ -33,6 +33,12 @@
       <description>Explode the cube on vertical rotations.</description>
     </key>
 
+    <key name="background-panorama" type="s">
+      <default>""</default>
+      <summary>Background Panorama</summary>
+      <description>The texture used for the skybox.</description>
+    </key>
+
     <key name="overview-transition-time" type="i">
       <default>0</default>
       <summary>Overview Transition Time</summary>
