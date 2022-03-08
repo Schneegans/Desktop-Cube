@@ -76,6 +76,7 @@ var PreferencesDialog = class PreferencesDialog {
     this._bindSwitch('last-first-gap');
     this._bindSwitch('enable-desktop-dragging');
     this._bindSwitch('enable-panel-dragging');
+    this._bindSwitch('enable-window-drag-rotation');
     this._bindSwitch('enable-overview-dragging');
     this._bindSwitch('do-explode');
     this._bindAdjustment('active-workpace-opacity');
