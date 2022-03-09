@@ -27,6 +27,7 @@ For a list of things changed in previous releases, you can have a look at the [c
 ![feature03](docs/pics/feature03.gif) <br> **Click and drag the desktop to rotate the cube:** You can click and drag anywhere on the desktop to start rotating the cube! | ![feature04](docs/pics/feature04.gif) <br> **Click and drag the panel to rotate the cube:** You can also trigger the cube by dragging on the panel. This is useful with maximized windows. 
 ![feature05](docs/pics/feature05.gif) <br> **Click and drag the overview to rotate the cube:** You can also click and drag the overview's background to rotate the cube. | ![feature06](docs/pics/feature06.gif) <br> **Explode the cube on vertical rotations:** If you rotate the cube up or down, the 3D effect will become more intense.
 ![feature07](docs/pics/feature07.gif) <br> **Smooth transitions between Desktop, Overview, and App Drawer:** If you enter the app-drawer mode, the cube will be unfolded. | ![feature08](docs/pics/feature08.gif) <br> **Dynamic workspaces:** The extension supports any number of workspaces. So it's actually not a cube most of the time...
+![feature09](docs/pics/feature09.gif) <br> **Background panoramas:** You can select an image which will be used as 360° skybox. | ![feature10](docs/pics/feature10.gif) <br> **Drag windows to other workspaces:** You can directly drag windows to adjacent workspaces. This also works in the overview.
 
 ## 🪲 Limitations
 
