@@ -1,36 +1,48 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Simon Schneegans
-# This file is distributed under the same license as the Desktop-Cube package.
+# This file is distributed under the same license as the desktop-cube package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Desktop-Cube\n"
+"Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-18 20:58+0100\n"
+"POT-Creation-Date: 2022-03-09 20:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: prefs.js:142
+#: prefs.js:149
 msgid "Gold Sponsors"
 msgstr ""
 
-#: prefs.js:145
+#: prefs.js:152
 msgid "Silver Sponsors"
 msgstr ""
 
-#: prefs.js:148
+#: prefs.js:155
 msgid "Bronze Sponsors"
 msgstr ""
 
-#: prefs.js:151
+#: prefs.js:158
 msgid "Past Sponsors"
+msgstr ""
+
+#: src/ImageChooserButton.js:39
+msgid "Select File"
+msgstr ""
+
+#: src/ImageChooserButton.js:40
+msgid "Cancel"
+msgstr ""
+
+#: src/ImageChooserButton.js:86 resources/ui/imageChooserButton.ui:21
+msgid "(None)"
 msgstr ""
 
 #: resources/ui/settings.ui:8
@@ -70,12 +82,13 @@ msgid "You cannot switch from the last to the first workspace anyways."
 msgstr ""
 
 #: resources/ui/settings.ui:119 resources/ui/settings.ui:171
-#: resources/ui/settings.ui:215 resources/ui/settings.ui:276
-#: resources/ui/settings.ui:337 resources/ui/settings.ui:398
-#: resources/ui/settings.ui:459 resources/ui/settings.ui:493
-#: resources/ui/settings.ui:554 resources/ui/settings.ui:596
-#: resources/ui/settings.ui:657 resources/ui/settings.ui:701
-#: resources/ui/settings.ui:745
+#: resources/ui/settings.ui:215 resources/ui/settings.ui:269
+#: resources/ui/settings.ui:330 resources/ui/settings.ui:391
+#: resources/ui/settings.ui:452 resources/ui/settings.ui:513
+#: resources/ui/settings.ui:547 resources/ui/settings.ui:581
+#: resources/ui/settings.ui:642 resources/ui/settings.ui:676
+#: resources/ui/settings.ui:718 resources/ui/settings.ui:779
+#: resources/ui/settings.ui:823 resources/ui/settings.ui:867
 msgid "Reset to default value"
 msgstr ""
 
@@ -92,58 +105,81 @@ msgid "Window parallax effect"
 msgstr ""
 
 #: resources/ui/settings.ui:237
+msgid "Background panorama"
+msgstr ""
+
+#: resources/ui/settings.ui:246
+msgid "See tooltip of the button for some hints."
+msgstr ""
+
+#: resources/ui/settings.ui:261
+msgid ""
+"You can use any image here. For best results, it should be a 360° panorama "
+"in the equirectangular projection. A good source for such panoramas is "
+"polyhaven.com/hdris. Be sure to download the tone-mapped JPEG versions!"
+msgstr ""
+
+#: resources/ui/settings.ui:291
 msgid "Transition time from desktop to overview [ms]"
 msgstr ""
 
-#: resources/ui/settings.ui:246 resources/ui/settings.ui:307
-#: resources/ui/settings.ui:368
+#: resources/ui/settings.ui:300 resources/ui/settings.ui:361
+#: resources/ui/settings.ui:422
 msgid "Set to 0 to use GNOME Shell's default value."
 msgstr ""
 
-#: resources/ui/settings.ui:298
+#: resources/ui/settings.ui:352
 msgid "Transition time from overview to app drawer [ms]"
 msgstr ""
 
-#: resources/ui/settings.ui:359
+#: resources/ui/settings.ui:413
 msgid "Transition time between workspaces [ms]"
 msgstr ""
 
-#: resources/ui/settings.ui:419
+#: resources/ui/settings.ui:473
 msgid "Desktop Options"
 msgstr ""
 
-#: resources/ui/settings.ui:442
+#: resources/ui/settings.ui:496
 msgid "Click and drag the desktop to rotate the cube"
 msgstr ""
 
-#: resources/ui/settings.ui:476
+#: resources/ui/settings.ui:530
 msgid "Click and drag the panel to rotate the cube"
 msgstr ""
 
-#: resources/ui/settings.ui:514
+#: resources/ui/settings.ui:564
+msgid "Drag windows to the edge of the desktop to switch workspaces"
+msgstr ""
+
+#: resources/ui/settings.ui:602
 msgid "Overview Options"
 msgstr ""
 
-#: resources/ui/settings.ui:537
+#: resources/ui/settings.ui:625
 msgid "Click and drag the overview to rotate the cube"
 msgstr ""
 
-#: resources/ui/settings.ui:572
+#: resources/ui/settings.ui:659
+msgid "Drag windows to the edge of the overview to switch workspaces"
+msgstr ""
+
+#: resources/ui/settings.ui:694
 msgid "Gap between adjacent workspaces"
 msgstr ""
 
-#: resources/ui/settings.ui:618
+#: resources/ui/settings.ui:740
 msgid "Horizontal stretching of the cube"
 msgstr ""
 
-#: resources/ui/settings.ui:627
+#: resources/ui/settings.ui:749
 msgid "This ensures that you can see the cube's sides from the front."
 msgstr ""
 
-#: resources/ui/settings.ui:675
+#: resources/ui/settings.ui:797
 msgid "Opacity of the active workspace"
 msgstr ""
 
-#: resources/ui/settings.ui:719
+#: resources/ui/settings.ui:841
 msgid "Opacity of inactive workspaces"
 msgstr ""
