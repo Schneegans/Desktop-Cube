@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-09 20:32+0100\n"
-"PO-Revision-Date: 2022-02-17 11:22+0000\n"
+"PO-Revision-Date: 2022-03-10 19:54+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/desktop-cube/core/"
 "nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: prefs.js:149
 msgid "Gold Sponsors"
@@ -37,15 +37,15 @@ msgstr "Voormalige sponsoren"
 
 #: src/ImageChooserButton.js:39
 msgid "Select File"
-msgstr ""
+msgstr "Bestand kiezen"
 
 #: src/ImageChooserButton.js:40
 msgid "Cancel"
-msgstr ""
+msgstr "Annuleren"
 
 #: src/ImageChooserButton.js:86 resources/ui/imageChooserButton.ui:21
 msgid "(None)"
-msgstr ""
+msgstr "(Geen)"
 
 #: resources/ui/settings.ui:8
 msgid "Visit Homepage"
@@ -110,11 +110,11 @@ msgstr "Bewegingsvervaging"
 
 #: resources/ui/settings.ui:237
 msgid "Background panorama"
-msgstr ""
+msgstr "Achtergrondpanorama"
 
 #: resources/ui/settings.ui:246
 msgid "See tooltip of the button for some hints."
-msgstr ""
+msgstr "Bekijk voor meer informatie de hulpballon."
 
 #: resources/ui/settings.ui:261
 msgid ""
@@ -122,6 +122,9 @@ msgid ""
 "in the equirectangular projection. A good source for such panoramas is "
 "polyhaven.com/hdris. Be sure to download the tone-mapped JPEG versions!"
 msgstr ""
+"U kunt elke afbeelding gebruiken, maar een 360°-panorama werkt uiteraard het "
+"beste. Zulke panorama's kunt u bijvoorbeeld vined op polyhaven.com/hdris. "
+"Let op: download de ‘tone-mapped’ jpeg-versies!"
 
 #: resources/ui/settings.ui:291
 msgid "Transition time from desktop to overview [ms]"
@@ -155,6 +158,8 @@ msgstr "Kubus draaien door te slepen vanaf de bovenbalk"
 #: resources/ui/settings.ui:564
 msgid "Drag windows to the edge of the desktop to switch workspaces"
 msgstr ""
+"Overschakelen naar ander werkblad door vensters te verslepen naar de "
+"schermrand"
 
 #: resources/ui/settings.ui:602
 msgid "Overview Options"
@@ -167,6 +172,8 @@ msgstr "Kubus draaien door te slepen vanaf het overzicht"
 #: resources/ui/settings.ui:659
 msgid "Drag windows to the edge of the overview to switch workspaces"
 msgstr ""
+"Overschakelen naar ander werkblad door vensters te verslepen naar de rand "
+"van het overzicht"
 
 #: resources/ui/settings.ui:694
 msgid "Gap between adjacent workspaces"
