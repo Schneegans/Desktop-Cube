@@ -39,11 +39,19 @@ var SkyboxEffect = GObject.registerClass({
   _init(file) {
     super._init();
 
+    const FORMATS = [
+      Cogl.PixelFormat.G_8,
+      Cogl.PixelFormat.RG_88,
+      Cogl.PixelFormat.RGB_888,
+      Cogl.PixelFormat.RGBA_8888,
+    ];
+
     // Attempt to load the texture.
     const textureData = GdkPixbuf.Pixbuf.new_from_file(file);
     this._texture     = new Clutter.Image();
-    this._texture.set_data(textureData.get_pixels(), Cogl.PixelFormat.RGB_888,
-                           textureData.width, textureData.height, textureData.rowstride);
+    this._texture.set_data(textureData.get_pixels(),
+                           FORMATS[textureData.get_n_channels() - 1], textureData.width,
+                           textureData.height, textureData.rowstride);
 
     // Redraw if either the pitch or the yaw changes.
     this.connect('notify::yaw', () => {this.queue_repaint()});
