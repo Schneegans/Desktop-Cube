@@ -549,11 +549,58 @@ class Extension {
 
     // We add two Meta.Barriers, one at each side of the stage. If the pointer hits one of
     // these with enough pressure while dragging a window, we initiate a workspace-switch.
+    // The last parameter (0) is actually supposed to be a bitwise combination of
+    // Shell.ActionModes. The pressure barrier will only trigger, if Main.actionMode
+    // equals one of the given action modes. This works well for Shell.ActionMode.NORMAL
+    // and Shell.ActionMode.OVERVIEW, however it does not work for Shell.ActionMode.NONE
+    // (which actually equals zero). However, when we want the barriers to also trigger in
+    // Shell.ActionMode.NONE, as this is the mode during a drag-operation in the overview.
+    // Therefore, we modify the _onBarrierHit method of the pressure barrier to completely
+    // ignore this parameter. Instead, we check for the correct action mode in the trigger
+    // handler.
     this._pressureBarrier = new Layout.PressureBarrier(
-      Layout.HOT_CORNER_PRESSURE_THRESHOLD, Layout.HOT_CORNER_PRESSURE_TIMEOUT,
-      Shell.ActionMode.NORMAL);
+      Layout.HOT_CORNER_PRESSURE_THRESHOLD, Layout.HOT_CORNER_PRESSURE_TIMEOUT, 0);
 
-    // The barriers are re-created whenever the size of stage changes.
+    // This is an exact copy of the original _onBarrierHit, with only one line disabled to
+    // ignore the given ActionMode.
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/layout.js#L1362
+    this._pressureBarrier._onBarrierHit = function(barrier, event) {
+      barrier._isHit = true;
+
+      // If we've triggered the barrier, wait until the pointer has the
+      // left the barrier hitbox until we trigger it again.
+      if (this._isTriggered) return;
+
+      if (this._eventFilter && this._eventFilter(event)) return;
+
+      // Throw out all events not in the proper keybinding mode
+      // if (!(this._actionMode & Main.actionMode)) return;
+
+      let slide    = this._getDistanceAlongBarrier(barrier, event);
+      let distance = this._getDistanceAcrossBarrier(barrier, event);
+
+      if (distance >= this._threshold) {
+        this._trigger();
+        return;
+      }
+
+      // Throw out events where the cursor is move more
+      // along the axis of the barrier than moving with
+      // the barrier.
+      if (slide > distance) return;
+
+      this._lastTime = event.time;
+
+      this._trimBarrierEvents();
+      distance = Math.min(15, distance);
+
+      this._barrierEvents.push([event.time, distance]);
+      this._currentPressure += distance;
+
+      if (this._currentPressure >= this._threshold) this._trigger();
+    };
+
+    // Now we add the left and right barrier to the pressure barrier.
     const createBarriers = () => {
       if (this._leftBarrier) {
         this._pressureBarrier.removeBarrier(this._leftBarrier);
@@ -595,14 +642,18 @@ class Extension {
     // window is currently dragged, we move the dragged window to the adjacent workspace
     // and activate it as well.
     this._pressureBarrier.connect('trigger', () => {
-      if (this._draggedWindow &&
-          this._settings.get_boolean('enable-window-drag-rotation')) {
+      const direction =
+        this._leftBarrier._isHit ? Meta.MotionDirection.LEFT : Meta.MotionDirection.RIGHT;
 
-        const direction = this._leftBarrier._isHit ? Meta.MotionDirection.LEFT :
-                                                     Meta.MotionDirection.RIGHT;
-        Main.wm.actionMoveWindow(
-          this._draggedWindow,
-          global.workspace_manager.get_active_workspace().get_neighbor(direction));
+      const newWorkspace =
+        global.workspace_manager.get_active_workspace().get_neighbor(direction);
+
+      if (Main.actionMode == Shell.ActionMode.NORMAL && this._draggedWindow &&
+          this._settings.get_boolean('enable-desktop-edge-switch')) {
+        Main.wm.actionMoveWindow(this._draggedWindow, newWorkspace);
+      } else if (Main.actionMode == Shell.ActionMode.NONE &&
+                 this._settings.get_boolean('enable-overview-edge-switch')) {
+        newWorkspace.activate(global.get_current_time());
       }
     });
 

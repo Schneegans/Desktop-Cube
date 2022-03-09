@@ -561,7 +561,7 @@
                   <object class="GtkBox">
                     <child>
                       <object class="GtkLabel">
-                        <property name="label" translatable="yes">Drag windows to the edge of the screen to switch workspaces</property>
+                        <property name="label" translatable="yes">Drag windows to the edge of the desktop to switch workspaces</property>
                         <property name="xalign">0</property>
                         <property name="wrap">1</property>
                         <property name="halign">start</property>
@@ -570,13 +570,13 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkSwitch" id="enable-window-drag-rotation">
+                      <object class="GtkSwitch" id="enable-desktop-edge-switch">
                         <property name="halign">end</property>
                         <property name="valign">center</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkButton" id="reset-enable-window-drag-rotation">
+                      <object class="GtkButton" id="reset-enable-desktop-edge-switch">
                         <property name="icon-name">edit-clear-symbolic</property>
                         <property name="tooltip-text" translatable="yes">Reset to default value</property>
                         <style>
@@ -638,6 +638,40 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="reset-enable-overview-dragging">
+                        <property name="icon-name">edit-clear-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Reset to default value</property>
+                        <style>
+                          <class name="flat" />
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkListBoxRow">
+                <child>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">Drag windows to the edge of the overview to switch workspaces</property>
+                        <property name="xalign">0</property>
+                        <property name="wrap">1</property>
+                        <property name="halign">start</property>
+                        <property name="valign">center</property>
+                        <property name="hexpand">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSwitch" id="enable-overview-edge-switch">
+                        <property name="halign">end</property>
+                        <property name="valign">center</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="reset-enable-overview-edge-switch">
                         <property name="icon-name">edit-clear-symbolic</property>
                         <property name="tooltip-text" translatable="yes">Reset to default value</property>
                         <style>

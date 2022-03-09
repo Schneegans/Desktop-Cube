@@ -73,10 +73,10 @@
       <description>Panel: Rotate the cube with the left mouse button.</description>
     </key>
 
-    <key name="enable-window-drag-rotation" type="b">
+    <key name="enable-desktop-edge-switch" type="b">
       <default>true</default>
-      <summary>Enable Window Drag Rotation</summary>
-      <description>Switch workspaces when dragging a window over the screen's edge.</description>
+      <summary>Enable Desktop Edge Drag Switch</summary>
+      <description>Switch workspaces when dragging a window over the desktop's edge.</description>
     </key>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -87,6 +87,12 @@
       <default>true</default>
       <summary>Enable Overview Dragging</summary>
       <description>Overview: Rotate the cube with the left mouse button.</description>
+    </key>
+
+    <key name="enable-overview-edge-switch" type="b">
+      <default>true</default>
+      <summary>Enable Overview Edge Drag Switch</summary>
+      <description>Switch workspaces when dragging a window over the overview's edge.</description>
     </key>
 
     <key name="workpace-separation" type="i">
