@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-09 20:32+0100\n"
-"PO-Revision-Date: 2022-02-27 17:57+0000\n"
-"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"PO-Revision-Date: 2022-03-09 19:44+0000\n"
+"Last-Translator: Simon Schneegans <code@simonschneegans.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/desktop-cube/core/"
 "de/>\n"
 "Language: de\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11.1-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: prefs.js:149
 msgid "Gold Sponsors"
@@ -37,15 +37,15 @@ msgstr "Ehemalige Sponsoren"
 
 #: src/ImageChooserButton.js:39
 msgid "Select File"
-msgstr ""
+msgstr "Datei auswählen"
 
 #: src/ImageChooserButton.js:40
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #: src/ImageChooserButton.js:86 resources/ui/imageChooserButton.ui:21
 msgid "(None)"
-msgstr ""
+msgstr "(Keins)"
 
 #: resources/ui/settings.ui:8
 msgid "Visit Homepage"
@@ -110,11 +110,11 @@ msgstr "Fenster-Parallax-Effekt"
 
 #: resources/ui/settings.ui:237
 msgid "Background panorama"
-msgstr ""
+msgstr "Hintergrundpanorama"
 
 #: resources/ui/settings.ui:246
 msgid "See tooltip of the button for some hints."
-msgstr ""
+msgstr "Siehe Tooltip der Schaltfläche für einige Hinweise."
 
 #: resources/ui/settings.ui:261
 msgid ""
@@ -122,6 +122,11 @@ msgid ""
 "in the equirectangular projection. A good source for such panoramas is "
 "polyhaven.com/hdris. Be sure to download the tone-mapped JPEG versions!"
 msgstr ""
+"Sie können hier jedes beliebige Bild verwenden. Die besten Ergebnisse "
+"erzielen Sie, wenn es sich um ein 360°-Panorama in äquirektangularer "
+"Projektion handelt. Eine gute Quelle für solche Panoramen ist polyhaven.com/"
+"hdris. Laden Sie unbedingt die JPEG-Versionen mit bereits angewendeter "
+"Tonwertkorrektur herunter!"
 
 #: resources/ui/settings.ui:291
 msgid "Transition time from desktop to overview [ms]"
@@ -156,6 +161,7 @@ msgstr "Klicken Sie und ziehen Sie das Panel zum Drehen"
 #: resources/ui/settings.ui:564
 msgid "Drag windows to the edge of the desktop to switch workspaces"
 msgstr ""
+"Ziehen Sie Fenster an den Rand des Desktops, um die Arbeitsfläche zu wechseln"
 
 #: resources/ui/settings.ui:602
 msgid "Overview Options"
@@ -168,6 +174,8 @@ msgstr "Klicken und ziehen Sie die Übersicht, um den Würfel zu drehen"
 #: resources/ui/settings.ui:659
 msgid "Drag windows to the edge of the overview to switch workspaces"
 msgstr ""
+"Ziehen Sie Fenster an den Rand der Übersicht, um die Arbeitsfläche zu "
+"wechseln"
 
 #: resources/ui/settings.ui:694
 msgid "Gap between adjacent workspaces"
