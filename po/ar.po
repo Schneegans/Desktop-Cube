@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-18 20:58+0100\n"
+"POT-Creation-Date: 2022-03-09 20:32+0100\n"
 "PO-Revision-Date: 2022-02-17 11:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -19,21 +19,33 @@ msgstr ""
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: prefs.js:142
+#: prefs.js:149
 msgid "Gold Sponsors"
 msgstr "الداعمين الذهبيين"
 
-#: prefs.js:145
+#: prefs.js:152
 msgid "Silver Sponsors"
 msgstr "الداعمين الفضيين"
 
-#: prefs.js:148
+#: prefs.js:155
 msgid "Bronze Sponsors"
 msgstr "الداعمين البرونزيين"
 
-#: prefs.js:151
+#: prefs.js:158
 msgid "Past Sponsors"
 msgstr "داعمين سابقين"
+
+#: src/ImageChooserButton.js:39
+msgid "Select File"
+msgstr ""
+
+#: src/ImageChooserButton.js:40
+msgid "Cancel"
+msgstr ""
+
+#: src/ImageChooserButton.js:86 resources/ui/imageChooserButton.ui:21
+msgid "(None)"
+msgstr ""
 
 #: resources/ui/settings.ui:8
 msgid "Visit Homepage"
@@ -72,12 +84,13 @@ msgid "You cannot switch from the last to the first workspace anyways."
 msgstr "لن يمكنك الانتقال من اخر الي اول مساحة عمل عموما."
 
 #: resources/ui/settings.ui:119 resources/ui/settings.ui:171
-#: resources/ui/settings.ui:215 resources/ui/settings.ui:276
-#: resources/ui/settings.ui:337 resources/ui/settings.ui:398
-#: resources/ui/settings.ui:459 resources/ui/settings.ui:493
-#: resources/ui/settings.ui:554 resources/ui/settings.ui:596
-#: resources/ui/settings.ui:657 resources/ui/settings.ui:701
-#: resources/ui/settings.ui:745
+#: resources/ui/settings.ui:215 resources/ui/settings.ui:269
+#: resources/ui/settings.ui:330 resources/ui/settings.ui:391
+#: resources/ui/settings.ui:452 resources/ui/settings.ui:513
+#: resources/ui/settings.ui:547 resources/ui/settings.ui:581
+#: resources/ui/settings.ui:642 resources/ui/settings.ui:676
+#: resources/ui/settings.ui:718 resources/ui/settings.ui:779
+#: resources/ui/settings.ui:823 resources/ui/settings.ui:867
 msgid "Reset to default value"
 msgstr "اعد الاعدادات الي المعايير الاصلية"
 
@@ -94,63 +107,86 @@ msgid "Window parallax effect"
 msgstr "مؤثر العمق للنوافذ"
 
 #: resources/ui/settings.ui:237
+msgid "Background panorama"
+msgstr ""
+
+#: resources/ui/settings.ui:246
+msgid "See tooltip of the button for some hints."
+msgstr ""
+
+#: resources/ui/settings.ui:261
+msgid ""
+"You can use any image here. For best results, it should be a 360° panorama "
+"in the equirectangular projection. A good source for such panoramas is "
+"polyhaven.com/hdris. Be sure to download the tone-mapped JPEG versions!"
+msgstr ""
+
+#: resources/ui/settings.ui:291
 msgid "Transition time from desktop to overview [ms]"
 msgstr ""
 "الوقت المستغرق للانتقال من وضعية سطح المكتب الي وضعية النظرة العامة [ميللي "
 "ثانية]"
 
-#: resources/ui/settings.ui:246 resources/ui/settings.ui:307
-#: resources/ui/settings.ui:368
+#: resources/ui/settings.ui:300 resources/ui/settings.ui:361
+#: resources/ui/settings.ui:422
 msgid "Set to 0 to use GNOME Shell's default value."
 msgstr "اكتب 0 لاستخدام العيار الافتراضي لدي Gnome Shell."
 
-#: resources/ui/settings.ui:298
+#: resources/ui/settings.ui:352
 msgid "Transition time from overview to app drawer [ms]"
 msgstr ""
 "الوقت المستغرق للانتقال من وضعية النظرة العامة الي وضعية قائمة البرامج "
 "[ميللي ثانية]"
 
-#: resources/ui/settings.ui:359
+#: resources/ui/settings.ui:413
 msgid "Transition time between workspaces [ms]"
 msgstr "الوقت المستغرق للانتقال بين مساحات العمل [ميللي ثانية]"
 
-#: resources/ui/settings.ui:419
+#: resources/ui/settings.ui:473
 msgid "Desktop Options"
 msgstr "اعدادات وضعية سطح المكتب"
 
-#: resources/ui/settings.ui:442
+#: resources/ui/settings.ui:496
 msgid "Click and drag the desktop to rotate the cube"
 msgstr "اضغط واسحب سطح المكتب لادارة المكعب"
 
-#: resources/ui/settings.ui:476
+#: resources/ui/settings.ui:530
 msgid "Click and drag the panel to rotate the cube"
 msgstr "اضغط واسحب الشريط العلوي لادارة المكعب"
 
-#: resources/ui/settings.ui:514
+#: resources/ui/settings.ui:564
+msgid "Drag windows to the edge of the desktop to switch workspaces"
+msgstr ""
+
+#: resources/ui/settings.ui:602
 msgid "Overview Options"
 msgstr "اعدادات وضعية النظرة العامة"
 
-#: resources/ui/settings.ui:537
+#: resources/ui/settings.ui:625
 msgid "Click and drag the overview to rotate the cube"
 msgstr "اضغط واسحب مساحات العمل لادارة المكعب"
 
-#: resources/ui/settings.ui:572
+#: resources/ui/settings.ui:659
+msgid "Drag windows to the edge of the overview to switch workspaces"
+msgstr ""
+
+#: resources/ui/settings.ui:694
 msgid "Gap between adjacent workspaces"
 msgstr "الفراغ بين مساحات عمل متجاورة"
 
-#: resources/ui/settings.ui:618
+#: resources/ui/settings.ui:740
 msgid "Horizontal stretching of the cube"
 msgstr "الامداد الافقي للمكعب"
 
-#: resources/ui/settings.ui:627
+#: resources/ui/settings.ui:749
 msgid "This ensures that you can see the cube's sides from the front."
 msgstr "هذا يعزز امكانية رؤيتك لجوانب المكعب من الامام."
 
-#: resources/ui/settings.ui:675
+#: resources/ui/settings.ui:797
 msgid "Opacity of the active workspace"
 msgstr "عتمة مساحات العمل المفعلة"
 
-#: resources/ui/settings.ui:719
+#: resources/ui/settings.ui:841
 msgid "Opacity of inactive workspaces"
 msgstr "عتمة مساحات العمل الغير المفعلة"
 
