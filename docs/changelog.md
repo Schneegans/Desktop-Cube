@@ -10,6 +10,10 @@
 * **Skyboxes**: You can now set an image as background panorama! For best results, the image should be a 360° panorama in the equirectangular projection. A good source for such panoramas is [polyhaven.com/hdris](https://polyhaven.com/hdris). Be sure to download the tone-mapped JPEG versions!
 * **Drag windows to adjacent workspaces**: You can now drag a window to the edge of your screen and with enough pressure, the cube will flip to the neighboring workspace! This works both, on the desktop and in the overview. There are two new switches in the preferences dialog to toggle these features.
 
+#### Other Changes
+
+* Removed the Liberapay donation option as it does not work properly.
+
 ## [Desktop Cube 8](https://github.com/schneegans/Desktop-Cube/releases/tag/v8)
 
 **Release Date:** 2022-02-25
