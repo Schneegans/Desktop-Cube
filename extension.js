@@ -651,7 +651,7 @@ class Extension {
       if (Main.actionMode == Shell.ActionMode.NORMAL && this._draggedWindow &&
           this._settings.get_boolean('enable-desktop-edge-switch')) {
         Main.wm.actionMoveWindow(this._draggedWindow, newWorkspace);
-      } else if (Main.actionMode == Shell.ActionMode.NONE &&
+      } else if (Main.actionMode == Shell.ActionMode.NONE && Main.overview.visible &&
                  this._settings.get_boolean('enable-overview-edge-switch')) {
         newWorkspace.activate(global.get_current_time());
       }

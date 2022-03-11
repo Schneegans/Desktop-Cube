@@ -1,6 +1,14 @@
 # Changelog of the Desktop Cube Extension
 
 
+## [Desktop Cube 10](https://github.com/schneegans/Desktop-Cube/releases/tag/v10)
+
+**Release Date:** TBD
+
+#### Bug Fixes
+
+* Fixed a bug which triggered workspace switches when the mouse pointer hit the screen edges while the Alt-Tab window switcher was shown.
+
 ## [Desktop Cube 9](https://github.com/schneegans/Desktop-Cube/releases/tag/v9)
 
 **Release Date:** 2022-03-10
