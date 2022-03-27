@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-09 20:32+0100\n"
-"PO-Revision-Date: 2022-03-08 05:02+0000\n"
-"Last-Translator: Veysel Erden <veyselerden1907@gmail.com>\n"
+"PO-Revision-Date: 2022-03-18 11:58+0000\n"
+"Last-Translator: Veysel Erden <veyselerden@outlook.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/desktop-cube/"
 "core/tr/>\n"
 "Language: tr\n"
@@ -37,15 +37,15 @@ msgstr "Geçmiş Sponsorlar"
 
 #: src/ImageChooserButton.js:39
 msgid "Select File"
-msgstr ""
+msgstr "Dosya Seç"
 
 #: src/ImageChooserButton.js:40
 msgid "Cancel"
-msgstr ""
+msgstr "İptal Et"
 
 #: src/ImageChooserButton.js:86 resources/ui/imageChooserButton.ui:21
 msgid "(None)"
-msgstr ""
+msgstr "(Hiç)"
 
 #: resources/ui/settings.ui:8
 msgid "Visit Homepage"
@@ -108,11 +108,11 @@ msgstr "Pencere açısal uzaklık efekti"
 
 #: resources/ui/settings.ui:237
 msgid "Background panorama"
-msgstr ""
+msgstr "Arkaplan panoraması"
 
 #: resources/ui/settings.ui:246
 msgid "See tooltip of the button for some hints."
-msgstr ""
+msgstr "Bazı ipuçları için düğmenin ipucuna bakın."
 
 #: resources/ui/settings.ui:261
 msgid ""
@@ -120,6 +120,10 @@ msgid ""
 "in the equirectangular projection. A good source for such panoramas is "
 "polyhaven.com/hdris. Be sure to download the tone-mapped JPEG versions!"
 msgstr ""
+"Buraya herhangi bir resmi koyabilirsiniz. En iyi sonuç için eşdikdörtgensel "
+"izdüşüm ile hazırlanmış 360° panorama olmalıdır. Bu tarz resimler için "
+"polyhaven.com/hdris adresine bakabilirsiniz. Resimleri eş tonlu JPEG olarak "
+"indirdiğinizden emin olun."
 
 #: resources/ui/settings.ui:291
 msgid "Transition time from desktop to overview [ms]"
@@ -153,6 +157,8 @@ msgstr "Küpü döndürmek için panele bas ve sürükle"
 #: resources/ui/settings.ui:564
 msgid "Drag windows to the edge of the desktop to switch workspaces"
 msgstr ""
+"Çalışma alanlarını değiştirmek için pencereleri masaüstünün kenarına "
+"sürükleyin"
 
 #: resources/ui/settings.ui:602
 msgid "Overview Options"
@@ -165,6 +171,8 @@ msgstr "Küpü döndürmek için genel görünüme bas ve sürükle"
 #: resources/ui/settings.ui:659
 msgid "Drag windows to the edge of the overview to switch workspaces"
 msgstr ""
+"Çalışma alanlarını değiştirmek için pencereleri genel görünümün kenarına "
+"sürükleyin"
 
 #: resources/ui/settings.ui:694
 msgid "Gap between adjacent workspaces"

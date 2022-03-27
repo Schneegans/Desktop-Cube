@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-09 20:32+0100\n"
-"PO-Revision-Date: 2022-02-19 11:54+0000\n"
+"PO-Revision-Date: 2022-03-13 09:54+0000\n"
 "Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/desktop-cube/"
 "core/es/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: prefs.js:149
 msgid "Gold Sponsors"
@@ -37,15 +37,15 @@ msgstr "Antiguos patrocinadores"
 
 #: src/ImageChooserButton.js:39
 msgid "Select File"
-msgstr ""
+msgstr "Seleccionar archivo"
 
 #: src/ImageChooserButton.js:40
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: src/ImageChooserButton.js:86 resources/ui/imageChooserButton.ui:21
 msgid "(None)"
-msgstr ""
+msgstr "(Ninguno)"
 
 #: resources/ui/settings.ui:8
 msgid "Visit Homepage"
@@ -109,11 +109,11 @@ msgstr "Efecto de paralaje en la ventana"
 
 #: resources/ui/settings.ui:237
 msgid "Background panorama"
-msgstr ""
+msgstr "Panorama de fondo"
 
 #: resources/ui/settings.ui:246
 msgid "See tooltip of the button for some hints."
-msgstr ""
+msgstr "Vea la información sobre el botón para obtener algunas pistas."
 
 #: resources/ui/settings.ui:261
 msgid ""
@@ -121,6 +121,10 @@ msgid ""
 "in the equirectangular projection. A good source for such panoramas is "
 "polyhaven.com/hdris. Be sure to download the tone-mapped JPEG versions!"
 msgstr ""
+"Puede usar cualquier imagen aquí. Para obtener los mejores resultados, debe "
+"ser una panorámica de 360° en la proyección equirrectangular. Una buena "
+"fuente de estos panoramas es polyhaven.com/hdris. ¡Asegúrese de descargar "
+"las versiones JPEG con mapa de tonos!"
 
 #: resources/ui/settings.ui:291
 msgid "Transition time from desktop to overview [ms]"
@@ -154,6 +158,8 @@ msgstr "Clic y arrastrar el panel para girar el cubo"
 #: resources/ui/settings.ui:564
 msgid "Drag windows to the edge of the desktop to switch workspaces"
 msgstr ""
+"Arrastrar las ventanas al borde del escritorio para cambiar de espacio de "
+"trabajo"
 
 #: resources/ui/settings.ui:602
 msgid "Overview Options"
@@ -166,6 +172,8 @@ msgstr "Clic y arrastrar la vista general para girar el cubo"
 #: resources/ui/settings.ui:659
 msgid "Drag windows to the edge of the overview to switch workspaces"
 msgstr ""
+"Arrastrar las ventanas al borde de la vista general para cambiar de espacio "
+"de trabajo"
 
 #: resources/ui/settings.ui:694
 msgid "Gap between adjacent workspaces"
