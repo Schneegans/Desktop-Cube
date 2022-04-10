@@ -91,82 +91,10 @@ class Extension {
 
     loadAnimationTimes();
 
-    // ------------------------------------------- fix perspective of multi-monitor setups
 
-    this._stageBeforeUpdateID = global.stage.connect('before-update', (stage, view) => {
-      view.get_framebuffer().push_matrix();
-
-      if (!this._settings.get_boolean('multi-monitor-fixes')) {
-        return;
-      }
-
-      const z_near    = stage.perspective.z_near;
-      const z_far     = stage.perspective.z_far;
-      const width_2d  = stage.width;
-      const height_2d = stage.height;
-
-      let viewCamX, viewCamY;
-
-      if (Meta.is_wayland_compositor()) {
-
-        viewCamX = view.layout.x + view.layout.width / 2;
-        viewCamY = view.layout.y + view.layout.height / 2;
-
-      } else {
-
-        const primaryMonitorRect =
-          global.display.get_monitor_geometry(global.display.get_primary_monitor());
-
-        viewCamX = primaryMonitorRect.x + primaryMonitorRect.width / 2;
-        viewCamY = primaryMonitorRect.y + primaryMonitorRect.height / 2;
-      }
-
-      const camOffsetX = width_2d / 2 - viewCamX;
-      const camOffsetY = viewCamY - height_2d / 2;
-
-      // https://gitlab.gnome.org/GNOME/mutter/-/blob/main/clutter/clutter/clutter-stage.c#L2255
-      const A = 0.57735025882720947265625;
-      const B = 0.866025388240814208984375;
-      const C = 0.86162912845611572265625;
-      const D = 0.00872653536498546600341796875;
-
-      const z_2d = z_near * A * B * C / D + z_near;
-
-      // https://gitlab.gnome.org/GNOME/mutter/-/blob/main/clutter/clutter/clutter-stage.c#L2270
-      const top    = z_near * Math.tan(stage.perspective.fovy * Math.PI / 360.0);
-      const left   = -top * stage.perspective.aspect;
-      const right  = top * stage.perspective.aspect;
-      const bottom = -top;
-
-      const left_2d_plane   = left / z_near * z_2d;
-      const right_2d_plane  = right / z_near * z_2d;
-      const bottom_2d_plane = bottom / z_near * z_2d;
-      const top_2d_plane    = top / z_near * z_2d;
-
-      const width_2d_start  = right_2d_plane - left_2d_plane;
-      const height_2d_start = top_2d_plane - bottom_2d_plane;
-
-      const width_scale  = width_2d_start / width_2d;
-      const height_scale = height_2d_start / height_2d;
-
-      // End copy.
-
-      const offsetX = camOffsetX * width_scale / z_2d * z_near;
-      const offsetY = camOffsetY * height_scale / z_2d * z_near;
-
-      view.get_framebuffer().frustum(left + offsetX, right + offsetX, bottom + offsetY,
-                                     top + offsetY, z_near, z_far);
-
-
-      view.get_framebuffer().translate(camOffsetX * width_scale,
-                                       camOffsetY * height_scale, 0);
-    });
-
-    this._stageAfterUpdateID = global.stage.connect('after-update', (stage, view) => {
-      view.get_framebuffer().pop_matrix();
-    });
-
-    // --------------------------------------------------------------- cubify the overview
+    // -----------------------------------------------------------------------------------
+    // ------------------------------- cubify the overview -------------------------------
+    // -----------------------------------------------------------------------------------
 
     // Normally, all workspaces outside the current field-of-view are hidden. We want to
     // show all workspaces, so we patch this method. The original code is about here:
@@ -349,7 +277,10 @@ class Extension {
       extensionThis._sortActorsByAngle(this._workspaces);
     };
 
-    // ------------------------------------------- cubify workspace-switch in desktop mode
+
+    // -----------------------------------------------------------------------------------
+    // --------------------- cubify workspace-switch in desktop mode ---------------------
+    // -----------------------------------------------------------------------------------
 
     // Here, we extend the WorkspaceAnimationController's animateSwitch method in order to
     // be able to modify the animation duration for switching workspaces in desktop mode.
@@ -498,7 +429,10 @@ class Extension {
       }
     };
 
-    // -------------------------------------------------- enable cube rotation by dragging
+
+    // -----------------------------------------------------------------------------------
+    // ------------------------- enable cube rotation by dragging ------------------------
+    // -----------------------------------------------------------------------------------
 
     // Usually, in GNOME Shell 40+, workspaces are move horizontally. We tweaked this to
     // look like a horizontal rotation above. To store the current vertical rotation, we
@@ -566,7 +500,9 @@ class Extension {
     });
 
 
-    // -------------------------------------------------------------------- add the skybox
+    // -----------------------------------------------------------------------------------
+    // ---------------------------------- add the skybox ---------------------------------
+    // -----------------------------------------------------------------------------------
 
     // This is called whenever the skybox texture setting is changed.
     const updateSkybox = () => {
@@ -620,7 +556,9 @@ class Extension {
     });
 
 
-    // ----------------------------------------------- enable edge-drag workspace-switches
+    // -----------------------------------------------------------------------------------
+    // ----------------------- enable edge-drag workspace-switches -----------------------
+    // -----------------------------------------------------------------------------------
 
     // We add two Meta.Barriers, one at each side of the stage. If the pointer hits one of
     // these with enough pressure while dragging a window, we initiate a workspace-switch.
@@ -744,6 +682,84 @@ class Extension {
       if (op == Meta.GrabOp.MOVING) {
         this._draggedWindow = null;
       }
+    });
+
+
+    // -----------------------------------------------------------------------------------
+    // ------------------- fix perspective of multi-monitor setups -----------------------
+    // -----------------------------------------------------------------------------------
+
+    this._stageBeforeUpdateID = global.stage.connect('before-update', (stage, view) => {
+      view.get_framebuffer().push_matrix();
+
+      if (!this._settings.get_boolean('multi-monitor-fixes')) {
+        return;
+      }
+
+      const z_near    = stage.perspective.z_near;
+      const z_far     = stage.perspective.z_far;
+      const width_2d  = stage.width;
+      const height_2d = stage.height;
+
+      let viewCamX, viewCamY;
+
+      if (Meta.is_wayland_compositor()) {
+
+        viewCamX = view.layout.x + view.layout.width / 2;
+        viewCamY = view.layout.y + view.layout.height / 2;
+
+      } else {
+
+        const primaryMonitorRect =
+          global.display.get_monitor_geometry(global.display.get_primary_monitor());
+
+        viewCamX = primaryMonitorRect.x + primaryMonitorRect.width / 2;
+        viewCamY = primaryMonitorRect.y + primaryMonitorRect.height / 2;
+      }
+
+      const camOffsetX = width_2d / 2 - viewCamX;
+      const camOffsetY = viewCamY - height_2d / 2;
+
+      // https://gitlab.gnome.org/GNOME/mutter/-/blob/main/clutter/clutter/clutter-stage.c#L2255
+      const A = 0.57735025882720947265625;
+      const B = 0.866025388240814208984375;
+      const C = 0.86162912845611572265625;
+      const D = 0.00872653536498546600341796875;
+
+      const z_2d = z_near * A * B * C / D + z_near;
+
+      // https://gitlab.gnome.org/GNOME/mutter/-/blob/main/clutter/clutter/clutter-stage.c#L2270
+      const top    = z_near * Math.tan(stage.perspective.fovy * Math.PI / 360.0);
+      const left   = -top * stage.perspective.aspect;
+      const right  = top * stage.perspective.aspect;
+      const bottom = -top;
+
+      const left_2d_plane   = left / z_near * z_2d;
+      const right_2d_plane  = right / z_near * z_2d;
+      const bottom_2d_plane = bottom / z_near * z_2d;
+      const top_2d_plane    = top / z_near * z_2d;
+
+      const width_2d_start  = right_2d_plane - left_2d_plane;
+      const height_2d_start = top_2d_plane - bottom_2d_plane;
+
+      const width_scale  = width_2d_start / width_2d;
+      const height_scale = height_2d_start / height_2d;
+
+      // End copy.
+
+      const offsetX = camOffsetX * width_scale / z_2d * z_near;
+      const offsetY = camOffsetY * height_scale / z_2d * z_near;
+
+      view.get_framebuffer().frustum(left + offsetX, right + offsetX, bottom + offsetY,
+                                     top + offsetY, z_near, z_far);
+
+
+      view.get_framebuffer().translate(camOffsetX * width_scale,
+                                       camOffsetY * height_scale, 0);
+    });
+
+    this._stageAfterUpdateID = global.stage.connect('after-update', (stage, view) => {
+      view.get_framebuffer().pop_matrix();
     });
   }
 
