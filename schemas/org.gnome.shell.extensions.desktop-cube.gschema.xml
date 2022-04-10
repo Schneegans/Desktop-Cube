@@ -33,6 +33,12 @@
       <description>Explode the cube on vertical rotations.</description>
     </key>
 
+    <key name="multi-monitor-fixes" type="b">
+      <default>true</default>
+      <summary>Multi-Monitor Fixes</summary>
+      <description>Tweak the projection matrices for better multi-monitor support.</description>
+    </key>
+
     <key name="background-panorama" type="s">
       <default>""</default>
       <summary>Background Panorama</summary>
