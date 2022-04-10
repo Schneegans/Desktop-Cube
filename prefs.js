@@ -96,9 +96,11 @@ var PreferencesDialog = class PreferencesDialog {
       // Add the menu to the title bar
       const menu = this._builder.get_object('menu-button');
 
-      // Starting with GNOME Shell 42, we have to hack our way through the widget tree of
-      // the Adw.PreferencesWindow...
-      if (utils.shellVersionIsAtLeast(42)) {
+      // Starting with GNOME Shell 42, the settings dialog uses libadwaita (at least most
+      // of the time - it seems that pop!_OS does not support libadwaita even on GNOME
+      // 42). So we have to hack our way through the widget tree of the
+      // Adw.PreferencesWindow...
+      if (Adw && utils.shellVersionIsAtLeast(42)) {
         const header = this._findWidgetByType(window.get_content(), Adw.HeaderBar);
         header.pack_end(menu);
       } else {
