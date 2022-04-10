@@ -873,8 +873,8 @@ class Extension {
   }
 
   // This sorts the given list of children actors (which are supposed to be attached to
-  // the same parent) by increasing rotation-y angle. This is used for depth-sorting, as
-  // cube faces which are less rotated, are in front of others.
+  // the same parent) by increasing absolute rotation-y angle. This is used for
+  // depth-sorting, as cube faces which are less rotated, are in front of others.
   _sortActorsByAngle(actors) {
     // First create a copy of the actors list and sort it by decreasing rotation angle.
     const copy = actors.slice();
@@ -965,6 +965,9 @@ class Extension {
   // zero. The strengths of both effects are small during horizontal rotations to make
   // workspace-switching not so obtrusive. However, during vertical rotations, the
   // effects are stronger.
+  // This method returns two values:
+  // result[0]: A translation value by which the cube should be moved backwards.
+  // result[1]: A translation value by which windows may be moved away from the cube.
   _getExplodeFactors(hRotation, vRotation, centerDepth) {
 
     // These are zero if we are facing a workspace and one if we look directly at an
