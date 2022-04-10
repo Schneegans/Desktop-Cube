@@ -690,12 +690,13 @@ class Extension {
     // -----------------------------------------------------------------------------------
 
     // Usually, GNOME Shell uses one central perspective for all monitors combined. This
-    // results in a somewhat sheared appearance of the cube on multi-monitor setups. With
-    // the code below, we modify the projection matrix for each monitor so that each
-    // monitor uses its own central perspective. This seems to be possible on Wayland
-    // only. On X11, we modify the projection matrix so that the projection center is in
-    // the middle of the primary monitor. So it will look bad on X11 if the cube is shown
-    // on all monitors...
+    // results in a somewhat sheared appearance of the cube on multi-monitor setups where
+    // the primary monitor is not in the middle (or the cube is shown on multiple
+    // monitors). With the code below, we modify the projection matrix for each monitor so
+    // that each monitor uses its own central perspective. This seems to be possible on
+    // Wayland only. On X11, we modify the projection matrix so that the projection center
+    // is in the middle of the primary monitor. So it will at least only look bad on X11
+    // if the cube is shown on all monitors...
     this._stageBeforeUpdateID = global.stage.connect('before-update', (stage, view) => {
       view.get_framebuffer().push_matrix();
 
@@ -735,6 +736,7 @@ class Extension {
       const z_near = stage.perspective.z_near;
       const z_far  = stage.perspective.z_far;
 
+      // The code below is copied from Mutter's Clutter.
       // https://gitlab.gnome.org/GNOME/mutter/-/blob/main/clutter/clutter/clutter-stage.c#L2255
       const A = 0.57735025882720947265625;
       const B = 0.866025388240814208984375;
@@ -743,6 +745,7 @@ class Extension {
 
       const z_2d = z_near * A * B * C / D + z_near;
 
+      // The code below is copied from Mutter's Clutter as well.
       // https://gitlab.gnome.org/GNOME/mutter/-/blob/main/clutter/clutter/clutter-stage.c#L2270
       const top    = z_near * Math.tan(stage.perspective.fovy * Math.PI / 360.0);
       const left   = -top * stage.perspective.aspect;
