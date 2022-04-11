@@ -694,98 +694,28 @@ class Extension {
 
     // Usually, GNOME Shell uses one central perspective for all monitors combined. This
     // results in a somewhat sheared appearance of the cube on multi-monitor setups where
-    // the primary monitor is not in the middle (or the cube is shown on multiple
-    // monitors). With the code below, we modify the projection matrix for each monitor so
+    // the primary monitor is not in the middle (or cubes are shown on multiple monitors).
+    // With the code below, we modify the projection and view matrices for each monitor so
     // that each monitor uses its own central perspective. This seems to be possible on
-    // Wayland only. On X11, we modify the projection matrix so that the projection center
-    // is in the middle of the primary monitor. So it will at least only look bad on X11
-    // if the cube is shown on all monitors...
-    this._stageBeforeUpdateID = global.stage.connect('before-update', (stage, view) => {
-      view.get_framebuffer().push_matrix();
+    // Wayland only. On X11, there's only one set of projection and view matrices for all
+    // monitors combined, so we tweak them so that the projection center is in the middle
+    // of the primary monitor. So it will at least only look bad on X11 if the cube is
+    // shown on all monitors...
 
-      // Do not tweak the perspective if the corresponding setting is disabled.
-      if (!this._settings.get_boolean('multi-monitor-fixes')) {
-        return;
-      }
-
-      // Usually, the virtual camera is positioned centered in front of the stage. We will
-      // move the virtual camera around. These variables will be the new stage-relative
-      // coordinates of the virtual camera.
-      let cameraX, cameraY;
-
-      if (Meta.is_wayland_compositor()) {
-
-        // On Wayland, each monitor has its own StageView. Therefore we can move the
-        // virtual camera for each monitor separately.
-        cameraX = view.layout.x + view.layout.width / 2;
-        cameraY = view.layout.y + view.layout.height / 2;
-
+    const updateMonitorPerspective = () => {
+      if (this._settings.get_boolean('multi-monitor-fixes') &&
+          global.display.get_n_monitors() > 1) {
+        this._enablePerspectiveCorrection();
       } else {
-
-        // On X11, there's only one StageView. We move the virtual camera so that it is in
-        // front of the primary monitor.
-        const primaryMonitorRect =
-          global.display.get_monitor_geometry(global.display.get_primary_monitor());
-
-        cameraX = primaryMonitorRect.x + primaryMonitorRect.width / 2;
-        cameraY = primaryMonitorRect.y + primaryMonitorRect.height / 2;
+        this._disablePerspectiveCorrection();
       }
+    };
 
-      // This is the offset to the original, centered camera position. Y is flipped due to
-      // some negative scaling at some point in Mutter.
-      const camOffsetX = stage.width / 2 - cameraX;
-      const camOffsetY = cameraY - stage.height / 2;
+    this._settings.connect('changed::multi-monitor-fixes', updateMonitorPerspective);
+    this._monitorsChangedID =
+      Meta.MonitorManager.connect('monitors-changed', updateMonitorPerspective);
 
-      const z_near = stage.perspective.z_near;
-      const z_far  = stage.perspective.z_far;
-
-      // The code below is copied from Mutter's Clutter.
-      // https://gitlab.gnome.org/GNOME/mutter/-/blob/main/clutter/clutter/clutter-stage.c#L2255
-      const A = 0.57735025882720947265625;
-      const B = 0.866025388240814208984375;
-      const C = 0.86162912845611572265625;
-      const D = 0.00872653536498546600341796875;
-
-      const z_2d = z_near * A * B * C / D + z_near;
-
-      // The code below is copied from Mutter's Clutter as well.
-      // https://gitlab.gnome.org/GNOME/mutter/-/blob/main/clutter/clutter/clutter-stage.c#L2270
-      const top    = z_near * Math.tan(stage.perspective.fovy * Math.PI / 360.0);
-      const left   = -top * stage.perspective.aspect;
-      const right  = top * stage.perspective.aspect;
-      const bottom = -top;
-
-      const left_2d_plane   = left / z_near * z_2d;
-      const right_2d_plane  = right / z_near * z_2d;
-      const bottom_2d_plane = bottom / z_near * z_2d;
-      const top_2d_plane    = top / z_near * z_2d;
-
-      const width_2d_start  = right_2d_plane - left_2d_plane;
-      const height_2d_start = top_2d_plane - bottom_2d_plane;
-
-      const width_scale  = width_2d_start / stage.width;
-      const height_scale = height_2d_start / stage.height;
-      // End of the copy-paste code.
-
-      // Compute the required offset of the frustum planes at the near plane. This
-      // basically updates the projection matrix according to our new camera position.
-      const offsetX = camOffsetX * width_scale / z_2d * z_near;
-      const offsetY = camOffsetY * height_scale / z_2d * z_near;
-
-      // Set the new frustum.
-      view.get_framebuffer().frustum(left + offsetX, right + offsetX, bottom + offsetY,
-                                     top + offsetY, z_near, z_far);
-
-      // Translate the virtual camera. This basically updates the view matrix according to
-      // our new camera position.
-      view.get_framebuffer().translate(camOffsetX * width_scale,
-                                       camOffsetY * height_scale, 0);
-    });
-
-    // Revert the matrix changes before the update,
-    this._stageAfterUpdateID = global.stage.connect('after-update', (stage, view) => {
-      view.get_framebuffer().pop_matrix();
-    });
+    updateMonitorPerspective();
   }
 
   // This function could be called after the extension is uninstalled, disabled in GNOME
@@ -817,8 +747,6 @@ class Extension {
 
     // Clean up the edge-workspace-switching.
     global.stage.disconnect(this._stageAllocationID);
-    global.stage.disconnect(this._stageBeforeUpdateID);
-    global.stage.disconnect(this._stageAfterUpdateID);
 
     this._pressureBarrier.destroy();
     this._leftBarrier.destroy();
@@ -827,6 +755,10 @@ class Extension {
     this._pressureBarrier = null;
     this._leftBarrier     = null;
     this._rightBarrier    = null;
+
+    // Clean up perspective correction.
+    this._disablePerspectiveCorrection();
+    Meta.MonitorManager.disconnect(this._monitorsChangedID);
 
     // Make sure that the settings object is freed.
     this._settings = null;
@@ -1015,6 +947,116 @@ class Extension {
       Math.min(1.0, 2.0 - Main.overview._overview.controls._stateAdjustment.value);
 
     return [depthOffset * windowPickerFactor, explode * windowPickerFactor];
+  }
+
+  // Usually, GNOME Shell uses one central perspective for all monitors combined. This
+  // results in a somewhat sheared appearance of the cube on multi-monitor setups where
+  // the primary monitor is not in the middle (or cubes are shown on multiple monitors).
+  // With the code below, we modify the projection and view matrices for each monitor so
+  // that each monitor uses its own central perspective. This seems to be possible on
+  // Wayland only. On X11, there's only one set of projection and view matrices for all
+  // monitors combined, so we tweak them so that the projection center is in the middle of
+  // the primary monitor. So it will at least only look bad on X11 if the cube is shown on
+  // all monitors...
+  _enablePerspectiveCorrection() {
+
+    this._stageBeforeUpdateID = global.stage.connect('before-paint', (stage, view) => {
+      // Usually, the virtual camera is positioned centered in front of the stage. We will
+      // move the virtual camera around. These variables will be the new stage-relative
+      // coordinates of the virtual camera.
+      let cameraX, cameraY;
+
+      if (Meta.is_wayland_compositor()) {
+
+        // On Wayland, each monitor has its own StageView. Therefore we can move the
+        // virtual camera for each monitor separately.
+        cameraX = view.layout.x + view.layout.width / 2;
+        cameraY = view.layout.y + view.layout.height / 2;
+
+      } else {
+
+        // On X11, there's only one StageView. We move the virtual camera so that it is in
+        // front of the primary monitor.
+        const primaryMonitorRect =
+          global.display.get_monitor_geometry(global.display.get_primary_monitor());
+
+        cameraX = primaryMonitorRect.x + primaryMonitorRect.width / 2;
+        cameraY = primaryMonitorRect.y + primaryMonitorRect.height / 2;
+      }
+
+      // This is the offset to the original, centered camera position. Y is flipped due to
+      // some negative scaling at some point in Mutter.
+      const camOffsetX = stage.width / 2 - cameraX;
+      const camOffsetY = cameraY - stage.height / 2;
+
+      const z_near = stage.perspective.z_near;
+      const z_far  = stage.perspective.z_far;
+
+      // The code below is copied from Mutter's Clutter.
+      // https://gitlab.gnome.org/GNOME/mutter/-/blob/main/clutter/clutter/clutter-stage.c#L2255
+      const A = 0.57735025882720947265625;
+      const B = 0.866025388240814208984375;
+      const C = 0.86162912845611572265625;
+      const D = 0.00872653536498546600341796875;
+
+      const z_2d = z_near * A * B * C / D + z_near;
+
+      // The code below is copied from Mutter's Clutter as well.
+      // https://gitlab.gnome.org/GNOME/mutter/-/blob/main/clutter/clutter/clutter-stage.c#L2270
+      const top    = z_near * Math.tan(stage.perspective.fovy * Math.PI / 360.0);
+      const left   = -top * stage.perspective.aspect;
+      const right  = top * stage.perspective.aspect;
+      const bottom = -top;
+
+      const left_2d_plane   = left / z_near * z_2d;
+      const right_2d_plane  = right / z_near * z_2d;
+      const bottom_2d_plane = bottom / z_near * z_2d;
+      const top_2d_plane    = top / z_near * z_2d;
+
+      const width_2d_start  = right_2d_plane - left_2d_plane;
+      const height_2d_start = top_2d_plane - bottom_2d_plane;
+
+      const width_scale  = width_2d_start / stage.width;
+      const height_scale = height_2d_start / stage.height;
+      // End of the copy-paste code.
+
+      // Compute the required offset of the frustum planes at the near plane. This
+      // basically updates the projection matrix according to our new camera position.
+      const offsetX = camOffsetX * width_scale / z_2d * z_near;
+      const offsetY = camOffsetY * height_scale / z_2d * z_near;
+
+      // Set the new frustum.
+      view.get_framebuffer().frustum(left + offsetX, right + offsetX, bottom + offsetY,
+                                     top + offsetY, z_near, z_far);
+
+      // Translate the virtual camera. This basically updates the view matrix according to
+      // our new camera position.
+      view.get_framebuffer().push_matrix();
+      view.get_framebuffer().translate(camOffsetX * width_scale,
+                                       camOffsetY * height_scale, 0);
+    });
+
+    // Revert the matrix changes before the update,
+    this._stageAfterUpdateID = global.stage.connect('after-paint', (stage, view) => {
+      view.get_framebuffer().pop_matrix();
+      view.get_framebuffer().perspective(stage.perspective.fovy, stage.perspective.aspect,
+                                         stage.perspective.z_near,
+                                         stage.perspective.z_far);
+    });
+  }
+
+  // Reverts the changes done with the method above.
+  _disablePerspectiveCorrection() {
+
+    if (this._stageBeforeUpdateID) {
+      global.stage.disconnect(this._stageBeforeUpdateID);
+      this._stageBeforeUpdateID = 0;
+    }
+
+    if (this._stageAfterUpdateID) {
+      global.stage.disconnect(this._stageAfterUpdateID);
+      this._stageAfterUpdateID = 0;
+    }
   }
 
   // This creates a custom drag gesture and adds it to the given SwipeTracker. The swipe
