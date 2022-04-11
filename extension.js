@@ -844,6 +844,36 @@ class Extension {
         (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180))
     });
 
+    // All actors are expected to share the same parent.
+    const parent = actors[0].get_parent();
+
+    // If the perspective is corrected for multi-monitor setups, the virtual camera is not
+    // in the middle of the stage but rather in front of each monitor.
+    if (this._settings.get_boolean('multi-monitor-fixes')) {
+
+      // Try to find the StageView for the parent actor.
+      const view =
+        parent.peek_stage_views().find(v => parent.is_effectively_on_stage_view(v));
+
+      if (view && Meta.is_wayland_compositor()) {
+
+        // On Wayland, each monitor should have its own StageView. Therefore, the virtual
+        // camera has been positioned in front of each monitor separately.
+        camera.x = view.layout.x + view.layout.width / 2;
+        camera.y = view.layout.y + view.layout.height / 2;
+
+      } else {
+
+        // On X11, there's only one StageView. We move the virtual camera so that it is in
+        // front of the primary monitor.
+        const geometry =
+          global.display.get_monitor_geometry(global.display.get_primary_monitor());
+
+        camera.x = geometry.x + geometry.width / 2;
+        camera.y = geometry.y + geometry.height / 2;
+      }
+    }
+
     // Create a list of the orthogonal distances to the camera for each actor.
     const distances = actors.map((a, i) => {
       // A point on the actor plane.
@@ -889,7 +919,6 @@ class Extension {
     });
 
     // Finally, sort the children actors accordingly.
-    const parent = actors[0].get_parent();
     for (let i = 0; i < copy.length; i++) {
       parent.set_child_at_index(copy[i], -1);
     }
