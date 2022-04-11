@@ -197,8 +197,10 @@ class Extension {
       // zero. The strengths of both effects are small during horizontal rotations to make
       // workspace-switching not so obtrusive. However, during vertical rotations, the
       // effects are stronger.
+      const monitorGeometry = global.display.get_monitor_geometry(this._monitorIndex);
       const [depthOffset, explode] = extensionThis._getExplodeFactors(
-        this._scrollAdjustment.value, extensionThis._pitch.value, centerDepth);
+        this._scrollAdjustment.value, extensionThis._pitch.value, centerDepth,
+        monitorGeometry.width, monitorGeometry.height);
 
       // Now loop through all workspace and compute the individual rotations.
       this._workspaces.forEach((w, index) => {
@@ -334,7 +336,8 @@ class Extension {
       // workspace-switching not so obtrusive. However, during vertical rotations, the
       // effects are stronger.
       const [depthOffset, explode] = extensionThis._getExplodeFactors(
-        group.progress, extensionThis._pitch.value, centerDepth);
+        group.progress, extensionThis._pitch.value, centerDepth, group._monitor.width,
+        group._monitor.height);
 
       // Rotate the individual faces.
       group._workspaceGroups.forEach((child, i) => {
@@ -968,7 +971,7 @@ class Extension {
   // This method returns two values:
   // result[0]: A translation value by which the cube should be moved backwards.
   // result[1]: A translation value by which windows may be moved away from the cube.
-  _getExplodeFactors(hRotation, vRotation, centerDepth) {
+  _getExplodeFactors(hRotation, vRotation, centerDepth, monitorWidth, monitorHeight) {
 
     // These are zero if we are facing a workspace and one if we look directly at an
     // edge between adjacent workspaces or if the cube is rotated vertically
@@ -980,9 +983,8 @@ class Extension {
     // a tiny bit to reveal a bit of parallax. However, if we have many cube sides, this
     // looks weird, so we reduce the effect there. We use the offset which would make
     // the cube's corners stay behind the original workspace faces during he rotation.
-    const width      = global.screen_width;
-    const height     = global.screen_height;
-    const cornerDist = Math.sqrt(Math.pow(centerDepth, 2) + Math.pow(width / 2, 2));
+    const cornerDist =
+      Math.sqrt(Math.pow(centerDepth, 2) + Math.pow(monitorWidth / 2, 2));
     const hDepthOffset =
       this._settings.get_double('window-parallax') * (cornerDist - centerDepth);
 
@@ -992,13 +994,14 @@ class Extension {
 
     // For vertical rotations, we move the cube backwards to reveal everything. The
     // maximum explode width is set to half of the workspace size.
-    const vExplode =
-      this._settings.get_boolean('do-explode') ? Math.max(width, height) / 2 : 0;
+    const vExplode = this._settings.get_boolean('do-explode') ?
+      Math.max(monitorWidth, monitorHeight) / 2 :
+      0;
     const diameter = 2 * (vExplode + centerDepth);
     const camDist =
-      height / (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180));
+      monitorHeight / (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180));
     const vDepthOffset =
-      (1 + PADDING_V_ROTATION) * diameter * camDist / width - centerDepth;
+      (1 + PADDING_V_ROTATION) * diameter * camDist / monitorWidth - centerDepth;
 
     // Use current maximum of both values.
     const depthOffset = Math.max(hFactor * hDepthOffset, vFactor * vDepthOffset);
