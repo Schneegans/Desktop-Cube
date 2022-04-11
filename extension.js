@@ -260,7 +260,7 @@ class Extension {
           // planes to the camera. This ensures proper depth sorting among the window
           // clones.
           if (sortedActors.length > 0) {
-            extensionThis._sortActorsByPlaneDist(w._container.get_children());
+            extensionThis._depthSortWindowActors(w._container.get_children());
           }
         }
 
@@ -269,12 +269,12 @@ class Extension {
         // virtual camera. We add a tiny translation to the window-clone container to
         // allow for proper sorting.
         w._container.translation_z = 1;
-        extensionThis._sortActorsByPlaneDist(w.get_children());
+        extensionThis._depthSortWindowActors(w.get_children());
       });
 
       // The depth-sorting of cube faces is quite simple, we sort them by increasing
       // rotation angle so that they are drawn back-to-front.
-      extensionThis._sortActorsByAngle(this._workspaces);
+      extensionThis._depthSortCubeFaces(this._workspaces);
     };
 
 
@@ -370,13 +370,13 @@ class Extension {
           // Now sort the window clones and the background actor according to the
           // orthogonal distance of the actor planes to the camera. This ensures proper
           // depth sorting.
-          extensionThis._sortActorsByPlaneDist(child.get_children());
+          extensionThis._depthSortWindowActors(child.get_children());
         }
       });
 
       // The depth-sorting of cube faces is quite simple, we sort them by increasing
       // rotation angle.
-      extensionThis._sortActorsByAngle(group._workspaceGroups);
+      extensionThis._depthSortCubeFaces(group._workspaceGroups);
 
       // Update horizontal rotation of the background panorama during workspace switches.
       if (this._skybox) {
@@ -875,7 +875,7 @@ class Extension {
   // This sorts the given list of children actors (which are supposed to be attached to
   // the same parent) by increasing absolute rotation-y angle. This is used for
   // depth-sorting, as cube faces which are less rotated, are in front of others.
-  _sortActorsByAngle(actors) {
+  _depthSortCubeFaces(actors) {
     // First create a copy of the actors list and sort it by decreasing rotation angle.
     const copy = actors.slice();
     copy.sort((a, b) => {
@@ -894,7 +894,7 @@ class Extension {
   // camera position is projected onto the plane defined by the actor and the absolute
   // distance from the camera to its projected position is computed. This is used for
   // depth-sorting a list of parallel actors.
-  _sortActorsByPlaneDist(actors) {
+  _depthSortWindowActors(actors) {
 
     // Sanity check.
     if (actors.length <= 1) {
