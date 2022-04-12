@@ -197,10 +197,9 @@ class Extension {
       // zero. The strengths of both effects are small during horizontal rotations to make
       // workspace-switching not so obtrusive. However, during vertical rotations, the
       // effects are stronger.
-      const monitorGeometry = global.display.get_monitor_geometry(this._monitorIndex);
       const [depthOffset, explode] = extensionThis._getExplodeFactors(
         this._scrollAdjustment.value, extensionThis._pitch.value, centerDepth,
-        monitorGeometry.width, monitorGeometry.height);
+        this._monitorIndex);
 
       // Now loop through all workspace and compute the individual rotations.
       this._workspaces.forEach((w, index) => {
@@ -261,8 +260,9 @@ class Extension {
           // Now sort the window clones according to the orthogonal distance of the actor
           // planes to the camera. This ensures proper depth sorting among the window
           // clones.
-          if (sortedActors.length > 0) {
-            extensionThis._depthSortWindowActors(w._container.get_children());
+          if (sortedActors.length > 1) {
+            extensionThis._depthSortWindowActors(w._container.get_children(),
+                                                 this._monitorIndex);
           }
         }
 
@@ -271,7 +271,7 @@ class Extension {
         // virtual camera. We add a tiny translation to the window-clone container to
         // allow for proper sorting.
         w._container.translation_z = 1;
-        extensionThis._depthSortWindowActors(w.get_children());
+        extensionThis._depthSortWindowActors(w.get_children(), this._monitorIndex);
       });
 
       // The depth-sorting of cube faces is quite simple, we sort them by increasing
@@ -336,8 +336,7 @@ class Extension {
       // workspace-switching not so obtrusive. However, during vertical rotations, the
       // effects are stronger.
       const [depthOffset, explode] = extensionThis._getExplodeFactors(
-        group.progress, extensionThis._pitch.value, centerDepth, group._monitor.width,
-        group._monitor.height);
+        group.progress, extensionThis._pitch.value, centerDepth, group._monitor.index);
 
       // Rotate the individual faces.
       group._workspaceGroups.forEach((child, i) => {
@@ -373,7 +372,8 @@ class Extension {
           // Now sort the window clones and the background actor according to the
           // orthogonal distance of the actor planes to the camera. This ensures proper
           // depth sorting.
-          extensionThis._depthSortWindowActors(child.get_children());
+          extensionThis._depthSortWindowActors(child.get_children(),
+                                               group._monitor.index);
         }
       });
 
@@ -701,9 +701,11 @@ class Extension {
     // monitors combined, so we tweak them so that the projection center is in the middle
     // of the primary monitor. So it will at least only look bad on X11 if the cube is
     // shown on all monitors...
-
     const updateMonitorPerspective = () => {
+      // Disable the perspective fixes first...
       this._disablePerspectiveCorrection();
+
+      // ... and then enable them if required.
       if (this._settings.get_boolean('per-monitor-perspective') &&
           global.display.get_n_monitors() > 1) {
         this._enablePerspectiveCorrection();
@@ -828,7 +830,7 @@ class Extension {
   // camera position is projected onto the plane defined by the actor and the absolute
   // distance from the camera to its projected position is computed. This is used for
   // depth-sorting a list of parallel actors.
-  _depthSortWindowActors(actors) {
+  _depthSortWindowActors(actors, monitorIndex) {
 
     // Sanity check.
     if (actors.length <= 1) {
@@ -850,27 +852,24 @@ class Extension {
     // in the middle of the stage but rather in front of each monitor.
     if (this._settings.get_boolean('per-monitor-perspective')) {
 
-      // Try to find the StageView for the parent actor.
-      const view =
-        parent.peek_stage_views().find(v => parent.is_effectively_on_stage_view(v));
+      let monitor;
 
-      if (view && Meta.is_wayland_compositor()) {
+      if (Meta.is_wayland_compositor()) {
 
         // On Wayland, each monitor should have its own StageView. Therefore, the virtual
         // camera has been positioned in front of each monitor separately.
-        camera.x = view.layout.x + view.layout.width / 2;
-        camera.y = view.layout.y + view.layout.height / 2;
+        monitor = global.display.get_monitor_geometry(monitorIndex);
 
       } else {
 
         // On X11, there's only one StageView. We move the virtual camera so that it is in
         // front of the primary monitor.
-        const geometry =
+        monitor =
           global.display.get_monitor_geometry(global.display.get_primary_monitor());
-
-        camera.x = geometry.x + geometry.width / 2;
-        camera.y = geometry.y + geometry.height / 2;
       }
+
+      camera.x = monitor.x + monitor.width / 2;
+      camera.y = monitor.y + monitor.height / 2;
     }
 
     // Create a list of the orthogonal distances to the camera for each actor.
@@ -931,7 +930,7 @@ class Extension {
   // This method returns two values:
   // result[0]: A translation value by which the cube should be moved backwards.
   // result[1]: A translation value by which windows may be moved away from the cube.
-  _getExplodeFactors(hRotation, vRotation, centerDepth, monitorWidth, monitorHeight) {
+  _getExplodeFactors(hRotation, vRotation, centerDepth, monitorIndex) {
 
     // These are zero if we are facing a workspace and one if we look directly at an
     // edge between adjacent workspaces or if the cube is rotated vertically
@@ -943,8 +942,9 @@ class Extension {
     // a tiny bit to reveal a bit of parallax. However, if we have many cube sides, this
     // looks weird, so we reduce the effect there. We use the offset which would make
     // the cube's corners stay behind the original workspace faces during he rotation.
+    const monitor = global.display.get_monitor_geometry(monitorIndex);
     const cornerDist =
-      Math.sqrt(Math.pow(centerDepth, 2) + Math.pow(monitorWidth / 2, 2));
+      Math.sqrt(Math.pow(centerDepth, 2) + Math.pow(monitor.width / 2, 2));
     const hDepthOffset =
       this._settings.get_double('window-parallax') * (cornerDist - centerDepth);
 
@@ -955,13 +955,13 @@ class Extension {
     // For vertical rotations, we move the cube backwards to reveal everything. The
     // maximum explode width is set to half of the workspace size.
     const vExplode = this._settings.get_boolean('do-explode') ?
-      Math.max(monitorWidth, monitorHeight) / 2 :
+      Math.max(monitor.width, monitor.height) / 2 :
       0;
     const diameter = 2 * (vExplode + centerDepth);
     const camDist =
-      monitorHeight / (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180));
+      monitor.height / (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180));
     const vDepthOffset =
-      (1 + PADDING_V_ROTATION) * diameter * camDist / monitorWidth - centerDepth;
+      (1 + PADDING_V_ROTATION) * diameter * camDist / monitor.width - centerDepth;
 
     // Use current maximum of both values.
     const depthOffset = Math.max(hFactor * hDepthOffset, vFactor * vDepthOffset);
