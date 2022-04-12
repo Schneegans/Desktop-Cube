@@ -703,15 +703,14 @@ class Extension {
     // shown on all monitors...
 
     const updateMonitorPerspective = () => {
-      if (this._settings.get_boolean('multi-monitor-fixes') &&
+      this._disablePerspectiveCorrection();
+      if (this._settings.get_boolean('per-monitor-perspective') &&
           global.display.get_n_monitors() > 1) {
         this._enablePerspectiveCorrection();
-      } else {
-        this._disablePerspectiveCorrection();
       }
     };
 
-    this._settings.connect('changed::multi-monitor-fixes', updateMonitorPerspective);
+    this._settings.connect('changed::per-monitor-perspective', updateMonitorPerspective);
     this._monitorsChangedID =
       Meta.MonitorManager.get().connect('monitors-changed', updateMonitorPerspective);
 
@@ -849,7 +848,7 @@ class Extension {
 
     // If the perspective is corrected for multi-monitor setups, the virtual camera is not
     // in the middle of the stage but rather in front of each monitor.
-    if (this._settings.get_boolean('multi-monitor-fixes')) {
+    if (this._settings.get_boolean('per-monitor-perspective')) {
 
       // Try to find the StageView for the parent actor.
       const view =

@@ -80,7 +80,7 @@ var PreferencesDialog = class PreferencesDialog {
     this._bindSwitch('enable-overview-edge-switch');
     this._bindSwitch('enable-overview-dragging');
     this._bindSwitch('do-explode');
-    this._bindSwitch('multi-monitor-fixes');
+    this._bindSwitch('per-monitor-perspective');
     this._bindAdjustment('active-workpace-opacity');
     this._bindAdjustment('inactive-workpace-opacity');
     this._bindAdjustment('overview-transition-time');
@@ -89,8 +89,7 @@ var PreferencesDialog = class PreferencesDialog {
 
     // Inject the video link.
     const label = this._builder.get_object('multi-monitor-hint-label');
-    label.label = label.label.replace(
-      '%s', '<a href="https://youtu.be/J7pdnkv7v1A">https://youtu.be/J7pdnkv7v1A</a>');
+    label.label = label.label.replace('%s', '<a href="TBD">TBD</a>');
 
     // Add a menu to the title bar of the preferences dialog.
     this._widget.connect('realize', (widget) => {
