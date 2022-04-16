@@ -272,6 +272,14 @@ class Extension {
         // allow for proper sorting.
         w._container.translation_z = 1;
         extensionThis._depthSortWindowActors(w.get_children(), this._monitorIndex);
+
+        // If the perspective of each monitor is computed separately, the culling of GNOME
+        // Shell does not work anymore as it still uses the original frustum. The only
+        // workaround is to disable culling altogether. This will be bad performance-wise,
+        // but I do not see an alternative.
+        if (extensionThis._enablePerMonitorPerspective) {
+          extensionThis._inhibitCulling(w);
+        }
       });
 
       // The depth-sorting of cube faces is quite simple, we sort them by increasing
@@ -374,6 +382,14 @@ class Extension {
           // depth sorting.
           extensionThis._depthSortWindowActors(child.get_children(),
                                                group._monitor.index);
+        }
+
+        // If the perspective of each monitor is computed separately, the culling of GNOME
+        // Shell does not work anymore as it still uses the original frustum. The only
+        // workaround is to disable culling altogether. This will be bad performance-wise,
+        // but I do not see an alternative.
+        if (extensionThis._enablePerMonitorPerspective) {
+          extensionThis._inhibitCulling(child);
         }
       });
 
@@ -705,9 +721,13 @@ class Extension {
       // Disable the perspective fixes first...
       this._disablePerspectiveCorrection();
 
+      // Store this so we do not have to get it too often.
+      this._enablePerMonitorPerspective =
+        this._settings.get_boolean('per-monitor-perspective') &&
+        global.display.get_n_monitors() > 1;
+
       // ... and then enable them if required.
-      if (this._settings.get_boolean('per-monitor-perspective') &&
-          global.display.get_n_monitors() > 1) {
+      if (this._enablePerMonitorPerspective) {
         this._enablePerspectiveCorrection();
       }
     };
@@ -766,6 +786,12 @@ class Extension {
   }
 
   // ----------------------------------------------------------------------- private stuff
+
+  // Calls inhibit_culling on the given actor and recursively on all children.
+  _inhibitCulling(actor) {
+    actor.inhibit_culling();
+    actor.get_children().forEach((c) => this._inhibitCulling(c));
+  };
 
   // Returns a value between [0...1] blending between overview (0) and app grid mode (1).
   _getAppDrawerMode(workspacesView) {
@@ -850,7 +876,7 @@ class Extension {
 
     // If the perspective is corrected for multi-monitor setups, the virtual camera is not
     // in the middle of the stage but rather in front of each monitor.
-    if (this._settings.get_boolean('per-monitor-perspective')) {
+    if (this._enablePerMonitorPerspective) {
 
       let monitor;
 
@@ -988,7 +1014,7 @@ class Extension {
   // all monitors...
   _enablePerspectiveCorrection() {
 
-    this._stageBeforeUpdateID = global.stage.connect('before-paint', (stage, view) => {
+    this._stageBeforeUpdateID = global.stage.connect('before-update', (stage, view) => {
       // Usually, the virtual camera is positioned centered in front of the stage. We will
       // move the virtual camera around. These variables will be the new stage-relative
       // coordinates of the virtual camera.
@@ -1065,7 +1091,7 @@ class Extension {
     });
 
     // Revert the matrix changes before the update,
-    this._stageAfterUpdateID = global.stage.connect('after-paint', (stage, view) => {
+    this._stageAfterUpdateID = global.stage.connect('after-update', (stage, view) => {
       view.get_framebuffer().pop_matrix();
       view.get_framebuffer().perspective(stage.perspective.fovy, stage.perspective.aspect,
                                          stage.perspective.z_near,
