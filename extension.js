@@ -98,7 +98,7 @@ class Extension {
 
     // Normally, all workspaces outside the current field-of-view are hidden. We want to
     // show all workspaces, so we patch this method. The original code is about here:
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L436
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L420
     WorkspacesView.prototype._updateVisibility = function() {
       this._workspaces.forEach((w) => {
         w.show();
@@ -408,7 +408,7 @@ class Extension {
     // bit to arrange the workspaces in a cube-like fashion. We have to adjust to parts of
     // the code as the automatic transitions (e.g. when switching with key combinations)
     // are handled differently than the gesture based switches.
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L300
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L299
     WorkspaceAnimationController.prototype._prepareWorkspaceSwitch = function() {
       // Here, we call the original method without any arguments. Usually, GNOME Shell
       // "skips" workspaces when switching to a workspace which is more than one workspace
@@ -595,7 +595,7 @@ class Extension {
 
     // This is an exact copy of the original _onBarrierHit, with only one line disabled to
     // ignore the given ActionMode.
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/layout.js#L1362
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/layout.js#L1366
     this._pressureBarrier._onBarrierHit = function(barrier, event) {
       barrier._isHit = true;
 
@@ -1164,7 +1164,7 @@ class Extension {
   // workspace-switching in desktop mode when dragging on the background.
   _addDesktopDragGesture() {
     // The SwipeTracker for switching workspaces in desktop mode is created here:
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L286
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L285
     const tracker = Main.wm._workspaceAnimation._swipeTracker;
     let actor     = Main.layoutManager._backgroundGroup;
     const mode    = Shell.ActionMode.NORMAL;
@@ -1181,7 +1181,7 @@ class Extension {
   // workspace-switching in desktop mode when dragging on the panel.
   _addPanelDragGesture() {
     // The SwipeTracker for switching workspaces in desktop mode is created here:
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L286
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L285
     const tracker = Main.wm._workspaceAnimation._swipeTracker;
     const actor   = Main.panel;
     const mode    = Shell.ActionMode.NORMAL;
@@ -1197,7 +1197,7 @@ class Extension {
   // workspace-switching in overview mode.
   _addOverviewDragGesture() {
     // The SwipeTracker for switching workspaces in overview mode is created here:
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L858
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L827
     const tracker = Main.overview._overview._controls._workspacesDisplay._swipeTracker;
     const actor   = Main.layoutManager.overviewGroup;
     const mode    = Shell.ActionMode.OVERVIEW;
