@@ -8,77 +8,80 @@ msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-09 20:32+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-04-21 18:06+0000\n"
+"Last-Translator: Maite Guix <maite.guix@gmail.com>\n"
+"Language-Team: Catalan <https://hosted.weblate.org/projects/desktop-cube/"
+"core/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: prefs.js:149
 msgid "Gold Sponsors"
-msgstr ""
+msgstr "Patrocinadors d'or"
 
 #: prefs.js:152
 msgid "Silver Sponsors"
-msgstr ""
+msgstr "Patrocinadors de plata"
 
 #: prefs.js:155
 msgid "Bronze Sponsors"
-msgstr ""
+msgstr "Patrocinadors de bronze"
 
 #: prefs.js:158
 msgid "Past Sponsors"
-msgstr ""
+msgstr "Patrocinadors anteriors"
 
 #: src/ImageChooserButton.js:39
 msgid "Select File"
-msgstr ""
+msgstr "Selecciona fitxer"
 
 #: src/ImageChooserButton.js:40
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel · lar"
 
 #: src/ImageChooserButton.js:86 resources/ui/imageChooserButton.ui:21
 msgid "(None)"
-msgstr ""
+msgstr "(Cap)"
 
 #: resources/ui/settings.ui:8
 msgid "Visit Homepage"
-msgstr ""
+msgstr "Visitar la pàgina principal"
 
 #: resources/ui/settings.ui:12
 msgid "View Changelog"
-msgstr ""
+msgstr "Veure registre de canvis"
 
 #: resources/ui/settings.ui:18
 msgid "Report a Bug"
-msgstr ""
+msgstr "Informar d'un error"
 
 #: resources/ui/settings.ui:22
 msgid "Translate"
-msgstr ""
+msgstr "Traduir"
 
 #: resources/ui/settings.ui:26
 msgid "Donate"
-msgstr ""
+msgstr "Donar"
 
 #: resources/ui/settings.ui:43
 msgid "About the Desktop-Cube"
-msgstr ""
+msgstr "Sobre el Desktop-Cube"
 
 #: resources/ui/settings.ui:61
 msgid "General Options"
-msgstr ""
+msgstr "Opcions generals"
 
 #: resources/ui/settings.ui:88
 msgid "Gap between last and first workspace"
-msgstr ""
+msgstr "Espai de treball entre l'últim i el primer espai de treball"
 
 #: resources/ui/settings.ui:97
 msgid "You cannot switch from the last to the first workspace anyways."
-msgstr ""
+msgstr "No pots canviar de l'últim al primer espai de treball de totes maneres."
 
 #: resources/ui/settings.ui:119 resources/ui/settings.ui:171
 #: resources/ui/settings.ui:215 resources/ui/settings.ui:269
@@ -89,27 +92,27 @@ msgstr ""
 #: resources/ui/settings.ui:718 resources/ui/settings.ui:779
 #: resources/ui/settings.ui:823 resources/ui/settings.ui:867
 msgid "Reset to default value"
-msgstr ""
+msgstr "Restablir el valor predeterminat"
 
 #: resources/ui/settings.ui:140
 msgid "Explode cube on vertical rotations"
-msgstr ""
+msgstr "Explotar el cub en rotacions verticals"
 
 #: resources/ui/settings.ui:149
 msgid "Rotate the cube up or down to show the 3D structure."
-msgstr ""
+msgstr "Gira el cub cap amunt o cap avall per a mostrar l'estructura 3D."
 
 #: resources/ui/settings.ui:189
 msgid "Window parallax effect"
-msgstr ""
+msgstr "Efecte de paral·laxi a la finestra"
 
 #: resources/ui/settings.ui:237
 msgid "Background panorama"
-msgstr ""
+msgstr "Panoràmica de fons"
 
 #: resources/ui/settings.ui:246
 msgid "See tooltip of the button for some hints."
-msgstr ""
+msgstr "Consulta la informació sobre el botó per a obtenir algunes pistes."
 
 #: resources/ui/settings.ui:261
 msgid ""
@@ -117,68 +120,76 @@ msgid ""
 "in the equirectangular projection. A good source for such panoramas is "
 "polyhaven.com/hdris. Be sure to download the tone-mapped JPEG versions!"
 msgstr ""
+"Pots utilitzar qualsevol imatge aquí. Per a obtenir els millors resultats, "
+"ha de ser una panoràmica de 360° a la projecció equirrectangular. Una bona "
+"font d'aquests panoramas és polyhaven.com/hdris. Assegura't de descarregar "
+"les versions JPEG amb mapa de tons!"
 
 #: resources/ui/settings.ui:291
 msgid "Transition time from desktop to overview [ms]"
-msgstr ""
+msgstr "Temps de transició de l'escriptori a la vista general [ms]"
 
 #: resources/ui/settings.ui:300 resources/ui/settings.ui:361
 #: resources/ui/settings.ui:422
 msgid "Set to 0 to use GNOME Shell's default value."
-msgstr ""
+msgstr "Establir a 0 per a utilitzar el valor predeterminat de GNOME Shell."
 
 #: resources/ui/settings.ui:352
 msgid "Transition time from overview to app drawer [ms]"
-msgstr ""
+msgstr "Temps de transició de la vista general al calaix d'aplicacions [ms]"
 
 #: resources/ui/settings.ui:413
 msgid "Transition time between workspaces [ms]"
-msgstr ""
+msgstr "Temps de transició entre espais de treball [ms]"
 
 #: resources/ui/settings.ui:473
 msgid "Desktop Options"
-msgstr ""
+msgstr "Opcions d'escriptori"
 
 #: resources/ui/settings.ui:496
 msgid "Click and drag the desktop to rotate the cube"
-msgstr ""
+msgstr "Clicar i arrossegar l'escriptori per a girar el cub"
 
 #: resources/ui/settings.ui:530
 msgid "Click and drag the panel to rotate the cube"
-msgstr ""
+msgstr "Clicar i arrossegar el tauler per a girar el cub"
 
 #: resources/ui/settings.ui:564
 msgid "Drag windows to the edge of the desktop to switch workspaces"
 msgstr ""
+"Arrossegar les finestres fins a la vora de l'escriptori per a canviar "
+"d'espai de treball"
 
 #: resources/ui/settings.ui:602
 msgid "Overview Options"
-msgstr ""
+msgstr "Opcions de la vista general"
 
 #: resources/ui/settings.ui:625
 msgid "Click and drag the overview to rotate the cube"
-msgstr ""
+msgstr "Clicar i arrossegar la vista general per a girar el cub"
 
 #: resources/ui/settings.ui:659
 msgid "Drag windows to the edge of the overview to switch workspaces"
 msgstr ""
+"Arrossegar les finestres fins a la vora de la vista general per a canviar "
+"d'espai de treball"
 
 #: resources/ui/settings.ui:694
 msgid "Gap between adjacent workspaces"
-msgstr ""
+msgstr "Espai entre els espais de treball adjacents"
 
 #: resources/ui/settings.ui:740
 msgid "Horizontal stretching of the cube"
-msgstr ""
+msgstr "Extensió horitzontal del cub"
 
 #: resources/ui/settings.ui:749
 msgid "This ensures that you can see the cube's sides from the front."
-msgstr ""
+msgstr "Això garanteix que pots veure els costats del cub des del davant."
 
 #: resources/ui/settings.ui:797
 msgid "Opacity of the active workspace"
-msgstr ""
+msgstr "Opacitat de l'espai de treball actiu"
 
 #: resources/ui/settings.ui:841
 msgid "Opacity of inactive workspaces"
-msgstr ""
+msgstr "Opacitat dels espais de treball inactius"
