@@ -789,8 +789,8 @@ class Extension {
 
   // Calls inhibit_culling on the given actor and recursively on all children.
   _inhibitCulling(actor) {
-    actor.inhibit_culling();
-    actor.get_children().forEach((c) => this._inhibitCulling(c));
+    // actor.inhibit_culling();
+    // actor.get_children().forEach((c) => this._inhibitCulling(c));
   };
 
   // Returns a value between [0...1] blending between overview (0) and app grid mode (1).
