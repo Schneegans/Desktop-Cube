@@ -419,6 +419,18 @@ class Extension {
       if (extensionThis._skybox) {
         extensionThis._skybox.get_parent().remove_child(extensionThis._skybox);
         Main.uiGroup.insert_child_above(extensionThis._skybox, global.window_group);
+
+        // If the workspaces are only on the primary monitor, the skybox would cover all
+        // other non-rotating screens. Therefore, we temporarily limit its size to the
+        // primary monitor's size.
+        if (Meta.prefs_get_workspaces_only_on_primary()) {
+          const monitor =
+            global.display.get_monitor_geometry(global.display.get_primary_monitor());
+          extensionThis._skybox.width  = monitor.width;
+          extensionThis._skybox.height = monitor.height;
+          extensionThis._skybox.x      = monitor.x;
+          extensionThis._skybox.y      = monitor.y;
+        }
       }
     };
 
@@ -426,9 +438,17 @@ class Extension {
     WorkspaceAnimationController.prototype._finishWorkspaceSwitch = function(...params) {
       extensionThis._origFinalSwitch.apply(this, params);
 
+      // Make sure that the skybox covers the entire stage again.
       if (extensionThis._skybox) {
         extensionThis._skybox.get_parent().remove_child(extensionThis._skybox);
         global.stage.insert_child_below(extensionThis._skybox, null);
+
+        if (Meta.prefs_get_workspaces_only_on_primary()) {
+          extensionThis._skybox.width  = global.stage.width;
+          extensionThis._skybox.height = global.stage.height;
+          extensionThis._skybox.x      = global.stage.x;
+          extensionThis._skybox.y      = global.stage.y;
+        }
       }
     };
 
