@@ -17,8 +17,9 @@
 
 #### Bug Fixes
 
+* Fixed a bug which caused any secondary monitor to flicker during workspace switches if a background panorama was used.
 * Fixed a bug which triggered workspace switches when the mouse pointer hit the screen edges while the Alt-Tab window switcher was shown.
-* There seem to be cases were `libadwaita` is not available on GNOME 42 (e.g. Pop!_OS 22.04 beta). The preferences dialog now tries to fallback to the GTK4-only variant if `libadwaita is not available`.
+* There seem to be cases were `libadwaita` is not available on GNOME 42 (e.g. Pop!_OS 22.04 beta). The preferences dialog now tries to fallback to the GTK4-only variant if `libadwaita` is not available.
 
 ## [Desktop Cube 9](https://github.com/schneegans/Desktop-Cube/releases/tag/v9)
 
