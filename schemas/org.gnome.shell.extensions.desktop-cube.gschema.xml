@@ -33,6 +33,12 @@
       <description>Explode the cube on vertical rotations.</description>
     </key>
 
+    <key name="per-monitor-perspective" type="b">
+      <default>true</default>
+      <summary>Per Monitor Perspective</summary>
+      <description>Tweak the projection matrices for better multi-monitor support.</description>
+    </key>
+
     <key name="background-panorama" type="s">
       <default>""</default>
       <summary>Background Panorama</summary>

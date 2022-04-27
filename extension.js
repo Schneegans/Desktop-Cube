@@ -91,11 +91,14 @@ class Extension {
 
     loadAnimationTimes();
 
-    // --------------------------------------------------------------- cubify the overview
+
+    // -----------------------------------------------------------------------------------
+    // ------------------------------- cubify the overview -------------------------------
+    // -----------------------------------------------------------------------------------
 
     // Normally, all workspaces outside the current field-of-view are hidden. We want to
     // show all workspaces, so we patch this method. The original code is about here:
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L436
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L420
     WorkspacesView.prototype._updateVisibility = function() {
       this._workspaces.forEach((w) => {
         w.show();
@@ -195,7 +198,8 @@ class Extension {
       // workspace-switching not so obtrusive. However, during vertical rotations, the
       // effects are stronger.
       const [depthOffset, explode] = extensionThis._getExplodeFactors(
-        this._scrollAdjustment.value, extensionThis._pitch.value, centerDepth);
+        this._scrollAdjustment.value, extensionThis._pitch.value, centerDepth,
+        this._monitorIndex);
 
       // Now loop through all workspace and compute the individual rotations.
       this._workspaces.forEach((w, index) => {
@@ -256,8 +260,9 @@ class Extension {
           // Now sort the window clones according to the orthogonal distance of the actor
           // planes to the camera. This ensures proper depth sorting among the window
           // clones.
-          if (sortedActors.length > 0) {
-            extensionThis._sortActorsByPlaneDist(w._container.get_children());
+          if (sortedActors.length > 1) {
+            extensionThis._depthSortWindowActors(w._container.get_children(),
+                                                 this._monitorIndex);
           }
         }
 
@@ -266,15 +271,26 @@ class Extension {
         // virtual camera. We add a tiny translation to the window-clone container to
         // allow for proper sorting.
         w._container.translation_z = 1;
-        extensionThis._sortActorsByPlaneDist(w.get_children());
+        extensionThis._depthSortWindowActors(w.get_children(), this._monitorIndex);
+
+        // If the perspective of each monitor is computed separately, the culling of GNOME
+        // Shell does not work anymore as it still uses the original frustum. The only
+        // workaround is to disable culling altogether. This will be bad performance-wise,
+        // but I do not see an alternative.
+        if (extensionThis._enablePerMonitorPerspective) {
+          extensionThis._inhibitCulling(w);
+        }
       });
 
       // The depth-sorting of cube faces is quite simple, we sort them by increasing
       // rotation angle so that they are drawn back-to-front.
-      extensionThis._sortActorsByAngle(this._workspaces);
+      extensionThis._depthSortCubeFaces(this._workspaces);
     };
 
-    // ------------------------------------------- cubify workspace-switch in desktop mode
+
+    // -----------------------------------------------------------------------------------
+    // --------------------- cubify workspace-switch in desktop mode ---------------------
+    // -----------------------------------------------------------------------------------
 
     // Here, we extend the WorkspaceAnimationController's animateSwitch method in order to
     // be able to modify the animation duration for switching workspaces in desktop mode.
@@ -328,7 +344,7 @@ class Extension {
       // workspace-switching not so obtrusive. However, during vertical rotations, the
       // effects are stronger.
       const [depthOffset, explode] = extensionThis._getExplodeFactors(
-        group.progress, extensionThis._pitch.value, centerDepth);
+        group.progress, extensionThis._pitch.value, centerDepth, group._monitor.index);
 
       // Rotate the individual faces.
       group._workspaceGroups.forEach((child, i) => {
@@ -364,13 +380,22 @@ class Extension {
           // Now sort the window clones and the background actor according to the
           // orthogonal distance of the actor planes to the camera. This ensures proper
           // depth sorting.
-          extensionThis._sortActorsByPlaneDist(child.get_children());
+          extensionThis._depthSortWindowActors(child.get_children(),
+                                               group._monitor.index);
+        }
+
+        // If the perspective of each monitor is computed separately, the culling of GNOME
+        // Shell does not work anymore as it still uses the original frustum. The only
+        // workaround is to disable culling altogether. This will be bad performance-wise,
+        // but I do not see an alternative.
+        if (extensionThis._enablePerMonitorPerspective) {
+          extensionThis._inhibitCulling(child);
         }
       });
 
       // The depth-sorting of cube faces is quite simple, we sort them by increasing
       // rotation angle.
-      extensionThis._sortActorsByAngle(group._workspaceGroups);
+      extensionThis._depthSortCubeFaces(group._workspaceGroups);
 
       // Update horizontal rotation of the background panorama during workspace switches.
       if (this._skybox) {
@@ -383,7 +408,7 @@ class Extension {
     // bit to arrange the workspaces in a cube-like fashion. We have to adjust to parts of
     // the code as the automatic transitions (e.g. when switching with key combinations)
     // are handled differently than the gesture based switches.
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L300
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L299
     WorkspaceAnimationController.prototype._prepareWorkspaceSwitch = function() {
       // Here, we call the original method without any arguments. Usually, GNOME Shell
       // "skips" workspaces when switching to a workspace which is more than one workspace
@@ -423,7 +448,10 @@ class Extension {
       }
     };
 
-    // -------------------------------------------------- enable cube rotation by dragging
+
+    // -----------------------------------------------------------------------------------
+    // ------------------------- enable cube rotation by dragging ------------------------
+    // -----------------------------------------------------------------------------------
 
     // Usually, in GNOME Shell 40+, workspaces are move horizontally. We tweaked this to
     // look like a horizontal rotation above. To store the current vertical rotation, we
@@ -491,7 +519,9 @@ class Extension {
     });
 
 
-    // -------------------------------------------------------------------- add the skybox
+    // -----------------------------------------------------------------------------------
+    // ---------------------------------- add the skybox ---------------------------------
+    // -----------------------------------------------------------------------------------
 
     // This is called whenever the skybox texture setting is changed.
     const updateSkybox = () => {
@@ -545,7 +575,9 @@ class Extension {
     });
 
 
-    // ----------------------------------------------- enable edge-drag workspace-switches
+    // -----------------------------------------------------------------------------------
+    // ----------------------- enable edge-drag workspace-switches -----------------------
+    // -----------------------------------------------------------------------------------
 
     // We add two Meta.Barriers, one at each side of the stage. If the pointer hits one of
     // these with enough pressure while dragging a window, we initiate a workspace-switch.
@@ -563,7 +595,7 @@ class Extension {
 
     // This is an exact copy of the original _onBarrierHit, with only one line disabled to
     // ignore the given ActionMode.
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/layout.js#L1362
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/layout.js#L1366
     this._pressureBarrier._onBarrierHit = function(barrier, event) {
       barrier._isHit = true;
 
@@ -670,6 +702,41 @@ class Extension {
         this._draggedWindow = null;
       }
     });
+
+
+    // -----------------------------------------------------------------------------------
+    // ------------------- fix perspective of multi-monitor setups -----------------------
+    // -----------------------------------------------------------------------------------
+
+    // Usually, GNOME Shell uses one central perspective for all monitors combined. This
+    // results in a somewhat sheared appearance of the cube on multi-monitor setups where
+    // the primary monitor is not in the middle (or cubes are shown on multiple monitors).
+    // With the code below, we modify the projection and view matrices for each monitor so
+    // that each monitor uses its own central perspective. This seems to be possible on
+    // Wayland only. On X11, there's only one set of projection and view matrices for all
+    // monitors combined, so we tweak them so that the projection center is in the middle
+    // of the primary monitor. So it will at least only look bad on X11 if the cube is
+    // shown on all monitors...
+    const updateMonitorPerspective = () => {
+      // Disable the perspective fixes first...
+      this._disablePerspectiveCorrection();
+
+      // Store this so we do not have to get it too often.
+      this._enablePerMonitorPerspective =
+        this._settings.get_boolean('per-monitor-perspective') &&
+        global.display.get_n_monitors() > 1;
+
+      // ... and then enable them if required.
+      if (this._enablePerMonitorPerspective) {
+        this._enablePerspectiveCorrection();
+      }
+    };
+
+    this._settings.connect('changed::per-monitor-perspective', updateMonitorPerspective);
+    this._monitorsChangedID =
+      Meta.MonitorManager.get().connect('monitors-changed', updateMonitorPerspective);
+
+    updateMonitorPerspective();
   }
 
   // This function could be called after the extension is uninstalled, disabled in GNOME
@@ -710,11 +777,21 @@ class Extension {
     this._leftBarrier     = null;
     this._rightBarrier    = null;
 
+    // Clean up perspective correction.
+    this._disablePerspectiveCorrection();
+    Meta.MonitorManager.get().disconnect(this._monitorsChangedID);
+
     // Make sure that the settings object is freed.
     this._settings = null;
   }
 
   // ----------------------------------------------------------------------- private stuff
+
+  // Calls inhibit_culling on the given actor and recursively on all children.
+  _inhibitCulling(actor) {
+    actor.inhibit_culling();
+    actor.get_children().forEach((c) => this._inhibitCulling(c));
+  };
 
   // Returns a value between [0...1] blending between overview (0) and app grid mode (1).
   _getAppDrawerMode(workspacesView) {
@@ -758,9 +835,9 @@ class Extension {
   }
 
   // This sorts the given list of children actors (which are supposed to be attached to
-  // the same parent) by increasing rotation-y angle. This is used for depth-sorting, as
-  // cube faces which are less rotated, are in front of others.
-  _sortActorsByAngle(actors) {
+  // the same parent) by increasing absolute rotation-y angle. This is used for
+  // depth-sorting, as cube faces which are less rotated, are in front of others.
+  _depthSortCubeFaces(actors) {
     // First create a copy of the actors list and sort it by decreasing rotation angle.
     const copy = actors.slice();
     copy.sort((a, b) => {
@@ -779,7 +856,7 @@ class Extension {
   // camera position is projected onto the plane defined by the actor and the absolute
   // distance from the camera to its projected position is computed. This is used for
   // depth-sorting a list of parallel actors.
-  _sortActorsByPlaneDist(actors) {
+  _depthSortWindowActors(actors, monitorIndex) {
 
     // Sanity check.
     if (actors.length <= 1) {
@@ -793,6 +870,33 @@ class Extension {
       z: global.stage.height /
         (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180))
     });
+
+    // All actors are expected to share the same parent.
+    const parent = actors[0].get_parent();
+
+    // If the perspective is corrected for multi-monitor setups, the virtual camera is not
+    // in the middle of the stage but rather in front of each monitor.
+    if (this._enablePerMonitorPerspective) {
+
+      let monitor;
+
+      if (Meta.is_wayland_compositor()) {
+
+        // On Wayland, each monitor should have its own StageView. Therefore, the virtual
+        // camera has been positioned in front of each monitor separately.
+        monitor = global.display.get_monitor_geometry(monitorIndex);
+
+      } else {
+
+        // On X11, there's only one StageView. We move the virtual camera so that it is in
+        // front of the primary monitor.
+        monitor =
+          global.display.get_monitor_geometry(global.display.get_primary_monitor());
+      }
+
+      camera.x = monitor.x + monitor.width / 2;
+      camera.y = monitor.y + monitor.height / 2;
+    }
 
     // Create a list of the orthogonal distances to the camera for each actor.
     const distances = actors.map((a, i) => {
@@ -839,7 +943,6 @@ class Extension {
     });
 
     // Finally, sort the children actors accordingly.
-    const parent = actors[0].get_parent();
     for (let i = 0; i < copy.length; i++) {
       parent.set_child_at_index(copy[i], -1);
     }
@@ -850,7 +953,10 @@ class Extension {
   // zero. The strengths of both effects are small during horizontal rotations to make
   // workspace-switching not so obtrusive. However, during vertical rotations, the
   // effects are stronger.
-  _getExplodeFactors(hRotation, vRotation, centerDepth) {
+  // This method returns two values:
+  // result[0]: A translation value by which the cube should be moved backwards.
+  // result[1]: A translation value by which windows may be moved away from the cube.
+  _getExplodeFactors(hRotation, vRotation, centerDepth, monitorIndex) {
 
     // These are zero if we are facing a workspace and one if we look directly at an
     // edge between adjacent workspaces or if the cube is rotated vertically
@@ -862,9 +968,9 @@ class Extension {
     // a tiny bit to reveal a bit of parallax. However, if we have many cube sides, this
     // looks weird, so we reduce the effect there. We use the offset which would make
     // the cube's corners stay behind the original workspace faces during he rotation.
-    const width      = global.screen_width;
-    const height     = global.screen_height;
-    const cornerDist = Math.sqrt(Math.pow(centerDepth, 2) + Math.pow(width / 2, 2));
+    const monitor = global.display.get_monitor_geometry(monitorIndex);
+    const cornerDist =
+      Math.sqrt(Math.pow(centerDepth, 2) + Math.pow(monitor.width / 2, 2));
     const hDepthOffset =
       this._settings.get_double('window-parallax') * (cornerDist - centerDepth);
 
@@ -874,13 +980,14 @@ class Extension {
 
     // For vertical rotations, we move the cube backwards to reveal everything. The
     // maximum explode width is set to half of the workspace size.
-    const vExplode =
-      this._settings.get_boolean('do-explode') ? Math.max(width, height) / 2 : 0;
+    const vExplode = this._settings.get_boolean('do-explode') ?
+      Math.max(monitor.width, monitor.height) / 2 :
+      0;
     const diameter = 2 * (vExplode + centerDepth);
     const camDist =
-      height / (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180));
+      monitor.height / (2 * Math.tan(global.stage.perspective.fovy / 2 * Math.PI / 180));
     const vDepthOffset =
-      (1 + PADDING_V_ROTATION) * diameter * camDist / width - centerDepth;
+      (1 + PADDING_V_ROTATION) * diameter * camDist / monitor.width - centerDepth;
 
     // Use current maximum of both values.
     const depthOffset = Math.max(hFactor * hDepthOffset, vFactor * vDepthOffset);
@@ -894,6 +1001,116 @@ class Extension {
       Math.min(1.0, 2.0 - Main.overview._overview.controls._stateAdjustment.value);
 
     return [depthOffset * windowPickerFactor, explode * windowPickerFactor];
+  }
+
+  // Usually, GNOME Shell uses one central perspective for all monitors combined. This
+  // results in a somewhat sheared appearance of the cube on multi-monitor setups where
+  // the primary monitor is not in the middle (or cubes are shown on multiple monitors).
+  // With the code below, we modify the projection and view matrices for each monitor so
+  // that each monitor uses its own central perspective. This seems to be possible on
+  // Wayland only. On X11, there's only one set of projection and view matrices for all
+  // monitors combined, so we tweak them so that the projection center is in the middle of
+  // the primary monitor. So it will at least only look bad on X11 if the cube is shown on
+  // all monitors...
+  _enablePerspectiveCorrection() {
+
+    this._stageBeforeUpdateID = global.stage.connect('before-update', (stage, view) => {
+      // Usually, the virtual camera is positioned centered in front of the stage. We will
+      // move the virtual camera around. These variables will be the new stage-relative
+      // coordinates of the virtual camera.
+      let cameraX, cameraY;
+
+      if (Meta.is_wayland_compositor()) {
+
+        // On Wayland, each monitor has its own StageView. Therefore we can move the
+        // virtual camera for each monitor separately.
+        cameraX = view.layout.x + view.layout.width / 2;
+        cameraY = view.layout.y + view.layout.height / 2;
+
+      } else {
+
+        // On X11, there's only one StageView. We move the virtual camera so that it is in
+        // front of the primary monitor.
+        const primaryMonitorRect =
+          global.display.get_monitor_geometry(global.display.get_primary_monitor());
+
+        cameraX = primaryMonitorRect.x + primaryMonitorRect.width / 2;
+        cameraY = primaryMonitorRect.y + primaryMonitorRect.height / 2;
+      }
+
+      // This is the offset to the original, centered camera position. Y is flipped due to
+      // some negative scaling at some point in Mutter.
+      const camOffsetX = stage.width / 2 - cameraX;
+      const camOffsetY = cameraY - stage.height / 2;
+
+      const z_near = stage.perspective.z_near;
+      const z_far  = stage.perspective.z_far;
+
+      // The code below is copied from Mutter's Clutter.
+      // https://gitlab.gnome.org/GNOME/mutter/-/blob/main/clutter/clutter/clutter-stage.c#L2255
+      const A = 0.57735025882720947265625;
+      const B = 0.866025388240814208984375;
+      const C = 0.86162912845611572265625;
+      const D = 0.00872653536498546600341796875;
+
+      const z_2d = z_near * A * B * C / D + z_near;
+
+      // The code below is copied from Mutter's Clutter as well.
+      // https://gitlab.gnome.org/GNOME/mutter/-/blob/main/clutter/clutter/clutter-stage.c#L2270
+      const top    = z_near * Math.tan(stage.perspective.fovy * Math.PI / 360.0);
+      const left   = -top * stage.perspective.aspect;
+      const right  = top * stage.perspective.aspect;
+      const bottom = -top;
+
+      const left_2d_plane   = left / z_near * z_2d;
+      const right_2d_plane  = right / z_near * z_2d;
+      const bottom_2d_plane = bottom / z_near * z_2d;
+      const top_2d_plane    = top / z_near * z_2d;
+
+      const width_2d_start  = right_2d_plane - left_2d_plane;
+      const height_2d_start = top_2d_plane - bottom_2d_plane;
+
+      const width_scale  = width_2d_start / stage.width;
+      const height_scale = height_2d_start / stage.height;
+      // End of the copy-paste code.
+
+      // Compute the required offset of the frustum planes at the near plane. This
+      // basically updates the projection matrix according to our new camera position.
+      const offsetX = camOffsetX * width_scale / z_2d * z_near;
+      const offsetY = camOffsetY * height_scale / z_2d * z_near;
+
+      // Set the new frustum.
+      view.get_framebuffer().frustum(left + offsetX, right + offsetX, bottom + offsetY,
+                                     top + offsetY, z_near, z_far);
+
+      // Translate the virtual camera. This basically updates the view matrix according to
+      // our new camera position.
+      view.get_framebuffer().push_matrix();
+      view.get_framebuffer().translate(camOffsetX * width_scale,
+                                       camOffsetY * height_scale, 0);
+    });
+
+    // Revert the matrix changes before the update,
+    this._stageAfterUpdateID = global.stage.connect('after-update', (stage, view) => {
+      view.get_framebuffer().pop_matrix();
+      view.get_framebuffer().perspective(stage.perspective.fovy, stage.perspective.aspect,
+                                         stage.perspective.z_near,
+                                         stage.perspective.z_far);
+    });
+  }
+
+  // Reverts the changes done with the method above.
+  _disablePerspectiveCorrection() {
+
+    if (this._stageBeforeUpdateID) {
+      global.stage.disconnect(this._stageBeforeUpdateID);
+      this._stageBeforeUpdateID = 0;
+    }
+
+    if (this._stageAfterUpdateID) {
+      global.stage.disconnect(this._stageAfterUpdateID);
+      this._stageAfterUpdateID = 0;
+    }
   }
 
   // This creates a custom drag gesture and adds it to the given SwipeTracker. The swipe
@@ -947,7 +1164,7 @@ class Extension {
   // workspace-switching in desktop mode when dragging on the background.
   _addDesktopDragGesture() {
     // The SwipeTracker for switching workspaces in desktop mode is created here:
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L286
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L285
     const tracker = Main.wm._workspaceAnimation._swipeTracker;
     let actor     = Main.layoutManager._backgroundGroup;
     const mode    = Shell.ActionMode.NORMAL;
@@ -964,7 +1181,7 @@ class Extension {
   // workspace-switching in desktop mode when dragging on the panel.
   _addPanelDragGesture() {
     // The SwipeTracker for switching workspaces in desktop mode is created here:
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L286
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L285
     const tracker = Main.wm._workspaceAnimation._swipeTracker;
     const actor   = Main.panel;
     const mode    = Shell.ActionMode.NORMAL;
@@ -980,7 +1197,7 @@ class Extension {
   // workspace-switching in overview mode.
   _addOverviewDragGesture() {
     // The SwipeTracker for switching workspaces in overview mode is created here:
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L858
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L827
     const tracker = Main.overview._overview._controls._workspacesDisplay._swipeTracker;
     const actor   = Main.layoutManager.overviewGroup;
     const mode    = Shell.ActionMode.OVERVIEW;

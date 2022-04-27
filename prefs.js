@@ -80,11 +80,17 @@ var PreferencesDialog = class PreferencesDialog {
     this._bindSwitch('enable-overview-edge-switch');
     this._bindSwitch('enable-overview-dragging');
     this._bindSwitch('do-explode');
+    this._bindSwitch('per-monitor-perspective');
     this._bindAdjustment('active-workpace-opacity');
     this._bindAdjustment('inactive-workpace-opacity');
     this._bindAdjustment('overview-transition-time');
     this._bindAdjustment('appgrid-transition-time');
     this._bindAdjustment('workspace-transition-time');
+
+    // Inject the video link.
+    const label = this._builder.get_object('multi-monitor-hint-label');
+    label.label = label.label.replace(
+      '%s', '<a href="https://youtu.be/dpYyn1BXGjU">https://youtu.be/dpYyn1BXGjU</a>');
 
     // Add a menu to the title bar of the preferences dialog.
     this._widget.connect('realize', (widget) => {
@@ -96,9 +102,9 @@ var PreferencesDialog = class PreferencesDialog {
       // Add the menu to the title bar
       const menu = this._builder.get_object('menu-button');
 
-      // Starting with GNOME Shell 42, the settings dialog uses libadwaita (at least most
-      // of the time - it seems that pop!_OS does not support libadwaita even on GNOME
-      // 42). So we have to hack our way through the widget tree of the
+      // Starting with GNOME Shell 42, the settings dialog uses libadwaita (at least
+      // most of the time - it seems that pop!_OS does not support libadwaita even on
+      // GNOME 42). So we have to hack our way through the widget tree of the
       // Adw.PreferencesWindow...
       if (Adw && utils.shellVersionIsAtLeast(42)) {
         const header = this._findWidgetByType(window.get_content(), Adw.HeaderBar);

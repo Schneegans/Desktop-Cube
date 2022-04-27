@@ -5,6 +5,15 @@
 
 **Release Date:** TBD
 
+#### New Features
+
+* The extension now tweaks the projection and view matrices used during rendering by GNOME Shell so that the projection center of the virtual camera is in front of the primary monitor. On Wayland, it can even use different matrices for each monitor. Therefore, even multiple desktop cubes will look good on Wayland. The only configuration which still looks bad is multiple desktop cubes on X11. This feature can be disabled as it may negatively affect the performance as frustum culling needs to be disabled for this to work...
+
+#### Other Changes
+
+* The extension now uses a new version of the [Dynamic Badges Action](https://github.com/Schneegans/dynamic-badges-action) to generate the lines-of-code badges for the README.md.
+* All links to the overridden methods of GNOME Shell in the source code of the extension have been updated.
+
 #### Bug Fixes
 
 * Fixed a bug which triggered workspace switches when the mouse pointer hit the screen edges while the Alt-Tab window switcher was shown.
