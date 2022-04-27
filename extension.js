@@ -272,14 +272,6 @@ class Extension {
         // allow for proper sorting.
         w._container.translation_z = 1;
         extensionThis._depthSortWindowActors(w.get_children(), this._monitorIndex);
-
-        // If the perspective of each monitor is computed separately, the culling of GNOME
-        // Shell does not work anymore as it still uses the original frustum. The only
-        // workaround is to disable culling altogether. This will be bad performance-wise,
-        // but I do not see an alternative.
-        if (extensionThis._enablePerMonitorPerspective) {
-          extensionThis._inhibitCulling(w);
-        }
       });
 
       // The depth-sorting of cube faces is quite simple, we sort them by increasing
@@ -382,14 +374,6 @@ class Extension {
           // depth sorting.
           extensionThis._depthSortWindowActors(child.get_children(),
                                                group._monitor.index);
-        }
-
-        // If the perspective of each monitor is computed separately, the culling of GNOME
-        // Shell does not work anymore as it still uses the original frustum. The only
-        // workaround is to disable culling altogether. This will be bad performance-wise,
-        // but I do not see an alternative.
-        if (extensionThis._enablePerMonitorPerspective) {
-          extensionThis._inhibitCulling(child);
         }
       });
 
@@ -787,10 +771,23 @@ class Extension {
 
   // ----------------------------------------------------------------------- private stuff
 
-  // Calls inhibit_culling on the given actor and recursively on all children.
+  // Calls inhibit_culling on the given actor and recursively on all mapped children.
   _inhibitCulling(actor) {
-    // actor.inhibit_culling();
-    // actor.get_children().forEach((c) => this._inhibitCulling(c));
+    if (actor.mapped) {
+      actor.inhibit_culling();
+      actor._culling_inhibited_by_desktop_cube = true;
+      actor.get_children().forEach(c => this._inhibitCulling(c));
+    }
+  };
+
+  // Calls uninhibit_culling on the given actor and recursively on all children. It will
+  // only call uninhibit_culling() on those actors which were inhibited before.
+  _uninhibitCulling(actor) {
+    if (actor._culling_inhibited_by_desktop_cube) {
+      delete actor._culling_inhibited_by_desktop_cube;
+      actor.uninhibit_culling();
+      actor.get_children().forEach(c => this._uninhibitCulling(c));
+    }
   };
 
   // Returns a value between [0...1] blending between overview (0) and app grid mode (1).
@@ -1015,6 +1012,11 @@ class Extension {
   _enablePerspectiveCorrection() {
 
     this._stageBeforeUpdateID = global.stage.connect('before-update', (stage, view) => {
+      // Do nothing if neither overview or desktop switcher are shown.
+      if (!Main.overview.visible && Main.wm._workspaceAnimation._switchData == null) {
+        return;
+      }
+
       // Usually, the virtual camera is positioned centered in front of the stage. We will
       // move the virtual camera around. These variables will be the new stage-relative
       // coordinates of the virtual camera.
@@ -1088,14 +1090,43 @@ class Extension {
       view.get_framebuffer().push_matrix();
       view.get_framebuffer().translate(camOffsetX * width_scale,
                                        camOffsetY * height_scale, 0);
+
+      // If the perspective of each monitor is computed separately, the culling of GNOME
+      // Shell does not work anymore as it still uses the original frustum. The only
+      // workaround is to disable culling altogether. This will be bad performance-wise,
+      // but I do not see an alternative.
+      // If the overview is shown, we inhibit culling for the WorkspacesDisplay. If the
+      // desktop-workspace-switcher is shown, we inhibit culling for all shown monitor
+      // groups.
+      if (Main.overview.visible) {
+        this._inhibitCulling(Main.overview._overview.controls._workspacesDisplay);
+      } else if (Main.wm._workspaceAnimation._switchData) {
+        Main.wm._workspaceAnimation._switchData.monitors.forEach(m => {
+          this._inhibitCulling(m);
+        });
+      }
     });
 
     // Revert the matrix changes before the update,
     this._stageAfterUpdateID = global.stage.connect('after-update', (stage, view) => {
+      // Nothing to do if neither overview or desktop switcher are shown.
+      if (!Main.overview.visible && Main.wm._workspaceAnimation._switchData == null) {
+        return;
+      }
+
       view.get_framebuffer().pop_matrix();
       view.get_framebuffer().perspective(stage.perspective.fovy, stage.perspective.aspect,
                                          stage.perspective.z_near,
                                          stage.perspective.z_far);
+
+      // Re-enable culling for all relevant actors.
+      if (Main.overview.visible) {
+        this._uninhibitCulling(Main.overview._overview.controls._workspacesDisplay);
+      } else if (Main.wm._workspaceAnimation._switchData) {
+        Main.wm._workspaceAnimation._switchData.monitors.forEach(m => {
+          this._uninhibitCulling(m);
+        });
+      }
     });
   }
 
