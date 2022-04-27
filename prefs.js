@@ -89,7 +89,8 @@ var PreferencesDialog = class PreferencesDialog {
 
     // Inject the video link.
     const label = this._builder.get_object('multi-monitor-hint-label');
-    label.label = label.label.replace('%s', '<a href="TBD">TBD</a>');
+    label.label = label.label.replace(
+      '%s', '<a href="https://youtu.be/dpYyn1BXGjU">https://youtu.be/dpYyn1BXGjU</a>');
 
     // Add a menu to the title bar of the preferences dialog.
     this._widget.connect('realize', (widget) => {
