@@ -11,6 +11,7 @@
 
 #### Other Changes
 
+* Many new translations! There are completely new Catalonian and Russian translations and the Italian, Turkish and Spanish translations received updates. Thanks to all the translators!
 * The extension now uses a new version of the [Dynamic Badges Action](https://github.com/Schneegans/dynamic-badges-action) to generate the lines-of-code badges for the README.md.
 * All links to the overridden methods of GNOME Shell in the source code of the extension have been updated.
 
