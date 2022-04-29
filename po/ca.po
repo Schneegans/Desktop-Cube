@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-29 05:32+0200\n"
-"PO-Revision-Date: 2022-04-21 18:06+0000\n"
+"PO-Revision-Date: 2022-04-30 10:09+0000\n"
 "Last-Translator: Maite Guix <maite.guix@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/desktop-cube/"
 "core/ca/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.12.1\n"
 
 #: prefs.js:156
 msgid "Gold Sponsors"
@@ -106,12 +106,12 @@ msgstr "Gira el cub cap amunt o cap avall per a mostrar l'estructura 3D."
 
 #: resources/ui/settings.ui:188
 msgid "Enable central perspective for each monitor"
-msgstr ""
+msgstr "Habilitar la perspectiva central per a cada monitor"
 
 #: resources/ui/settings.ui:197
 #, javascript-format
 msgid "For an explanation, you can watch this video: %s."
-msgstr ""
+msgstr "Per a una explicació, pots veure aquest vídeo: %s."
 
 #: resources/ui/settings.ui:238
 msgid "Window parallax effect"
