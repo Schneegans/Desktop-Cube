@@ -3,7 +3,7 @@
 
 ## [Desktop Cube 10](https://github.com/schneegans/Desktop-Cube/releases/tag/v10)
 
-**Release Date:** TBD
+**Release Date:** 2022-04-29
 
 #### New Features
 
