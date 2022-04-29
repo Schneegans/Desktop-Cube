@@ -7,6 +7,8 @@
 
 #### New Features
 
+<a href="https://youtu.be/dpYyn1BXGjU"><img align="right" src ="pics/cube10.jpg" /></a>
+
 * **Multi-Monitor Perspective Fixes:** The extension now tweaks the projection and view matrices used during rendering by GNOME Shell so that the projection center of the virtual camera is in front of the primary monitor. On Wayland, it can even use different matrices for each monitor. Therefore, even multiple desktop cubes will look good on Wayland. The only configuration which still looks bad is multiple desktop cubes on X11. This feature can be disabled as it may negatively affect the performance as frustum culling needs to be disabled for this to work...
 
 #### Other Changes
