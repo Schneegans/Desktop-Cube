@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-09 20:32+0100\n"
+"POT-Creation-Date: 2022-04-29 05:32+0200\n"
 "PO-Revision-Date: 2022-03-10 19:54+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/desktop-cube/core/"
@@ -19,19 +19,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.12-dev\n"
 
-#: prefs.js:149
+#: prefs.js:156
 msgid "Gold Sponsors"
 msgstr "Gouden sponsoren"
 
-#: prefs.js:152
+#: prefs.js:159
 msgid "Silver Sponsors"
 msgstr "Zilveren sponsoren"
 
-#: prefs.js:155
+#: prefs.js:162
 msgid "Bronze Sponsors"
 msgstr "Bronzen sponsoren"
 
-#: prefs.js:158
+#: prefs.js:165
 msgid "Past Sponsors"
 msgstr "Voormalige sponsoren"
 
@@ -67,56 +67,66 @@ msgstr "Vertalen"
 msgid "Donate"
 msgstr "Doneren"
 
-#: resources/ui/settings.ui:43
+#: resources/ui/settings.ui:39
 msgid "About the Desktop-Cube"
 msgstr "Over Bureaubladkubus"
 
-#: resources/ui/settings.ui:61
+#: resources/ui/settings.ui:57
 msgid "General Options"
 msgstr "Algemene voorkeuren"
 
-#: resources/ui/settings.ui:88
+#: resources/ui/settings.ui:84
 msgid "Gap between last and first workspace"
 msgstr "Ruimte tussen laatste en eerste werkblad"
 
-#: resources/ui/settings.ui:97
+#: resources/ui/settings.ui:93
 msgid "You cannot switch from the last to the first workspace anyways."
 msgstr ""
 "U kunt bovendien toch niet van het laatste naar het eerste werkblad "
 "overschakelen."
 
-#: resources/ui/settings.ui:119 resources/ui/settings.ui:171
-#: resources/ui/settings.ui:215 resources/ui/settings.ui:269
-#: resources/ui/settings.ui:330 resources/ui/settings.ui:391
-#: resources/ui/settings.ui:452 resources/ui/settings.ui:513
-#: resources/ui/settings.ui:547 resources/ui/settings.ui:581
-#: resources/ui/settings.ui:642 resources/ui/settings.ui:676
-#: resources/ui/settings.ui:718 resources/ui/settings.ui:779
-#: resources/ui/settings.ui:823 resources/ui/settings.ui:867
+#: resources/ui/settings.ui:115 resources/ui/settings.ui:167
+#: resources/ui/settings.ui:220 resources/ui/settings.ui:264
+#: resources/ui/settings.ui:318 resources/ui/settings.ui:379
+#: resources/ui/settings.ui:440 resources/ui/settings.ui:501
+#: resources/ui/settings.ui:562 resources/ui/settings.ui:596
+#: resources/ui/settings.ui:630 resources/ui/settings.ui:691
+#: resources/ui/settings.ui:725 resources/ui/settings.ui:767
+#: resources/ui/settings.ui:828 resources/ui/settings.ui:872
+#: resources/ui/settings.ui:916
 msgid "Reset to default value"
 msgstr "Standaardwaarde herstellen"
 
-#: resources/ui/settings.ui:140
+#: resources/ui/settings.ui:136
 msgid "Explode cube on vertical rotations"
 msgstr "Kubus uiteen laten vallen na verticaal draaien"
 
-#: resources/ui/settings.ui:149
+#: resources/ui/settings.ui:145
 msgid "Rotate the cube up or down to show the 3D structure."
 msgstr "Draai de kubus omhoog of omlaag zodat de 3D-structuur zichtbaar wordt."
 
-#: resources/ui/settings.ui:189
+#: resources/ui/settings.ui:188
+msgid "Enable central perspective for each monitor"
+msgstr ""
+
+#: resources/ui/settings.ui:197
+#, javascript-format
+msgid "For an explanation, you can watch this video: %s."
+msgstr ""
+
+#: resources/ui/settings.ui:238
 msgid "Window parallax effect"
 msgstr "Bewegingsvervaging"
 
-#: resources/ui/settings.ui:237
+#: resources/ui/settings.ui:286
 msgid "Background panorama"
 msgstr "Achtergrondpanorama"
 
-#: resources/ui/settings.ui:246
+#: resources/ui/settings.ui:295
 msgid "See tooltip of the button for some hints."
 msgstr "Bekijk voor meer informatie de hulpballon."
 
-#: resources/ui/settings.ui:261
+#: resources/ui/settings.ui:310
 msgid ""
 "You can use any image here. For best results, it should be a 360° panorama "
 "in the equirectangular projection. A good source for such panoramas is "
@@ -126,72 +136,72 @@ msgstr ""
 "beste. Zulke panorama's kunt u bijvoorbeeld vined op polyhaven.com/hdris. "
 "Let op: download de ‘tone-mapped’ jpeg-versies!"
 
-#: resources/ui/settings.ui:291
+#: resources/ui/settings.ui:340
 msgid "Transition time from desktop to overview [ms]"
 msgstr "Overgangstijd tussen bureaublad en overzicht [in ms]"
 
-#: resources/ui/settings.ui:300 resources/ui/settings.ui:361
-#: resources/ui/settings.ui:422
+#: resources/ui/settings.ui:349 resources/ui/settings.ui:410
+#: resources/ui/settings.ui:471
 msgid "Set to 0 to use GNOME Shell's default value."
 msgstr "Stel in op 0 om de standaardwaarde van GNOME Shell te gebruiken."
 
-#: resources/ui/settings.ui:352
+#: resources/ui/settings.ui:401
 msgid "Transition time from overview to app drawer [ms]"
 msgstr "Overgangstijd tussen venster- en toepassingenoverzicht [in ms]"
 
-#: resources/ui/settings.ui:413
+#: resources/ui/settings.ui:462
 msgid "Transition time between workspaces [ms]"
 msgstr "Overgangstijd tussen werkbladschakeling [in ms]"
 
-#: resources/ui/settings.ui:473
+#: resources/ui/settings.ui:522
 msgid "Desktop Options"
 msgstr "Bureaubladvoorkeuren"
 
-#: resources/ui/settings.ui:496
+#: resources/ui/settings.ui:545
 msgid "Click and drag the desktop to rotate the cube"
 msgstr "Kubus draaien door te slepen vanaf het bureaublad"
 
-#: resources/ui/settings.ui:530
+#: resources/ui/settings.ui:579
 msgid "Click and drag the panel to rotate the cube"
 msgstr "Kubus draaien door te slepen vanaf de bovenbalk"
 
-#: resources/ui/settings.ui:564
+#: resources/ui/settings.ui:613
 msgid "Drag windows to the edge of the desktop to switch workspaces"
 msgstr ""
 "Overschakelen naar ander werkblad door vensters te verslepen naar de "
 "schermrand"
 
-#: resources/ui/settings.ui:602
+#: resources/ui/settings.ui:651
 msgid "Overview Options"
 msgstr "Overzichtsvoorkeuren"
 
-#: resources/ui/settings.ui:625
+#: resources/ui/settings.ui:674
 msgid "Click and drag the overview to rotate the cube"
 msgstr "Kubus draaien door te slepen vanaf het overzicht"
 
-#: resources/ui/settings.ui:659
+#: resources/ui/settings.ui:708
 msgid "Drag windows to the edge of the overview to switch workspaces"
 msgstr ""
 "Overschakelen naar ander werkblad door vensters te verslepen naar de rand "
 "van het overzicht"
 
-#: resources/ui/settings.ui:694
+#: resources/ui/settings.ui:743
 msgid "Gap between adjacent workspaces"
 msgstr "Ruimte tussen aangrenzende werkbladen"
 
-#: resources/ui/settings.ui:740
+#: resources/ui/settings.ui:789
 msgid "Horizontal stretching of the cube"
 msgstr "Horizontale kubusuitrekking"
 
-#: resources/ui/settings.ui:749
+#: resources/ui/settings.ui:798
 msgid "This ensures that you can see the cube's sides from the front."
 msgstr "Deze optie zorgt er voor dat u alle kubuszijden van voren kunt zien."
 
-#: resources/ui/settings.ui:797
+#: resources/ui/settings.ui:846
 msgid "Opacity of the active workspace"
 msgstr "Doorzichtigheid van actief werkblad"
 
-#: resources/ui/settings.ui:841
+#: resources/ui/settings.ui:890
 msgid "Opacity of inactive workspaces"
 msgstr "Doorzichtigheid van inactieve werkbladen"
 
