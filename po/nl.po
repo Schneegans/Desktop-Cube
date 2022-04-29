@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-29 05:32+0200\n"
-"PO-Revision-Date: 2022-03-10 19:54+0000\n"
+"PO-Revision-Date: 2022-04-30 10:09+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/desktop-cube/core/"
 "nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.12.1\n"
 
 #: prefs.js:156
 msgid "Gold Sponsors"
@@ -107,12 +107,12 @@ msgstr "Draai de kubus omhoog of omlaag zodat de 3D-structuur zichtbaar wordt."
 
 #: resources/ui/settings.ui:188
 msgid "Enable central perspective for each monitor"
-msgstr ""
+msgstr "Gecentreerd perspectief per beeldscherm gebruiken"
 
 #: resources/ui/settings.ui:197
 #, javascript-format
 msgid "For an explanation, you can watch this video: %s."
-msgstr ""
+msgstr "De volgende video biedt uitleg: %s."
 
 #: resources/ui/settings.ui:238
 msgid "Window parallax effect"
