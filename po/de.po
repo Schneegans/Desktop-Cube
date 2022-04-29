@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-29 05:32+0200\n"
-"PO-Revision-Date: 2022-03-09 19:44+0000\n"
+"PO-Revision-Date: 2022-04-29 03:41+0000\n"
 "Last-Translator: Simon Schneegans <code@simonschneegans.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/desktop-cube/core/"
 "de/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.12.1-dev\n"
 
 #: prefs.js:156
 msgid "Gold Sponsors"
@@ -107,12 +107,12 @@ msgstr ""
 
 #: resources/ui/settings.ui:188
 msgid "Enable central perspective for each monitor"
-msgstr ""
+msgstr "Zentralperspektive für jeden Monitor aktivieren"
 
 #: resources/ui/settings.ui:197
 #, javascript-format
 msgid "For an explanation, you can watch this video: %s."
-msgstr ""
+msgstr "Zur Erläuterung können Sie sich dieses Video ansehen: %s."
 
 #: resources/ui/settings.ui:238
 msgid "Window parallax effect"
