@@ -1,5 +1,12 @@
 # Changelog of the Desktop Cube Extension
 
+## [Desktop Cube 10](https://github.com/schneegans/Desktop-Cube/releases/tag/v11)
+
+**Release Date:** TBD
+
+#### Bug Fixes
+
+* Fixed an issue which made the default hot corners of GNOME Shell difficult to activate. Thank you, [msizanoen1 for this fix](https://github.com/Schneegans/Desktop-Cube/pull/75)!
 
 ## [Desktop Cube 10](https://github.com/schneegans/Desktop-Cube/releases/tag/v10)
 
