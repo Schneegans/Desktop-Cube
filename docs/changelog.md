@@ -1,6 +1,6 @@
 # Changelog of the Desktop Cube Extension
 
-## [Desktop Cube 10](https://github.com/schneegans/Desktop-Cube/releases/tag/v11)
+## [Desktop Cube 11](https://github.com/schneegans/Desktop-Cube/releases/tag/v11)
 
 **Release Date:** TBD
 
