@@ -652,7 +652,7 @@ class Extension {
         display: global.display,
         x1: 0,
         x2: 0,
-        y1: 0,
+        y1: 1,
         y2: global.stage.height,
         directions: Meta.BarrierDirection.POSITIVE_X,
       });
@@ -661,7 +661,7 @@ class Extension {
         display: global.display,
         x1: global.stage.width,
         x2: global.stage.width,
-        y1: 0,
+        y1: 1,
         y2: global.stage.height,
         directions: Meta.BarrierDirection.NEGATIVE_X,
       });
