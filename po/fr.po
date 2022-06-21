@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-29 05:32+0200\n"
-"PO-Revision-Date: 2022-03-01 21:57+0000\n"
-"Last-Translator: Clément Schotte <schotte.clement@hotmail.fr>\n"
+"PO-Revision-Date: 2022-06-22 22:19+0000\n"
+"Last-Translator: Maxime Leroy <lisacintosh@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/desktop-cube/core/"
 "fr/>\n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.11.1-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #: prefs.js:156
 msgid "Gold Sponsors"
@@ -37,15 +37,15 @@ msgstr "Anciens Soutiens"
 
 #: src/ImageChooserButton.js:39
 msgid "Select File"
-msgstr ""
+msgstr "Sélectionner un fichier"
 
 #: src/ImageChooserButton.js:40
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: src/ImageChooserButton.js:86 resources/ui/imageChooserButton.ui:21
 msgid "(None)"
-msgstr ""
+msgstr "(Aucun)"
 
 #: resources/ui/settings.ui:8
 msgid "Visit Homepage"
@@ -95,7 +95,7 @@ msgstr ""
 #: resources/ui/settings.ui:828 resources/ui/settings.ui:872
 #: resources/ui/settings.ui:916
 msgid "Reset to default value"
-msgstr "Réinitialiser aux valeurs par défaut"
+msgstr "Rétablir la valeur par défaut"
 
 #: resources/ui/settings.ui:136
 msgid "Explode cube on vertical rotations"
@@ -108,12 +108,12 @@ msgstr ""
 
 #: resources/ui/settings.ui:188
 msgid "Enable central perspective for each monitor"
-msgstr ""
+msgstr "Activer la perspective centrale pour chaque écran"
 
 #: resources/ui/settings.ui:197
 #, javascript-format
 msgid "For an explanation, you can watch this video: %s."
-msgstr ""
+msgstr "Pour une explication, vous pouvez regarder cette vidéo : %s."
 
 #: resources/ui/settings.ui:238
 msgid "Window parallax effect"
@@ -121,11 +121,11 @@ msgstr "Effet de parallaxe des fenêtres"
 
 #: resources/ui/settings.ui:286
 msgid "Background panorama"
-msgstr ""
+msgstr "Panorama d'arrière-plan"
 
 #: resources/ui/settings.ui:295
 msgid "See tooltip of the button for some hints."
-msgstr ""
+msgstr "Voir l'infobulle du bouton pour quelques indications."
 
 #: resources/ui/settings.ui:310
 msgid ""
@@ -133,6 +133,10 @@ msgid ""
 "in the equirectangular projection. A good source for such panoramas is "
 "polyhaven.com/hdris. Be sure to download the tone-mapped JPEG versions!"
 msgstr ""
+"Vous pouvez utiliser une image ici. Pour de meilleurs résultats, ça doit "
+"être une panorama à 360° avec une projection équirectangulaire. Une bonne "
+"source de tels panoramas est polyhaven.com/hdris. Assurez-vous d'avoir "
+"téléchargé les versions JPEG avec mappage de ton local !"
 
 #: resources/ui/settings.ui:340
 msgid "Transition time from desktop to overview [ms]"
@@ -166,6 +170,7 @@ msgstr "Cliquer et faire glisser le panneau pour pivoter le cube"
 #: resources/ui/settings.ui:613
 msgid "Drag windows to the edge of the desktop to switch workspaces"
 msgstr ""
+"Glisser les fenêtres dans le coin du bureau pour changer d'espace de travail"
 
 #: resources/ui/settings.ui:651
 msgid "Overview Options"
@@ -178,6 +183,8 @@ msgstr "Cliquer et faire glisser la vue d'ensemble pour faire pivoter le cube"
 #: resources/ui/settings.ui:708
 msgid "Drag windows to the edge of the overview to switch workspaces"
 msgstr ""
+"Glisser les fenêtres dans le coin de la vue d'ensemble pour changer d'espace "
+"de travail"
 
 #: resources/ui/settings.ui:743
 msgid "Gap between adjacent workspaces"
