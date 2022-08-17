@@ -48,20 +48,21 @@ Maxence Sebald<br>
 
 <h3 align="center">🥈 Current Silver Sponsors</h3>
 <p align="center">
-  <a href="https://twitter.com/tjiiik">tj3k</a><br>
   <a href="https://github.com/castrojo">Jorge Castro</a>
 </p>
 
 <h3 align="center">🥉 Current Bronze Sponsors</h3>
 <p align="center">
+  <a href="https://github.com/sponsors/Schneegans">Become the first!</a><br>
+</p>
+
+ 
+<h3 align="center">🏅 Previous Sponsors and One-Time Donators</h3>
+<p align="center">
+  <a href="https://twitter.com/tjiiik">tj3k</a><br>
   <a href='https://github.com/AngelBrielez'>Angel Brielez</a>
 </p>
 
-<!--
-<h3 align="center">🏅 Previous Sponsors and One-Time Donators</h3>
-<p align="center">
-</p>
--->
 
 Do you want to show that you love it too? You may <a href="https://github.com/sponsors/Schneegans">become a sponsor for as little as 1$ / month</a>!
 If you like this extension, you may also want to try one of my other extensions: [🔥 Burn-My-Windows](https://github.com/Schneegans/Burn-My-Windows) or [🍰 Fly-Pie](https://github.com/Schneegans/Fly-Pie/)!
