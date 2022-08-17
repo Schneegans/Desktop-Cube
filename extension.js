@@ -594,8 +594,14 @@ class Extension {
     // Therefore, we modify the _onBarrierHit method of the pressure barrier to completely
     // ignore this parameter. Instead, we check for the correct action mode in the trigger
     // handler.
-    this._pressureBarrier = new Layout.PressureBarrier(
-      Layout.HOT_CORNER_PRESSURE_THRESHOLD, Layout.HOT_CORNER_PRESSURE_TIMEOUT, 0);
+    this._pressureBarrier =
+      new Layout.PressureBarrier(this._settings.get_int('edge-switch-pressure'),
+                                 Layout.HOT_CORNER_PRESSURE_TIMEOUT, 0);
+
+    // Update pressure threshold when the corresponding settings key changes.
+    this._settings.connect('changed::edge-switch-pressure', () => {
+      this._pressureBarrier._threshold = this._settings.get_int('edge-switch-pressure');
+    });
 
     // This is an exact copy of the original _onBarrierHit, with only one line disabled to
     // ignore the given ActionMode.

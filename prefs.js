@@ -83,6 +83,7 @@ var PreferencesDialog = class PreferencesDialog {
     this._bindSwitch('per-monitor-perspective');
     this._bindAdjustment('active-workpace-opacity');
     this._bindAdjustment('inactive-workpace-opacity');
+    this._bindAdjustment('edge-switch-pressure');
     this._bindAdjustment('overview-transition-time');
     this._bindAdjustment('appgrid-transition-time');
     this._bindAdjustment('workspace-transition-time');

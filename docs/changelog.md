@@ -8,6 +8,14 @@
 
 * Fixed an issue which made the default hot corners of GNOME Shell difficult to activate. Thank you, [msizanoen1 for this fix](https://github.com/Schneegans/Desktop-Cube/pull/75)!
 
+#### New Features
+
+* It is now possible to adjust the required mouse pressure for switching workspaces when moving windows against the workspace edges.
+
+#### Other Changes
+
+* The required pressure for switching workspaces when moving windows against the workspace edges has been increased (now 200, previously 100).
+
 ## [Desktop Cube 10](https://github.com/schneegans/Desktop-Cube/releases/tag/v10)
 
 **Release Date:** 2022-04-29
