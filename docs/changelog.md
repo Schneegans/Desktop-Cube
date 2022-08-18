@@ -2,7 +2,7 @@
 
 ## [Desktop Cube 11](https://github.com/schneegans/Desktop-Cube/releases/tag/v11)
 
-**Release Date:** TBD
+**Release Date:** 2022-08-18
 
 #### Bug Fixes
 
