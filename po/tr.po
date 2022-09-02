@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-29 05:32+0200\n"
-"PO-Revision-Date: 2022-03-18 11:58+0000\n"
-"Last-Translator: Veysel Erden <veyselerden@outlook.com>\n"
+"PO-Revision-Date: 2022-09-03 23:18+0000\n"
+"Last-Translator: Burak Orcun OZKABLAN <borcunozkablan@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/desktop-cube/"
 "core/tr/>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: prefs.js:156
 msgid "Gold Sponsors"
@@ -105,12 +105,12 @@ msgstr "3B biçimi görüntülemek için küpü yukarı ya da aşağı yönde ç
 
 #: resources/ui/settings.ui:188
 msgid "Enable central perspective for each monitor"
-msgstr ""
+msgstr "Her ekran için merkezi perspektifi etkinleştir"
 
 #: resources/ui/settings.ui:197
 #, javascript-format
 msgid "For an explanation, you can watch this video: %s."
-msgstr ""
+msgstr "Açıklama için, bu videoyu %s izleyebilirsiniz."
 
 #: resources/ui/settings.ui:238
 msgid "Window parallax effect"
