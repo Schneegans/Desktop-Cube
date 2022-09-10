@@ -8,41 +8,46 @@ msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-29 05:32+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-09-11 09:16+0000\n"
+"Last-Translator: Moo <hazap@hotmail.com>\n"
+"Language-Team: Lithuanian <https://hosted.weblate.org/projects/desktop-cube/"
+"core/lt/>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > "
+"19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? "
+"1 : 2);\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: prefs.js:156
 msgid "Gold Sponsors"
-msgstr ""
+msgstr "Auksiniai rėmėjai"
 
 #: prefs.js:159
 msgid "Silver Sponsors"
-msgstr ""
+msgstr "Sidabriniai rėmėjai"
 
 #: prefs.js:162
 msgid "Bronze Sponsors"
-msgstr ""
+msgstr "Bronziniai rėmėjai"
 
 #: prefs.js:165
 msgid "Past Sponsors"
-msgstr ""
+msgstr "Buvę rėmėjai"
 
 #: src/ImageChooserButton.js:39
 msgid "Select File"
-msgstr ""
+msgstr "Pasirinkti failą"
 
 #: src/ImageChooserButton.js:40
 msgid "Cancel"
-msgstr ""
+msgstr "Atsisakyti"
 
 #: src/ImageChooserButton.js:86 resources/ui/imageChooserButton.ui:21
 msgid "(None)"
-msgstr ""
+msgstr "(Nėra)"
 
 #: resources/ui/settings.ui:8
 msgid "Visit Homepage"
@@ -50,35 +55,37 @@ msgstr ""
 
 #: resources/ui/settings.ui:12
 msgid "View Changelog"
-msgstr ""
+msgstr "Rodyti keitinių žurnalą"
 
 #: resources/ui/settings.ui:18
 msgid "Report a Bug"
-msgstr ""
+msgstr "Pranešti apie klaidą"
 
 #: resources/ui/settings.ui:22
 msgid "Translate"
-msgstr ""
+msgstr "Versti"
 
 #: resources/ui/settings.ui:26
 msgid "Donate"
-msgstr ""
+msgstr "Aukoti"
 
 #: resources/ui/settings.ui:39
 msgid "About the Desktop-Cube"
-msgstr ""
+msgstr "Apie Desktop-Cube"
 
 #: resources/ui/settings.ui:57
 msgid "General Options"
-msgstr ""
+msgstr "Bendri parametrai"
 
 #: resources/ui/settings.ui:84
 msgid "Gap between last and first workspace"
-msgstr ""
+msgstr "Tarpas tarp paskutinės ir pirmos darbo srities"
 
 #: resources/ui/settings.ui:93
 msgid "You cannot switch from the last to the first workspace anyways."
 msgstr ""
+"Jūs bet kokiu atveju negalite perjungti iš paskutinės darbo srities į "
+"pirmąją."
 
 #: resources/ui/settings.ui:115 resources/ui/settings.ui:167
 #: resources/ui/settings.ui:220 resources/ui/settings.ui:264
@@ -90,7 +97,7 @@ msgstr ""
 #: resources/ui/settings.ui:828 resources/ui/settings.ui:872
 #: resources/ui/settings.ui:916
 msgid "Reset to default value"
-msgstr ""
+msgstr "Atstatyti į numatytąją reikšmę"
 
 #: resources/ui/settings.ui:136
 msgid "Explode cube on vertical rotations"
@@ -115,7 +122,7 @@ msgstr ""
 
 #: resources/ui/settings.ui:286
 msgid "Background panorama"
-msgstr ""
+msgstr "Foninė panorama"
 
 #: resources/ui/settings.ui:295
 msgid "See tooltip of the button for some hints."
@@ -147,7 +154,7 @@ msgstr ""
 
 #: resources/ui/settings.ui:522
 msgid "Desktop Options"
-msgstr ""
+msgstr "Darbalaukio parametrai"
 
 #: resources/ui/settings.ui:545
 msgid "Click and drag the desktop to rotate the cube"
