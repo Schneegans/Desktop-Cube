@@ -6,6 +6,10 @@
 
 * Added support for GNOME 43.
 
+#### Other Changes
+
+* Many new translations! There are completely new Slovak and Galician translations and many other translations received updates. Thanks to all the translators!
+
 ## [Desktop Cube 11](https://github.com/schneegans/Desktop-Cube/releases/tag/v11)
 
 **Release Date:** 2022-08-18
