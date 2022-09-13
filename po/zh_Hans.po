@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-29 05:32+0200\n"
+"POT-Creation-Date: 2022-09-13 21:05+0200\n"
 "PO-Revision-Date: 2022-09-02 08:21+0000\n"
 "Last-Translator: aerowolf <aerowolf@tom.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -19,19 +19,19 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.14.1-dev\n"
 
-#: prefs.js:156
+#: prefs.js:157
 msgid "Gold Sponsors"
 msgstr "金牌赞助商"
 
-#: prefs.js:159
+#: prefs.js:160
 msgid "Silver Sponsors"
 msgstr "银牌赞助商"
 
-#: prefs.js:162
+#: prefs.js:163
 msgid "Bronze Sponsors"
 msgstr "铜牌赞助商"
 
-#: prefs.js:165
+#: prefs.js:166
 msgid "Past Sponsors"
 msgstr "以往赞助商"
 
@@ -87,11 +87,11 @@ msgstr "如启用，则第一个桌面与最后一个桌面首尾不相接。"
 #: resources/ui/settings.ui:220 resources/ui/settings.ui:264
 #: resources/ui/settings.ui:318 resources/ui/settings.ui:379
 #: resources/ui/settings.ui:440 resources/ui/settings.ui:501
-#: resources/ui/settings.ui:562 resources/ui/settings.ui:596
-#: resources/ui/settings.ui:630 resources/ui/settings.ui:691
-#: resources/ui/settings.ui:725 resources/ui/settings.ui:767
-#: resources/ui/settings.ui:828 resources/ui/settings.ui:872
-#: resources/ui/settings.ui:916
+#: resources/ui/settings.ui:562 resources/ui/settings.ui:623
+#: resources/ui/settings.ui:657 resources/ui/settings.ui:710
+#: resources/ui/settings.ui:771 resources/ui/settings.ui:824
+#: resources/ui/settings.ui:866 resources/ui/settings.ui:927
+#: resources/ui/settings.ui:971 resources/ui/settings.ui:1015
 msgid "Reset to default value"
 msgstr "恢复默认值"
 
@@ -130,70 +130,82 @@ msgid ""
 "in the equirectangular projection. A good source for such panoramas is "
 "polyhaven.com/hdris. Be sure to download the tone-mapped JPEG versions!"
 msgstr ""
-"在此，您可以使用任何图片。为了达到最佳效果，图片应该是等角投影的360°全景图。p"
-"olyhaven.com是此类全景图的一个好来源。 请务必下载色调映射的JPEG版本！"
+"在此，您可以使用任何图片。为了达到最佳效果，图片应该是等角投影的360°全景图。"
+"polyhaven.com是此类全景图的一个好来源。 请务必下载色调映射的JPEG版本！"
 
 #: resources/ui/settings.ui:340
+msgid "Edge switch pressure"
+msgstr ""
+
+#: resources/ui/settings.ui:349
+msgid "The amount of pressure required to switch workspaces."
+msgstr ""
+
+#: resources/ui/settings.ui:401
 msgid "Transition time from desktop to overview [ms]"
 msgstr "从桌面到概览的过渡时间[ms]"
 
-#: resources/ui/settings.ui:349 resources/ui/settings.ui:410
-#: resources/ui/settings.ui:471
+#: resources/ui/settings.ui:410 resources/ui/settings.ui:471
+#: resources/ui/settings.ui:532
 msgid "Set to 0 to use GNOME Shell's default value."
 msgstr "设置为0则使用GNOME Shell的默认值。"
 
-#: resources/ui/settings.ui:401
+#: resources/ui/settings.ui:462
 msgid "Transition time from overview to app drawer [ms]"
 msgstr "从概览到应用抽屉的过渡时间[ms]"
 
-#: resources/ui/settings.ui:462
+#: resources/ui/settings.ui:523
 msgid "Transition time between workspaces [ms]"
 msgstr "工作区之间的过渡时间[ms]"
 
-#: resources/ui/settings.ui:522
+#: resources/ui/settings.ui:583
 msgid "Desktop Options"
 msgstr "桌面选项"
 
-#: resources/ui/settings.ui:545
+#: resources/ui/settings.ui:606
 msgid "Click and drag the desktop to rotate the cube"
 msgstr "‎单击并拖动桌面可旋转立方体‎"
 
-#: resources/ui/settings.ui:579
+#: resources/ui/settings.ui:640
 msgid "Click and drag the panel to rotate the cube"
 msgstr "‎单击并拖动面板可旋转立方体‎"
 
-#: resources/ui/settings.ui:613
+#: resources/ui/settings.ui:678
 msgid "Drag windows to the edge of the desktop to switch workspaces"
 msgstr "拖动窗口到桌面边缘可切换工作区"
 
-#: resources/ui/settings.ui:651
+#: resources/ui/settings.ui:687 resources/ui/settings.ui:801
+msgid "You can configure the required pressure in the general options above."
+msgstr ""
+
+#: resources/ui/settings.ui:731
 msgid "Overview Options"
 msgstr "概览选项"
 
-#: resources/ui/settings.ui:674
+#: resources/ui/settings.ui:754
 msgid "Click and drag the overview to rotate the cube"
 msgstr "单击并拖动概览可旋转立方体"
 
-#: resources/ui/settings.ui:708
+#: resources/ui/settings.ui:792
 msgid "Drag windows to the edge of the overview to switch workspaces"
 msgstr "拖动窗口到概览边缘可切换工作区"
 
-#: resources/ui/settings.ui:743
+#: resources/ui/settings.ui:842
 msgid "Gap between adjacent workspaces"
 msgstr "相邻工作区之间的间隙"
 
-#: resources/ui/settings.ui:789
+#: resources/ui/settings.ui:888
 msgid "Horizontal stretching of the cube"
 msgstr "立方体横向拉伸"
 
-#: resources/ui/settings.ui:798
+#: resources/ui/settings.ui:897
 msgid "This ensures that you can see the cube's sides from the front."
 msgstr "可从正面看到立方体的侧面。"
 
-#: resources/ui/settings.ui:846
+#: resources/ui/settings.ui:945
 msgid "Opacity of the active workspace"
 msgstr "活动工作区的不透明度"
 
-#: resources/ui/settings.ui:890
+#: resources/ui/settings.ui:989
 msgid "Opacity of inactive workspaces"
 msgstr "非活动工作区的不透明度"
