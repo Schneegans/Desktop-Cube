@@ -1,5 +1,11 @@
 # Changelog of the Desktop Cube Extension
 
+## [Desktop Cube 12](https://github.com/schneegans/Desktop-Cube/releases/tag/v12)
+
+#### New Features
+
+* Added support for GNOME 43.
+
 ## [Desktop Cube 11](https://github.com/schneegans/Desktop-Cube/releases/tag/v11)
 
 **Release Date:** 2022-08-18
