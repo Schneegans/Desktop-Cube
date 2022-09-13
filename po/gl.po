@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-29 05:32+0200\n"
+"POT-Creation-Date: 2022-09-13 21:05+0200\n"
 "PO-Revision-Date: 2022-05-01 15:12+0000\n"
 "Last-Translator: Xosé Calvo <xosecalvo@gmail.com>\n"
 "Language-Team: Galician <https://hosted.weblate.org/projects/desktop-cube/"
@@ -19,19 +19,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.12.1\n"
 
-#: prefs.js:156
+#: prefs.js:157
 msgid "Gold Sponsors"
 msgstr "Patrocinios de ouro"
 
-#: prefs.js:159
+#: prefs.js:160
 msgid "Silver Sponsors"
 msgstr "Patrocinios de prata"
 
-#: prefs.js:162
+#: prefs.js:163
 msgid "Bronze Sponsors"
 msgstr "Patrocinios de bronce"
 
-#: prefs.js:165
+#: prefs.js:166
 msgid "Past Sponsors"
 msgstr "Patrocinios anteriores"
 
@@ -89,11 +89,11 @@ msgstr ""
 #: resources/ui/settings.ui:220 resources/ui/settings.ui:264
 #: resources/ui/settings.ui:318 resources/ui/settings.ui:379
 #: resources/ui/settings.ui:440 resources/ui/settings.ui:501
-#: resources/ui/settings.ui:562 resources/ui/settings.ui:596
-#: resources/ui/settings.ui:630 resources/ui/settings.ui:691
-#: resources/ui/settings.ui:725 resources/ui/settings.ui:767
-#: resources/ui/settings.ui:828 resources/ui/settings.ui:872
-#: resources/ui/settings.ui:916
+#: resources/ui/settings.ui:562 resources/ui/settings.ui:623
+#: resources/ui/settings.ui:657 resources/ui/settings.ui:710
+#: resources/ui/settings.ui:771 resources/ui/settings.ui:824
+#: resources/ui/settings.ui:866 resources/ui/settings.ui:927
+#: resources/ui/settings.ui:971 resources/ui/settings.ui:1015
 msgid "Reset to default value"
 msgstr "Restaurar o valor predeterminado"
 
@@ -138,70 +138,83 @@ msgstr ""
 "JPEG con mapa de tons!"
 
 #: resources/ui/settings.ui:340
+msgid "Edge switch pressure"
+msgstr ""
+
+#: resources/ui/settings.ui:349
+msgid "The amount of pressure required to switch workspaces."
+msgstr ""
+
+#: resources/ui/settings.ui:401
 msgid "Transition time from desktop to overview [ms]"
 msgstr "Tempo de transición desde o escritorio á vista xeral [ms]"
 
-#: resources/ui/settings.ui:349 resources/ui/settings.ui:410
-#: resources/ui/settings.ui:471
+#: resources/ui/settings.ui:410 resources/ui/settings.ui:471
+#: resources/ui/settings.ui:532
 msgid "Set to 0 to use GNOME Shell's default value."
 msgstr "Estabeleza 0 para empregar o valor predeterminado do GNOME Shell."
 
-#: resources/ui/settings.ui:401
+#: resources/ui/settings.ui:462
 msgid "Transition time from overview to app drawer [ms]"
 msgstr "Tempo de transición desde a vista xeral á gabeta de aplicacións [ms]"
 
-#: resources/ui/settings.ui:462
+#: resources/ui/settings.ui:523
 msgid "Transition time between workspaces [ms]"
 msgstr "Tempo de transición entre espazos de traballo [ms]"
 
-#: resources/ui/settings.ui:522
+#: resources/ui/settings.ui:583
 msgid "Desktop Options"
 msgstr "Opcións do escritorio"
 
-#: resources/ui/settings.ui:545
+#: resources/ui/settings.ui:606
 msgid "Click and drag the desktop to rotate the cube"
 msgstr "Premer e arrastrar o escritorio para xirar o cubo"
 
-#: resources/ui/settings.ui:579
+#: resources/ui/settings.ui:640
 msgid "Click and drag the panel to rotate the cube"
 msgstr "Premer e arrastrar o panel para xirar o cubo"
 
-#: resources/ui/settings.ui:613
+#: resources/ui/settings.ui:678
 msgid "Drag windows to the edge of the desktop to switch workspaces"
 msgstr ""
 "Arrastrar xanelas para o bordo do escritorio para pasar entre espazos de "
 "traballo"
 
-#: resources/ui/settings.ui:651
+#: resources/ui/settings.ui:687 resources/ui/settings.ui:801
+msgid "You can configure the required pressure in the general options above."
+msgstr ""
+
+#: resources/ui/settings.ui:731
 msgid "Overview Options"
 msgstr "Opcións da vista xeral"
 
-#: resources/ui/settings.ui:674
+#: resources/ui/settings.ui:754
 msgid "Click and drag the overview to rotate the cube"
 msgstr "Premer e arrastrar a vista xeral para xirar o cubo"
 
-#: resources/ui/settings.ui:708
+#: resources/ui/settings.ui:792
 msgid "Drag windows to the edge of the overview to switch workspaces"
 msgstr ""
 "Arrastrar xanelas para o bordo da vista xeral para pasar entre espazos de "
 "traballo"
 
-#: resources/ui/settings.ui:743
+#: resources/ui/settings.ui:842
 msgid "Gap between adjacent workspaces"
 msgstr "Separación entre espazos de traballo adxacentes"
 
-#: resources/ui/settings.ui:789
+#: resources/ui/settings.ui:888
 msgid "Horizontal stretching of the cube"
 msgstr "Extensión horizontal do cubo"
 
-#: resources/ui/settings.ui:798
+#: resources/ui/settings.ui:897
 msgid "This ensures that you can see the cube's sides from the front."
-msgstr "Isto garante que se poden ver os lados do cubo desde a parte dianteira."
+msgstr ""
+"Isto garante que se poden ver os lados do cubo desde a parte dianteira."
 
-#: resources/ui/settings.ui:846
+#: resources/ui/settings.ui:945
 msgid "Opacity of the active workspace"
 msgstr "Opacidade do espazo de traballo activo"
 
-#: resources/ui/settings.ui:890
+#: resources/ui/settings.ui:989
 msgid "Opacity of inactive workspaces"
 msgstr "Opacidade dos espazos de traballo inactivos"
