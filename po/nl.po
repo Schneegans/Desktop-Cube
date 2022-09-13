@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-13 21:05+0200\n"
 "PO-Revision-Date: 2022-09-15 14:19+0000\n"
-"Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/desktop-cube/core/"
 "nl/>\n"
 "Language: nl\n"
@@ -138,11 +138,13 @@ msgstr ""
 
 #: resources/ui/settings.ui:340
 msgid "Edge switch pressure"
-msgstr ""
+msgstr "Randdruk"
 
 #: resources/ui/settings.ui:349
 msgid "The amount of pressure required to switch workspaces."
 msgstr ""
+"De druk die dient te worden uitgeoefend op de rand voordat er wordt "
+"overgeschakeld naar een ander werkblad."
 
 #: resources/ui/settings.ui:401
 msgid "Transition time from desktop to overview [ms]"
@@ -181,7 +183,7 @@ msgstr ""
 
 #: resources/ui/settings.ui:687 resources/ui/settings.ui:801
 msgid "You can configure the required pressure in the general options above."
-msgstr ""
+msgstr "Met bovenstaande opties kunt u de hoeveelheid druk instellen."
 
 #: resources/ui/settings.ui:731
 msgid "Overview Options"
