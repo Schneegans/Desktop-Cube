@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-13 21:05+0200\n"
-"PO-Revision-Date: 2022-04-30 10:09+0000\n"
-"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"PO-Revision-Date: 2022-09-15 14:19+0000\n"
+"Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/desktop-cube/core/"
 "nl/>\n"
 "Language: nl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: prefs.js:157
 msgid "Gold Sponsors"
@@ -53,11 +53,11 @@ msgstr "Website openen"
 
 #: resources/ui/settings.ui:12
 msgid "View Changelog"
-msgstr "Wijzigingslog bekijken"
+msgstr "Lijst met wijzigingen bekijken"
 
 #: resources/ui/settings.ui:18
 msgid "Report a Bug"
-msgstr "Bug melden"
+msgstr "Probleem melden"
 
 #: resources/ui/settings.ui:22
 msgid "Translate"
