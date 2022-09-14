@@ -2,6 +2,8 @@
 
 ## [Desktop Cube 12](https://github.com/schneegans/Desktop-Cube/releases/tag/v12)
 
+**Release Date:** 2022-09-14
+
 #### New Features
 
 * Added support for GNOME 43.
