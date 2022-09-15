@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-09-13 21:05+0200\n"
-"PO-Revision-Date: 2022-04-30 10:09+0000\n"
+"PO-Revision-Date: 2022-09-16 17:18+0000\n"
 "Last-Translator: Maite Guix <maite.guix@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/desktop-cube/"
 "core/ca/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #: prefs.js:157
 msgid "Gold Sponsors"
@@ -102,7 +102,7 @@ msgstr "Explotar el cub en rotacions verticals"
 
 #: resources/ui/settings.ui:145
 msgid "Rotate the cube up or down to show the 3D structure."
-msgstr "Gira el cub cap amunt o cap avall per a mostrar l'estructura 3D."
+msgstr "Girar el cub cap amunt o cap avall per a mostrar l'estructura 3D."
 
 #: resources/ui/settings.ui:188
 msgid "Enable central perspective for each monitor"
@@ -137,12 +137,13 @@ msgstr ""
 "les versions JPEG amb mapa de tons!"
 
 #: resources/ui/settings.ui:340
+#, fuzzy
 msgid "Edge switch pressure"
-msgstr ""
+msgstr "Pressió de l'interruptor de vora"
 
 #: resources/ui/settings.ui:349
 msgid "The amount of pressure required to switch workspaces."
-msgstr ""
+msgstr "La pressió necessària per a canviar d'espai de treball."
 
 #: resources/ui/settings.ui:401
 msgid "Transition time from desktop to overview [ms]"
@@ -182,6 +183,7 @@ msgstr ""
 #: resources/ui/settings.ui:687 resources/ui/settings.ui:801
 msgid "You can configure the required pressure in the general options above."
 msgstr ""
+"Podeu configurar la pressió necessària a les opcions generals anteriors."
 
 #: resources/ui/settings.ui:731
 msgid "Overview Options"
