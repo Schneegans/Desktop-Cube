@@ -1,4 +1,17 @@
+<!--
+SPDX-FileCopyrightText: Simon Schneegans <code@simonschneegans.de>
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 # Changelog of the Desktop Cube Extension
+
+## [Desktop Cube 13](https://github.com/schneegans/Desktop-Cube/releases/tag/v13)
+
+**Release Date:** TBD
+
+#### Other Enhancements
+
+* The Desktop-Cube now follows the [REUSE Specification](https://reuse.software/spec).
 
 ## [Desktop Cube 12](https://github.com/schneegans/Desktop-Cube/releases/tag/v12)
 

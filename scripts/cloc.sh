@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # -------------------------------------------------------------------------------------- #
-#  ,-.  ,--.  ,-.  ,  , ,---.  ,-.  ;-.     ,-. .  . ,-.  ,--.        Copyright (c) 2021 #
-#  |  \ |    (   ` | /    |   /   \ |  )   /    |  | |  ) |             Simon Schneegans #
-#  |  | |-    `-.  |<     |   |   | |-'    |    |  | |-<  |-    Released under the GPLv3 #
-#  |  / |    .   ) | \    |   \   / |      \    |  | |  ) |        or later. See LICENSE #
-#  `-'  `--'  `-'  '  `   '    `-'  '       `-' `--` `-'  `--'         file for details. #
+#               ,-.  ,--.  ,-.  ,  , ,---.  ,-.  ;-.     ,-. .  . ,-.  ,--.              #
+#               |  \ |    (   ` | /    |   /   \ |  )   /    |  | |  ) |                 #
+#               |  | |-    `-.  |<     |   |   | |-'    |    |  | |-<  |-                #
+#               |  / |    .   ) | \    |   \   / |      \    |  | |  ) |                 #
+#               `-'  `--'  `-'  '  `   '    `-'  '       `-' `--` `-'  `--'              #
 # -------------------------------------------------------------------------------------- #
 
-# This script is based on a similar script from the Fly-Pie GNOME Shell extension which is
-# published under the MIT License (https://github.com/Schneegans/Fly-Pie).
+# SPDX-FileCopyrightText: Simon Schneegans <code@simonschneegans.de>
+# SPDX-License-Identifier: MIT
 
 # This scripts counts the lines of code and comments in all JavaScript files.
 # The copyright-headers are substracted. It uses the command line tool "cloc".
@@ -39,12 +39,12 @@ COMMENT_LINES=${TOKENS[3]}
 LINES_OF_CODE=${TOKENS[4]}
 
 # To make the estimate of commented lines more accurate, we have to substract the
-# copyright header which is included in each file. This header has the length of five
+# copyright header which is included in each file. This header has the length of nine
 # lines. All dumb comments like those /////////// or those // ------------ are also
 # substracted. As cloc does not count inline comments, the overall estimate should be
 # rather conservative.
 DUMB_COMMENTS="$(grep -r -E '//////|// -----' . | wc -l)"
-COMMENT_LINES=$((COMMENT_LINES - 5 * NUMBER_OF_FILES - DUMB_COMMENTS))
+COMMENT_LINES=$((COMMENT_LINES - 9 * NUMBER_OF_FILES - DUMB_COMMENTS))
 
 # Print all results if no arguments are given.
 if [[ $# -eq 0 ]] ; then
