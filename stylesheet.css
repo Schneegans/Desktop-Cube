@@ -1,10 +1,7 @@
-/* ///////////////////////////////////////////////////////////////////////////////////////
-// ,-.  ,--.  ,-.  ,  , ,---.  ,-.  ;-.     ,-. .  . ,-.  ,--.       Copyright (c) 2021 //
-// |  \ |    (   ` | /    |   /   \ |  )   /    |  | |  ) |            Simon Schneegans //
-// |  | |-    `-.  |<     |   |   | |-'    |    |  | |-<  |-   Released under the GPLv3 //
-// |  / |    .   ) | \    |   \   / |      \    |  | |  ) |       or later. See LICENSE //
-// `-'  `--'  `-'  '  `   '    `-'  '       `-' `--` `-'  `--'        file for details. //
-/////////////////////////////////////////////////////////////////////////////////////// */
+/*
+SPDX-FileCopyrightText: Simon Schneegans <code@simonschneegans.de>
+SPDX-License-Identifier: CC0-1.0
+*/
 
 /*
 This ensures that the overview background is transparent, so that the background

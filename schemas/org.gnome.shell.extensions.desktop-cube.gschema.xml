@@ -1,12 +1,10 @@
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-<!--,-.  ,-.  ,-.  ,  , , . -.  ,-.  ;-.     ,-. .  . ,-.  ,-.      Copyright (c) 2021 -->
-<!--|  \ |    (   ` | /    |   /   \ |  )   /    |  | |  ) |          Simon Schneegans -->
-<!--|  | |-    `-.  |<     |   |   | |-'    |    |  | |-<  |- Released under the GPLv3 -->
-<!--|  / |    .   ) | \    |   \   / |      \    |  | |  ) |     or later. See LICENSE -->
-<!--`-'  `-'  `-'  '  `   '    `-'  '       `-' `-` `-'  ` '-'       file for details. -->
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+SPDX-FileCopyrightText: Simon Schneegans <code@simonschneegans.de>
+SPDX-License-Identifier: CC0-1.0
+-->
+
 <schemalist>
 
   <schema path="/org/gnome/shell/extensions/desktop-cube/" id="org.gnome.shell.extensions.desktop-cube">
