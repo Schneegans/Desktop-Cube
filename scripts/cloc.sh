@@ -39,12 +39,12 @@ COMMENT_LINES=${TOKENS[3]}
 LINES_OF_CODE=${TOKENS[4]}
 
 # To make the estimate of commented lines more accurate, we have to substract the
-# copyright header which is included in each file. This header has the length of nine
+# copyright header which is included in each file. This header has the length of seven
 # lines. All dumb comments like those /////////// or those // ------------ are also
 # substracted. As cloc does not count inline comments, the overall estimate should be
 # rather conservative.
 DUMB_COMMENTS="$(grep -r -E '//////|// -----' . | wc -l)"
-COMMENT_LINES=$((COMMENT_LINES - 9 * NUMBER_OF_FILES - DUMB_COMMENTS))
+COMMENT_LINES=$((COMMENT_LINES - 7 * NUMBER_OF_FILES - DUMB_COMMENTS))
 
 # Print all results if no arguments are given.
 if [[ $# -eq 0 ]] ; then
