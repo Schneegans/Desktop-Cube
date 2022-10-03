@@ -9,8 +9,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Release Date:** TBD
 
-#### Other Enhancements
+#### Enhancements
 
+* When rotating the cube outside the overview, the rotation is not limited to the adjacent workspaces any more. You can also 'flick' the cube to rotate by multiple workspaces at once!
 * The Desktop-Cube now follows the [REUSE Specification](https://reuse.software/spec).
 
 ## [Desktop Cube 12](https://github.com/schneegans/Desktop-Cube/releases/tag/v12)
