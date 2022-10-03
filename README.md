@@ -59,6 +59,7 @@ Maxence Sebald<br>
 
 <h3 align="center">🥉 Current Bronze Sponsors</h3>
 <p align="center">
+  <a href='https://github.com/AJCxZ0'>Andrew J. Caines</a><br>
   <a href='https://github.com/AngelBrielez'>Angel Brielez</a>
   <!-- <a href="https://github.com/sponsors/Schneegans">Become the first!</a><br> -->
 </p>
