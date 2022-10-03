@@ -199,6 +199,9 @@ var DragGesture =
         // Compute the accumulated pitch relative to the screen height.
         this.pitch = (this._startY - currentPos[1]) / global.screen_height;
 
+        // Increase sensitivity.
+        deltaX *= 2;
+
         // Increase horizontal movement if the cube is rotated vertically.
         deltaX *= Util.lerp(1.0, global.workspaceManager.get_n_workspaces(),
                             Math.abs(this.pitch));
