@@ -51,6 +51,8 @@ var DragGesture =
           'distance', 'distance', 'distance', GObject.ParamFlags.READWRITE, 0, Infinity, 0),
         'pitch': GObject.ParamSpec.double(
           'pitch', 'pitch', 'pitch', GObject.ParamFlags.READWRITE, 0, 1, 0),
+        'sensitivity': GObject.ParamSpec.double(
+          'sensitivity', 'sensitivity', 'sensitivity', GObject.ParamFlags.READWRITE, 1, 10, 1),
       },
       Signals: {
         'begin':  {param_types: [GObject.TYPE_UINT, GObject.TYPE_DOUBLE, GObject.TYPE_DOUBLE]},
@@ -200,7 +202,7 @@ var DragGesture =
         this.pitch = (this._startY - currentPos[1]) / global.screen_height;
 
         // Increase sensitivity.
-        deltaX *= 2;
+        deltaX *= this.sensitivity;
 
         // Increase horizontal movement if the cube is rotated vertically.
         deltaX *= Util.lerp(1.0, global.workspaceManager.get_n_workspaces(),

@@ -404,6 +404,68 @@ SPDX-License-Identifier: GPL-3.0-or-later
                         <property name="spacing">3</property>
                         <child>
                           <object class="GtkLabel">
+                            <property name="label" translatable="yes">Mouse rotation speed</property>
+                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
+                            <property name="valign">center</property>
+                            <property name="hexpand">1</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label" translatable="yes">A multiplier for the desktop cube rotation when dragged.</property>
+                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
+                            <property name="valign">center</property>
+                            <property name="hexpand">1</property>
+                            <style>
+                              <class name="dim-label" />
+                              <class name="caption" />
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton">
+                        <property name="halign">end</property>
+                        <property name="valign">center</property>
+                        <property name="digits">1</property>
+                        <property name="adjustment">
+                          <object class="GtkAdjustment" id="mouse-rotation-speed">
+                            <property name="upper">10</property>
+                            <property name="lower">1</property>
+                            <property name="step-increment">0.1</property>
+                            <property name="page-increment">0.5</property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="reset-mouse-rotation-speed">
+                        <property name="icon-name">edit-clear-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Reset to default value</property>
+                        <style>
+                          <class name="flat" />
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkListBoxRow">
+                <property name="activatable">0</property>
+                <child>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">3</property>
+                        <child>
+                          <object class="GtkLabel">
                             <property name="label" translatable="yes">Transition time from desktop to overview [ms]</property>
                             <property name="xalign">0</property>
                             <property name="halign">start</property>

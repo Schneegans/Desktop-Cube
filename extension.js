@@ -11,7 +11,7 @@
 
 'use strict';
 
-const {Clutter, Graphene, GObject, Shell, St, Meta} = imports.gi;
+const {Clutter, Graphene, GObject, Shell, St, Meta, Gio} = imports.gi;
 
 const Util           = imports.misc.util;
 const Main           = imports.ui.main;
@@ -1186,6 +1186,10 @@ class Extension {
     gesture.connect('end', tracker._endTouchGesture.bind(tracker));
     tracker.bind_property('distance', gesture, 'distance',
                           GObject.BindingFlags.SYNC_CREATE);
+
+    // Update the gesture's sensitivity when the corresponding settings value changes.
+    this._settings.bind('mouse-rotation-speed', gesture, 'sensitivity',
+                        Gio.SettingsBindFlags.GET);
 
     // Connect the gesture's pitch property to the pitch adjustment.
     gesture.bind_property('pitch', this._pitch, 'value', 0);
