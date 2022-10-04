@@ -9,10 +9,14 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Release Date:** TBD
 
-#### Enhancements
+#### New Features
+
+* It is now possible to configure the cube rotation speed when dragging with the mouse. You can find the new "Mouse Rotation Speed" in the general settings of the extension.
+
+#### Other Enhancements
 
 * When rotating the cube outside the overview, the rotation is not limited to the adjacent workspaces any more. You can also 'flick' the cube to rotate by multiple workspaces at once!
-* The sensitivity for drag rotations has been increased. It is now easier to rotate to workspaces which are farther away.
+* The default sensitivity for drag rotations has been increased. It is now easier to rotate to workspaces which are farther away.
 * The Desktop-Cube now follows the [REUSE Specification](https://reuse.software/spec).
 
 ## [Desktop Cube 12](https://github.com/schneegans/Desktop-Cube/releases/tag/v12)
