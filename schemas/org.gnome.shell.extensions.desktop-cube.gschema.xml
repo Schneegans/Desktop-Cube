@@ -49,6 +49,12 @@ SPDX-License-Identifier: CC0-1.0
       <description>The amount of pressure required to switch workspaces when dragging a window.</description>
     </key>
 
+    <key name="mouse-rotation-speed" type="d">
+      <default>2.0</default>
+      <summary>Mouse Rotation Speed</summary>
+      <description>A multiplier for the desktop cube rotation when dragged.</description>
+    </key>
+
     <key name="overview-transition-time" type="i">
       <default>0</default>
       <summary>Overview Transition Time</summary>

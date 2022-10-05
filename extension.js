@@ -11,7 +11,7 @@
 
 'use strict';
 
-const {Clutter, Graphene, GObject, Shell, St, Meta} = imports.gi;
+const {Clutter, Graphene, GObject, Shell, St, Meta, Gio} = imports.gi;
 
 const Util           = imports.misc.util;
 const Main           = imports.ui.main;
@@ -1187,6 +1187,10 @@ class Extension {
     tracker.bind_property('distance', gesture, 'distance',
                           GObject.BindingFlags.SYNC_CREATE);
 
+    // Update the gesture's sensitivity when the corresponding settings value changes.
+    this._settings.bind('mouse-rotation-speed', gesture, 'sensitivity',
+                        Gio.SettingsBindFlags.GET);
+
     // Connect the gesture's pitch property to the pitch adjustment.
     gesture.bind_property('pitch', this._pitch, 'value', 0);
 
@@ -1229,6 +1233,11 @@ class Extension {
     let actor     = Main.layoutManager._backgroundGroup;
     const mode    = Shell.ActionMode.NORMAL;
 
+    // If not in the overview, you can usually only swipe to adjacent workspaces. This
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/swipeTracker.js#L633
+    // allows us to override this behavior.
+    tracker.allowLongSwipes = true;
+
     // We have to make the background reactive. Make sure to store the current state so
     // that we can reset it later.
     this._origBackgroundReactivity = actor.reactive;
@@ -1245,6 +1254,11 @@ class Extension {
     const tracker = Main.wm._workspaceAnimation._swipeTracker;
     const actor   = Main.panel;
     const mode    = Shell.ActionMode.NORMAL;
+
+    // If not in the overview, you can usually only swipe to adjacent workspaces. This
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/swipeTracker.js#L633
+    // allows us to override this behavior.
+    tracker.allowLongSwipes = true;
 
     // We have to prevent moving fullscreen windows when dragging.
     this._origPanelTryDragWindow = actor._tryDragWindow;
@@ -1270,6 +1284,9 @@ class Extension {
   _removeDesktopDragGesture() {
     if (this._desktopDragGesture) {
 
+      // Restore original behavior.
+      this._desktopDragGesture.tracker.allowLongSwipes = false;
+
       // Make sure to restore the original state.
       this._desktopDragGesture.actor.reactive = this._origBackgroundReactivity;
 
@@ -1283,6 +1300,9 @@ class Extension {
   // workspace-switching in desktop mode when dragging on the panel.
   _removePanelDragGesture() {
     if (this._panelDragGesture) {
+
+      // Restore original behavior.
+      this._panelDragGesture.tracker.allowLongSwipes = false;
 
       // Make sure to restore the original state.
       this._panelDragGesture.actor._tryDragWindow = this._origPanelTryDragWindow;
