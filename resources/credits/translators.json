@@ -14,6 +14,70 @@
     ]
   },
   {
+    "Spanish": [
+      [
+        "vaio0@swismail.com",
+        "Eduardo Malaspina",
+        1
+      ],
+      [
+        "oscfdezdz@tuta.io",
+        "\u00d3scar Fern\u00e1ndez D\u00edaz",
+        48
+      ]
+    ]
+  },
+  {
+    "Catalan": [
+      [
+        "maite.guix@gmail.com",
+        "Maite Guix",
+        46
+      ]
+    ]
+  },
+  {
+    "Russian": [
+      [
+        "vantu5z@mail.ru",
+        "Ivan Vantu5z",
+        48
+      ]
+    ]
+  },
+  {
+    "Galician": [
+      [
+        "xosecalvo@gmail.com",
+        "Xos\u00e9 Calvo",
+        46
+      ]
+    ]
+  },
+  {
+    "Slovak": [
+      [
+        "menom1@protonmail.com",
+        "menom",
+        45
+      ]
+    ]
+  },
+  {
+    "Dutch": [
+      [
+        "philip.goto@gmail.com",
+        "Philip Goto",
+        3
+      ],
+      [
+        "vistausss@fastmail.com",
+        "Heimen Stoffels",
+        51
+      ]
+    ]
+  },
+  {
     "French": [
       [
         "j.lavoie@net-c.ca",
@@ -29,15 +93,6 @@
         "schotte.clement@hotmail.fr",
         "Cl\u00e9ment Schotte",
         33
-      ]
-    ]
-  },
-  {
-    "Spanish": [
-      [
-        "oscfdezdz@tuta.io",
-        "\u00d3scar Fern\u00e1ndez D\u00edaz",
-        48
       ]
     ]
   },
@@ -89,15 +144,6 @@
     ]
   },
   {
-    "Catalan": [
-      [
-        "maite.guix@gmail.com",
-        "Maite Guix",
-        42
-      ]
-    ]
-  },
-  {
     "Norwegian Bokm\u00e5l": [
       [
         "epost@anotheragency.no",
@@ -126,42 +172,6 @@
         "code@simonschneegans.de",
         "Simon Schneegans",
         39
-      ]
-    ]
-  },
-  {
-    "Russian": [
-      [
-        "vantu5z@mail.ru",
-        "Ivan Vantu5z",
-        48
-      ]
-    ]
-  },
-  {
-    "Galician": [
-      [
-        "xosecalvo@gmail.com",
-        "Xos\u00e9 Calvo",
-        46
-      ]
-    ]
-  },
-  {
-    "Slovak": [
-      [
-        "menom1@protonmail.com",
-        "menom",
-        45
-      ]
-    ]
-  },
-  {
-    "Dutch": [
-      [
-        "vistausss@fastmail.com",
-        "Heimen Stoffels",
-        48
       ]
     ]
   }
