@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-13 21:05+0200\n"
+"POT-Creation-Date: 2022-10-09 07:22+0200\n"
 "PO-Revision-Date: 2022-03-13 09:54+0000\n"
 "Last-Translator: Ivan Vantu5z <vantu5z@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/desktop-cube/"
@@ -20,114 +20,115 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.12-dev\n"
 
-#: prefs.js:157
+#: prefs.js:161
 msgid "Gold Sponsors"
 msgstr "Золотые спонсоры"
 
-#: prefs.js:160
+#: prefs.js:164
 msgid "Silver Sponsors"
 msgstr "Серебряные спонсоры"
 
-#: prefs.js:163
+#: prefs.js:167
 msgid "Bronze Sponsors"
 msgstr "Бронзовые спонсоры"
 
-#: prefs.js:166
+#: prefs.js:170
 msgid "Past Sponsors"
 msgstr "Прежние спонсоры"
 
-#: src/ImageChooserButton.js:39
+#: src/ImageChooserButton.js:42
 msgid "Select File"
 msgstr "Выбрать файл"
 
-#: src/ImageChooserButton.js:40
+#: src/ImageChooserButton.js:43
 msgid "Cancel"
 msgstr "Отмена"
 
-#: src/ImageChooserButton.js:86 resources/ui/imageChooserButton.ui:21
+#: src/ImageChooserButton.js:89 resources/ui/imageChooserButton.ui:27
 msgid "(None)"
 msgstr "(Нет)"
 
-#: resources/ui/settings.ui:8
+#: resources/ui/settings.ui:14
 msgid "Visit Homepage"
 msgstr "Домашняя страница"
 
-#: resources/ui/settings.ui:12
+#: resources/ui/settings.ui:18
 msgid "View Changelog"
 msgstr "Просмотреть список изменений"
 
-#: resources/ui/settings.ui:18
+#: resources/ui/settings.ui:24
 msgid "Report a Bug"
 msgstr "Сообщить об ошибке"
 
-#: resources/ui/settings.ui:22
+#: resources/ui/settings.ui:28
 msgid "Translate"
 msgstr "Перевод"
 
-#: resources/ui/settings.ui:26
+#: resources/ui/settings.ui:32
 msgid "Donate"
 msgstr "Пожертвовать"
 
-#: resources/ui/settings.ui:39
+#: resources/ui/settings.ui:45
 msgid "About the Desktop-Cube"
 msgstr "О приложении Desktop-Cube"
 
-#: resources/ui/settings.ui:57
+#: resources/ui/settings.ui:63
 msgid "General Options"
 msgstr "Общие параметры"
 
-#: resources/ui/settings.ui:84
+#: resources/ui/settings.ui:90
 msgid "Gap between last and first workspace"
 msgstr "Промежуток между последней и первой рабочей областью"
 
-#: resources/ui/settings.ui:93
+#: resources/ui/settings.ui:99
 msgid "You cannot switch from the last to the first workspace anyways."
 msgstr ""
 "В любом случае вы не сможете переключиться с последнего рабочего "
 "пространства на первое."
 
-#: resources/ui/settings.ui:115 resources/ui/settings.ui:167
-#: resources/ui/settings.ui:220 resources/ui/settings.ui:264
-#: resources/ui/settings.ui:318 resources/ui/settings.ui:379
-#: resources/ui/settings.ui:440 resources/ui/settings.ui:501
-#: resources/ui/settings.ui:562 resources/ui/settings.ui:623
-#: resources/ui/settings.ui:657 resources/ui/settings.ui:710
-#: resources/ui/settings.ui:771 resources/ui/settings.ui:824
-#: resources/ui/settings.ui:866 resources/ui/settings.ui:927
-#: resources/ui/settings.ui:971 resources/ui/settings.ui:1015
+#: resources/ui/settings.ui:121 resources/ui/settings.ui:173
+#: resources/ui/settings.ui:226 resources/ui/settings.ui:270
+#: resources/ui/settings.ui:324 resources/ui/settings.ui:385
+#: resources/ui/settings.ui:447 resources/ui/settings.ui:508
+#: resources/ui/settings.ui:569 resources/ui/settings.ui:630
+#: resources/ui/settings.ui:691 resources/ui/settings.ui:725
+#: resources/ui/settings.ui:778 resources/ui/settings.ui:839
+#: resources/ui/settings.ui:892 resources/ui/settings.ui:934
+#: resources/ui/settings.ui:995 resources/ui/settings.ui:1039
+#: resources/ui/settings.ui:1083
 msgid "Reset to default value"
 msgstr "Сбросить на значение по умолчанию"
 
-#: resources/ui/settings.ui:136
+#: resources/ui/settings.ui:142
 msgid "Explode cube on vertical rotations"
 msgstr "Вращать куб по-вертикали"
 
-#: resources/ui/settings.ui:145
+#: resources/ui/settings.ui:151
 msgid "Rotate the cube up or down to show the 3D structure."
 msgstr "Поворачивать куб вверх или вниз, чтобы увидеть 3D-структуру."
 
-#: resources/ui/settings.ui:188
+#: resources/ui/settings.ui:194
 msgid "Enable central perspective for each monitor"
 msgstr ""
 
-#: resources/ui/settings.ui:197
+#: resources/ui/settings.ui:203
 #, javascript-format
 msgid "For an explanation, you can watch this video: %s."
 msgstr ""
 
-#: resources/ui/settings.ui:238
+#: resources/ui/settings.ui:244
 msgid "Window parallax effect"
 msgstr "Эффект оконного параллакса (удаленность от поверхности)"
 
-#: resources/ui/settings.ui:286
+#: resources/ui/settings.ui:292
 msgid "Background panorama"
 msgstr "Фоновая панорама"
 
-#: resources/ui/settings.ui:295
+#: resources/ui/settings.ui:301
 msgid "See tooltip of the button for some hints."
 msgstr "Во всплывающей подсказке кнопки указаны рекомендации."
 
-#: resources/ui/settings.ui:310
+#: resources/ui/settings.ui:316
 msgid ""
 "You can use any image here. For best results, it should be a 360° panorama "
 "in the equirectangular projection. A good source for such panoramas is "
@@ -138,81 +139,89 @@ msgstr ""
 "Хорошим источником для таких панорам является polyhaven.com/hdris. "
 "Обязательно загрузите версии JPEG с тональным отображением!"
 
-#: resources/ui/settings.ui:340
+#: resources/ui/settings.ui:346
 msgid "Edge switch pressure"
 msgstr ""
 
-#: resources/ui/settings.ui:349
+#: resources/ui/settings.ui:355
 msgid "The amount of pressure required to switch workspaces."
 msgstr ""
 
-#: resources/ui/settings.ui:401
+#: resources/ui/settings.ui:407
+msgid "Mouse rotation speed"
+msgstr ""
+
+#: resources/ui/settings.ui:416
+msgid "A multiplier for the desktop cube rotation when dragged."
+msgstr ""
+
+#: resources/ui/settings.ui:469
 msgid "Transition time from desktop to overview [ms]"
 msgstr "Длительность эффекта перехода от рабочего стола к обзору [мс]"
 
-#: resources/ui/settings.ui:410 resources/ui/settings.ui:471
-#: resources/ui/settings.ui:532
+#: resources/ui/settings.ui:478 resources/ui/settings.ui:539
+#: resources/ui/settings.ui:600
 msgid "Set to 0 to use GNOME Shell's default value."
 msgstr ""
 "Установите значение 0, чтобы использовать значение GNOME Shell по умолчанию."
 
-#: resources/ui/settings.ui:462
+#: resources/ui/settings.ui:530
 msgid "Transition time from overview to app drawer [ms]"
 msgstr "Длительность эффекта перехода к списку приложений [мс]"
 
-#: resources/ui/settings.ui:523
+#: resources/ui/settings.ui:591
 msgid "Transition time between workspaces [ms]"
 msgstr "Длительность эффекта перехода между рабочими пространствами [мс]"
 
-#: resources/ui/settings.ui:583
+#: resources/ui/settings.ui:651
 msgid "Desktop Options"
 msgstr "Параметры рабочего стола"
 
-#: resources/ui/settings.ui:606
+#: resources/ui/settings.ui:674
 msgid "Click and drag the desktop to rotate the cube"
 msgstr "Вращать куб удерживая левую кнопку мыши на рабочем столе"
 
-#: resources/ui/settings.ui:640
+#: resources/ui/settings.ui:708
 msgid "Click and drag the panel to rotate the cube"
 msgstr "Вращать куб удерживая левую кнопку мыши на панеле"
 
-#: resources/ui/settings.ui:678
+#: resources/ui/settings.ui:746
 msgid "Drag windows to the edge of the desktop to switch workspaces"
 msgstr ""
 "Переключать рабочие пространства перемещая окна к границе рабочего стола"
 
-#: resources/ui/settings.ui:687 resources/ui/settings.ui:801
+#: resources/ui/settings.ui:755 resources/ui/settings.ui:869
 msgid "You can configure the required pressure in the general options above."
 msgstr ""
 
-#: resources/ui/settings.ui:731
+#: resources/ui/settings.ui:799
 msgid "Overview Options"
 msgstr "Параметры обзора"
 
-#: resources/ui/settings.ui:754
+#: resources/ui/settings.ui:822
 msgid "Click and drag the overview to rotate the cube"
 msgstr "Вращать куб левой кнопкой мыши"
 
-#: resources/ui/settings.ui:792
+#: resources/ui/settings.ui:860
 msgid "Drag windows to the edge of the overview to switch workspaces"
 msgstr "Переключать рабочие пространства перемещая окна к границе обзора"
 
-#: resources/ui/settings.ui:842
+#: resources/ui/settings.ui:910
 msgid "Gap between adjacent workspaces"
 msgstr "Промежуток между соседними рабочими пространствами"
 
-#: resources/ui/settings.ui:888
+#: resources/ui/settings.ui:956
 msgid "Horizontal stretching of the cube"
 msgstr "Увеличение ширины куба"
 
-#: resources/ui/settings.ui:897
+#: resources/ui/settings.ui:965
 msgid "This ensures that you can see the cube's sides from the front."
 msgstr "Позволяет настроить видимость сторон куба спереди."
 
-#: resources/ui/settings.ui:945
+#: resources/ui/settings.ui:1013
 msgid "Opacity of the active workspace"
 msgstr "Прозрачность активной рабочей области"
 
-#: resources/ui/settings.ui:989
+#: resources/ui/settings.ui:1057
 msgid "Opacity of inactive workspaces"
 msgstr "Прозрачность неактивных рабочих областей"
