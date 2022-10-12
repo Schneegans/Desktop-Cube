@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-09 07:22+0200\n"
-"PO-Revision-Date: 2022-09-15 14:19+0000\n"
+"PO-Revision-Date: 2022-10-13 18:03+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/desktop-cube/core/"
 "nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 4.15-dev\n"
 
 #: prefs.js:161
 msgid "Gold Sponsors"
@@ -149,11 +149,11 @@ msgstr ""
 
 #: resources/ui/settings.ui:407
 msgid "Mouse rotation speed"
-msgstr ""
+msgstr "Draaisnelheid"
 
 #: resources/ui/settings.ui:416
 msgid "A multiplier for the desktop cube rotation when dragged."
-msgstr ""
+msgstr "Hoe ver de kubus dient te worden gedraaid met behulp van de cursor."
 
 #: resources/ui/settings.ui:469
 msgid "Transition time from desktop to overview [ms]"
