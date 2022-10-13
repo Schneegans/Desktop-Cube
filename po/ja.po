@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-09 07:22+0200\n"
-"PO-Revision-Date: 2022-10-13 18:03+0000\n"
+"PO-Revision-Date: 2022-10-17 00:54+0000\n"
 "Last-Translator: TouryuTamane <touryutamane@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/desktop-cube/"
 "core/ja/>\n"
@@ -77,11 +77,12 @@ msgstr "一般オプション"
 
 #: resources/ui/settings.ui:90
 msgid "Gap between last and first workspace"
-msgstr "最後のワークスペースと最初のワークスペースの間が空きます"
+msgstr "最後のワークスペースと最初のワークスペースの間を空ける"
 
 #: resources/ui/settings.ui:99
 msgid "You cannot switch from the last to the first workspace anyways."
-msgstr "最後のワークスペースと最初のワークスペースに切り替えることはできません。"
+msgstr "ONにすると最後のワークスペースから最初のワークスペースに切り替えることはでき"
+"ません。"
 
 #: resources/ui/settings.ui:121 resources/ui/settings.ui:173
 #: resources/ui/settings.ui:226 resources/ui/settings.ui:270
