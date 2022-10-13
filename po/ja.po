@@ -8,77 +8,80 @@ msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-09 07:22+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-10-13 18:03+0000\n"
+"Last-Translator: TouryuTamane <touryutamane@gmail.com>\n"
+"Language-Team: Japanese <https://hosted.weblate.org/projects/desktop-cube/"
+"core/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.15-dev\n"
 
 #: prefs.js:161
 msgid "Gold Sponsors"
-msgstr ""
+msgstr "ゴールドスポンサー"
 
 #: prefs.js:164
 msgid "Silver Sponsors"
-msgstr ""
+msgstr "シルバースポンサー"
 
 #: prefs.js:167
 msgid "Bronze Sponsors"
-msgstr ""
+msgstr "ブロンズスポンサー"
 
 #: prefs.js:170
 msgid "Past Sponsors"
-msgstr ""
+msgstr "過去のスポンサー"
 
 #: src/ImageChooserButton.js:42
 msgid "Select File"
-msgstr ""
+msgstr "ファイルを選択"
 
 #: src/ImageChooserButton.js:43
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #: src/ImageChooserButton.js:89 resources/ui/imageChooserButton.ui:27
 msgid "(None)"
-msgstr ""
+msgstr "(未選択)"
 
 #: resources/ui/settings.ui:14
 msgid "Visit Homepage"
-msgstr ""
+msgstr "ホームページにアクセス"
 
 #: resources/ui/settings.ui:18
 msgid "View Changelog"
-msgstr ""
+msgstr "変更ログを表示"
 
 #: resources/ui/settings.ui:24
 msgid "Report a Bug"
-msgstr ""
+msgstr "バグを報告"
 
 #: resources/ui/settings.ui:28
 msgid "Translate"
-msgstr ""
+msgstr "翻訳"
 
 #: resources/ui/settings.ui:32
 msgid "Donate"
-msgstr ""
+msgstr "寄付"
 
 #: resources/ui/settings.ui:45
 msgid "About the Desktop-Cube"
-msgstr ""
+msgstr "Desktop-Cube について"
 
 #: resources/ui/settings.ui:63
 msgid "General Options"
-msgstr ""
+msgstr "一般オプション"
 
 #: resources/ui/settings.ui:90
 msgid "Gap between last and first workspace"
-msgstr ""
+msgstr "最後のワークスペースと最初のワークスペースの間が空きます"
 
 #: resources/ui/settings.ui:99
 msgid "You cannot switch from the last to the first workspace anyways."
-msgstr ""
+msgstr "最後のワークスペースと最初のワークスペースに切り替えることはできません。"
 
 #: resources/ui/settings.ui:121 resources/ui/settings.ui:173
 #: resources/ui/settings.ui:226 resources/ui/settings.ui:270
@@ -91,7 +94,7 @@ msgstr ""
 #: resources/ui/settings.ui:995 resources/ui/settings.ui:1039
 #: resources/ui/settings.ui:1083
 msgid "Reset to default value"
-msgstr ""
+msgstr "デフォルト値にリセット"
 
 #: resources/ui/settings.ui:142
 msgid "Explode cube on vertical rotations"
@@ -99,11 +102,11 @@ msgstr ""
 
 #: resources/ui/settings.ui:151
 msgid "Rotate the cube up or down to show the 3D structure."
-msgstr ""
+msgstr "立方体を上下に回転させて、3D 構造を表示します。"
 
 #: resources/ui/settings.ui:194
 msgid "Enable central perspective for each monitor"
-msgstr ""
+msgstr "各モニターの中央表示を有効にする"
 
 #: resources/ui/settings.ui:203
 #, javascript-format
