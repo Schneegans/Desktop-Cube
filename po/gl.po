@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-09 07:22+0200\n"
-"PO-Revision-Date: 2022-05-01 15:12+0000\n"
-"Last-Translator: Xosé Calvo <xosecalvo@gmail.com>\n"
+"PO-Revision-Date: 2022-10-20 17:06+0000\n"
+"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
 "Language-Team: Galician <https://hosted.weblate.org/projects/desktop-cube/"
 "core/gl/>\n"
 "Language: gl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 
 #: prefs.js:161
 msgid "Gold Sponsors"
@@ -140,19 +140,20 @@ msgstr ""
 
 #: resources/ui/settings.ui:346
 msgid "Edge switch pressure"
-msgstr ""
+msgstr "Interruptor de presión de borde"
 
 #: resources/ui/settings.ui:355
 msgid "The amount of pressure required to switch workspaces."
-msgstr ""
+msgstr "A cantidade de presión necesaria para cambiar de espazo de traballo."
 
 #: resources/ui/settings.ui:407
 msgid "Mouse rotation speed"
-msgstr ""
+msgstr "Velocidade de rotación do rato"
 
 #: resources/ui/settings.ui:416
 msgid "A multiplier for the desktop cube rotation when dragged."
 msgstr ""
+"Un multiplicador para a rotación do cubo do escritorio cando se arrastra."
 
 #: resources/ui/settings.ui:469
 msgid "Transition time from desktop to overview [ms]"
@@ -191,7 +192,7 @@ msgstr ""
 
 #: resources/ui/settings.ui:755 resources/ui/settings.ui:869
 msgid "You can configure the required pressure in the general options above."
-msgstr ""
+msgstr "Pode configurar a presión necesaria nas opcións xerais anteriores."
 
 #: resources/ui/settings.ui:799
 msgid "Overview Options"
