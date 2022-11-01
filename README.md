@@ -67,6 +67,7 @@ Maxence Sebald<br>
  
 <h3 align="center">🏅 Previous Sponsors and One-Time Donators</h3>
 <p align="center">
+  <a href='https://github.com/trival'>Thomas Gorny</a><br>
   <a href="https://twitter.com/tjiiik">tj3k</a>
 </p>
 
