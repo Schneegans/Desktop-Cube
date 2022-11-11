@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-09 07:22+0200\n"
-"PO-Revision-Date: 2022-05-20 00:20+0000\n"
+"PO-Revision-Date: 2022-11-12 22:48+0000\n"
 "Last-Translator: menom <menom1@protonmail.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/desktop-cube/core/"
 "sk/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.15-dev\n"
 
 #: prefs.js:161
 msgid "Gold Sponsors"
@@ -137,19 +137,19 @@ msgstr ""
 
 #: resources/ui/settings.ui:346
 msgid "Edge switch pressure"
-msgstr ""
+msgstr "Tlak okrajového spínača"
 
 #: resources/ui/settings.ui:355
 msgid "The amount of pressure required to switch workspaces."
-msgstr ""
+msgstr "Množstvo tlaku potrebného na prepínanie pracovných plôch."
 
 #: resources/ui/settings.ui:407
 msgid "Mouse rotation speed"
-msgstr ""
+msgstr "Rýchlosť otáčania kolieskom myši"
 
 #: resources/ui/settings.ui:416
 msgid "A multiplier for the desktop cube rotation when dragged."
-msgstr ""
+msgstr "Násobiteľ rotácie kocky pracovnej plochy pri ťahaní."
 
 #: resources/ui/settings.ui:469
 msgid "Transition time from desktop to overview [ms]"
@@ -187,6 +187,7 @@ msgstr "Prepnúť pracovné plochy ťahaním okien k okrajom v režime plochy"
 #: resources/ui/settings.ui:755 resources/ui/settings.ui:869
 msgid "You can configure the required pressure in the general options above."
 msgstr ""
+"Požadovaný tlak môžete nakonfigurovať vo všeobecných možnostiach vyššie."
 
 #: resources/ui/settings.ui:799
 msgid "Overview Options"
