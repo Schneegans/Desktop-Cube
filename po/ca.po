@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-09 07:22+0200\n"
-"PO-Revision-Date: 2022-09-16 17:18+0000\n"
+"PO-Revision-Date: 2022-11-18 15:48+0000\n"
 "Last-Translator: Maite Guix <maite.guix@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/desktop-cube/"
 "core/ca/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 4.15-dev\n"
 
 #: prefs.js:161
 msgid "Gold Sponsors"
@@ -140,7 +140,7 @@ msgstr ""
 #: resources/ui/settings.ui:346
 #, fuzzy
 msgid "Edge switch pressure"
-msgstr "Pressió de l'interruptor de vora"
+msgstr "Pressió de canvi de vora"
 
 #: resources/ui/settings.ui:355
 msgid "The amount of pressure required to switch workspaces."
@@ -148,11 +148,12 @@ msgstr "La pressió necessària per a canviar d'espai de treball."
 
 #: resources/ui/settings.ui:407
 msgid "Mouse rotation speed"
-msgstr ""
+msgstr "Velocitat de rotació del ratolí"
 
 #: resources/ui/settings.ui:416
 msgid "A multiplier for the desktop cube rotation when dragged."
 msgstr ""
+"Un multiplicador per a la rotació del cub de l'escriptori quan s'arrossega."
 
 #: resources/ui/settings.ui:469
 msgid "Transition time from desktop to overview [ms]"
