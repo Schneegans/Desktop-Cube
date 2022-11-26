@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-09 07:22+0200\n"
-"PO-Revision-Date: 2022-03-13 09:54+0000\n"
-"Last-Translator: Ivan Vantu5z <vantu5z@mail.ru>\n"
+"PO-Revision-Date: 2022-11-27 12:48+0000\n"
+"Last-Translator: Сергей <asvmail.as@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/desktop-cube/"
 "core/ru/>\n"
 "Language: ru\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.15-dev\n"
 
 #: prefs.js:161
 msgid "Gold Sponsors"
@@ -78,7 +78,7 @@ msgstr "Общие параметры"
 
 #: resources/ui/settings.ui:90
 msgid "Gap between last and first workspace"
-msgstr "Промежуток между последней и первой рабочей областью"
+msgstr "Промежуток между последним и первым рабочим пространством"
 
 #: resources/ui/settings.ui:99
 msgid "You cannot switch from the last to the first workspace anyways."
@@ -101,7 +101,7 @@ msgstr "Сбросить на значение по умолчанию"
 
 #: resources/ui/settings.ui:142
 msgid "Explode cube on vertical rotations"
-msgstr "Вращать куб по-вертикали"
+msgstr "Вращать куб по вертикали"
 
 #: resources/ui/settings.ui:151
 msgid "Rotate the cube up or down to show the 3D structure."
@@ -109,12 +109,12 @@ msgstr "Поворачивать куб вверх или вниз, чтобы �
 
 #: resources/ui/settings.ui:194
 msgid "Enable central perspective for each monitor"
-msgstr ""
+msgstr "Включить центральную перспективу для каждого монитора"
 
 #: resources/ui/settings.ui:203
 #, javascript-format
 msgid "For an explanation, you can watch this video: %s."
-msgstr ""
+msgstr "Объяснение этого параметра вы можете посмотреть на видео: %s."
 
 #: resources/ui/settings.ui:244
 msgid "Window parallax effect"
@@ -141,19 +141,21 @@ msgstr ""
 
 #: resources/ui/settings.ui:346
 msgid "Edge switch pressure"
-msgstr ""
+msgstr "Давление при краевом переключении"
 
 #: resources/ui/settings.ui:355
 msgid "The amount of pressure required to switch workspaces."
-msgstr ""
+msgstr "Величина давления, необходимая для переключения рабочих пространств."
 
 #: resources/ui/settings.ui:407
 msgid "Mouse rotation speed"
-msgstr ""
+msgstr "Скорость вращения мышью"
 
 #: resources/ui/settings.ui:416
 msgid "A multiplier for the desktop cube rotation when dragged."
 msgstr ""
+"Множитель для вращения куба рабочего стола при использовании перетаскивания "
+"мышью."
 
 #: resources/ui/settings.ui:469
 msgid "Transition time from desktop to overview [ms]"
@@ -193,6 +195,8 @@ msgstr ""
 #: resources/ui/settings.ui:755 resources/ui/settings.ui:869
 msgid "You can configure the required pressure in the general options above."
 msgstr ""
+"Вы можете настроить необходимое давление в общих параметрах, расположенных "
+"выше."
 
 #: resources/ui/settings.ui:799
 msgid "Overview Options"
