@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-10-09 07:22+0200\n"
-"PO-Revision-Date: 2022-10-13 18:03+0000\n"
-"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
+"PO-Revision-Date: 2022-12-29 16:52+0000\n"
+"Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/desktop-cube/core/"
 "nl/>\n"
 "Language: nl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #: prefs.js:161
 msgid "Gold Sponsors"
@@ -166,7 +166,7 @@ msgstr "Stel in op 0 om de standaardwaarde van GNOME Shell te gebruiken."
 
 #: resources/ui/settings.ui:530
 msgid "Transition time from overview to app drawer [ms]"
-msgstr "Overgangstijd tussen venster- en toepassingenoverzicht [in ms]"
+msgstr "Overgangstijd tussen venster- en app-overzicht [in ms]"
 
 #: resources/ui/settings.ui:591
 msgid "Transition time between workspaces [ms]"
