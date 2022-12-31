@@ -5,6 +5,14 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## [Desktop Cube 14](https://github.com/schneegans/Desktop-Cube/releases/tag/v14)
+
+**Release Date:** TBD
+
+#### Enhancements
+
+* The settings dialog now uses widgets from `libadwaita`. Hence, this update is only available for GNOME 42 and GNOME 43.
+
 ## [Desktop Cube 13](https://github.com/schneegans/Desktop-Cube/releases/tag/v13)
 
 **Release Date:** 2022-10-09
