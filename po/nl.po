@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-31 19:37+0100\n"
-"PO-Revision-Date: 2022-12-29 16:52+0000\n"
-"Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
+"PO-Revision-Date: 2022-12-31 18:50+0000\n"
+"Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/desktop-cube/core/"
 "nl/>\n"
 "Language: nl\n"
@@ -73,7 +73,7 @@ msgstr "Over Bureaubladkubus"
 
 #: resources/ui/settings.ui:57
 msgid "General"
-msgstr ""
+msgstr "Algemeen"
 
 #: resources/ui/settings.ui:62
 msgid "General Options"
@@ -82,6 +82,7 @@ msgstr "Algemene voorkeuren"
 #: resources/ui/settings.ui:63
 msgid "These options affect the cube both in desktop and overview mode."
 msgstr ""
+"Deze voorkeuren hebben effect op zowel de werkblad- als overzichtsmodus."
 
 #: resources/ui/settings.ui:67
 msgid "Gap between last and first workspace"
@@ -147,7 +148,7 @@ msgstr ""
 
 #: resources/ui/settings.ui:193
 msgid "Advanced Options"
-msgstr ""
+msgstr "Geavanceerde voorkeuren"
 
 #: resources/ui/settings.ui:194
 msgid "Usually, you can leave these options to their default values."
