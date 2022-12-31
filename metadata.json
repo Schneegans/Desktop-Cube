@@ -5,8 +5,6 @@
     "gettext-domain": "desktop-cube",
     "settings-schema": "org.gnome.shell.extensions.desktop-cube",
     "shell-version": [
-        "40",
-        "41",
         "42",
         "43"
     ],
