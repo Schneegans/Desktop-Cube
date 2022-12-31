@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-31 19:37+0100\n"
-"PO-Revision-Date: 2022-12-31 18:50+0000\n"
+"PO-Revision-Date: 2023-01-02 07:54+0000\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/desktop-cube/core/"
 "nl/>\n"
@@ -82,7 +82,7 @@ msgstr "Algemene voorkeuren"
 #: resources/ui/settings.ui:63
 msgid "These options affect the cube both in desktop and overview mode."
 msgstr ""
-"Deze voorkeuren hebben effect op zowel de werkblad- als overzichtsmodus."
+"Deze voorkeuren hebben effect op zowel de bureaublad- als overzichtsmodus."
 
 #: resources/ui/settings.ui:67
 msgid "Gap between last and first workspace"
@@ -152,7 +152,7 @@ msgstr "Geavanceerde voorkeuren"
 
 #: resources/ui/settings.ui:194
 msgid "Usually, you can leave these options to their default values."
-msgstr ""
+msgstr "Normaliter hoeft u deze waarden niet aan te passen."
 
 #: resources/ui/settings.ui:198
 msgid "Edge switch pressure"
@@ -191,7 +191,7 @@ msgstr "Overgangstijd tussen werkbladschakeling [in ms]"
 
 #: resources/ui/settings.ui:353
 msgid "Desktop"
-msgstr ""
+msgstr "Bureaublad"
 
 #: resources/ui/settings.ui:358
 msgid "Desktop Options"
@@ -201,6 +201,8 @@ msgstr "Bureaubladvoorkeuren"
 msgid ""
 "These options tweak the cube when switching workspaces outside the overview."
 msgstr ""
+"Met deze voorkeuren kunt u de kubus tijdens het schakelen tussen werkbladen "
+"aanpassen."
 
 #: resources/ui/settings.ui:363
 msgid "Click and drag the desktop to rotate the cube"
@@ -218,11 +220,11 @@ msgstr ""
 
 #: resources/ui/settings.ui:408 resources/ui/settings.ui:467
 msgid "You can configure the required pressure in the general options."
-msgstr ""
+msgstr "U kunt de vereiste druk aanpassen in de algemene voorkeuren."
 
 #: resources/ui/settings.ui:434
 msgid "Overview"
-msgstr ""
+msgstr "Overzicht"
 
 #: resources/ui/settings.ui:439
 msgid "Overview Options"
@@ -230,7 +232,7 @@ msgstr "Overzichtsvoorkeuren"
 
 #: resources/ui/settings.ui:440
 msgid "These options tweak the cube in the overview."
-msgstr ""
+msgstr "Met deze voorkeuren kunt u de kubus op het overzicht aanpassen."
 
 #: resources/ui/settings.ui:444
 msgid "Click and drag the overview to rotate the cube"
