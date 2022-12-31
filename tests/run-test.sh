@@ -23,6 +23,8 @@
 # -v fedora_version: This determines the version of GNOME Shell to test agains.
 #                    -v 34: GNOME Shell 40
 #                    -v 35: GNOME Shell 41
+#                    -v 36: GNOME Shell 42
+#                    -v 37: GNOME Shell 43
 # -s session:        This can either be "gnome-xsession" or "gnome-wayland-nested".
 
 # Exit on error.
@@ -54,8 +56,16 @@ EXTENSION="desktop-cube@schneegans.github.com"
 # Run the container. For more info, visit https://github.com/Schneegans/gnome-shell-pod.
 POD=$(podman run --rm --cap-add=SYS_NICE --cap-add=IPC_LOCK -td "${IMAGE}")
 
+# Create a temporary directory.
+WORK_DIR=$(mktemp -d)
+if [[ ! "${WORK_DIR}" || ! -d "${WORK_DIR}" ]]; then
+  echo "Failed to create tmp directory!" >&2
+  exit 1
+fi
+
 # Properly shutdown podman when this script is exited.
 quit() {
+  rm -r "${WORK_DIR}"
   podman kill "${POD}"
   wait
 }
@@ -80,11 +90,15 @@ fail() {
 }
 
 # This searches the virtual screen of the container for a given target image (first
-# parameter). If it is not found, an error message (second paramter) is printed and the
+# parameter). If it is not found, an error message (second parameter) is printed and the
 # script exits via the fail() method above.
 find_target() {
   echo "Looking for ${1} on the screen."
-  POS=$(do_in_pod find-target.sh "${1}") || true
+
+  podman cp "${POD}:/opt/Xvfb_screen0" - | tar xf - --to-command "convert xwd:- ${WORK_DIR}/screen.png"
+
+  POS=$(./tests/find-target.sh -f 0.02 "${WORK_DIR}/screen.png" "tests/references/${1}") || true
+
   if [[ -z "${POS}" ]]; then
     fail "${2}"
   fi
@@ -92,7 +106,7 @@ find_target() {
 
 # This searches the virtual screen of the container for a given target image (first
 # parameter) and moves the mouse to the upper left corner of the best match. If the target
-# image is not found, an error message (second paramter) is printed and the script exits
+# image is not found, an error message (second parameter) is printed and the script exits
 # via the fail() method above.
 move_mouse_to_target() {
   echo "Trying to move mouse to ${1}."
@@ -133,10 +147,8 @@ do_in_pod wait-user-bus.sh > /dev/null 2>&1
 # ----------------------------------------------------- install the to-be-tested extension
 
 echo "Installing extension."
-podman cp "tests/references" "${POD}:/home/gnomeshell/references"
 podman cp "${EXTENSION}.zip" "${POD}:/home/gnomeshell"
 do_in_pod gnome-extensions install "${EXTENSION}.zip"
-do_in_pod gnome-extensions enable "${EXTENSION}"
 
 
 # ---------------------------------------------------------------------- start GNOME Shell
@@ -152,6 +164,9 @@ echo "Starting $(do_in_pod gnome-shell --version)."
 do_in_pod systemctl --user start "${SESSION}@:99"
 sleep 10
 
+# Enable the extension.
+do_in_pod gnome-extensions enable "${EXTENSION}"
+
 # Starting with GNOME 40, the overview is the default mode. We close this here by hitting
 # the super key.
 if [[ "${FEDORA_VERSION}" -gt 33 ]]; then
@@ -159,6 +174,9 @@ if [[ "${FEDORA_VERSION}" -gt 33 ]]; then
   send_keystroke "super"
   sleep 3
 fi
+
+# Wait until the extension is enabled and the overview closed.
+sleep 3
 
 
 # ---------------------------------------------------------------------- perform the tests
@@ -168,13 +186,13 @@ fi
 echo "Opening Preferences."
 do_in_pod gnome-extensions prefs "${EXTENSION}"
 sleep 3
-find_target "references/preferences.png" "Failed to open preferences!"
+find_target "preferences.png" "Failed to open preferences!"
 
 # Then we enter the overview and look for the corner of the adjacent workspace.
 echo "Check overview cube."
 send_keystroke "super"
 sleep 1.0
-find_target "references/right-screen.png" "Overview does not look like a cube!"
+find_target "right-screen.png" "Overview does not look like a cube!"
 
 # Then we click on the adjacent workspace and check if we can see the corner of the
 # previous workspace.
@@ -183,6 +201,6 @@ do_in_pod xdotool mousemove 1800 500
 sleep 0.1
 do_in_pod xdotool click 1
 sleep 1.0
-find_target "references/left-screen.png" "Failed to switch workspaces!"
+find_target "left-screen.png" "Failed to switch workspaces!"
 
 echo "All tests executed successfully."
