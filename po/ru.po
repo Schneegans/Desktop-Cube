@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-31 19:37+0100\n"
-"PO-Revision-Date: 2022-12-12 05:50+0000\n"
-"Last-Translator: lenemter <lenemter@gmail.com>\n"
+"PO-Revision-Date: 2023-01-02 07:54+0000\n"
+"Last-Translator: Сергей <asvmail.as@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/desktop-cube/"
 "core/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #: prefs.js:132
 msgid "Gold Sponsors"
@@ -74,7 +74,7 @@ msgstr "О приложении Desktop-Cube"
 
 #: resources/ui/settings.ui:57
 msgid "General"
-msgstr ""
+msgstr "Общие"
 
 #: resources/ui/settings.ui:62
 msgid "General Options"
@@ -83,6 +83,8 @@ msgstr "Общие параметры"
 #: resources/ui/settings.ui:63
 msgid "These options affect the cube both in desktop and overview mode."
 msgstr ""
+"Эти параметры влияют на куб как в режиме рабочего стола, так и в режиме "
+"обзора."
 
 #: resources/ui/settings.ui:67
 msgid "Gap between last and first workspace"
@@ -149,11 +151,12 @@ msgstr ""
 
 #: resources/ui/settings.ui:193
 msgid "Advanced Options"
-msgstr ""
+msgstr "Расширенные параметры"
 
 #: resources/ui/settings.ui:194
 msgid "Usually, you can leave these options to their default values."
 msgstr ""
+"Вы можете оставить эти параметры со значениями, установленными по умолчанию."
 
 #: resources/ui/settings.ui:198
 msgid "Edge switch pressure"
@@ -193,7 +196,7 @@ msgstr "Длительность эффекта перехода между ра
 
 #: resources/ui/settings.ui:353
 msgid "Desktop"
-msgstr ""
+msgstr "Рабочий стол"
 
 #: resources/ui/settings.ui:358
 msgid "Desktop Options"
@@ -203,6 +206,8 @@ msgstr "Параметры рабочего стола"
 msgid ""
 "These options tweak the cube when switching workspaces outside the overview."
 msgstr ""
+"Эти параметры настраивают куб при переключении рабочих пространств вне "
+"режима обзора."
 
 #: resources/ui/settings.ui:363
 msgid "Click and drag the desktop to rotate the cube"
@@ -219,11 +224,11 @@ msgstr ""
 
 #: resources/ui/settings.ui:408 resources/ui/settings.ui:467
 msgid "You can configure the required pressure in the general options."
-msgstr ""
+msgstr "Вы можете настроить необходимое давление в разделе общих параметров."
 
 #: resources/ui/settings.ui:434
 msgid "Overview"
-msgstr ""
+msgstr "Обзор"
 
 #: resources/ui/settings.ui:439
 msgid "Overview Options"
@@ -231,7 +236,7 @@ msgstr "Параметры обзора"
 
 #: resources/ui/settings.ui:440
 msgid "These options tweak the cube in the overview."
-msgstr ""
+msgstr "Эти параметры настраивают куб для режима обзора."
 
 #: resources/ui/settings.ui:444
 msgid "Click and drag the overview to rotate the cube"
