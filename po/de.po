@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-31 19:37+0100\n"
-"PO-Revision-Date: 2022-04-29 03:41+0000\n"
-"Last-Translator: Simon Schneegans <code@simonschneegans.de>\n"
+"PO-Revision-Date: 2023-01-05 21:47+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/desktop-cube/core/"
 "de/>\n"
 "Language: de\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1-dev\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #: prefs.js:132
 msgid "Gold Sponsors"
@@ -73,7 +73,7 @@ msgstr "Über den Desktop-Würfel"
 
 #: resources/ui/settings.ui:57
 msgid "General"
-msgstr ""
+msgstr "Allgemein"
 
 #: resources/ui/settings.ui:62
 msgid "General Options"
@@ -82,6 +82,8 @@ msgstr "Allgemeine Optionen"
 #: resources/ui/settings.ui:63
 msgid "These options affect the cube both in desktop and overview mode."
 msgstr ""
+"Diese Optionen betreffen den Würfel sowohl im Schreibtisch- als auch im "
+"Übersichtsmodus."
 
 #: resources/ui/settings.ui:67
 msgid "Gap between last and first workspace"
@@ -149,27 +151,28 @@ msgstr ""
 
 #: resources/ui/settings.ui:193
 msgid "Advanced Options"
-msgstr ""
+msgstr "Erweiterte Optionen"
 
 #: resources/ui/settings.ui:194
 msgid "Usually, you can leave these options to their default values."
 msgstr ""
+"In der Regel können Sie diese Optionen auf ihren Standardwerten belassen."
 
 #: resources/ui/settings.ui:198
 msgid "Edge switch pressure"
-msgstr ""
+msgstr "Kantenwechseldruck"
 
 #: resources/ui/settings.ui:199
 msgid "The amount of pressure required to switch workspaces."
-msgstr ""
+msgstr "Der zum Wechseln der Arbeitsflächen erforderliche Druck."
 
 #: resources/ui/settings.ui:228
 msgid "Mouse rotation speed"
-msgstr ""
+msgstr "Maus-Drehgeschwindigkeit"
 
 #: resources/ui/settings.ui:229
 msgid "A multiplier for the desktop cube rotation when dragged."
-msgstr ""
+msgstr "Ein Multiplikator für die Drehung des Schreibtisch-Würfels beim Ziehen."
 
 #: resources/ui/settings.ui:259
 msgid "Transition time from desktop to overview [ms]"
@@ -191,7 +194,7 @@ msgstr "Animationszeit zwischen Arbeitsflächen [ms]"
 
 #: resources/ui/settings.ui:353
 msgid "Desktop"
-msgstr ""
+msgstr "Schreibtisch"
 
 #: resources/ui/settings.ui:358
 msgid "Desktop Options"
@@ -201,6 +204,8 @@ msgstr "Desktop-Optionen"
 msgid ""
 "These options tweak the cube when switching workspaces outside the overview."
 msgstr ""
+"Diese Optionen passen den Würfel an, wenn Sie die Arbeitsflächen außerhalb "
+"der Übersicht wechseln."
 
 #: resources/ui/settings.ui:363
 msgid "Click and drag the desktop to rotate the cube"
@@ -218,10 +223,12 @@ msgstr ""
 #: resources/ui/settings.ui:408 resources/ui/settings.ui:467
 msgid "You can configure the required pressure in the general options."
 msgstr ""
+"Sie können den erforderlichen Druck in den allgemeinen Optionen "
+"konfigurieren."
 
 #: resources/ui/settings.ui:434
 msgid "Overview"
-msgstr ""
+msgstr "Übersicht"
 
 #: resources/ui/settings.ui:439
 msgid "Overview Options"
@@ -229,7 +236,7 @@ msgstr "Übersichts-Optionen"
 
 #: resources/ui/settings.ui:440
 msgid "These options tweak the cube in the overview."
-msgstr ""
+msgstr "Diese Optionen passen den Würfel in der Übersicht an."
 
 #: resources/ui/settings.ui:444
 msgid "Click and drag the overview to rotate the cube"
