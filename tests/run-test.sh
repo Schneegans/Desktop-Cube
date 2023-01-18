@@ -104,21 +104,6 @@ find_target() {
   fi
 }
 
-# This searches the virtual screen of the container for a given target image (first
-# parameter) and moves the mouse to the upper left corner of the best match. If the target
-# image is not found, an error message (second parameter) is printed and the script exits
-# via the fail() method above.
-move_mouse_to_target() {
-  echo "Trying to move mouse to ${1}."
-  POS=$(do_in_pod find-target.sh "${1}") || true
-  if [[ -z "${POS}" ]]; then
-    fail "${2}"
-  fi
-
-  # shellcheck disable=SC2086
-  do_in_pod xdotool mousemove $POS
-}
-
 # This simulates the given keystroke in the container. Simply calling "xdotool key $1"
 # sometimes fails to be recognized. Maybe the default 12ms between key-down and key-up
 # are too short for xvfb...
@@ -126,15 +111,6 @@ send_keystroke() {
   do_in_pod xdotool keydown "${1}"
   sleep 0.5
   do_in_pod xdotool keyup "${1}"
-}
-
-# This simulates a mouse click in the container. Simply calling "xdotool click $1"
-# sometimes fails to be recognized. Maybe the default 12ms between button-down and
-# button-up are too short for xvfb...
-send_click() {
-  do_in_pod xdotool mousedown "${1}"
-  sleep 0.5
-  do_in_pod xdotool mouseup "${1}"
 }
 
 
