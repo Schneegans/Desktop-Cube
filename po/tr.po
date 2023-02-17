@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-31 19:37+0100\n"
-"PO-Revision-Date: 2022-09-03 23:18+0000\n"
-"Last-Translator: Burak Orcun OZKABLAN <borcunozkablan@gmail.com>\n"
+"PO-Revision-Date: 2023-02-18 22:39+0000\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/desktop-cube/"
 "core/tr/>\n"
 "Language: tr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 #: prefs.js:132
 msgid "Gold Sponsors"
@@ -73,7 +73,7 @@ msgstr "Desktop-Cube Hakkında"
 
 #: resources/ui/settings.ui:57
 msgid "General"
-msgstr ""
+msgstr "Genel"
 
 #: resources/ui/settings.ui:62
 msgid "General Options"
@@ -81,7 +81,7 @@ msgstr "Genel Ayarlar"
 
 #: resources/ui/settings.ui:63
 msgid "These options affect the cube both in desktop and overview mode."
-msgstr ""
+msgstr "Bu seçenekler küpü hem masaüstü hem de genel görünüm kipinde etkiler."
 
 #: resources/ui/settings.ui:67
 msgid "Gap between last and first workspace"
@@ -146,27 +146,27 @@ msgstr ""
 
 #: resources/ui/settings.ui:193
 msgid "Advanced Options"
-msgstr ""
+msgstr "Gelişmiş Seçenekler"
 
 #: resources/ui/settings.ui:194
 msgid "Usually, you can leave these options to their default values."
-msgstr ""
+msgstr "Genellikle bu seçenekleri öntanımlı değerlerinde bırakabilirsiniz."
 
 #: resources/ui/settings.ui:198
 msgid "Edge switch pressure"
-msgstr ""
+msgstr "Kenar değiştirme basıncı"
 
 #: resources/ui/settings.ui:199
 msgid "The amount of pressure required to switch workspaces."
-msgstr ""
+msgstr "Çalışma alanlarını değiştirmek için gereken basınç miktarı."
 
 #: resources/ui/settings.ui:228
 msgid "Mouse rotation speed"
-msgstr ""
+msgstr "Fare döndürme hızı"
 
 #: resources/ui/settings.ui:229
 msgid "A multiplier for the desktop cube rotation when dragged."
-msgstr ""
+msgstr "Sürüklendiğinde masaüstü küpü döndürme için bir katsayı."
 
 #: resources/ui/settings.ui:259
 msgid "Transition time from desktop to overview [ms]"
@@ -187,7 +187,7 @@ msgstr "Çalışma alanları arasındaki geçiş süresi [ms]"
 
 #: resources/ui/settings.ui:353
 msgid "Desktop"
-msgstr ""
+msgstr "Masaüstü"
 
 #: resources/ui/settings.ui:358
 msgid "Desktop Options"
@@ -197,6 +197,8 @@ msgstr "Masaüstü Ayarları"
 msgid ""
 "These options tweak the cube when switching workspaces outside the overview."
 msgstr ""
+"Bu seçenekler, genel görünüm dışındaki çalışma alanlarına geçerken küpü "
+"ayarlar."
 
 #: resources/ui/settings.ui:363
 msgid "Click and drag the desktop to rotate the cube"
@@ -214,11 +216,11 @@ msgstr ""
 
 #: resources/ui/settings.ui:408 resources/ui/settings.ui:467
 msgid "You can configure the required pressure in the general options."
-msgstr ""
+msgstr "Gerekli basıncı genel seçeneklerden yapılandırabilirsiniz."
 
 #: resources/ui/settings.ui:434
 msgid "Overview"
-msgstr ""
+msgstr "Genel Görünüm"
 
 #: resources/ui/settings.ui:439
 msgid "Overview Options"
@@ -226,7 +228,7 @@ msgstr "Genel Görünüm Ayarları"
 
 #: resources/ui/settings.ui:440
 msgid "These options tweak the cube in the overview."
-msgstr ""
+msgstr "Bu seçenekler genel görünümde küpü ayarlar."
 
 #: resources/ui/settings.ui:444
 msgid "Click and drag the overview to rotate the cube"
