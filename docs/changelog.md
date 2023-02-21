@@ -11,7 +11,8 @@ SPDX-License-Identifier: CC-BY-4.0
 
 #### Enhancements
 
-* The settings dialog now uses widgets from `libadwaita`. Hence, this update is only available for GNOME 42 and GNOME 43.
+* Added support for GNOME 44.
+* The settings dialog now uses widgets from `libadwaita`. Hence, this update is only available for GNOME 42, 43 and 44.
 
 ## [Desktop Cube 13](https://github.com/schneegans/Desktop-Cube/releases/tag/v13)
 
