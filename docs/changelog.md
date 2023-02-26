@@ -13,6 +13,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 * Added support for GNOME 44.
 * The settings dialog now uses widgets from `libadwaita`. Hence, this update is only available for GNOME 42, 43 and 44.
+* Many new translations! There are completely new Czech, Japanese, and Swedish translations and many other translations received updates. Thanks to all the translators!
 
 ## [Desktop Cube 13](https://github.com/schneegans/Desktop-Cube/releases/tag/v13)
 
