@@ -5,6 +5,14 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## [Desktop Cube 15](https://github.com/schneegans/Desktop-Cube/releases/tag/v15)
+
+**Release Date:** TBD
+
+#### Enhancements
+
+* **New donation method: Ko-fi**. Follow me on Ko-fi to get the latest updates regarding my extensions: https://ko-fi.com/schneegans!
+
 ## [Desktop Cube 14](https://github.com/schneegans/Desktop-Cube/releases/tag/v14)
 
 **Release Date:** 2023-02-26
