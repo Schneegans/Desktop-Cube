@@ -12,6 +12,7 @@ SPDX-License-Identifier: CC-BY-4.0
 #### Enhancements
 
 * **New donation method: Ko-fi**. Follow me on Ko-fi to get the latest updates regarding my extensions: https://ko-fi.com/schneegans!
+* On X11 multi-monitor setups, the cube's perspective is now corrected for the _current_ monitor (rather than the _primary_ monitor). Thanks to [@G-dH](https://github.com/G-dH) for the suggestion!
 
 ## [Desktop Cube 14](https://github.com/schneegans/Desktop-Cube/releases/tag/v14)
 
