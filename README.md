@@ -39,7 +39,7 @@ For a list of things changed in previous releases, you can have a look at the [c
 
 Issues are tracked [here on GitHub](https://github.com/Schneegans/Desktop-Cube/issues). There are currently two main known limitations:
 * **No wrap-around:** In GNOME Shell, it is not possible to change from the last to the first workspace. The Desktop-Cube extension does not change this.
-* **Bad multi-monitor support on X11:** On X11, GNOME Shell uses the same projection and view matrices for all monitors. The extension can modify these matrices so that the projection center of the virtual camera is in front of the primary monitor. However, the cube looks somewhat sheared on setups with multiple monitors if the cube is shown on all monitors.
+* **Bad multi-monitor support on X11:** On X11, GNOME Shell uses the same projection and view matrices for all monitors. The extension can modify these matrices so that the projection center of the virtual camera is in front of the current monitor. However, the cube looks somewhat sheared on setups with multiple monitors if the cube is shown on all monitors.
 
 
 ## 💞 These People _love_ this Extension
