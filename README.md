@@ -49,7 +49,6 @@ While coding new features is the most awesome way to contribute, providing finan
 <h3 align="center">🥇 Current Gold Sponsors</h3>
 <p align="center">
 Maxence Sebald<br>
-<a href="https://github.com/dennis1248">Dennis ten Hoove</a><br>
 </p>
 
 <h3 align="center">🥈 Current Silver Sponsors</h3>
@@ -68,6 +67,7 @@ Maxence Sebald<br>
  
 <h3 align="center">🏅 Previous Sponsors and One-Time Donators</h3>
 <p align="center">
+  <a href="https://github.com/dennis1248">Dennis ten Hoove</a><br>
   <a href='https://github.com/trival'>Thomas Gorny</a><br>
   <a href="https://twitter.com/tjiiik">tj3k</a>
 </p>

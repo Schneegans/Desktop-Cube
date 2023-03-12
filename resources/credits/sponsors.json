@@ -3,10 +3,6 @@
         {
             "name": "Maxence Sebald",
             "url": ""
-        },
-        {
-            "name": "Dennis ten Hoove",
-            "url": "https://github.com/dennis1248"
         }
     ],
     "silver": [
@@ -26,6 +22,10 @@
         }
     ],
     "past": [
+        {
+            "name": "Dennis ten Hoove",
+            "url": "https://github.com/dennis1248"
+        },
         {
             "name": "Angel Brielez",
             "url": "https://github.com/AngelBrielez"
