@@ -92,6 +92,8 @@ jobs:
         version:
           - '36'
           - '37'
+          - '38'
+          - 'rawhide'
         session:
           - 'gnome-xsession'
           - 'gnome-wayland-nested'
