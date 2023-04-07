@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-31 19:37+0100\n"
-"PO-Revision-Date: 2022-11-12 22:48+0000\n"
+"PO-Revision-Date: 2023-04-08 18:49+0000\n"
 "Last-Translator: menom <menom1@protonmail.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/desktop-cube/core/"
 "sk/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 4.17-dev\n"
 
 #: prefs.js:132
 msgid "Gold Sponsors"
@@ -73,7 +73,7 @@ msgstr "O Desktop-Cube"
 
 #: resources/ui/settings.ui:57
 msgid "General"
-msgstr ""
+msgstr "Všeobecné"
 
 #: resources/ui/settings.ui:62
 msgid "General Options"
@@ -82,6 +82,8 @@ msgstr "Všeobecné možnosti"
 #: resources/ui/settings.ui:63
 msgid "These options affect the cube both in desktop and overview mode."
 msgstr ""
+"Tieto možnosti ovplyvňujú kocku v režime pracovnej plochy aj v režime "
+"prehľadu."
 
 #: resources/ui/settings.ui:67
 msgid "Gap between last and first workspace"
@@ -145,11 +147,11 @@ msgstr ""
 
 #: resources/ui/settings.ui:193
 msgid "Advanced Options"
-msgstr ""
+msgstr "Pokročilé nastavenia"
 
 #: resources/ui/settings.ui:194
 msgid "Usually, you can leave these options to their default values."
-msgstr ""
+msgstr "Zvyčajne môžete tieto možnosti ponechať na predvolené hodnoty."
 
 #: resources/ui/settings.ui:198
 msgid "Edge switch pressure"
@@ -186,7 +188,7 @@ msgstr "Čas zmeny medzi pracovnými plochami [ms]"
 
 #: resources/ui/settings.ui:353
 msgid "Desktop"
-msgstr ""
+msgstr "Desktop"
 
 #: resources/ui/settings.ui:358
 msgid "Desktop Options"
@@ -196,6 +198,7 @@ msgstr "Možnosti plochy"
 msgid ""
 "These options tweak the cube when switching workspaces outside the overview."
 msgstr ""
+"Tieto možnosti upravia kocku pri prepínaní pracovných plôch mimo prehľadu."
 
 #: resources/ui/settings.ui:363
 msgid "Click and drag the desktop to rotate the cube"
@@ -211,11 +214,11 @@ msgstr "Prepnúť pracovné plochy ťahaním okien k okrajom v režime plochy"
 
 #: resources/ui/settings.ui:408 resources/ui/settings.ui:467
 msgid "You can configure the required pressure in the general options."
-msgstr ""
+msgstr "Požadovaný tlak môžete nakonfigurovať vo všeobecných možnostiach."
 
 #: resources/ui/settings.ui:434
 msgid "Overview"
-msgstr ""
+msgstr "Prehľad"
 
 #: resources/ui/settings.ui:439
 msgid "Overview Options"
@@ -223,7 +226,7 @@ msgstr "Možnosti prehliadania"
 
 #: resources/ui/settings.ui:440
 msgid "These options tweak the cube in the overview."
-msgstr ""
+msgstr "Tieto možnosti upravia kocku v prehľade."
 
 #: resources/ui/settings.ui:444
 msgid "Click and drag the overview to rotate the cube"
