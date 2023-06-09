@@ -5,6 +5,14 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## [Desktop Cube 17](https://github.com/schneegans/Desktop-Cube/releases/tag/v17)
+
+**Release Date:** 2023-06-09
+
+#### Enhancements
+
+- https://www.paypal.me/simonschneegans is now the default donation link for PayPal.
+
 ## [Desktop Cube 16](https://github.com/schneegans/Desktop-Cube/releases/tag/v16)
 
 **Release Date:** 2023-06-09
