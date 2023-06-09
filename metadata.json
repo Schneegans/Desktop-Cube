@@ -2,6 +2,11 @@
     "uuid": "desktop-cube@schneegans.github.com",
     "description": "Indulge in nostalgia with useless 3D effects.",
     "name": "Desktop Cube",
+    "donations": {
+        "kofi": "schneegans",
+        "github": "schneegans",
+        "custom": "https://www.paypal.com/donate/?hosted_button_id=3F7UFL8KLVPXE"
+    },
     "gettext-domain": "desktop-cube",
     "settings-schema": "org.gnome.shell.extensions.desktop-cube",
     "shell-version": [
