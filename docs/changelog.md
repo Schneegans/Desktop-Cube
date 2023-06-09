@@ -14,6 +14,8 @@ SPDX-License-Identifier: CC-BY-4.0
 - Added support for the new donation button on extensions.gnome.org.
 - Translation updates, including a completely new Polish translation! Thanks to all the translators!
 
+## [Desktop Cube 15](https://github.com/schneegans/Desktop-Cube/releases/tag/v15)
+
 **Release Date:** 2023-03-12
 
 #### Enhancements
