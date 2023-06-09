@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-31 19:37+0100\n"
-"PO-Revision-Date: 2022-09-02 08:21+0000\n"
+"PO-Revision-Date: 2023-05-16 12:48+0000\n"
 "Last-Translator: aerowolf <aerowolf@tom.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "desktop-cube/core/zh_Hans/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: prefs.js:132
 msgid "Gold Sponsors"
@@ -73,7 +73,7 @@ msgstr "关于Desktop-Cube"
 
 #: resources/ui/settings.ui:57
 msgid "General"
-msgstr ""
+msgstr "常规"
 
 #: resources/ui/settings.ui:62
 msgid "General Options"
@@ -81,7 +81,7 @@ msgstr "常规选项"
 
 #: resources/ui/settings.ui:63
 msgid "These options affect the cube both in desktop and overview mode."
-msgstr ""
+msgstr "在桌面和概览模式中，这些选项都将效果立方体。"
 
 #: resources/ui/settings.ui:67
 msgid "Gap between last and first workspace"
@@ -144,27 +144,27 @@ msgstr ""
 
 #: resources/ui/settings.ui:193
 msgid "Advanced Options"
-msgstr ""
+msgstr "高级选项"
 
 #: resources/ui/settings.ui:194
 msgid "Usually, you can leave these options to their default values."
-msgstr ""
+msgstr "通常，您可以将这些选项设为默认值。"
 
 #: resources/ui/settings.ui:198
 msgid "Edge switch pressure"
-msgstr ""
+msgstr "边缘切换压力"
 
 #: resources/ui/settings.ui:199
 msgid "The amount of pressure required to switch workspaces."
-msgstr ""
+msgstr "切换工作区所需的压力大小。"
 
 #: resources/ui/settings.ui:228
 msgid "Mouse rotation speed"
-msgstr ""
+msgstr "鼠标旋转速度"
 
 #: resources/ui/settings.ui:229
 msgid "A multiplier for the desktop cube rotation when dragged."
-msgstr ""
+msgstr "拖动桌面立方体时，旋转的倍数。"
 
 #: resources/ui/settings.ui:259
 msgid "Transition time from desktop to overview [ms]"
@@ -185,7 +185,7 @@ msgstr "工作区之间的过渡时间[ms]"
 
 #: resources/ui/settings.ui:353
 msgid "Desktop"
-msgstr ""
+msgstr "桌面"
 
 #: resources/ui/settings.ui:358
 msgid "Desktop Options"
@@ -194,7 +194,7 @@ msgstr "桌面选项"
 #: resources/ui/settings.ui:359
 msgid ""
 "These options tweak the cube when switching workspaces outside the overview."
-msgstr ""
+msgstr "这些选项在概览之外切换工作区时调节立方体。"
 
 #: resources/ui/settings.ui:363
 msgid "Click and drag the desktop to rotate the cube"
@@ -210,11 +210,11 @@ msgstr "拖动窗口到桌面边缘可切换工作区"
 
 #: resources/ui/settings.ui:408 resources/ui/settings.ui:467
 msgid "You can configure the required pressure in the general options."
-msgstr ""
+msgstr "您可以在常规选项中配置所需的压力。"
 
 #: resources/ui/settings.ui:434
 msgid "Overview"
-msgstr ""
+msgstr "概览"
 
 #: resources/ui/settings.ui:439
 msgid "Overview Options"
@@ -222,7 +222,7 @@ msgstr "概览选项"
 
 #: resources/ui/settings.ui:440
 msgid "These options tweak the cube in the overview."
-msgstr ""
+msgstr "在概览中，这些选项调整立方体。"
 
 #: resources/ui/settings.ui:444
 msgid "Click and drag the overview to rotate the cube"

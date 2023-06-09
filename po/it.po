@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-12-31 19:37+0100\n"
-"PO-Revision-Date: 2022-04-21 18:06+0000\n"
-"Last-Translator: Frankie McEyes <mceyes@protonmail.com>\n"
+"PO-Revision-Date: 2023-05-29 12:48+0000\n"
+"Last-Translator: albanobattistella <albano_battistella@hotmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/desktop-cube/"
 "core/it/>\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: prefs.js:132
 msgid "Gold Sponsors"
@@ -73,7 +73,7 @@ msgstr "Su Desktop-Cube"
 
 #: resources/ui/settings.ui:57
 msgid "General"
-msgstr ""
+msgstr "Generale"
 
 #: resources/ui/settings.ui:62
 msgid "General Options"
@@ -82,6 +82,7 @@ msgstr "Opzioni generali"
 #: resources/ui/settings.ui:63
 msgid "These options affect the cube both in desktop and overview mode."
 msgstr ""
+"Queste opzioni influiscono sul cubo sia in modalità desktop che panoramica."
 
 #: resources/ui/settings.ui:67
 msgid "Gap between last and first workspace"
@@ -113,16 +114,16 @@ msgstr "Fai esplodere il cubo per le rotazioni verticali"
 #: resources/ui/settings.ui:91
 msgid "Rotate the cube up or down to show the 3D structure."
 msgstr ""
-"Ruota il cubo verso l'alto e verso il basso per visualizzarne la struttura 3D"
+"Ruota il cubo verso l'alto o verso il basso per mostrare la struttura 3D."
 
 #: resources/ui/settings.ui:113
 msgid "Enable central perspective for each monitor"
-msgstr ""
+msgstr "Abilita la prospettiva centrale per ogni monitor"
 
 #: resources/ui/settings.ui:114
 #, javascript-format
 msgid "For an explanation, you can watch this video: %s."
-msgstr ""
+msgstr "Per una spiegazione, puoi guardare questo video: %s."
 
 #: resources/ui/settings.ui:136
 msgid "Window parallax effect"
@@ -149,27 +150,29 @@ msgstr ""
 
 #: resources/ui/settings.ui:193
 msgid "Advanced Options"
-msgstr ""
+msgstr "Opzioni avanzate"
 
 #: resources/ui/settings.ui:194
 msgid "Usually, you can leave these options to their default values."
-msgstr ""
+msgstr "Di solito, puoi lasciare queste opzioni ai loro valori predefiniti."
 
 #: resources/ui/settings.ui:198
 msgid "Edge switch pressure"
-msgstr ""
+msgstr "Pressione cambio prospettiva"
 
 #: resources/ui/settings.ui:199
 msgid "The amount of pressure required to switch workspaces."
-msgstr ""
+msgstr "La quantità di pressione necessaria per cambiare area di lavoro."
 
 #: resources/ui/settings.ui:228
 msgid "Mouse rotation speed"
-msgstr ""
+msgstr "Velocità di rotazione del mouse"
 
 #: resources/ui/settings.ui:229
 msgid "A multiplier for the desktop cube rotation when dragged."
 msgstr ""
+"Un moltiplicatore per la rotazione del cubo del desktop durante il "
+"trascinamento."
 
 #: resources/ui/settings.ui:259
 msgid "Transition time from desktop to overview [ms]"
@@ -192,7 +195,7 @@ msgstr "Tempo di transizione tra i vari workspace [ms]"
 
 #: resources/ui/settings.ui:353
 msgid "Desktop"
-msgstr ""
+msgstr "Desktop"
 
 #: resources/ui/settings.ui:358
 msgid "Desktop Options"
@@ -202,6 +205,8 @@ msgstr "Opzioni del Desktop"
 msgid ""
 "These options tweak the cube when switching workspaces outside the overview."
 msgstr ""
+"Queste opzioni modificano il cubo quando si cambia area di lavoro al di "
+"fuori della panoramica."
 
 #: resources/ui/settings.ui:363
 msgid "Click and drag the desktop to rotate the cube"
@@ -217,11 +222,11 @@ msgstr "Trascina le finestre sul bordo del desktop per cambiare area di lavoro"
 
 #: resources/ui/settings.ui:408 resources/ui/settings.ui:467
 msgid "You can configure the required pressure in the general options."
-msgstr ""
+msgstr "È possibile configurare la pressione richiesta nelle opzioni generali."
 
 #: resources/ui/settings.ui:434
 msgid "Overview"
-msgstr ""
+msgstr "Panoramica"
 
 #: resources/ui/settings.ui:439
 msgid "Overview Options"
@@ -229,7 +234,7 @@ msgstr "Opzioni della modalità overview"
 
 #: resources/ui/settings.ui:440
 msgid "These options tweak the cube in the overview."
-msgstr ""
+msgstr "Queste opzioni modificano il cubo nella panoramica."
 
 #: resources/ui/settings.ui:444
 msgid "Click and drag the overview to rotate the cube"
@@ -251,8 +256,7 @@ msgstr "Distensione orizzontale del cubo"
 #: resources/ui/settings.ui:520
 msgid "This ensures that you can see the cube's sides from the front."
 msgstr ""
-"Questo garantisce la possibiltà di vedere i lati del cubo dalla parte "
-"frontale"
+"Questo assicura che tu possa vedere i lati del cubo dalla parte anteriore."
 
 #: resources/ui/settings.ui:549
 msgid "Opacity of the active workspace"
