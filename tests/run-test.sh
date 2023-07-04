@@ -115,6 +115,11 @@ send_keystroke() {
   do_in_pod xdotool keyup "${1}"
 }
 
+# -------------------------------------------------------------- set GSK_RENDERER to cairo
+
+echo "Make sure to use Cairo GTK rendering backend."
+do_in_pod 'echo "export GSK_RENDERER=cairo" >> .bash_profile'
+
 
 # ----------------------------------------------------- wait for the container to start up
 
