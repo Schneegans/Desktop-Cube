@@ -22,7 +22,7 @@ SPDX-License-Identifier: CC-BY-4.0
 When I started using Linux more than a decade ago, it was because of the 3D desktop cube of Compiz.
 Even if this was a pretty useless feature, I am still missing it today.
 Therefore, I decided to create a similar effect for GNOME Shell.
-If you like it, you may also be interested in other nostalgic extensions, such as [Compiz-alike windows effects](https://extensions.gnome.org/extension/2950/compiz-alike-windows-effect/), or [Burn-My-Windows](https://extensions.gnome.org/extension/4679/burn-my-windows/)!
+If you like it, you may also be interested in other nostalgic extensions, such as [Compiz windows effects](https://extensions.gnome.org/extension/3210/compiz-windows-effect/), or [Burn-My-Windows](https://extensions.gnome.org/extension/4679/burn-my-windows/)!
 
 For a list of things changed in previous releases, you can have a look at the [changelog](docs/changelog.md)!
 
