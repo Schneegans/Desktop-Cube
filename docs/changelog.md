@@ -16,6 +16,7 @@ SPDX-License-Identifier: CC-BY-4.0
   - Transition time from desktop to overview.
   - Transition time from overview to app drawer.
   - Transition time between workspaces.
+- The Skybox now uses `Clutter.Effect` instead of `Shell.GLSLEffect` as a base class. This should improve the performance slightly, as it does not require painting to an offscreen buffer any more.
 
 ## [Desktop Cube 17](https://github.com/schneegans/Desktop-Cube/releases/tag/v17)
 
