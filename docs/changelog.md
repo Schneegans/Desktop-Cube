@@ -5,6 +5,18 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## [Desktop Cube 18](https://github.com/schneegans/Desktop-Cube/releases/tag/v18)
+
+**Release Date:** TBD
+
+#### Changes
+
+- The extension has been ported to use ESM modules. This is a requirement for GNOME 45 and newer. As a consequence, the extension is no longer compatible with GNOME 44 and older.
+- With GNOME 45, it is not possible anymore to override the UI animation durations. Therefore, the following settings had to be removed:
+  - Transition time from desktop to overview.
+  - Transition time from overview to app drawer.
+  - Transition time between workspaces.
+
 ## [Desktop Cube 17](https://github.com/schneegans/Desktop-Cube/releases/tag/v17)
 
 **Release Date:** 2023-06-09
