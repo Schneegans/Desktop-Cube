@@ -11,7 +11,9 @@
 
 'use strict';
 
-const {GObject, Gtk, Gio} = imports.gi;
+import Gio from 'gi://Gio';
+import Gtk from 'gi://Gtk';
+import GObject from 'gi://GObject';
 
 const _ = imports.gettext.domain('desktop-cube').gettext;
 
@@ -21,7 +23,7 @@ const _ = imports.gettext.domain('desktop-cube').gettext;
 // We only need file chooser buttons for images, so the content.                        //
 //////////////////////////////////////////////////////////////////////////////////////////
 
-function registerWidget() {
+export function registerImageChooserButton() {
 
   if (GObject.type_from_name('DesktopCubeImageChooserButton') == null) {
     GObject.registerClass(

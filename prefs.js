@@ -11,32 +11,33 @@
 
 'use strict';
 
-const {Gio, Gtk, Gdk} = imports.gi;
-const Adw             = imports.gi.Adw;
-const ByteArray       = imports.byteArray;
+import Gio from 'gi://Gio';
+import Gtk from 'gi://Gtk';
+import Gdk from 'gi://Gdk';
+import Adw from 'gi://Adw';
 
-const _ = imports.gettext.domain('desktop-cube').gettext;
-
-const ExtensionUtils     = imports.misc.extensionUtils;
-const Me                 = imports.misc.extensionUtils.getCurrentExtension();
-const utils              = Me.imports.src.utils;
-const ImageChooserButton = Me.imports.src.ImageChooserButton;
+import {ExtensionPreferences, gettext as _} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
+import {registerImageChooserButton} from './src/ImageChooserButton.js';
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // For now, the preferences dialog of this extension is very simple. In the future, if  //
 // we might consider to improve its layout...                                           //
 //////////////////////////////////////////////////////////////////////////////////////////
 
-var PreferencesDialog = class PreferencesDialog {
-  // ------------------------------------------------------------ constructor / destructor
+export default class DesktopCubePreferences extends ExtensionPreferences {
 
-  constructor() {
+  // -------------------------------------------------------------------- public interface
+
+  // This function is called when the preferences window is created. We create a new
+  // instance of the PreferencesDialog class each time this method is called. This way we
+  // can actually open multiple settings windows and interact with all of them properly.
+  fillPreferencesWindow(window) {
     // Load all of our resources.
-    this._resources = Gio.Resource.load(Me.path + '/resources/desktop-cube.gresource');
+    this._resources = Gio.Resource.load(this.path + '/resources/desktop-cube.gresource');
     Gio.resources_register(this._resources);
 
     // Register our custom widgets.
-    ImageChooserButton.registerWidget();
+    registerImageChooserButton();
 
     // Load the user interface file.
     this._builder = new Gtk.Builder();
@@ -52,7 +53,7 @@ var PreferencesDialog = class PreferencesDialog {
     ];
 
     // Store a reference to the settings object.
-    this._settings = ExtensionUtils.getSettings();
+    this._settings = this.getSettings();
 
     // Bind all properties.
     this._bindAdjustment('workpace-separation');
@@ -71,9 +72,6 @@ var PreferencesDialog = class PreferencesDialog {
     this._bindAdjustment('inactive-workpace-opacity');
     this._bindAdjustment('edge-switch-pressure');
     this._bindAdjustment('mouse-rotation-speed');
-    this._bindAdjustment('overview-transition-time');
-    this._bindAdjustment('appgrid-transition-time');
-    this._bindAdjustment('workspace-transition-time');
 
     // Inject the video link.
     const label    = this._builder.get_object('central-perspective-row');
@@ -137,7 +135,7 @@ var PreferencesDialog = class PreferencesDialog {
           dialog = new Adw.AboutWindow({transient_for: window, modal: true});
           dialog.set_application_icon('desktop-cube-symbolic');
           dialog.set_application_name('Desktop Cube');
-          dialog.set_version(`${Me.metadata.version}`);
+          dialog.set_version(`${this.metadata.version}`);
           dialog.set_developer_name('Simon Schneegans');
           dialog.set_issue_url('https://github.com/Schneegans/Desktop-Cube/issues');
           if (sponsors.gold.length > 0) {
@@ -168,7 +166,7 @@ var PreferencesDialog = class PreferencesDialog {
 
           dialog = new Gtk.AboutDialog({transient_for: window, modal: true});
           dialog.set_logo_icon_name('desktop-cube-symbolic');
-          dialog.set_program_name(`Desktop Cube ${Me.metadata.version}`);
+          dialog.set_program_name(`Desktop Cube ${this.metadata.version}`);
           dialog.set_authors(['Simon Schneegans']);
           if (sponsors.gold.length > 0) {
             dialog.add_credit_section(_('Gold Sponsors'), formatSponsors(sponsors.gold));
@@ -198,6 +196,11 @@ var PreferencesDialog = class PreferencesDialog {
       window.insert_action_group('prefs', group);
     });
 
+    window.set_search_enabled(true);
+
+    this._pages.forEach(page => {
+      window.add(page);
+    });
 
     // As we do not have something like a destructor, we just listen for the destroy
     // signal of our general page.
@@ -207,12 +210,6 @@ var PreferencesDialog = class PreferencesDialog {
     });
   }
 
-  // -------------------------------------------------------------------- public interface
-
-  // Returns the pages of the settings dialog for this extension.
-  getPages() {
-    return this._pages;
-  }
 
   // ----------------------------------------------------------------------- private stuff
 
@@ -250,7 +247,7 @@ var PreferencesDialog = class PreferencesDialog {
   // is parsed and returned as a JavaScript object / array.
   _getJSONResource(path) {
     const data   = Gio.resources_lookup_data(path, 0);
-    const string = ByteArray.toString(ByteArray.fromGBytes(data));
+    const string = new TextDecoder().decode(data.get_data());
     return JSON.parse(string);
   }
 
@@ -266,22 +263,4 @@ var PreferencesDialog = class PreferencesDialog {
 
     return null;
   }
-}
-
-// This is used for setting up the translations.
-function init() {
-  ExtensionUtils.initTranslations();
-}
-
-// This function is called when the preferences window is created. We create a new
-// instance of the PreferencesDialog class each time this method is called. This way we
-// can actually open multiple settings windows and interact with all of them properly.
-function fillPreferencesWindow(window) {
-  var dialog = new PreferencesDialog();
-
-  window.set_search_enabled(true);
-
-  dialog.getPages().forEach(page => {
-    window.add(page);
-  });
 }

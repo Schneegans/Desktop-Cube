@@ -11,13 +11,16 @@
 
 'use strict';
 
-const {Clutter, Gio, GObject, GdkPixbuf, Cogl, Shell} = imports.gi;
+import Gio from 'gi://Gio';
+import Clutter from 'gi://Clutter';
+import GObject from 'gi://GObject';
+import Shell from 'gi://Shell';
+import GdkPixbuf from 'gi://GdkPixbuf';
+import Cogl from 'gi://Cogl';
 
-const Main = imports.ui.main;
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me             = imports.misc.extensionUtils.getCurrentExtension();
-const utils          = Me.imports.src.utils;
+import {debug} from './utils.js';
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // This file contains two classes, the Skybox (which is an actor) and the SkyboxEffect, //
@@ -51,7 +54,7 @@ var SkyboxEffect = GObject.registerClass({
         this.queue_repaint();
       })
       .catch(error => {
-        utils.debug(error);
+        debug(error);
       });
 
     // Redraw if either the pitch or the yaw changes.
@@ -148,7 +151,7 @@ var SkyboxEffect = GObject.registerClass({
 //////////////////////////////////////////////////////////////////////////////////////////
 
 // clang-format off
-var Skybox = GObject.registerClass({
+export var Skybox = GObject.registerClass({
     Properties: {
       'yaw':   GObject.ParamSpec.double('yaw', 'yaw', 'yaw', GObject.ParamFlags.READWRITE,
                                         -2 * Math.PI, 2 * Math.PI, 0),
