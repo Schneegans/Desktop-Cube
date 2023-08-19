@@ -14,7 +14,6 @@
 import Gio from 'gi://Gio';
 import Clutter from 'gi://Clutter';
 import GObject from 'gi://GObject';
-import Shell from 'gi://Shell';
 import GdkPixbuf from 'gi://GdkPixbuf';
 import Cogl from 'gi://Cogl';
 
