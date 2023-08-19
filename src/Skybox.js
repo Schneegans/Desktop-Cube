@@ -40,7 +40,7 @@ var SkyboxEffect = GObject.registerClass({
       'pitch': GObject.ParamSpec.double('pitch', 'pitch', 'pitch', GObject.ParamFlags.READWRITE,
                                         -0.5 * Math.PI, 0.5 * Math.PI, 0),
     },
-  }, class SkyboxEffect extends Shell.GLSLEffect {
+}, class SkyboxEffect extends Clutter.Effect {
   // clang-format on
   _init(file) {
     super._init();
@@ -60,14 +60,16 @@ var SkyboxEffect = GObject.registerClass({
     // Redraw if either the pitch or the yaw changes.
     this.connect('notify::yaw', () => {this.queue_repaint()});
     this.connect('notify::pitch', () => {this.queue_repaint()});
-  };
 
-  // This is called once to setup the Cogl.Pipeline.
-  vfunc_build_pipeline() {
+    const backend     = Clutter.get_default_backend();
+    const coglContext = backend.get_cogl_context();
+
+    this._pipeline = new Cogl.Pipeline(coglContext);
 
     // In the vertex shader, we compute the view space position of the actor's corners.
-    this.add_glsl_snippet(Shell.SnippetHook.VERTEX, 'varying vec4 vsPos;',
-                          'vsPos = cogl_modelview_matrix * cogl_position_in;', false);
+    this._pipeline.add_snippet(
+      Cogl.Snippet.new(Cogl.SnippetHook.VERTEX, 'varying vec4 vsPos;',
+                       'vsPos = cogl_modelview_matrix * cogl_position_in;'));
 
     const fragmentDeclares = `
       varying vec4      vsPos;
@@ -102,19 +104,28 @@ var SkyboxEffect = GObject.registerClass({
       cogl_color_out = texture2D(uTexture, vec2(x, y));
     `;
 
-    this.add_glsl_snippet(Shell.SnippetHook.FRAGMENT, fragmentDeclares, fragmentCode,
-                          false);
-  }
+    this._pipeline.add_snippet(
+      Cogl.Snippet.new(Cogl.SnippetHook.FRAGMENT, fragmentDeclares, fragmentCode));
+  };
 
   // For each draw call, we have to set some uniform values.
-  vfunc_paint_target(node, paintContext) {
+  vfunc_paint_node(node, paintContext) {
     if (this._texture) {
-      this.get_pipeline().set_layer_texture(0, this._texture.get_texture());
-      this.set_uniform_float(this.get_uniform_location('uTexture'), 1, [0]);
-      this.set_uniform_float(this.get_uniform_location('uPitch'), 1, [this.pitch]);
-      this.set_uniform_float(this.get_uniform_location('uYaw'), 1, [this.yaw]);
+      this._pipeline.set_layer_texture(0, this._texture.get_texture());
 
-      super.vfunc_paint_target(node, paintContext);
+      this._pipeline.set_uniform_1i(this._pipeline.get_uniform_location('uTexture'), 0);
+      this._pipeline.set_uniform_1f(this._pipeline.get_uniform_location('uPitch'),
+                                    this.pitch);
+      this._pipeline.set_uniform_1f(this._pipeline.get_uniform_location('uYaw'),
+                                    this.yaw);
+
+      const pipelineNode = new Clutter.PipelineNode(this._pipeline);
+      pipelineNode.set_name('Dekstop-Cube Skybox');
+      node.add_child(pipelineNode);
+
+      const actor = this.get_actor();
+      const alloc = actor.get_allocation_box();
+      pipelineNode.add_texture_rectangle(alloc, 0, 0, 1, 1);
     }
   }
 
