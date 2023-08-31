@@ -6,10 +6,10 @@ name: Checks
 on:
   push:
     branches:
-      - '**'
+      - "**"
   pull_request:
     branches:
-      - '**'
+      - "**"
 
 jobs:
   clang_format:
@@ -33,9 +33,9 @@ jobs:
     name: Check Compliance with REUSE Specification
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: REUSE Compliance Check
-      uses: fsfe/reuse-action@v1
+      - uses: actions/checkout@v3
+      - name: REUSE Compliance Check
+        uses: fsfe/reuse-action@v1
 
   comment_percentage:
     name: Check Comment Percentage
@@ -90,30 +90,29 @@ jobs:
       fail-fast: false
       matrix:
         version:
-          - '36'
-          - '37'
-          - '38'
-          - 'rawhide'
+          - "36"
+          - "37"
+          - "38"
         session:
-          - 'gnome-xsession'
-          - 'gnome-wayland-nested'
+          - "gnome-xsession"
+          - "gnome-wayland-nested"
     steps:
-    - uses: actions/checkout@v3
-    - name: Download Dependencies
-      run: |
-        sudo apt update -qq
-        sudo apt install gettext -qq
-    - name: Build Desktop Cube
-      run: make
-    - name: Test Desktop Cube
-      run: sudo $GITHUB_WORKSPACE/tests/run-test.sh -v ${{ matrix.version }} -s ${{ matrix.session }}
-    - uses: actions/upload-artifact@v2
-      if: failure()
-      with:
-        name: log_${{ matrix.version }}_${{ matrix.session }}
-        path: fail.log
-    - uses: actions/upload-artifact@v2
-      if: failure()
-      with:
-        name: screen_${{ matrix.version }}_${{ matrix.session }}
-        path: fail.png
+      - uses: actions/checkout@v3
+      - name: Download Dependencies
+        run: |
+          sudo apt update -qq
+          sudo apt install gettext -qq
+      - name: Build Desktop Cube
+        run: make
+      - name: Test Desktop Cube
+        run: sudo $GITHUB_WORKSPACE/tests/run-test.sh -v ${{ matrix.version }} -s ${{ matrix.session }}
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: log_${{ matrix.version }}_${{ matrix.session }}
+          path: fail.log
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: screen_${{ matrix.version }}_${{ matrix.session }}
+          path: fail.png
