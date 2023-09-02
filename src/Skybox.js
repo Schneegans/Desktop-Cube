@@ -19,7 +19,7 @@ import Cogl from 'gi://Cogl';
 
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
-import {debug} from './utils.js';
+import * as utils from './utils.js';
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // This file contains two classes, the Skybox (which is an actor) and the SkyboxEffect, //
@@ -53,7 +53,7 @@ var SkyboxEffect = GObject.registerClass({
         this.queue_repaint();
       })
       .catch(error => {
-        debug(error);
+        utils.debug(error);
       });
 
     // Redraw if either the pitch or the yaw changes.

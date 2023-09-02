@@ -26,7 +26,7 @@ import {WorkspacesView, FitMode} from 'resource:///org/gnome/shell/ui/workspaces
 import {WorkspaceAnimationController} from 'resource:///org/gnome/shell/ui/workspaceAnimation.js';
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
-import {debug} from './src/utils.js';
+import * as utils from './src/utils.js';
 import {DragGesture} from './src/DragGesture.js';
 import {Skybox} from './src/Skybox.js';
 
@@ -524,7 +524,7 @@ export default class DesktopCube extends Extension {
                                      GObject.BindingFlags.SYNC_CREATE);
 
         } catch (error) {
-          debug('Failed to set skybox: ' + error);
+          utils.debug('Failed to set skybox: ' + error);
         }
       }
     };
