@@ -28,5 +28,5 @@ export function debug(message) {
   // in the stack entry. We do not want to print the entire absolute file path.
   const extensionRoot = stack[0].indexOf('desktop-cube@schneegans.github.com');
 
-  log('[' + stack[0].slice(extensionRoot) + '] ' + message);
+  console.log('[' + stack[0].slice(extensionRoot) + '] ' + message);
 }
