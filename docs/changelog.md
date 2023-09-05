@@ -9,9 +9,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 **Release Date:** TBD
 
-#### Changes
+#### Major Changes
 
-- The extension has been ported to use ESM modules. This is a requirement for GNOME 45 and newer. As a consequence, the extension is no longer compatible with GNOME 44 and older.
+- This is the first release of the Desktop-Cube supporting GNOME 45. This required a [major refactoring](https://github.com/Schneegans/Desktop-Cube/pull/132/files) of the code base as GJS now uses ESM modules. As a consequence, this version is not compatible with older versions of GNOME Shell anymore. The old code base is still available on the `gnome-42-44` branch and if new features are added (especially translations), they can be backported to this branch.
 - With GNOME 45, it is not possible anymore to override the UI animation durations. Therefore, the following settings had to be removed:
   - Transition time from desktop to overview.
   - Transition time from overview to app drawer.
