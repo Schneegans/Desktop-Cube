@@ -30,3 +30,13 @@ export function debug(message) {
 
   console.log('[' + stack[0].slice(extensionRoot) + '] ' + message);
 }
+
+// This method can be used to import gettext. This is done differently in the
+// GNOME Shell process and in the preferences process.
+export async function importGettext() {
+  if (typeof global === 'undefined') {
+    return (await import('resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js'))
+      .gettext;
+  }
+  return (await import('resource:///org/gnome/shell/extensions/extension.js')).gettext;
+}

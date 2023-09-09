@@ -15,7 +15,9 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
 import GObject from 'gi://GObject';
 
-const _ = imports.gettext.domain('desktop-cube').gettext;
+import * as utils from '../utils.js';
+
+const _ = await utils.importGettext();
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // This is based on a similar class from the Fly-Pie extension (MIT License).           //
