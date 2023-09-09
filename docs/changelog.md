@@ -5,6 +5,19 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## [Desktop Cube 18](https://github.com/schneegans/Desktop-Cube/releases/tag/v18)
+
+**Release Date:** 2023-09-09
+
+#### Major Changes
+
+- This is the first release of the Desktop-Cube supporting GNOME 45. This required a [major refactoring](https://github.com/Schneegans/Desktop-Cube/pull/132/files) of the code base as GJS now uses ESM modules. As a consequence, this version is not compatible with older versions of GNOME Shell anymore. The old code base is still available on the `gnome-42-44` branch and if new features are added (especially translations), they can be backported to this branch.
+- With GNOME 45, it is not possible anymore to override the UI animation durations. Therefore, the following settings had to be removed:
+  - Transition time from desktop to overview.
+  - Transition time from overview to app drawer.
+  - Transition time between workspaces.
+- The Skybox now uses `Clutter.Effect` instead of `Shell.GLSLEffect` as a base class. This should improve the performance slightly, as it does not require painting to an offscreen buffer any more.
+
 ## [Desktop Cube 17](https://github.com/schneegans/Desktop-Cube/releases/tag/v17)
 
 **Release Date:** 2023-06-09

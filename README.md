@@ -28,19 +28,19 @@ For a list of things changed in previous releases, you can have a look at the [c
 
 ## 🎉 Features
 
-![feature01](docs/pics/feature01.gif) <br> **3D Overview:** The extension arranges the workspaces in the overview in a cube-like fashion. | ![feature02](docs/pics/feature02.gif) <br> **3D Workspaces:** Also, when switching workspaces with touch gestures or keyboard shortcuts, the cube is shown.
-|:-:|:-:|
-![feature03](docs/pics/feature03.gif) <br> **Click and drag the desktop to rotate the cube:** You can click and drag anywhere on the desktop to start rotating the cube! | ![feature04](docs/pics/feature04.gif) <br> **Click and drag the panel to rotate the cube:** You can also trigger the cube by dragging on the panel. This is useful with maximized windows. 
-![feature05](docs/pics/feature05.gif) <br> **Click and drag the overview to rotate the cube:** You can also click and drag the overview's background to rotate the cube. | ![feature06](docs/pics/feature06.gif) <br> **Explode the cube on vertical rotations:** If you rotate the cube up or down, the 3D effect will become more intense.
-![feature07](docs/pics/feature07.gif) <br> **Smooth transitions between Desktop, Overview, and App Drawer:** If you enter the app-drawer mode, the cube will be unfolded. | ![feature08](docs/pics/feature08.gif) <br> **Dynamic workspaces:** The extension supports any number of workspaces. So it's actually not a cube most of the time...
-![feature09](docs/pics/feature09.gif) <br> **Background panoramas:** You can select an image which will be used as 360° skybox. | ![feature10](docs/pics/feature10.gif) <br> **Drag windows to other workspaces:** You can directly drag windows to adjacent workspaces. This also works in the overview.
+|                 ![feature01](docs/pics/feature01.gif) <br> **3D Overview:** The extension arranges the workspaces in the overview in a cube-like fashion.                 |                ![feature02](docs/pics/feature02.gif) <br> **3D Workspaces:** Also, when switching workspaces with touch gestures or keyboard shortcuts, the cube is shown.                 |
+| :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| ![feature03](docs/pics/feature03.gif) <br> **Click and drag the desktop to rotate the cube:** You can click and drag anywhere on the desktop to start rotating the cube!  | ![feature04](docs/pics/feature04.gif) <br> **Click and drag the panel to rotate the cube:** You can also trigger the cube by dragging on the panel. This is useful with maximized windows. |
+| ![feature05](docs/pics/feature05.gif) <br> **Click and drag the overview to rotate the cube:** You can also click and drag the overview's background to rotate the cube.  |             ![feature06](docs/pics/feature06.gif) <br> **Explode the cube on vertical rotations:** If you rotate the cube up or down, the 3D effect will become more intense.              |
+| ![feature07](docs/pics/feature07.gif) <br> **Smooth transitions between Desktop, Overview, and App Drawer:** If you enter the app-drawer mode, the cube will be unfolded. |            ![feature08](docs/pics/feature08.gif) <br> **Dynamic workspaces:** The extension supports any number of workspaces. So it's actually not a cube most of the time...             |
+|                      ![feature09](docs/pics/feature09.gif) <br> **Background panoramas:** You can select an image which will be used as 360° skybox.                      |          ![feature10](docs/pics/feature10.gif) <br> **Drag windows to other workspaces:** You can directly drag windows to adjacent workspaces. This also works in the overview.           |
 
 ## 🪲 Limitations
 
 Issues are tracked [here on GitHub](https://github.com/Schneegans/Desktop-Cube/issues). There are currently two main known limitations:
-* **No wrap-around:** In GNOME Shell, it is not possible to change from the last to the first workspace. The Desktop-Cube extension does not change this.
-* **Bad multi-monitor support on X11:** On X11, GNOME Shell uses the same projection and view matrices for all monitors. The extension can modify these matrices so that the projection center of the virtual camera is in front of the current monitor. However, the cube looks somewhat sheared on setups with multiple monitors if the cube is shown on all monitors.
 
+- **No wrap-around:** In GNOME Shell, it is not possible to change from the last to the first workspace. The Desktop-Cube extension does not change this.
+- **Bad multi-monitor support on X11:** On X11, GNOME Shell uses the same projection and view matrices for all monitors. The extension can modify these matrices so that the projection center of the virtual camera is in front of the current monitor. However, the cube looks somewhat sheared on setups with multiple monitors if the cube is shown on all monitors.
 
 ## 💞 These People _love_ this Extension
 
@@ -64,14 +64,12 @@ Maxence Sebald<br>
   <!-- <a href="https://github.com/sponsors/Schneegans">Become the first!</a><br> -->
 </p>
 
- 
 <h3 align="center">🏅 Previous Sponsors and One-Time Donators</h3>
 <p align="center">
   <a href="https://github.com/dennis1248">Dennis ten Hoove</a><br>
   <a href='https://github.com/trival'>Thomas Gorny</a><br>
   <a href="https://twitter.com/tjiiik">tj3k</a>
 </p>
-
 
 Do you want to show that you love it too? You may <a href="https://github.com/sponsors/Schneegans">become a sponsor for as little as 1$ / month</a>!
 If you like this extension, you may also want to try one of my other extensions: [🔥 Burn-My-Windows](https://github.com/Schneegans/Burn-My-Windows) or [🍰 Fly-Pie](https://github.com/Schneegans/Fly-Pie/)!
@@ -104,7 +102,7 @@ gnome-extensions install desktop-cube@schneegans.github.com.zip
 
 Then restart GNOME Shell with <kbd>Alt</kbd> + <kbd>F2</kbd>, <kbd>r</kbd> + <kbd>Enter</kbd>.
 Or logout / login if you are on Wayland.
-Then you can enable the extension with the *Gnome Tweak Tool*, the *Extensions* application or with this command:
+Then you can enable the extension with the _Gnome Tweak Tool_, the _Extensions_ application or with this command:
 
 ```bash
 gnome-extensions enable desktop-cube@schneegans.github.com
@@ -120,6 +118,12 @@ git clone https://github.com/Schneegans/Desktop-Cube.git
 cd Desktop-Cube
 ```
 
+If your GNOME Shell version is <= 45, you will have to checkout the `gnome-42-44` branch:
+
+```bash
+git checkout gnome-42-44
+```
+
 Now you will have to install the extension.
 The `make` command below compiles the locales, schemas and resources, creates a zip file of the extension and finally installs it with the `gnome-extensions` tool.
 
@@ -129,7 +133,7 @@ make install
 
 Then restart GNOME Shell with <kbd>Alt</kbd> + <kbd>F2</kbd>, <kbd>r</kbd> + <kbd>Enter</kbd>.
 Or logout / login if you are on Wayland.
-Then you can enable the extension with the *Gnome Tweak Tool*, the *Extensions* application or with this command:
+Then you can enable the extension with the _Gnome Tweak Tool_, the _Extensions_ application or with this command:
 
 ```bash
 gnome-extensions enable desktop-cube@schneegans.github.com
@@ -139,24 +143,24 @@ gnome-extensions enable desktop-cube@schneegans.github.com
 
 That's great!
 Here are some basic rulles to get you started:
-Commits should start with a Capital letter and should be written in present tense (e.g. __:tada: Add cool new feature__ instead of __:tada: Added cool new feature__).
+Commits should start with a Capital letter and should be written in present tense (e.g. **:tada: Add cool new feature** instead of **:tada: Added cool new feature**).
 You should also start your commit message with **one** applicable emoji.
 This does not only look great but also makes you rethink what to add to a commit. Make many but small commits!
 
-Emoji | Description
-------|------------
-:tada: `:tada:` | When you added a cool new feature.
-:wrench: `:wrench:` | When you added a piece of code.
-:recycle: `:recycle:` | When you refactored a part of the code.
-:sparkles: `:sparkles:` | When you applied clang-format.
-:globe_with_meridians: `:globe_with_meridians:` | When you worked on translations.
-:art: `:art:` | When you improved / added assets like themes.
-:lipstick: `:lipstick:` | When you worked on the UI of the preferences dialog.
-:rocket: `:rocket:` | When you improved performance.
-:memo: `:memo:` | When you wrote documentation.
-:beetle: `:beetle:` | When you fixed a bug.
-:revolving_hearts: `:revolving_hearts:` | When a new sponsor is added or credits are updated.
-:heavy_check_mark: `:heavy_check_mark:` | When you worked on checks or adjusted the code to be compliant with them.
-:twisted_rightwards_arrows: `:twisted_rightwards_arrows:` | When you merged a branch.
-:fire: `:fire:` | When you removed something.
-:truck: `:truck:` | When you moved / renamed something.
+| Emoji                                                     | Description                                                               |
+| --------------------------------------------------------- | ------------------------------------------------------------------------- |
+| :tada: `:tada:`                                           | When you added a cool new feature.                                        |
+| :wrench: `:wrench:`                                       | When you added a piece of code.                                           |
+| :recycle: `:recycle:`                                     | When you refactored a part of the code.                                   |
+| :sparkles: `:sparkles:`                                   | When you applied clang-format.                                            |
+| :globe_with_meridians: `:globe_with_meridians:`           | When you worked on translations.                                          |
+| :art: `:art:`                                             | When you improved / added assets like themes.                             |
+| :lipstick: `:lipstick:`                                   | When you worked on the UI of the preferences dialog.                      |
+| :rocket: `:rocket:`                                       | When you improved performance.                                            |
+| :memo: `:memo:`                                           | When you wrote documentation.                                             |
+| :beetle: `:beetle:`                                       | When you fixed a bug.                                                     |
+| :revolving_hearts: `:revolving_hearts:`                   | When a new sponsor is added or credits are updated.                       |
+| :heavy_check_mark: `:heavy_check_mark:`                   | When you worked on checks or adjusted the code to be compliant with them. |
+| :twisted_rightwards_arrows: `:twisted_rightwards_arrows:` | When you merged a branch.                                                 |
+| :fire: `:fire:`                                           | When you removed something.                                               |
+| :truck: `:truck:`                                         | When you moved / renamed something.                                       |
