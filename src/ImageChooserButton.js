@@ -15,7 +15,7 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
 import GObject from 'gi://GObject';
 
-import * as utils from '../utils.js';
+import * as utils from './utils.js';
 
 const _ = await utils.importGettext();
 
