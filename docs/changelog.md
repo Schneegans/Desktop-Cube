@@ -7,7 +7,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## [Desktop Cube 18](https://github.com/schneegans/Desktop-Cube/releases/tag/v18)
 
-**Release Date:** TBD
+**Release Date:** 2023-09-09
 
 #### Major Changes
 
