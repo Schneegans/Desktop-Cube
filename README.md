@@ -19,6 +19,8 @@ SPDX-License-Identifier: CC-BY-4.0
   <a href="scripts/cloc.sh"><img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Schneegans/66479de801ea8e0f6a1cf084cd37ffe8/raw/comments.json" /></a>
 </p>
 
+**:warning: The code in the `main` branch is for GNOME Shell 45+. For older GNOME versions, please use the `gnome-40-41` or `gnome-42-44` branches respectively.**
+
 When I started using Linux more than a decade ago, it was because of the 3D desktop cube of Compiz.
 Even if this was a pretty useless feature, I am still missing it today.
 Therefore, I decided to create a similar effect for GNOME Shell.
