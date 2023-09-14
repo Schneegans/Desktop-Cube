@@ -57,7 +57,6 @@ export default class DesktopCube extends Extension {
     this._origUpdateWorkspacesState = WorkspacesView.prototype._updateWorkspacesState;
     this._origGetSpacing            = WorkspacesView.prototype._getSpacing;
     this._origUpdateVisibility      = WorkspacesView.prototype._updateVisibility;
-    this._origAnimateSwitch = WorkspaceAnimationController.prototype.animateSwitch;
     this._origPrepSwitch = WorkspaceAnimationController.prototype._prepareWorkspaceSwitch;
     this._origFinalSwitch = WorkspaceAnimationController.prototype._finishWorkspaceSwitch;
 
@@ -255,24 +254,6 @@ export default class DesktopCube extends Extension {
     // -----------------------------------------------------------------------------------
     // --------------------- cubify workspace-switch in desktop mode ---------------------
     // -----------------------------------------------------------------------------------
-
-    // Here, we extend the WorkspaceAnimationController's animateSwitch method in order to
-    // be able to modify the animation duration for switching workspaces in desktop mode.
-    // We have to do it like this since the time is hard-coded with a constant:
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L11
-    WorkspaceAnimationController.prototype.animateSwitch = function(...params) {
-      // Call the original method. This sets up the progress transitions which we tweak
-      // thereafter.
-      extensionThis._origAnimateSwitch.apply(this, params);
-
-      // Now update the transition durations.
-      const duration = extensionThis._settings.get_int('workspace-transition-time');
-      if (duration > 0) {
-        for (const monitorGroup of this._switchData.monitors) {
-          monitorGroup.get_transition('progress').set_duration(duration);
-        }
-      }
-    };
 
     // This override rotates the workspaces during the transition to look like cube
     // faces. The original movement of the workspaces is implemented in the setter of
@@ -728,7 +709,6 @@ export default class DesktopCube extends Extension {
     WorkspacesView.prototype._updateWorkspacesState = this._origUpdateWorkspacesState;
     WorkspacesView.prototype._getSpacing            = this._origGetSpacing;
     WorkspacesView.prototype._updateVisibility      = this._origUpdateVisibility;
-    WorkspaceAnimationController.prototype.animateSwitch = this._origAnimateSwitch;
     WorkspaceAnimationController.prototype._prepareWorkspaceSwitch = this._origPrepSwitch;
     WorkspaceAnimationController.prototype._finishWorkspaceSwitch = this._origFinalSwitch;
 
