@@ -5,6 +5,14 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## [Desktop Cube 19](https://github.com/schneegans/Desktop-Cube/releases/tag/v19)
+
+**Release Date:** TBD
+
+#### Bug Fixes
+
+- Removed some old code from pre 45 times which caused an error message during workspace switches.
+
 ## [Desktop Cube 18](https://github.com/schneegans/Desktop-Cube/releases/tag/v18)
 
 **Release Date:** 2023-09-09
