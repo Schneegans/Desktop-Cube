@@ -44,37 +44,15 @@ Issues are tracked [here on GitHub](https://github.com/Schneegans/Desktop-Cube/i
 - **No wrap-around:** In GNOME Shell, it is not possible to change from the last to the first workspace. The Desktop-Cube extension does not change this.
 - **Bad multi-monitor support on X11:** On X11, GNOME Shell uses the same projection and view matrices for all monitors. The extension can modify these matrices so that the projection center of the virtual camera is in front of the current monitor. However, the cube looks somewhat sheared on setups with multiple monitors if the cube is shown on all monitors.
 
-## 💞 These People _love_ this Extension
+## 💞 Show that you love the Desktop Cube!
 
-While coding new features is the most awesome way to contribute, providing financial support will help me stay motivated to invest my spare time to keep the project alive in the future.
+While coding new features or translating the Desktop Cube is the most awesome way to contribute, [providing financial support](https://schneegans.github.io/sponsors/) will encourage me to invest my spare time for developing free and open-source software.
 
-<h3 align="center">🥇 Current Gold Sponsors</h3>
-<p align="center">
-Maxence Sebald<br>
-</p>
+These awesome people have already donated to the development of my open-source projects:
 
-<h3 align="center">🥈 Current Silver Sponsors</h3>
-<p align="center">
-  <a href="https://github.com/castrojo">Jorge Castro</a>
-</p>
+[![Sponsors](https://schneegans.github.io/sponsors/sponsors.svg)](https://schneegans.github.io/sponsors/)
 
-<h3 align="center">🥉 Current Bronze Sponsors</h3>
-<p align="center">
-  <a href='https://github.com/vlazic'>@vlazic</a><br>
-  <a href='https://github.com/AJCxZ0'>Andrew J. Caines</a><br>
-  <a href='https://github.com/AngelBrielez'>Angel Brielez</a>
-  <!-- <a href="https://github.com/sponsors/Schneegans">Become the first!</a><br> -->
-</p>
-
-<h3 align="center">🏅 Previous Sponsors and One-Time Donators</h3>
-<p align="center">
-  <a href="https://github.com/dennis1248">Dennis ten Hoove</a><br>
-  <a href='https://github.com/trival'>Thomas Gorny</a><br>
-  <a href="https://twitter.com/tjiiik">tj3k</a>
-</p>
-
-Do you want to show that you love it too? You may <a href="https://github.com/sponsors/Schneegans">become a sponsor for as little as 1$ / month</a>!
-If you like this extension, you may also want to try one of my other extensions: [🔥 Burn-My-Windows](https://github.com/Schneegans/Burn-My-Windows) or [🍰 Fly-Pie](https://github.com/Schneegans/Fly-Pie/)!
+Do you want to show that you love it too? If you donate via [Ko-fi](https://ko-fi.com/schneegans), [GitHub](https://github.com/sponsors/Schneegans), or [PayPal](https://www.paypal.com/donate/?hosted_button_id=3F7UFL8KLVPXE), you will show up in this list as well!
 
 ## ⬇️ Installation
 
