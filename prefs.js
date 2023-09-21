@@ -104,6 +104,7 @@ export default class DesktopCubePreferences extends ExtensionPreferences {
       addAction('donate-kofi',   'https://ko-fi.com/schneegans');
       addAction('donate-github', 'https://github.com/sponsors/Schneegans');
       addAction('donate-paypal', 'https://www.paypal.me/simonschneegans');
+      addAction('show-sponsors', 'https://schneegans.github.io/sponsors');
       // clang-format on
 
       // Add the about dialog.
@@ -118,74 +119,14 @@ export default class DesktopCubePreferences extends ExtensionPreferences {
           }
         });
 
-        const sponsors = this._getJSONResource('/credits/sponsors.json');
-        let dialog;
-
-        // We try to use the special Adw.AboutWindow if it is available.
-        if (Adw.AboutWindow) {
-          let formatSponsors = (sponsors) => {
-            return sponsors.map(s => {
-              if (s.url == '')
-                return s.name;
-              else
-                return `${s.name} ${s.url}`;
-            });
-          };
-
-          dialog = new Adw.AboutWindow({transient_for: window, modal: true});
-          dialog.set_application_icon('desktop-cube-symbolic');
-          dialog.set_application_name('Desktop Cube');
-          dialog.set_version(`${this.metadata.version}`);
-          dialog.set_developer_name('Simon Schneegans');
-          dialog.set_issue_url('https://github.com/Schneegans/Desktop-Cube/issues');
-          if (sponsors.gold.length > 0) {
-            dialog.add_credit_section(_('Gold Sponsors'), formatSponsors(sponsors.gold));
-          }
-          if (sponsors.silver.length > 0) {
-            dialog.add_credit_section(_('Silver Sponsors'),
-                                      formatSponsors(sponsors.silver));
-          }
-          if (sponsors.bronze.length > 0) {
-            dialog.add_credit_section(_('Bronze Sponsors'),
-                                      formatSponsors(sponsors.bronze));
-          }
-          if (sponsors.past.length > 0) {
-            dialog.add_credit_section(_('Past Sponsors'), formatSponsors(sponsors.past));
-          }
-
-        } else {
-
-          let formatSponsors = (sponsors) => {
-            return sponsors.map(s => {
-              if (s.url == '')
-                return s.name;
-              else
-                return `<a href="${s.url}">${s.name}</a>`;
-            });
-          };
-
-          dialog = new Gtk.AboutDialog({transient_for: window, modal: true});
-          dialog.set_logo_icon_name('desktop-cube-symbolic');
-          dialog.set_program_name(`Desktop Cube ${this.metadata.version}`);
-          dialog.set_authors(['Simon Schneegans']);
-          if (sponsors.gold.length > 0) {
-            dialog.add_credit_section(_('Gold Sponsors'), formatSponsors(sponsors.gold));
-          }
-          if (sponsors.silver.length > 0) {
-            dialog.add_credit_section(_('Silver Sponsors'),
-                                      formatSponsors(sponsors.silver));
-          }
-          if (sponsors.bronze.length > 0) {
-            dialog.add_credit_section(_('Bronze Sponsors'),
-                                      formatSponsors(sponsors.bronze));
-          }
-          if (sponsors.past.length > 0) {
-            dialog.add_credit_section(_('Past Sponsors'), formatSponsors(sponsors.past));
-          }
-        }
-
+        const dialog = new Adw.AboutWindow({transient_for: window, modal: true});
+        dialog.set_application_icon('desktop-cube-symbolic');
+        dialog.set_application_name('Desktop Cube');
+        dialog.set_version(`${this.metadata.version}`);
+        dialog.set_developer_name('Simon Schneegans');
+        dialog.set_issue_url('https://github.com/Schneegans/Desktop-Cube/issues');
         dialog.set_translator_credits([...translators].join('\n'));
-        dialog.set_copyright('© 2022 Simon Schneegans');
+        dialog.set_copyright('© 2023 Simon Schneegans');
         dialog.set_website('https://github.com/Schneegans/Desktop-Cube');
         dialog.set_license_type(Gtk.License.GPL_3_0);
 

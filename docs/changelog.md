@@ -5,6 +5,14 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## [Desktop Cube 20](https://github.com/schneegans/Desktop-Cube/releases/tag/v20)
+
+**Release Date:** TBD
+
+#### Enhancements
+
+- Instead of an always out-of-date list of sponsors, the main menu of the preferences dialog now contains a link to the new [list of all donors](https://schneegans.github.io/sponsors/). This list is semi-automatically updated whenever a new donation is received. Thanks to all the donors!
+
 ## [Desktop Cube 19](https://github.com/schneegans/Desktop-Cube/releases/tag/v19)
 
 **Release Date:** 2023-09-14
