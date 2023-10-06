@@ -5,6 +5,14 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## [Desktop Cube 21 [backport release]](https://github.com/schneegans/Desktop-Cube/releases/tag/v21)
+
+**Release Date:** TBD
+
+#### Enhancements
+
+- Ported the changes from version 20 to GNOME 42, 43, and 44.
+
 ## [Desktop Cube 20](https://github.com/schneegans/Desktop-Cube/releases/tag/v20)
 
 **Release Date:** TBD
