@@ -19,7 +19,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
         <attribute name="action">prefs.changelog</attribute>
       </item>
       <item>
-        <attribute name="label">View Donors Hall-of-Fame</attribute>
+        <attribute name="label" translatable="yes">View Donors Hall-of-Fame</attribute>
         <attribute name="action">prefs.show-sponsors</attribute>
       </item>
     </section>
