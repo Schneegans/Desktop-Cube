@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-07 13:05+0200\n"
-"PO-Revision-Date: 2023-05-29 12:48+0000\n"
+"PO-Revision-Date: 2023-10-08 17:00+0000\n"
 "Last-Translator: albanobattistella <albano_battistella@hotmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/desktop-cube/"
 "core/it/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: src/ImageChooserButton.js:46
 msgid "Select File"
@@ -41,7 +41,7 @@ msgstr "Visualizza registro modifiche"
 
 #: resources/ui/settings.ui:22
 msgid "View Donors Hall-of-Fame"
-msgstr ""
+msgstr "Visualizza la Hall of Fame dei donatori"
 
 #: resources/ui/settings.ui:28
 msgid "Donate"
