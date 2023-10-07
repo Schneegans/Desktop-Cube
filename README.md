@@ -122,7 +122,7 @@ gnome-extensions enable desktop-cube@schneegans.github.com
 ## :octocat: I want to contribute!
 
 That's great!
-Here are some basic rulles to get you started:
+Here are some basic rules to get you started:
 Commits should start with a Capital letter and should be written in present tense (e.g. **:tada: Add cool new feature** instead of **:tada: Added cool new feature**).
 You should also start your commit message with **one** applicable emoji.
 This does not only look great but also makes you rethink what to add to a commit. Make many but small commits!
