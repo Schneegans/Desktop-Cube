@@ -13,6 +13,10 @@ SPDX-License-Identifier: CC-BY-4.0
 
 - Instead of an always out-of-date list of sponsors, the main menu of the preferences dialog now contains a link to the new [list of all donors](https://schneegans.github.io/sponsors/). This list is semi-automatically updated whenever a new donation is received. Thanks to all the donors!
 
+#### Bug Fixes
+
+- Fixed an issue which caused overly ambitious workspace transitions when dragging the cube with the mouse.
+
 ## [Desktop Cube 19](https://github.com/schneegans/Desktop-Cube/releases/tag/v19)
 
 **Release Date:** 2023-09-14

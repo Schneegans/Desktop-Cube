@@ -23,6 +23,7 @@ import * as Util from 'resource:///org/gnome/shell/misc/util.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import {PressureBarrier} from 'resource:///org/gnome/shell/ui/layout.js';
 import {WorkspacesView, FitMode} from 'resource:///org/gnome/shell/ui/workspacesView.js';
+import {SwipeTracker} from 'resource:///org/gnome/shell/ui/swipeTracker.js';
 import {WorkspaceAnimationController} from 'resource:///org/gnome/shell/ui/workspaceAnimation.js';
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
@@ -54,6 +55,7 @@ export default class DesktopCube extends Extension {
     this._settings = this.getSettings();
 
     // We will monkey-patch these methods. Let's store the original ones.
+    this._origEndGesture            = SwipeTracker.prototype._endGesture;
     this._origUpdateWorkspacesState = WorkspacesView.prototype._updateWorkspacesState;
     this._origGetSpacing            = WorkspacesView.prototype._getSpacing;
     this._origUpdateVisibility      = WorkspacesView.prototype._updateVisibility;
@@ -436,6 +438,19 @@ export default class DesktopCube extends Extension {
     // We want to be able to rotate the cube with the left mouse button, so we add an
     // additional gesture to these two SwipeTracker instances tracking single-click drags.
 
+    // First, we fix an issue which leads to very quick workspace switches when the
+    // SwipeTracker are used with mouse clicks. When the mouse button is released, no
+    // event is added to the history. This means that the velocity is always calculated
+    // relative to the last received mouse movement. Even if he mouse pointer was
+    // stationary for some time, high velocities will be computed.
+    SwipeTracker.prototype._endGesture = function(time, distance, isTouchpad) {
+      // Add a final time step to the history.
+      this._history.append(time, 0);
+
+      // Then call the original method.
+      extensionThis._origEndGesture.apply(this, [time, distance, isTouchpad]);
+    };
+
     // Add single-click drag gesture to the desktop.
     if (this._settings.get_boolean('enable-desktop-dragging')) {
       this._addDesktopDragGesture();
@@ -706,6 +721,7 @@ export default class DesktopCube extends Extension {
   disable() {
 
     // Restore the original behavior.
+    SwipeTracker.prototype._endGesture              = this._origEndGesture;
     WorkspacesView.prototype._updateWorkspacesState = this._origUpdateWorkspacesState;
     WorkspacesView.prototype._getSpacing            = this._origGetSpacing;
     WorkspacesView.prototype._updateVisibility      = this._origUpdateVisibility;
