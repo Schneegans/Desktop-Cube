@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-07 13:05+0200\n"
-"PO-Revision-Date: 2023-04-08 18:49+0000\n"
-"Last-Translator: menom <menom1@protonmail.com>\n"
+"PO-Revision-Date: 2023-10-14 05:01+0000\n"
+"Last-Translator: Milan Šalka <salka.milan@googlemail.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/desktop-cube/core/"
 "sk/>\n"
 "Language: sk\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.17-dev\n"
+"X-Generator: Weblate 5.1-dev\n"
 
 #: src/ImageChooserButton.js:46
 msgid "Select File"
@@ -41,7 +41,7 @@ msgstr "Prezrieť zoznam zmien"
 
 #: resources/ui/settings.ui:22
 msgid "View Donors Hall-of-Fame"
-msgstr ""
+msgstr "Zobraziť Donors Hall-of-Fame"
 
 #: resources/ui/settings.ui:28
 msgid "Donate"
