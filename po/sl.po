@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: desktop-cube master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/meld/issues\n"
-"POT-Creation-Date: 2022-01-17 21:20+0000\n"
-"PO-Revision-Date: 2023-10-29 21:08+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-07 13:05+0200\n"
+"PO-Revision-Date: 2023-11-02 08:40+0100\n"
 "Last-Translator: Matej Urbančič <mateju@src.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups."
 "com>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
 "n%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.4.1\n"
 
 #: src/ImageChooserButton.js:46
 msgid "Select File"
@@ -76,7 +76,7 @@ msgstr "Možnosti vplivajo na prikaz kocke v namiznem in preglednem načinu."
 
 #: resources/ui/settings.ui:75
 msgid "Gap between last and first workspace"
-msgstr "Razmik med zadnjim in prvim delovnim prostorom"
+msgstr "Ustvari razmik med zadnjim in prvim delovnim prostorom"
 
 #: resources/ui/settings.ui:76
 msgid "You cannot switch from the last to the first workspace anyways."
@@ -95,16 +95,15 @@ msgstr "Ponastavi na privzete vrednosti"
 
 #: resources/ui/settings.ui:98
 msgid "Explode cube on vertical rotations"
-msgstr "Razširi kocko pri navpičnem vrtenju"
+msgstr "Razširi prostor kocke pri navpičnem vrtenju"
 
 #: resources/ui/settings.ui:99
 msgid "Rotate the cube up or down to show the 3D structure."
-msgstr ""
-"Ob vrtenju kocke navzgor ali navzdol, se pokaže tridimenzionalni pogled."
+msgstr "Ob vrtenju kocke navzgor ali navzdol, se pokaže trirazsežni pogled."
 
 #: resources/ui/settings.ui:121
 msgid "Enable central perspective for each monitor"
-msgstr "Omogoči osrednji tridimenzionalni pogled za vsak monitor"
+msgstr "Omogoči osrednji trirazsežni pogled za vsak monitor"
 
 #: resources/ui/settings.ui:122
 #, javascript-format
@@ -113,11 +112,11 @@ msgstr "Podrobni prikaz je predstavljen na posnetku: %s."
 
 #: resources/ui/settings.ui:144
 msgid "Window parallax effect"
-msgstr "Učinek paralakse okna"
+msgstr "Velikost učinka navidezne globine okna"
 
 #: resources/ui/settings.ui:175
 msgid "Background panorama"
-msgstr "Panorama ozadja"
+msgstr "Uporabi panoramsko ozadje"
 
 #: resources/ui/settings.ui:176
 msgid "See tooltip of the button for some hints."
@@ -144,19 +143,19 @@ msgstr "Običajno teh nastavitev ni treba spreminjati."
 
 #: resources/ui/settings.ui:206
 msgid "Edge switch pressure"
-msgstr "Prag pritiska ob rob zaslona"
+msgstr "Prag sile pritiska ob rob zaslona"
 
 #: resources/ui/settings.ui:207
 msgid "The amount of pressure required to switch workspaces."
-msgstr "Raven pritiska za preklop delovnega prostora."
+msgstr "Raven sile pritiska za preklop delovnega prostora."
 
 #: resources/ui/settings.ui:236
 msgid "Mouse rotation speed"
-msgstr "Hitrost vrtenja miške"
+msgstr "Hitrost vrtenja kocke z miško"
 
 #: resources/ui/settings.ui:237
 msgid "A multiplier for the desktop cube rotation when dragged."
-msgstr "Določilo velikosti vrtenja kocke namizja pri vlečenju."
+msgstr "Določilo hitrosti vrtenja kocke namizja pri vlečenju z miško."
 
 #: resources/ui/settings.ui:271
 msgid "Desktop"
@@ -179,7 +178,7 @@ msgstr "Kocka se zavrti ob kliku in potegu namizja"
 
 #: resources/ui/settings.ui:303
 msgid "Click and drag the panel to rotate the cube"
-msgstr "Kocka se zavrti ob kliku in potegu pladnja"
+msgstr "Kocka se zavrti ob kliku in potegu pulta"
 
 #: resources/ui/settings.ui:325
 msgid "Drag windows to the edge of the desktop to switch workspaces"
@@ -187,7 +186,7 @@ msgstr "Poteg okna do roba namizja preklopi delovno površino"
 
 #: resources/ui/settings.ui:326 resources/ui/settings.ui:385
 msgid "You can configure the required pressure in the general options."
-msgstr "Zahtevan pritisk je mogoče nastaviti med splošnimi nastavitvami."
+msgstr "Zahtevano silo je mogoče nastaviti med splošnimi nastavitvami."
 
 #: resources/ui/settings.ui:352
 msgid "Overview"
@@ -199,19 +198,19 @@ msgstr "Možnosti predogleda"
 
 #: resources/ui/settings.ui:358
 msgid "These options tweak the cube in the overview."
-msgstr "Možnosti so namenjene spreminjanju kocko v pregledu."
+msgstr "Možnosti so namenjene spreminjanju kocke v pregledu."
 
 #: resources/ui/settings.ui:362
 msgid "Click and drag the overview to rotate the cube"
-msgstr "S klikom in potegom polja pregleda se zavrti tudi konca"
+msgstr "S klikom in potegom polja pregleda se zavrti tudi kocka"
 
 #: resources/ui/settings.ui:384
 msgid "Drag windows to the edge of the overview to switch workspaces"
-msgstr "S potegom okna ob rob pregleda se preklopi delovna površina"
+msgstr "S potiskom okna ob rob predogleda se preklopi delovna površina"
 
 #: resources/ui/settings.ui:407
 msgid "Gap between adjacent workspaces"
-msgstr "Razmik med sosednjimi delovnimi površinami"
+msgstr "Velikost razmika med delovnimi površinami"
 
 #: resources/ui/settings.ui:437
 msgid "Horizontal stretching of the cube"
@@ -219,7 +218,7 @@ msgstr "Vodoravno raztegovanje kocke"
 
 #: resources/ui/settings.ui:438
 msgid "This ensures that you can see the cube's sides from the front."
-msgstr "Možnost zagotavlja prikaz strani kocke s sprednje strani."
+msgstr "Možnost zagotavlja prikaz bočnih ploskev kocke s sprednje strani."
 
 #: resources/ui/settings.ui:467
 msgid "Opacity of the active workspace"
