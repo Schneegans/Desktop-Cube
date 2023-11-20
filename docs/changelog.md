@@ -5,6 +5,14 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## [Desktop Cube 22](https://github.com/schneegans/Desktop-Cube/releases/tag/v22)
+
+**Release Date:** TBD
+
+#### Enhancements
+
+- All CI jobs are now executed for GNOME 45 as well.
+
 ## [Desktop Cube 21 [backport release]](https://github.com/schneegans/Desktop-Cube/releases/tag/v21)
 
 **Release Date:** 2023-10-07
