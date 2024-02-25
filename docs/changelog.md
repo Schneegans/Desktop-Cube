@@ -11,6 +11,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 #### Enhancements
 
+- Many translation updates. Thanks to all the translators!
 - All CI jobs are now executed for GNOME 45 as well.
 
 ## [Desktop Cube 21 [backport release]](https://github.com/schneegans/Desktop-Cube/releases/tag/v21)
