@@ -1,34 +1,15 @@
 [
   {
-    "Turkish": [
+    "Arabic": [
       [
-        "borcunozkablan@gmail.com",
-        "Burak Orcun OZKABLAN",
-        2
+        "fawaz27000@hotmail.com",
+        "fawaz006",
+        11
       ],
       [
-        "veyselerden@outlook.com",
-        "Veysel Erden",
-        10
-      ],
-      [
-        "libreajans@gmail.com",
-        "Sabri \u00dcnal",
-        13
-      ],
-      [
-        "veyselerden1907@gmail.com",
-        "Veysel Erden",
-        35
-      ]
-    ]
-  },
-  {
-    "Polish": [
-      [
-        "sto@tutanota.de",
-        "WaldiS",
-        62
+        "hamzah.abusamak@gmail.com",
+        "bonbonboi",
+        6
       ]
     ]
   },
@@ -37,118 +18,16 @@
       [
         "maite.guix@gmail.com",
         "Maite Guix",
-        48
-      ]
-    ]
-  },
-  {
-    "Swedish": [
-      [
-        "droidbittin@gmail.com",
-        "Luna Jernberg",
-        12
-      ]
-    ]
-  },
-  {
-    "Slovak": [
-      [
-        "menom1@protonmail.com",
-        "menom",
-        58
-      ]
-    ]
-  },
-  {
-    "German": [
-      [
-        "j.lavoie@net-c.ca",
-        "J. Lavoie",
-        2
-      ],
-      [
-        "atalanttore@googlemail.com",
-        "Ettore Atalan",
-        14
-      ],
-      [
-        "code@simonschneegans.de",
-        "Simon Schneegans",
         39
-      ]
-    ]
-  },
-  {
-    "Finnish": [
-      [
-        "jiri.gronroos@iki.fi",
-        "Jiri Gr\u00f6nroos",
-        44
-      ]
-    ]
-  },
-  {
-    "Dutch": [
-      [
-        "philip.goto@gmail.com",
-        "Philip Goto",
-        4
-      ],
-      [
-        "vistausss@fastmail.com",
-        "Heimen Stoffels",
-        63
-      ]
-    ]
-  },
-  {
-    "Italian": [
-      [
-        "j.lavoie@net-c.ca",
-        "J. Lavoie",
-        6
-      ],
-      [
-        "mceyes@protonmail.com",
-        "Frankie McEyes",
-        8
-      ],
-      [
-        "albano_battistella@hotmail.com",
-        "albanobattistella",
-        17
-      ]
-    ]
-  },
-  {
-    "Lithuanian": [
-      [
-        "hazap@hotmail.com",
-        "Moo",
-        18
-      ]
-    ]
-  },
-  {
-    "Galician": [
-      [
-        "fran-carro@hotmail.es",
-        "gallegonovato",
-        13
-      ],
-      [
-        "xosecalvo@gmail.com",
-        "Xos\u00e9 Calvo",
-        46
       ]
     ]
   },
   {
     "Chinese (Simplified)": [
       [
-        "lyuutau@outlook.com",
-        "\u5218\u97ec",
-        6
+        "aerowolf@tom.com",
+        "aerowolf",
+        53
       ],
       [
         "ourmicroid@outlook.com",
@@ -156,98 +35,9 @@
         12
       ],
       [
-        "aerowolf@tom.com",
-        "aerowolf",
-        64
-      ]
-    ]
-  },
-  {
-    "French": [
-      [
-        "j.lavoie@net-c.ca",
-        "J. Lavoie",
-        8
-      ],
-      [
-        "lisacintosh@gmail.com",
-        "Maxime Leroy",
-        14
-      ],
-      [
-        "schotte.clement@hotmail.fr",
-        "Cl\u00e9ment Schotte",
-        33
-      ]
-    ]
-  },
-  {
-    "Russian": [
-      [
-        "lenemter@gmail.com",
-        "lenemter",
-        2
-      ],
-      [
-        "asvmail.as@gmail.com",
-        "\u0421\u0435\u0440\u0433\u0435\u0439",
-        18
-      ],
-      [
-        "vantu5z@mail.ru",
-        "Ivan Vantu5z",
-        48
-      ]
-    ]
-  },
-  {
-    "Norwegian Bokm\u00e5l": [
-      [
-        "epost@anotheragency.no",
-        "Allan Nordh\u00f8y",
-        32
-      ]
-    ]
-  },
-  {
-    "Arabic": [
-      [
-        "hamzah.abusamak@gmail.com",
-        "bonbonboi",
-        6
-      ],
-      [
-        "fawaz27000@hotmail.com",
-        "fawaz006",
-        11
-      ]
-    ]
-  },
-  {
-    "Spanish": [
-      [
-        "vaio0@swismail.com",
-        "Eduardo Malaspina",
-        1
-      ],
-      [
-        "fran-carro@hotmail.es",
-        "gallegonovato",
-        14
-      ],
-      [
-        "oscfdezdz@tuta.io",
-        "\u00d3scar Fern\u00e1ndez D\u00edaz",
-        48
-      ]
-    ]
-  },
-  {
-    "Japanese": [
-      [
-        "touryutamane@gmail.com",
-        "TouryuTamane",
-        31
+        "lyuutau@outlook.com",
+        "\u5218\u97ec",
+        3
       ]
     ]
   },
@@ -256,7 +46,245 @@
       [
         "lmlmlmlmlm71@gmail.com",
         "matl-17",
+        41
+      ]
+    ]
+  },
+  {
+    "Dutch": [
+      [
+        "vistausss@fastmail.com",
+        "Heimen Stoffels",
+        56
+      ],
+      [
+        "philip.goto@gmail.com",
+        "Philip Goto",
+        3
+      ]
+    ]
+  },
+  {
+    "English": [
+      [
+        "lisacintosh@gmail.com",
+        "Maxime Leroy",
+        2
+      ]
+    ]
+  },
+  {
+    "Finnish": [
+      [
+        "jiri.gronroos@iki.fi",
+        "Jiri Gr\u00f6nroos",
+        37
+      ]
+    ]
+  },
+  {
+    "French": [
+      [
+        "schotte.clement@hotmail.fr",
+        "Cl\u00e9ment Schotte",
+        24
+      ],
+      [
+        "lisacintosh@gmail.com",
+        "Maxime Leroy",
+        16
+      ],
+      [
+        "j.lavoie@net-c.ca",
+        "J. Lavoie",
+        8
+      ]
+    ]
+  },
+  {
+    "Galician": [
+      [
+        "xosecalvo@gmail.com",
+        "Xos\u00e9 Calvo",
+        37
+      ],
+      [
+        "fran-carro@hotmail.es",
+        "gallegonovato",
+        13
+      ]
+    ]
+  },
+  {
+    "German": [
+      [
+        "code@simonschneegans.de",
+        "Simon Schneegans",
+        31
+      ],
+      [
+        "atalanttore@googlemail.com",
+        "Ettore Atalan",
+        14
+      ],
+      [
+        "j.lavoie@net-c.ca",
+        "J. Lavoie",
+        2
+      ]
+    ]
+  },
+  {
+    "Hindi": [
+      [
+        "weblate.scrambled777@simplelogin.com",
+        "Scrambled777",
         49
+      ]
+    ]
+  },
+  {
+    "Italian": [
+      [
+        "albano_battistella@hotmail.com",
+        "albanobattistella",
+        18
+      ],
+      [
+        "mceyes@protonmail.com",
+        "Frankie McEyes",
+        8
+      ],
+      [
+        "j.lavoie@net-c.ca",
+        "J. Lavoie",
+        6
+      ]
+    ]
+  },
+  {
+    "Japanese": [
+      [
+        "touryutamane@gmail.com",
+        "TouryuTamane",
+        27
+      ]
+    ]
+  },
+  {
+    "Lithuanian": [
+      [
+        "hazap@hotmail.com",
+        "Moo",
+        14
+      ]
+    ]
+  },
+  {
+    "Norwegian Bokm\u00e5l": [
+      [
+        "epost@anotheragency.no",
+        "Allan Nordh\u00f8y",
+        24
+      ]
+    ]
+  },
+  {
+    "Polish": [
+      [
+        "sto@tutanota.de",
+        "WaldiS",
+        54
+      ],
+      [
+        "gnu.ewm@protonmail.com",
+        "Eryk Michalak",
+        1
+      ]
+    ]
+  },
+  {
+    "Russian": [
+      [
+        "vantu5z@mail.ru",
+        "Ivan Vantu5z",
+        39
+      ],
+      [
+        "asvmail.as@gmail.com",
+        "\u0421\u0435\u0440\u0433\u0435\u0439",
+        20
+      ],
+      [
+        "lenemter@gmail.com",
+        "lenemter",
+        2
+      ]
+    ]
+  },
+  {
+    "Slovak": [
+      [
+        "menom1@protonmail.com",
+        "menom",
+        48
+      ],
+      [
+        "salka.milan@googlemail.com",
+        "Milan \u0160alka",
+        1
+      ]
+    ]
+  },
+  {
+    "Spanish": [
+      [
+        "oscfdezdz@tuta.io",
+        "\u00d3scar Fern\u00e1ndez D\u00edaz",
+        40
+      ],
+      [
+        "fran-carro@hotmail.es",
+        "gallegonovato",
+        15
+      ],
+      [
+        "vaio0@swismail.com",
+        "Eduardo Malaspina",
+        1
+      ]
+    ]
+  },
+  {
+    "Swedish": [
+      [
+        "droidbittin@gmail.com",
+        "Luna Jernberg",
+        8
+      ]
+    ]
+  },
+  {
+    "Turkish": [
+      [
+        "veyselerden1907@gmail.com",
+        "Veysel Erden",
+        26
+      ],
+      [
+        "libreajans@gmail.com",
+        "Sabri \u00dcnal",
+        14
+      ],
+      [
+        "veyselerden@outlook.com",
+        "Veysel Erden",
+        10
+      ],
+      [
+        "borcunozkablan@gmail.com",
+        "Burak Orcun OZKABLAN",
+        2
       ]
     ]
   }
