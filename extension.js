@@ -21,6 +21,7 @@ import St from 'gi://St';
 
 import * as Util from 'resource:///org/gnome/shell/misc/util.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import * as Config from 'resource:///org/gnome/shell/misc/config.js';
 import {PressureBarrier} from 'resource:///org/gnome/shell/ui/layout.js';
 import {WorkspacesView, FitMode} from 'resource:///org/gnome/shell/ui/workspacesView.js';
 import {SwipeTracker} from 'resource:///org/gnome/shell/ui/swipeTracker.js';
@@ -35,6 +36,8 @@ import {Skybox} from './src/Skybox.js';
 // This extensions tweaks the positioning of workspaces in overview mode and while      //
 // switching workspaces in desktop mode to make them look like cube faces.              //
 //////////////////////////////////////////////////////////////////////////////////////////
+
+const [GS_VERSION] = Config.PACKAGE_VERSION.split('.').map(s => Number(s));
 
 // Maximum degrees the cube can be rotated up and down.
 const MAX_VERTICAL_ROTATION = 50;
@@ -621,23 +624,42 @@ export default class DesktopCube extends Extension {
         this._rightBarrier.destroy();
       }
 
-      this._leftBarrier = new Meta.Barrier({
-        display: global.display,
-        x1: 0,
-        x2: 0,
-        y1: 1,
-        y2: global.stage.height,
-        directions: Meta.BarrierDirection.POSITIVE_X,
-      });
+      // Since GNOME 46, the display property is not required anymore.
+      if (GS_VERSION <= 45) {
+        this._leftBarrier = new Meta.Barrier({
+          display: global.display,
+          x1: 0,
+          x2: 0,
+          y1: 1,
+          y2: global.stage.height,
+          directions: Meta.BarrierDirection.POSITIVE_X,
+        });
 
-      this._rightBarrier = new Meta.Barrier({
-        display: global.display,
-        x1: global.stage.width,
-        x2: global.stage.width,
-        y1: 1,
-        y2: global.stage.height,
-        directions: Meta.BarrierDirection.NEGATIVE_X,
-      });
+        this._rightBarrier = new Meta.Barrier({
+          display: global.display,
+          x1: global.stage.width,
+          x2: global.stage.width,
+          y1: 1,
+          y2: global.stage.height,
+          directions: Meta.BarrierDirection.NEGATIVE_X,
+        });
+      } else {
+        this._leftBarrier = new Meta.Barrier({
+          x1: 0,
+          x2: 0,
+          y1: 1,
+          y2: global.stage.height,
+          directions: Meta.BarrierDirection.POSITIVE_X,
+        });
+
+        this._rightBarrier = new Meta.Barrier({
+          x1: global.stage.width,
+          x2: global.stage.width,
+          y1: 1,
+          y2: global.stage.height,
+          directions: Meta.BarrierDirection.NEGATIVE_X,
+        });
+      }
 
       this._pressureBarrier.addBarrier(this._leftBarrier);
       this._pressureBarrier.addBarrier(this._rightBarrier);
