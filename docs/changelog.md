@@ -5,6 +5,14 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## [Desktop Cube 23 [backport release]](https://github.com/schneegans/Desktop-Cube/releases/tag/v23)
+
+**Release Date:** 2024-02-27
+
+#### Enhancements
+
+- Ported the translation updates of version 22 to GNOME 42, 43, and 44.
+
 ## [Desktop Cube 22](https://github.com/schneegans/Desktop-Cube/releases/tag/v22)
 
 **Release Date:** 2024-02-27
@@ -21,7 +29,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 #### Enhancements
 
-- Ported the changes from version 20 to GNOME 42, 43, and 44.
+- Ported the changes of version 20 to GNOME 42, 43, and 44.
 
 ## [Desktop Cube 20](https://github.com/schneegans/Desktop-Cube/releases/tag/v20)
 
