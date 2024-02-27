@@ -1,0 +1,226 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Simon Schneegans
+# This file is distributed under the same license as the desktop-cube package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: desktop-cube\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-10-07 13:05+0200\n"
+"PO-Revision-Date: 2024-02-25 10:02+0000\n"
+"Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
+"Language-Team: Hindi <https://hosted.weblate.org/projects/desktop-cube/core/"
+"hi/>\n"
+"Language: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.5-dev\n"
+
+#: src/ImageChooserButton.js:46
+msgid "Select File"
+msgstr "फ़ाइल चुनें"
+
+#: src/ImageChooserButton.js:47
+msgid "Cancel"
+msgstr "रद्द करें"
+
+#: src/ImageChooserButton.js:93 resources/ui/imageChooserButton.ui:27
+msgid "(None)"
+msgstr "(कोई नहीं)"
+
+#: resources/ui/settings.ui:14
+msgid "Visit Homepage"
+msgstr "मुखपृष्ठ पर जाएँ"
+
+#: resources/ui/settings.ui:18
+msgid "View Changelog"
+msgstr "चेंजलॉग देखें"
+
+#: resources/ui/settings.ui:22
+msgid "View Donors Hall-of-Fame"
+msgstr "डोनर्स हॉल-ऑफ-फेम देखें"
+
+#: resources/ui/settings.ui:28
+msgid "Donate"
+msgstr "दान करें"
+
+#: resources/ui/settings.ui:43
+msgid "Report a Bug"
+msgstr "बग रिपोर्ट करें"
+
+#: resources/ui/settings.ui:47
+msgid "Translate"
+msgstr "अनुवाद"
+
+#: resources/ui/settings.ui:53
+msgid "About the Desktop-Cube"
+msgstr "Desktop-Cube के बारे में"
+
+#: resources/ui/settings.ui:65
+msgid "General"
+msgstr "जनरल"
+
+#: resources/ui/settings.ui:70
+msgid "General Options"
+msgstr "सामान्य विकल्प"
+
+#: resources/ui/settings.ui:71
+msgid "These options affect the cube both in desktop and overview mode."
+msgstr "ये विकल्प क्यूब को डेस्कटॉप और ओवरव्यू मोड दोनों में प्रभावित करते हैं।"
+
+#: resources/ui/settings.ui:75
+msgid "Gap between last and first workspace"
+msgstr "अंतिम और प्रथम कार्यस्थान के बीच अंतर"
+
+#: resources/ui/settings.ui:76
+msgid "You cannot switch from the last to the first workspace anyways."
+msgstr "आप वैसे भी अंतिम से पहले कार्यस्थान पर स्विच नहीं कर सकते।"
+
+#: resources/ui/settings.ui:87 resources/ui/settings.ui:110
+#: resources/ui/settings.ui:133 resources/ui/settings.ui:164
+#: resources/ui/settings.ui:187 resources/ui/settings.ui:225
+#: resources/ui/settings.ui:256 resources/ui/settings.ui:292
+#: resources/ui/settings.ui:314 resources/ui/settings.ui:337
+#: resources/ui/settings.ui:373 resources/ui/settings.ui:396
+#: resources/ui/settings.ui:426 resources/ui/settings.ui:456
+#: resources/ui/settings.ui:487 resources/ui/settings.ui:518
+msgid "Reset to default value"
+msgstr "डिफ़ॉल्ट मूल्य पर रीसेट करें"
+
+#: resources/ui/settings.ui:98
+msgid "Explode cube on vertical rotations"
+msgstr "ऊर्ध्वाधर घुमावों पर क्यूब का विस्फोट करें"
+
+#: resources/ui/settings.ui:99
+msgid "Rotate the cube up or down to show the 3D structure."
+msgstr "3D संरचना दिखाने के लिए क्यूब को ऊपर या नीचे घुमाएँ।"
+
+#: resources/ui/settings.ui:121
+msgid "Enable central perspective for each monitor"
+msgstr "प्रत्येक मॉनिटर के लिए केंद्रीय परिप्रेक्ष्य सक्षम करें"
+
+#: resources/ui/settings.ui:122
+#, javascript-format
+msgid "For an explanation, you can watch this video: %s."
+msgstr "स्पष्टीकरण के लिए, आप यह वीडियो देख सकते हैं: %s।"
+
+#: resources/ui/settings.ui:144
+msgid "Window parallax effect"
+msgstr "विंडो लंबन प्रभाव"
+
+#: resources/ui/settings.ui:175
+msgid "Background panorama"
+msgstr "पृष्ठभूमि चित्रमाला"
+
+#: resources/ui/settings.ui:176
+msgid "See tooltip of the button for some hints."
+msgstr "कुछ संकेतों के लिए बटन का टूलटिप देखें।"
+
+#: resources/ui/settings.ui:179
+msgid ""
+"You can use any image here. For best results, it should be a 360° panorama "
+"in the equirectangular projection. A good source for such panoramas is "
+"polyhaven.com/hdris. Be sure to download the tone-mapped JPEG versions!"
+msgstr ""
+"आप यहां किसी भी छवि का उपयोग कर सकते हैं। सर्वोत्तम परिणामों के लिए, यह "
+"समआयताकार प्रक्षेपण में 360° पैनोरमा होना चाहिए। ऐसे पैनोरमा के लिए एक अच्छा "
+"स्रोत है http://polyhaven.com/hdris. टोन-मैप्ड JPEG संस्करण डाउनलोड करना "
+"सुनिश्चित करें!"
+
+#: resources/ui/settings.ui:201
+msgid "Advanced Options"
+msgstr "उन्नत विकल्प"
+
+#: resources/ui/settings.ui:202
+msgid "Usually, you can leave these options to their default values."
+msgstr "आमतौर पर, आप इन विकल्पों को उनके डिफ़ॉल्ट मानों पर छोड़ सकते हैं।"
+
+#: resources/ui/settings.ui:206
+msgid "Edge switch pressure"
+msgstr "एज स्विच दबाव"
+
+#: resources/ui/settings.ui:207
+msgid "The amount of pressure required to switch workspaces."
+msgstr "कार्यस्थलों को बदलने के लिए आवश्यक दबाव की मात्रा।"
+
+#: resources/ui/settings.ui:236
+msgid "Mouse rotation speed"
+msgstr "माउस घूर्णन गति"
+
+#: resources/ui/settings.ui:237
+msgid "A multiplier for the desktop cube rotation when dragged."
+msgstr "खींचे जाने पर डेस्कटॉप क्यूब रोटेशन के लिए एक गुणक।"
+
+#: resources/ui/settings.ui:271
+msgid "Desktop"
+msgstr "डेस्कटॉप"
+
+#: resources/ui/settings.ui:276
+msgid "Desktop Options"
+msgstr "डेस्कटॉप विकल्प"
+
+#: resources/ui/settings.ui:277
+msgid ""
+"These options tweak the cube when switching workspaces outside the overview."
+msgstr ""
+"अवलोकन के बाहर कार्यस्थानों को स्विच करते समय ये विकल्प क्यूब को घुमा देते "
+"हैं।"
+
+#: resources/ui/settings.ui:281
+msgid "Click and drag the desktop to rotate the cube"
+msgstr "क्यूब को घुमाने के लिए डेस्कटॉप पर क्लिक करें और खींचें"
+
+#: resources/ui/settings.ui:303
+msgid "Click and drag the panel to rotate the cube"
+msgstr "क्यूब को घुमाने के लिए पैनल को क्लिक करें और खींचें"
+
+#: resources/ui/settings.ui:325
+msgid "Drag windows to the edge of the desktop to switch workspaces"
+msgstr "कार्यस्थानों को बदलने के लिए विंडोज़ को डेस्कटॉप के किनारे तक खींचें"
+
+#: resources/ui/settings.ui:326 resources/ui/settings.ui:385
+msgid "You can configure the required pressure in the general options."
+msgstr "आप सामान्य विकल्पों में आवश्यक दबाव को कॉन्फ़िगर कर सकते हैं।"
+
+#: resources/ui/settings.ui:352
+msgid "Overview"
+msgstr "अवलोकन"
+
+#: resources/ui/settings.ui:357
+msgid "Overview Options"
+msgstr "अवलोकन विकल्प"
+
+#: resources/ui/settings.ui:358
+msgid "These options tweak the cube in the overview."
+msgstr "ये विकल्प अवलोकन में क्यूब को घुमाते हैं।"
+
+#: resources/ui/settings.ui:362
+msgid "Click and drag the overview to rotate the cube"
+msgstr "क्यूब को घुमाने के लिए अवलोकन को क्लिक करें और खींचें"
+
+#: resources/ui/settings.ui:384
+msgid "Drag windows to the edge of the overview to switch workspaces"
+msgstr "कार्यस्थानों को बदलने के लिए विंडोज़ को अवलोकन के किनारे तक खींचें"
+
+#: resources/ui/settings.ui:407
+msgid "Gap between adjacent workspaces"
+msgstr "निकटवर्ती कार्यस्थानों के बीच अंतराल"
+
+#: resources/ui/settings.ui:437
+msgid "Horizontal stretching of the cube"
+msgstr "क्यूब का क्षैतिज विस्तार"
+
+#: resources/ui/settings.ui:438
+msgid "This ensures that you can see the cube's sides from the front."
+msgstr "यह सुनिश्चित करता है कि आप सामने से क्यूब के किनारों को देख सकें।"
+
+#: resources/ui/settings.ui:467
+msgid "Opacity of the active workspace"
+msgstr "सक्रिय कार्यक्षेत्र की अस्पष्टता"
+
+#: resources/ui/settings.ui:498
+msgid "Opacity of inactive workspaces"
+msgstr "निष्क्रिय कार्यस्थानों की अस्पष्टता"

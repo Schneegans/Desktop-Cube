@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-31 07:34+0200\n"
+"POT-Creation-Date: 2023-10-07 13:05+0200\n"
 "PO-Revision-Date: 2022-12-09 00:47+0000\n"
 "Last-Translator: matl-17 <lmlmlmlmlm71@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/desktop-cube/core/"
@@ -19,31 +19,15 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Weblate 4.15-dev\n"
 
-#: prefs.js:144 prefs.js:174
-msgid "Gold Sponsors"
-msgstr "Zlatí sponzoři"
-
-#: prefs.js:147 prefs.js:177
-msgid "Silver Sponsors"
-msgstr "Stříbrní sponzoři"
-
-#: prefs.js:151 prefs.js:181
-msgid "Bronze Sponsors"
-msgstr "Bronzoví sponzoři"
-
-#: prefs.js:155 prefs.js:185
-msgid "Past Sponsors"
-msgstr "Dřívější sponzoři"
-
-#: src/ImageChooserButton.js:42
+#: src/ImageChooserButton.js:46
 msgid "Select File"
 msgstr "Vybrat soubor"
 
-#: src/ImageChooserButton.js:43
+#: src/ImageChooserButton.js:47
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: src/ImageChooserButton.js:89 resources/ui/imageChooserButton.ui:27
+#: src/ImageChooserButton.js:93 resources/ui/imageChooserButton.ui:27
 msgid "(None)"
 msgstr "(Žádné)"
 
@@ -55,85 +39,87 @@ msgstr "Navštívit domovskou stránku"
 msgid "View Changelog"
 msgstr "Prohlédnout seznam změn"
 
-#: resources/ui/settings.ui:24
-msgid "Report a Bug"
-msgstr "Nahlásit chybu"
+#: resources/ui/settings.ui:22
+msgid "View Donors Hall-of-Fame"
+msgstr ""
 
 #: resources/ui/settings.ui:28
-msgid "Translate"
-msgstr "Přeložit"
-
-#: resources/ui/settings.ui:32
 msgid "Donate"
 msgstr "Přispět"
 
-#: resources/ui/settings.ui:49
+#: resources/ui/settings.ui:43
+msgid "Report a Bug"
+msgstr "Nahlásit chybu"
+
+#: resources/ui/settings.ui:47
+msgid "Translate"
+msgstr "Přeložit"
+
+#: resources/ui/settings.ui:53
 msgid "About the Desktop-Cube"
 msgstr "O Desktop-Cube"
 
-#: resources/ui/settings.ui:61
+#: resources/ui/settings.ui:65
 msgid "General"
 msgstr ""
 
-#: resources/ui/settings.ui:66
+#: resources/ui/settings.ui:70
 msgid "General Options"
 msgstr "Obecné možnosti"
 
-#: resources/ui/settings.ui:67
+#: resources/ui/settings.ui:71
 msgid "These options affect the cube both in desktop and overview mode."
 msgstr ""
 
-#: resources/ui/settings.ui:71
+#: resources/ui/settings.ui:75
 msgid "Gap between last and first workspace"
 msgstr "Mezera mezi poslední a první pracovní plochou"
 
-#: resources/ui/settings.ui:72
+#: resources/ui/settings.ui:76
 msgid "You cannot switch from the last to the first workspace anyways."
 msgstr "Mezi poslední a první pracovní plochou nelze přepínat."
 
-#: resources/ui/settings.ui:83 resources/ui/settings.ui:106
-#: resources/ui/settings.ui:129 resources/ui/settings.ui:160
-#: resources/ui/settings.ui:183 resources/ui/settings.ui:221
-#: resources/ui/settings.ui:252 resources/ui/settings.ui:282
-#: resources/ui/settings.ui:312 resources/ui/settings.ui:342
-#: resources/ui/settings.ui:378 resources/ui/settings.ui:400
-#: resources/ui/settings.ui:423 resources/ui/settings.ui:459
-#: resources/ui/settings.ui:482 resources/ui/settings.ui:512
-#: resources/ui/settings.ui:542 resources/ui/settings.ui:573
-#: resources/ui/settings.ui:604
+#: resources/ui/settings.ui:87 resources/ui/settings.ui:110
+#: resources/ui/settings.ui:133 resources/ui/settings.ui:164
+#: resources/ui/settings.ui:187 resources/ui/settings.ui:225
+#: resources/ui/settings.ui:256 resources/ui/settings.ui:292
+#: resources/ui/settings.ui:314 resources/ui/settings.ui:337
+#: resources/ui/settings.ui:373 resources/ui/settings.ui:396
+#: resources/ui/settings.ui:426 resources/ui/settings.ui:456
+#: resources/ui/settings.ui:487 resources/ui/settings.ui:518
 msgid "Reset to default value"
 msgstr "Vrátit zpět na výchozí hodnotu"
 
-#: resources/ui/settings.ui:94
+#: resources/ui/settings.ui:98
 msgid "Explode cube on vertical rotations"
 msgstr "Rozložit krychli při vertikální rotaci"
 
-#: resources/ui/settings.ui:95
+#: resources/ui/settings.ui:99
 msgid "Rotate the cube up or down to show the 3D structure."
 msgstr "Otáčením krychle nahoru nebo dolů se ukáže 3D struktura."
 
-#: resources/ui/settings.ui:117
+#: resources/ui/settings.ui:121
 msgid "Enable central perspective for each monitor"
 msgstr "Povolit centrální pohled pro každý monitor"
 
-#: resources/ui/settings.ui:118
+#: resources/ui/settings.ui:122
 #, javascript-format
 msgid "For an explanation, you can watch this video: %s."
 msgstr "Pro vysvětlení se můžete podívat na toto video: %s."
 
-#: resources/ui/settings.ui:140
+#: resources/ui/settings.ui:144
 msgid "Window parallax effect"
 msgstr "Paralaxní efekt oken"
 
-#: resources/ui/settings.ui:171
+#: resources/ui/settings.ui:175
 msgid "Background panorama"
 msgstr "Panorama pozadí"
 
-#: resources/ui/settings.ui:172
+#: resources/ui/settings.ui:176
 msgid "See tooltip of the button for some hints."
 msgstr "V popisku tlačítka naleznete několik rad."
 
-#: resources/ui/settings.ui:175
+#: resources/ui/settings.ui:179
 msgid ""
 "You can use any image here. For best results, it should be a 360° panorama "
 "in the equirectangular projection. A good source for such panoramas is "
@@ -144,115 +130,122 @@ msgstr ""
 "taková panoramata je polyhaven.com/hdris. Ujistěte se, že stahujete tone-"
 "mapped JPEG verzi!"
 
-#: resources/ui/settings.ui:197
+#: resources/ui/settings.ui:201
 msgid "Advanced Options"
 msgstr ""
 
-#: resources/ui/settings.ui:198
+#: resources/ui/settings.ui:202
 msgid "Usually, you can leave these options to their default values."
 msgstr ""
 
-#: resources/ui/settings.ui:202
+#: resources/ui/settings.ui:206
 msgid "Edge switch pressure"
 msgstr "Tlak okrajového spínače"
 
-#: resources/ui/settings.ui:203
+#: resources/ui/settings.ui:207
 msgid "The amount of pressure required to switch workspaces."
 msgstr "Množství tlaku potřebné pro přepínání pracovních ploch."
 
-#: resources/ui/settings.ui:232
+#: resources/ui/settings.ui:236
 msgid "Mouse rotation speed"
 msgstr "Rychlost otáčení kolečkem myši"
 
-#: resources/ui/settings.ui:233
+#: resources/ui/settings.ui:237
 msgid "A multiplier for the desktop cube rotation when dragged."
 msgstr "Násobitel pro rotaci krychle ploch při tažení."
 
-#: resources/ui/settings.ui:263
-msgid "Transition time from desktop to overview [ms]"
-msgstr "Doba přechodu z plochy na přehled [ms]"
-
-#: resources/ui/settings.ui:264 resources/ui/settings.ui:294
-#: resources/ui/settings.ui:324
-msgid "Set to 0 to use GNOME Shell's default value."
-msgstr "Pro výchozí hodnotu GNOME Shell nastavte 0."
-
-#: resources/ui/settings.ui:293
-msgid "Transition time from overview to app drawer [ms]"
-msgstr "Doba přechodu z přehledu na šuplík aplikací [ms]"
-
-#: resources/ui/settings.ui:323
-msgid "Transition time between workspaces [ms]"
-msgstr "Doba přechodu mezi pracovními plochami [ms]"
-
-#: resources/ui/settings.ui:357
+#: resources/ui/settings.ui:271
 msgid "Desktop"
 msgstr ""
 
-#: resources/ui/settings.ui:362
+#: resources/ui/settings.ui:276
 msgid "Desktop Options"
 msgstr "Možnosti plochy"
 
-#: resources/ui/settings.ui:363
+#: resources/ui/settings.ui:277
 msgid ""
 "These options tweak the cube when switching workspaces outside the overview."
 msgstr ""
 
-#: resources/ui/settings.ui:367
+#: resources/ui/settings.ui:281
 msgid "Click and drag the desktop to rotate the cube"
 msgstr "Kliknout a táhnout plochu pro rotaci krychle"
 
-#: resources/ui/settings.ui:389
+#: resources/ui/settings.ui:303
 msgid "Click and drag the panel to rotate the cube"
 msgstr "Kliknout a táhnout panel pro rotaci krychle"
 
-#: resources/ui/settings.ui:411
+#: resources/ui/settings.ui:325
 msgid "Drag windows to the edge of the desktop to switch workspaces"
 msgstr "Přepínat pracovní plochy tažením okna k okraji plochy"
 
-#: resources/ui/settings.ui:412 resources/ui/settings.ui:471
+#: resources/ui/settings.ui:326 resources/ui/settings.ui:385
 msgid "You can configure the required pressure in the general options."
 msgstr ""
 
-#: resources/ui/settings.ui:438
+#: resources/ui/settings.ui:352
 msgid "Overview"
 msgstr ""
 
-#: resources/ui/settings.ui:443
+#: resources/ui/settings.ui:357
 msgid "Overview Options"
 msgstr "Možnosti přehledu"
 
-#: resources/ui/settings.ui:444
+#: resources/ui/settings.ui:358
 msgid "These options tweak the cube in the overview."
 msgstr ""
 
-#: resources/ui/settings.ui:448
+#: resources/ui/settings.ui:362
 msgid "Click and drag the overview to rotate the cube"
 msgstr "Kliknout a táhnout přehled pro rotaci krychle"
 
-#: resources/ui/settings.ui:470
+#: resources/ui/settings.ui:384
 msgid "Drag windows to the edge of the overview to switch workspaces"
 msgstr "Přepínat pracovní plochy tažením okna k okraji přehledu"
 
-#: resources/ui/settings.ui:493
+#: resources/ui/settings.ui:407
 msgid "Gap between adjacent workspaces"
 msgstr "Mezera mezi sousedními pracovními plochami"
 
-#: resources/ui/settings.ui:523
+#: resources/ui/settings.ui:437
 msgid "Horizontal stretching of the cube"
 msgstr "Horizontální natažení krychle"
 
-#: resources/ui/settings.ui:524
+#: resources/ui/settings.ui:438
 msgid "This ensures that you can see the cube's sides from the front."
 msgstr "Toto zajistí, že uvidíte boční strany krychle zepředu."
 
-#: resources/ui/settings.ui:553
+#: resources/ui/settings.ui:467
 msgid "Opacity of the active workspace"
 msgstr "Neprůhlednost aktivní pracovní plochy"
 
-#: resources/ui/settings.ui:584
+#: resources/ui/settings.ui:498
 msgid "Opacity of inactive workspaces"
 msgstr "Neprůhlednost neaktivních pracovních ploch"
+
+#~ msgid "Gold Sponsors"
+#~ msgstr "Zlatí sponzoři"
+
+#~ msgid "Silver Sponsors"
+#~ msgstr "Stříbrní sponzoři"
+
+#~ msgid "Bronze Sponsors"
+#~ msgstr "Bronzoví sponzoři"
+
+#~ msgid "Past Sponsors"
+#~ msgstr "Dřívější sponzoři"
+
+#~ msgid "Transition time from desktop to overview [ms]"
+#~ msgstr "Doba přechodu z plochy na přehled [ms]"
+
+#~ msgid "Set to 0 to use GNOME Shell's default value."
+#~ msgstr "Pro výchozí hodnotu GNOME Shell nastavte 0."
+
+#~ msgid "Transition time from overview to app drawer [ms]"
+#~ msgstr "Doba přechodu z přehledu na šuplík aplikací [ms]"
+
+#~ msgid "Transition time between workspaces [ms]"
+#~ msgstr "Doba přechodu mezi pracovními plochami [ms]"
 
 #~ msgid ""
 #~ "You can configure the required pressure in the general options above."

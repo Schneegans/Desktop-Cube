@@ -5,13 +5,31 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## [Desktop Cube 23 [backport release]](https://github.com/schneegans/Desktop-Cube/releases/tag/v23)
+
+**Release Date:** 2024-02-27
+
+#### Enhancements
+
+- Ported the translation updates of version 22 to GNOME 42, 43, and 44.
+
+## [Desktop Cube 22](https://github.com/schneegans/Desktop-Cube/releases/tag/v22)
+
+**Release Date:** 2024-02-27
+
+#### Enhancements
+
+- The extension has been updated to work with GNOME 46.
+- Many translation updates. Thanks to all the translators!
+- All CI jobs are now executed for GNOME 45 and GNOME 46 as well.
+
 ## [Desktop Cube 21 [backport release]](https://github.com/schneegans/Desktop-Cube/releases/tag/v21)
 
 **Release Date:** 2023-10-07
 
 #### Enhancements
 
-- Ported the changes from version 20 to GNOME 42, 43, and 44.
+- Ported the changes of version 20 to GNOME 42, 43, and 44.
 
 ## [Desktop Cube 20](https://github.com/schneegans/Desktop-Cube/releases/tag/v20)
 
