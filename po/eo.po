@@ -8,69 +8,72 @@ msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-07 13:05+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-03-22 17:02+0000\n"
+"Last-Translator: phlostically <phlostically@mailinator.com>\n"
+"Language-Team: Esperanto <https://hosted.weblate.org/projects/desktop-cube/"
+"core/eo/>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: src/ImageChooserButton.js:46
 msgid "Select File"
-msgstr ""
+msgstr "Elektu dosieron"
 
 #: src/ImageChooserButton.js:47
 msgid "Cancel"
-msgstr ""
+msgstr "Nuligi"
 
 #: src/ImageChooserButton.js:93 resources/ui/imageChooserButton.ui:27
 msgid "(None)"
-msgstr ""
+msgstr "(Nenio)"
 
 #: resources/ui/settings.ui:14
 msgid "Visit Homepage"
-msgstr ""
+msgstr "Viziti retejon"
 
 #: resources/ui/settings.ui:18
 msgid "View Changelog"
-msgstr ""
+msgstr "Vidi protokolon de ŝanĝoj"
 
 #: resources/ui/settings.ui:22
 msgid "View Donors Hall-of-Fame"
-msgstr ""
+msgstr "Vidi Halon de Famaj Donacintoj"
 
 #: resources/ui/settings.ui:28
 msgid "Donate"
-msgstr ""
+msgstr "Donaci"
 
 #: resources/ui/settings.ui:43
 msgid "Report a Bug"
-msgstr ""
+msgstr "Raporti cimon"
 
 #: resources/ui/settings.ui:47
 msgid "Translate"
-msgstr ""
+msgstr "Traduki"
 
 #: resources/ui/settings.ui:53
 msgid "About the Desktop-Cube"
-msgstr ""
+msgstr "Pri Desktop-Cube"
 
 #: resources/ui/settings.ui:65
 msgid "General"
-msgstr ""
+msgstr "Ĝenerala"
 
 #: resources/ui/settings.ui:70
 msgid "General Options"
-msgstr ""
+msgstr "Ĝeneralaj opcioj"
 
 #: resources/ui/settings.ui:71
 msgid "These options affect the cube both in desktop and overview mode."
-msgstr ""
+msgstr "Jen opcioj pri la kubo en kaj labortabla kaj superrigarda reĝimoj."
 
 #: resources/ui/settings.ui:75
 msgid "Gap between last and first workspace"
-msgstr ""
+msgstr "Fendo inter la lasta kaj la unua laborspacoj"
 
 #: resources/ui/settings.ui:76
 msgid "You cannot switch from the last to the first workspace anyways."
@@ -85,7 +88,7 @@ msgstr ""
 #: resources/ui/settings.ui:426 resources/ui/settings.ui:456
 #: resources/ui/settings.ui:487 resources/ui/settings.ui:518
 msgid "Reset to default value"
-msgstr ""
+msgstr "Uzi implicitan valoron"
 
 #: resources/ui/settings.ui:98
 msgid "Explode cube on vertical rotations"
@@ -94,6 +97,7 @@ msgstr ""
 #: resources/ui/settings.ui:99
 msgid "Rotate the cube up or down to show the 3D structure."
 msgstr ""
+"Turni la kubon supren aŭ malsupren por montri la tridimensian strukturon."
 
 #: resources/ui/settings.ui:121
 msgid "Enable central perspective for each monitor"
@@ -102,15 +106,15 @@ msgstr ""
 #: resources/ui/settings.ui:122
 #, javascript-format
 msgid "For an explanation, you can watch this video: %s."
-msgstr ""
+msgstr "Por klarigo, spektu la jenan filmon: %s."
 
 #: resources/ui/settings.ui:144
 msgid "Window parallax effect"
-msgstr ""
+msgstr "Fenestra paralaksa efekto"
 
 #: resources/ui/settings.ui:175
 msgid "Background panorama"
-msgstr ""
+msgstr "Fona panoramo"
 
 #: resources/ui/settings.ui:176
 msgid "See tooltip of the button for some hints."
@@ -125,7 +129,7 @@ msgstr ""
 
 #: resources/ui/settings.ui:201
 msgid "Advanced Options"
-msgstr ""
+msgstr "Altnivelaj opcioj"
 
 #: resources/ui/settings.ui:202
 msgid "Usually, you can leave these options to their default values."
@@ -141,7 +145,7 @@ msgstr ""
 
 #: resources/ui/settings.ui:236
 msgid "Mouse rotation speed"
-msgstr ""
+msgstr "Rapido de musa turniĝo"
 
 #: resources/ui/settings.ui:237
 msgid "A multiplier for the desktop cube rotation when dragged."
@@ -149,11 +153,11 @@ msgstr ""
 
 #: resources/ui/settings.ui:271
 msgid "Desktop"
-msgstr ""
+msgstr "Labortablo"
 
 #: resources/ui/settings.ui:276
 msgid "Desktop Options"
-msgstr ""
+msgstr "Labortablaj opcioj"
 
 #: resources/ui/settings.ui:277
 msgid ""
@@ -178,11 +182,11 @@ msgstr ""
 
 #: resources/ui/settings.ui:352
 msgid "Overview"
-msgstr ""
+msgstr "Superrigardo"
 
 #: resources/ui/settings.ui:357
 msgid "Overview Options"
-msgstr ""
+msgstr "Opcioj pri superrigardo"
 
 #: resources/ui/settings.ui:358
 msgid "These options tweak the cube in the overview."
@@ -198,7 +202,7 @@ msgstr ""
 
 #: resources/ui/settings.ui:407
 msgid "Gap between adjacent workspaces"
-msgstr ""
+msgstr "Fendo inter apudaj laborspacoj"
 
 #: resources/ui/settings.ui:437
 msgid "Horizontal stretching of the cube"
@@ -210,8 +214,8 @@ msgstr ""
 
 #: resources/ui/settings.ui:467
 msgid "Opacity of the active workspace"
-msgstr ""
+msgstr "Opakeco de la aktiva laborspaco"
 
 #: resources/ui/settings.ui:498
 msgid "Opacity of inactive workspaces"
-msgstr ""
+msgstr "Opakeco de neaktivaj laborspacoj"
