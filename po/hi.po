@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-07 13:05+0200\n"
-"PO-Revision-Date: 2024-02-25 10:02+0000\n"
+"PO-Revision-Date: 2024-03-29 10:01+0000\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/desktop-cube/core/"
 "hi/>\n"
@@ -21,11 +21,11 @@ msgstr ""
 
 #: src/ImageChooserButton.js:46
 msgid "Select File"
-msgstr "फ़ाइल चुनें"
+msgstr "फाइल चुनें"
 
 #: src/ImageChooserButton.js:47
 msgid "Cancel"
-msgstr "रद्द करें"
+msgstr "रद्द"
 
 #: src/ImageChooserButton.js:93 resources/ui/imageChooserButton.ui:27
 msgid "(None)"
@@ -65,7 +65,7 @@ msgstr "जनरल"
 
 #: resources/ui/settings.ui:70
 msgid "General Options"
-msgstr "सामान्य विकल्प"
+msgstr "जनरल विकल्प"
 
 #: resources/ui/settings.ui:71
 msgid "These options affect the cube both in desktop and overview mode."
@@ -140,7 +140,7 @@ msgstr "आमतौर पर, आप इन विकल्पों को �
 
 #: resources/ui/settings.ui:206
 msgid "Edge switch pressure"
-msgstr "एज स्विच दबाव"
+msgstr "किनारे का स्विच दबाव"
 
 #: resources/ui/settings.ui:207
 msgid "The amount of pressure required to switch workspaces."
