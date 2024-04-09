@@ -5,6 +5,14 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## [unreleased]
+
+**Release Date:** TBD
+
+#### Bug Fixes
+
+- Fixed a crash on GNOME 46 when using background panoramas.
+
 ## [Desktop Cube 23 [backport release]](https://github.com/schneegans/Desktop-Cube/releases/tag/v23)
 
 **Release Date:** 2024-02-27
