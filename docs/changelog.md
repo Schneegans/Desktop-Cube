@@ -11,7 +11,7 @@ SPDX-License-Identifier: CC-BY-4.0
 
 #### Bug Fixes
 
-- Fixed not-working workspace switches when dragging window to the screen's edge on GNOME 46.
+- Fixed not-working workspace switches when dragging windows to the screen's edge on GNOME 46.
 
 ## [Desktop Cube 24](https://github.com/schneegans/Desktop-Cube/releases/tag/v24)
 
