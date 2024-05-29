@@ -19,6 +19,8 @@ import GObject from 'gi://GObject';
 import Shell from 'gi://Shell';
 import St from 'gi://St';
 
+import GOpenHMD from 'gi://GOpenHMD';
+
 import * as Util from 'resource:///org/gnome/shell/misc/util.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as Config from 'resource:///org/gnome/shell/misc/config.js';
@@ -29,6 +31,7 @@ import {WorkspaceAnimationController} from 'resource:///org/gnome/shell/ui/works
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 import * as utils from './src/utils.js';
+import {setInterval, clearInterval} from './src/utils.js';
 import {DragGesture} from './src/DragGesture.js';
 import {Skybox} from './src/Skybox.js';
 
@@ -65,8 +68,158 @@ export default class DesktopCube extends Extension {
     this._origPrepSwitch = WorkspaceAnimationController.prototype._prepareWorkspaceSwitch;
     this._origFinalSwitch = WorkspaceAnimationController.prototype._finishWorkspaceSwitch;
 
+    var init_vr =
+      () => {
+        this.gopenhmd = new GOpenHMD.Context();
+        this.devs     = this.gopenhmd.enumerate();
+        this.hmd      = this.gopenhmd.open_device(0, null);
+
+        this.update_hmd = () => {
+          var toEuler = (x, y, z, w, order) => {
+            // https://github.com/rawify/Quaternion.js/blob/master/quaternion.js
+            var wx = w * x, wy = w * y, wz = w * z;
+            var xx = x * x, xy = x * y, xz = x * z;
+            var yy = y * y, yz = y * z, zz = z * z;
+
+            function asin(t) {
+              return t >= 1 ? Math.PI / 2 : (t <= -1 ? -Math.PI / 2 : Math.asin(t));
+            }
+
+            if (order === undefined || order === 'ZXY') {
+              return [
+                -Math.atan2(2 * (xy - wz), 1 - 2 * (xx + zz)),
+                asin(2 * (yz + wx)),
+                -Math.atan2(2 * (xz - wy), 1 - 2 * (xx + yy)),
+              ];
+            }
+
+            if (order === 'XYZ' || order === 'RPY') {
+              return [
+                -Math.atan2(2 * (yz - wx), 1 - 2 * (xx + yy)),
+                asin(2 * (xz + wy)),
+                -Math.atan2(2 * (xy - wz), 1 - 2 * (yy + zz)),
+              ];
+            }
+
+            return null;
+          };
+
+          this.gopenhmd.update();
+          const q     = this.hmd.rotation_quat();
+          const euler = toEuler(q.x, q.y, q.z, q.w, 'XYZ');
+
+          const additional_empirical_adjust_k = 0.65;
+
+          const k = 100 * additional_empirical_adjust_k;
+
+          this.rot_x = euler[0] * k;
+          this.rot_y = euler[1] * k;
+          this.rot_z = euler[2] * k;
+        };
+
+        this.workspacesView = undefined;
+        this.hmd_poller_fn = () => {
+          try {
+            this.update_hmd();
+
+            const update_workspace =
+              () => {
+                if (this.workspacesView) {
+                  this.workspacesView._updateWorkspacesState();
+                }
+              }
+
+            const update_monitor_group =
+              () => {
+                if (this.switchData) {
+                  this.switchData.monitors.forEach(m => {
+                    // Sometimes group.container or group._workspaceGroups doesn't exist.
+                    // Probably if no swipe active or yet not initilized on startup
+                    if (m._container && m._workspaceGroups) {
+                      try {
+                        updateMonitorGroup(m);
+                      } catch {
+                        // Probably monitors deleted in mid execution
+                        return;
+                      }
+                    } else {
+                      // console.error("Can not update monitor group")
+                      return;
+                    }
+                  });
+                }
+              }
+
+            switch (Main.actionMode) {
+              // SHELL_ACTION_MODE_NONE is active when windows is
+              // dragging between workspaces
+              case Shell.ActionMode.NONE:
+              case Shell.ActionMode.OVERVIEW:
+                update_workspace();
+                break;
+              case Shell.ActionMode.NORMAL:
+                update_monitor_group();
+                break;
+              // Noticed if click right button on desktop
+              // or if opened the notification panel
+              case Shell.ActionMode.POPUP:
+                // Could be on normal as well as on overview
+                // So just update both
+                update_workspace();
+                update_monitor_group();
+                break;
+              default:
+                console.error('Unhandled action mode: ' + Main.actionMode);
+            }
+          } catch (ex) {
+            this._settings.set_boolean('enable-vr', false);
+            // Look at error by `journalctl -r /usr/bin/gnome-shell`
+            console.error(ex);
+            return;
+          }
+
+          if (this._skybox) {
+            const magic_pitch_k = 0.015;
+            this._skybox.pitch  = this.rot_x * magic_pitch_k;
+            this._skybox.yaw    = this.rot_y * magic_pitch_k;
+          }
+        };
+
+        // TODO: how to keep updates synced with frames?
+        this.hmd_poller = setInterval(this.hmd_poller_fn, 16);
+      }
+
+    if (this._settings.get_boolean('enable-vr')) {
+      try {
+        init_vr();
+      } catch (ex) {
+        this._settings.set_boolean('enable-vr', false);
+      }
+    }
+
+    this._settings.connect('changed::enable-vr', () => {
+      if (this._settings.get_boolean('enable-vr')) {
+        try {
+          init_vr();
+        } catch (ex) {
+          this._settings.set_boolean('enable-vr', false);
+        }
+      } else {
+        clearInterval(this.hmd_poller);
+
+        this.hmd_poller_fn  = null;
+        this.update_hmd     = null;
+        this.workspacesView = null;
+        this.monitors       = null;
+
+        this.hmd      = null;
+        this.devs     = null;
+        this.gopenhmd = null;
+      }
+    });
+
     // We will use extensionThis to refer to the extension inside the patched methods.
-    const extensionThis = this;
+    var extensionThis = this;
 
     // -----------------------------------------------------------------------------------
     // ------------------------------- cubify the overview -------------------------------
@@ -111,6 +264,12 @@ export default class DesktopCube extends Extension {
     // repositioned.
     // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L255
     WorkspacesView.prototype._updateWorkspacesState = function() {
+      if (extensionThis._settings.get_boolean('enable-vr')) {
+        if (extensionThis.workspacesView !== this) {
+          extensionThis.workspacesView = this;
+        }
+      }
+
       // Use the original method if we have just one workspace.
       const faceCount = this._workspaces.length;
       if (faceCount <= 1) {
@@ -164,9 +323,21 @@ export default class DesktopCube extends Extension {
 
       // Apply vertical rotation if required. This comes from the pitch value of the
       // modified SwipeTracker created by _addOverviewDragGesture() further below.
-      this.pivot_point_z = -centerDepth;
+      if (extensionThis._settings.get_boolean('enable-vr')) {
+        // The centre of rotation should be in the user position
+        // TODO: probably better to set to a Clutter Stage's zfar value.
+        this.pivot_point_z = centerDepth;
+      } else {
+        this.pivot_point_z = -centerDepth;
+      }
+
       this.set_pivot_point(0.5, 0.5);
-      this.rotation_angle_x = extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
+
+      if (extensionThis._settings.get_boolean('enable-vr')) {
+        this.rotation_angle_x = extensionThis.rot_x;
+      } else {
+        this.rotation_angle_x = extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
+      }
 
       // During rotations, the cube is scaled down and the windows are "exploded". If we
       // are directly facing a cube side, the strengths of both effects are approaching
@@ -182,17 +353,33 @@ export default class DesktopCube extends Extension {
         // First update the corner radii. Corners are only rounded in overview.
         w.stateAdjustment.value = overviewMode;
 
-        // Now update the rotation of the cube face. The rotation center is -centerDepth
-        // units behind the front face.
-        w.pivot_point_z = -centerDepth;
+        // Now update the rotation of the cube face.
+        if (extensionThis._settings.get_boolean('enable-vr')) {
+          // The centre of rotation should be in the user position
+          // TODO: probably better to set to a Clutter Stage's zfar value.
+          w.pivot_point_z = centerDepth;
+        } else {
+          // The rotation center is -centerDepth
+          // units behind the front face.
+          w.pivot_point_z = -centerDepth;
+        }
 
         // Make cube smaller during rotations.
-        w.translation_z = -depthOffset;
+        if (extensionThis._settings.get_boolean('enable-vr')) {
+          // w.translation_z = -depthOffset;
+        } else {
+          w.translation_z = -depthOffset;
+        }
 
-        // The rotation angle is transitioned proportional to cubeMode^1.5. This slows
-        // down the rotation a bit closer to the desktop and to the app drawer.
-        w.rotation_angle_y =
-          Math.pow(cubeMode, 1.5) * (-this._scrollAdjustment.value + index) * faceAngle;
+        if (extensionThis._settings.get_boolean('enable-vr')) {
+          w.rotation_angle_y = -1 * (-this._scrollAdjustment.value + index) * faceAngle -
+            extensionThis.rot_y;
+        } else {
+          // The rotation angle is transitioned proportional to cubeMode^1.5. This slows
+          // down the rotation a bit closer to the desktop and to the app drawer.
+          w.rotation_angle_y =
+            Math.pow(cubeMode, 1.5) * (-this._scrollAdjustment.value + index) * faceAngle;
+        }
 
         // Distance to being the active workspace in [-1...0...1].
         const dist = Math.clamp(index - this._scrollAdjustment.value, -1, 1);
@@ -200,11 +387,14 @@ export default class DesktopCube extends Extension {
         // This moves next and previous workspaces a bit to the left and right. This
         // ensures that we can actually see them if we look at the cube from the front.
         // The value is set to zero if we have five or more workspaces.
-        if (faceCount <= 4) {
-          w.translation_x =
-            dist * overviewMode * extensionThis._settings.get_int('horizontal-stretch');
+        if (extensionThis._settings.get_boolean('enable-vr')) {
         } else {
-          w.translation_x = 0;
+          if (faceCount <= 4) {
+            w.translation_x =
+              dist * overviewMode * extensionThis._settings.get_int('horizontal-stretch');
+          } else {
+            w.translation_x = 0;
+          }
         }
 
         // Update opacity only in overview mode.
@@ -283,32 +473,67 @@ export default class DesktopCube extends Extension {
 
       // Apply vertical rotation if required. This comes from the pitch value of the
       // modified SwipeTracker created by _addDesktopDragGesture() further below.
-      group._container.pivot_point_z = -centerDepth;
+      if (extensionThis._settings.get_boolean('enable-vr')) {
+        // The centre of rotation should be in the user position
+        // TODO: probably better to set to a Clutter Stage's zfar value.
+        group._container.pivot_point_z = centerDepth;
+      } else {
+        group._container.pivot_point_z = -centerDepth;
+      }
       group._container.set_pivot_point(0.5, 0.5);
-      group._container.rotation_angle_x =
-        extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
+
+      if (extensionThis._settings.get_boolean('enable-vr')) {
+        group._container.rotation_angle_x =
+          -extensionThis._pitch.value * MAX_VERTICAL_ROTATION + extensionThis.rot_x;
+      } else {
+        group._container.rotation_angle_x =
+          extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
+      }
 
       // During rotations, the cube is scaled down and the windows are "exploded". If we
       // are directly facing a cube side, the strengths of both effects are approaching
       // zero. The strengths of both effects are small during horizontal rotations to make
       // workspace-switching not so obtrusive. However, during vertical rotations, the
       // effects are stronger.
+      // if (extensionThis._settings.get_boolean('enable-vr')) {
+      //   const [depthOffset, explode] = extensionThis._getExplodeFactors(
+      //     group.progress, extensionThis._pitch.value + extensionThis.rot_x,
+      //     centerDepth, group._monitor.index);
+      // } else {
       const [depthOffset, explode] = extensionThis._getExplodeFactors(
         group.progress, extensionThis._pitch.value, centerDepth, group._monitor.index);
+      // }
 
       // Rotate the individual faces.
       group._workspaceGroups.forEach((child, i) => {
-        child.set_pivot_point_z(-centerDepth);
+        if (extensionThis._settings.get_boolean('enable-vr')) {
+          // The centre of rotation should be in the user position
+          // TODO: probably better to set to a Clutter Stage's zfar value.
+          child.set_pivot_point_z(centerDepth);
+        } else {
+          child.set_pivot_point_z(-centerDepth);
+        }
         child.set_pivot_point(0.5, 0.5);
-        child.rotation_angle_y   = (i - group.progress) * faceAngle;
-        child.translation_z      = -depthOffset;
+        if (extensionThis._settings.get_boolean('enable-vr')) {
+          child.rotation_angle_y =
+            -1 * (i - group.progress) * faceAngle - extensionThis.rot_y;
+          child.translation_z = -depthOffset;
+        } else {
+          child.rotation_angle_y = (i - group.progress) * faceAngle;
+          child.translation_z    = -depthOffset;
+        }
         child.clip_to_allocation = false;
 
         // Counter the horizontal movement.
         child.translation_x = -child.x;
 
         // Make cube transparent during vertical rotations.
-        child._background.opacity = 255 * (1.0 - Math.abs(extensionThis._pitch.value));
+        if (extensionThis._settings.get_boolean('enable-vr')) {
+          // child._background.opacity =
+          //   255 * (1.0 - Math.abs(extensionThis._pitch.value + extensionThis.rot_x));
+        } else {
+          child._background.opacity = 255 * (1.0 - Math.abs(extensionThis._pitch.value));
+        }
 
         // Now we add some depth separation between the window clones. We get the stacking
         // order from the global window list. If the explode factor becomes too small, the
@@ -341,8 +566,13 @@ export default class DesktopCube extends Extension {
 
       // Update horizontal rotation of the background panorama during workspace switches.
       if (this._skybox) {
-        this._skybox.yaw =
-          2 * Math.PI * group.progress / global.workspaceManager.get_n_workspaces();
+        if (extensionThis._settings.get_boolean('enable-vr')) {
+          this._skybox.yaw = -1 * 2 * Math.PI * group.progress /
+            global.workspaceManager.get_n_workspaces();
+        } else {
+          this._skybox.yaw =
+            2 * Math.PI * group.progress / global.workspaceManager.get_n_workspaces();
+        }
       }
     };
 
@@ -358,6 +588,15 @@ export default class DesktopCube extends Extension {
       // messes with your spatial memory. If no workspaceIndices are given to this method,
       // all workspaces will be shown during the workspace switch.
       extensionThis._origPrepSwitch.apply(this, []);
+
+      // Save switchData with monitors for calling updateMonitorGroup() outside of this
+      // function
+      try {
+        if (this._switchData != extensionThis.switchData) {
+          extensionThis.switchData = this._switchData;
+        }
+      } catch {
+      }
 
       // Now tweak the monitor groups.
       this._switchData.monitors.forEach(m => {
@@ -394,7 +633,20 @@ export default class DesktopCube extends Extension {
 
     // Re-attach the background panorama to the stage once the workspace switch is done.
     WorkspaceAnimationController.prototype._finishWorkspaceSwitch = function(...params) {
-      extensionThis._origFinalSwitch.apply(this, params);
+      if (this._settings.get_boolean('enable-vr')) {
+        Meta.enable_unredirect_for_display(global.display);
+
+        // It is used by main HMD update cycle too
+        // Also, for some reason, commenting it out is preventing view repositioning to
+        // the centre after a gesture end
+        // this._switchData = null;
+        // switchData.monitors.forEach(m => m.destroy());
+
+        this.movingWindow = null;
+
+      } else {
+        extensionThis._origFinalSwitch.apply(this, params);
+      }
 
       // Make sure that the skybox covers the entire stage again.
       if (extensionThis._skybox) {
@@ -533,19 +785,29 @@ export default class DesktopCube extends Extension {
     updateSkybox();
 
     // Update vertical rotation of the background panorama.
-    this._pitch.connect('notify::value', () => {
-      if (this._skybox) {
-        this._skybox.pitch = (this._pitch.value * MAX_VERTICAL_ROTATION) * Math.PI / 180;
-      }
-    });
+    if (this._settings.get_boolean('enable-vr')) {
+    } else {
+      this._pitch.connect('notify::value', () => {
+        if (this._skybox) {
+          this._skybox.pitch =
+            (this._pitch.value * MAX_VERTICAL_ROTATION) * Math.PI / 180;
+        }
+      });
+    }
 
     // Update horizontal rotation of the background panorama during workspace switches in
     // the overview.
     Main.overview._overview.controls._workspaceAdjustment.connect('notify::value', () => {
       if (this._skybox) {
-        this._skybox.yaw = 2 * Math.PI *
-          Main.overview._overview.controls._workspaceAdjustment.value /
-          global.workspaceManager.get_n_workspaces();
+        if (this._settings.get_boolean('enable-vr')) {
+          this._skybox.yaw = -1 * 2 * Math.PI *
+            Main.overview._overview.controls._workspaceAdjustment.value /
+            global.workspaceManager.get_n_workspaces();
+        } else {
+          this._skybox.yaw = 2 * Math.PI *
+            Main.overview._overview.controls._workspaceAdjustment.value /
+            global.workspaceManager.get_n_workspaces();
+        }
       }
     });
 
@@ -743,6 +1005,9 @@ export default class DesktopCube extends Extension {
   // This function could be called after the extension is uninstalled, disabled in GNOME
   // Tweaks, when you log out or when the screen locks.
   disable() {
+    if (this._settings.get_boolean('enable-vr')) {
+      clearInterval(this.hmd_poller);
+    }
 
     // Restore the original behavior.
     SwipeTracker.prototype._endGesture              = this._origEndGesture;
@@ -773,6 +1038,14 @@ export default class DesktopCube extends Extension {
     this._pressureBarrier = null;
     this._leftBarrier     = null;
     this._rightBarrier    = null;
+
+    if (this._settings.get_boolean('enable-vr')) {
+      this.monitors       = null;
+      this.workspacesView = null;
+      this.hmd            = null;
+      this.devs           = null;
+      this.gopenhmd       = null;
+    }
 
     // Clean up perspective correction.
     this._disablePerspectiveCorrection();
@@ -986,7 +1259,11 @@ export default class DesktopCube extends Extension {
 
     // The explode factor is set to the hDepthOffset value to make the front-most
     // window stay at a constant depth.
+    // if (this._settings.get_boolean('enable-vr')) {
+    // const hExplode = -hDepthOffset;
+    // } else {
     const hExplode = hDepthOffset;
+    // }
 
     // For vertical rotations, we move the cube backwards to reveal everything. The
     // maximum explode width is set to half of the workspace size.
