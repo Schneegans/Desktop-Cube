@@ -131,13 +131,17 @@ export default class DesktopCube extends Extension {
 
             if (Main.actionMode == Shell.ActionMode.NORMAL) {
               if (this.workspaceAnimationController) {
-                this.workspaceAnimationController._switchData.monitors.forEach(m => {
-                  updateMonitorGroup(m);
-                });
+                if (this.workspaceAnimationController._switchData) {
+                  this.workspaceAnimationController._switchData.monitors.forEach(m => {
+                    updateMonitorGroup(m);
+                  });
+                }
               }
             }
           } catch (ex) {
             this._settings.set_boolean('enable-vr', false);
+            // Look at error by `journalctl -r /usr/bin/gnome-shell`
+            console.error(ex);
             return;
           }
 
