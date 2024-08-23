@@ -15,9 +15,19 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk';
 import Gdk from 'gi://Gdk';
 import Adw from 'gi://Adw';
+import GOpenHMD from 'gi://GOpenHMD';
+
+// try {
+//   var ns = await import('gi://GOpenHMD')
+//   var GOpenHMD = ns.GOpenHMD;
+  var is_gopenhmd_available = true
+// } catch (ex) {
+//   var is_gopenhmd_available = false
+// }
 
 import {ExtensionPreferences, gettext as _} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 import {registerImageChooserButton} from './src/ImageChooserButton.js';
+import {setInterval, clearInterval} from './src/utils.js';
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // For now, the preferences dialog of this extension is very simple. In the future, if  //
@@ -42,6 +52,9 @@ export default class DesktopCubePreferences extends ExtensionPreferences {
     // Load the user interface file.
     this._builder = new Gtk.Builder();
     this._builder.add_from_resource(`/ui/settings.ui`);
+    if (is_gopenhmd_available === true) {
+      this._builder.add_from_resource(`/ui/vr-page.ui`);
+    }
 
     // Make sure custom icons are found.
     Gtk.IconTheme.get_for_display(Gdk.Display.get_default()).add_resource_path('/img');
@@ -51,6 +64,8 @@ export default class DesktopCubePreferences extends ExtensionPreferences {
       this._builder.get_object('general-page'), this._builder.get_object('desktop-page'),
       this._builder.get_object('overview-page')
     ];
+
+    this._vr_mode_add_page(this._pages);
 
     // Store a reference to the settings object.
     this._settings = this.getSettings();
@@ -72,6 +87,10 @@ export default class DesktopCubePreferences extends ExtensionPreferences {
     this._bindAdjustment('inactive-workpace-opacity');
     this._bindAdjustment('edge-switch-pressure');
     this._bindAdjustment('mouse-rotation-speed');
+
+    // VR mode
+    this._settings.bind('enable-vr', this._builder.get_object('enable-vr'), 'active',
+      Gio.SettingsBindFlags.DEFAULT);
 
     // Inject the video link.
     const label    = this._builder.get_object('central-perspective-row');
@@ -204,4 +223,108 @@ export default class DesktopCubePreferences extends ExtensionPreferences {
 
     return null;
   }
+
+  //////////////////////////////////////////////////////////////////////////////////////////
+  // VR mode HMD related functions                                                        //
+  //////////////////////////////////////////////////////////////////////////////////////////
+
+  _vr_mode_set_openhmd_version(builder) {
+    var hmd_version_openhmd_label = builder.get_object('hmd_version_openhmd');
+    hmd_version_openhmd_label.set_text(GOpenHMD.version().to_string())
+  }
+
+  _vr_mode_context_enumerate(builder) {
+    var hmd_dev_nums_label = builder.get_object('hmd_dev_nums');
+
+    this.vr_mode_hmd_context = new GOpenHMD.Context();
+    const enum_devs = this.vr_mode_hmd_context.enumerate();
+
+    hmd_dev_nums_label.set_text(enum_devs.length.toString())
+
+    var hmd_current_selected_row = builder.get_object('hmd_current_selected');
+    var hmd_run_data_fetch_switcher = builder.get_object('hmd_run_data_fetch');
+
+    var radiobutton_group;
+    for (var i = 0; i < enum_devs.length; i++) {
+      let title = `${enum_devs[i].vendor} ${enum_devs[i].product}`
+      
+      let row = new Adw.ActionRow();
+      row.set_title(title);
+
+      let path = enum_devs[i].path
+      if (path) {
+        row.set_subtitle(path);
+      }
+
+      if (i == 0) {
+        // TODO: make selectors actual work
+        hmd_current_selected_row.set_title(title);
+        hmd_current_selected_row.icon_name = 'emblem-default-symbolic';
+        var radiobtn = new Gtk.CheckButton();
+        radiobutton_group = radiobtn;
+
+        hmd_run_data_fetch_switcher.sensitive = true;
+
+        this._vr_mode_configure_pose_fetch(builder, hmd_run_data_fetch_switcher, i);        
+      } else {
+        var radiobtn = new Gtk.CheckButton({group: radiobutton_group});
+      }
+
+      row.activatable_widget = radiobtn;
+      row.add_suffix(radiobtn);
+      
+      hmd_current_selected_row.add_row(row)
+    }
+  }
+
+  _vr_mode_configure_pose_fetch(builder, switcher, dev_index) {
+    var hmd_fetch_quat_x_level = builder.get_object('hmd_fetch_quat_x');
+    var hmd_fetch_quat_y_level = builder.get_object('hmd_fetch_quat_y');
+    var hmd_fetch_quat_z_level = builder.get_object('hmd_fetch_quat_z');
+    var hmd_fetch_quat_w_level = builder.get_object('hmd_fetch_quat_w');
+
+    switcher.connect('notify::active', () => {
+      if (switcher.get_active()) {
+        let settings = new GOpenHMD.DeviceSettings(this.vr_mode_hmd_context);
+        settings.set_automatic_update(true);
+        this.active_fetch_device = this.vr_mode_hmd_context.open_device(dev_index, settings);
+        this.vr_mode_hmd_poller = setInterval(() => {
+          this.vr_mode_hmd_context.update();
+          var quat = this.active_fetch_device.rotation_quat();
+    
+          hmd_fetch_quat_x_level.set_value(quat.x);
+          hmd_fetch_quat_y_level.set_value(quat.y);
+          hmd_fetch_quat_z_level.set_value(quat.z);
+          hmd_fetch_quat_w_level.set_value(quat.w);
+        }, 10);
+      } else {
+        this.active_fetch_device = null;
+        clearInterval(this.vr_mode_hmd_poller);
+      }
+    });
+  }
+
+  _vr_mode_add_page(pages) {
+    if (is_gopenhmd_available === true) {
+      pages.push(this._builder.get_object('vr-page'))
+      this._vr_mode_set_openhmd_version(this._builder);
+      this._vr_mode_context_enumerate(this._builder);
+    } else {
+      let page = new Adw.PreferencesPage();
+      let group = new Adw.PreferencesGroup();
+      let vr_status = new Adw.StatusPage();
+
+      vr_status.set_title('No library found');
+      vr_status.set_description('GOpenHMD library required to operate with HMD');
+      vr_status.set_icon_name('dialog-warning-symbolic');
+
+      group.add(vr_status);
+      page.add(group);
+
+      page.icon_name = 'settings-vr-symbolic';
+      page.title = 'VR';
+      pages.push(page);
+    }
+  }
+
 }
