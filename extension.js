@@ -36,6 +36,7 @@ import * as utils from './src/utils.js';
 import {setInterval, clearInterval} from './src/utils.js';
 import {DragGesture} from './src/DragGesture.js';
 import {Skybox} from './src/Skybox.js';
+import {CorsorBeam} from './src/shaders.js';
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // This extensions tweaks the positioning of workspaces in overview mode and while      //
@@ -1165,6 +1166,20 @@ export default class DesktopCube extends Extension {
 
         this.workspacesView = undefined;
         this.hmd_poller_fn = () => {
+          if (this._cursorBeamEffect) {
+            let [mouse_x, mouse_y] = global.get_pointer();
+
+            this._cursorBeamEffect.updateEffect(
+              {
+                rot_x: this.rot_x ? this.rot_x : 0.0,
+                rot_y: this.rot_y ? this.rot_y : 0.0,
+                rot_z: this.rot_z ? this.rot_z : 0.0,
+                pointer_pos_x: mouse_x,
+                pointer_pos_y: mouse_y
+              }
+            )
+          }
+
           try {
             this.update_hmd();
 
@@ -1221,6 +1236,15 @@ export default class DesktopCube extends Extension {
 
         // TODO: how to keep updates synced with frames?
         this.hmd_poller = setInterval(this.hmd_poller_fn, 16);
+
+        try {
+          this._cursorBeamEffect = new CorsorBeam(1920, 1080);
+          Main.uiGroup.add_effect_with_name('CorsorBeam', this._cursorBeamEffect);
+          console.warn('CursorBeam effect is loaded');
+        } catch (ex) {
+          console.error(ex);
+          console.warn('CursorBeam effect is not loaded');
+        }
       }
 
     if (this._settings.get_boolean('enable-vr')) {
@@ -1261,6 +1285,9 @@ export default class DesktopCube extends Extension {
   // Tweaks, when you log out or when the screen locks.
   disable() {
     if (this._settings.get_boolean('enable-vr')) {
+      if (this._cursorBeamEffect) {
+        Main.uiGroup.remove_effect_by_name('CursorBeam');
+      };
       clearInterval(this.hmd_poller);
     }
 
