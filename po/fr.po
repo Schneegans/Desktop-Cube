@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Desktop-Cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-07 13:05+0200\n"
-"PO-Revision-Date: 2022-06-22 22:19+0000\n"
-"Last-Translator: Maxime Leroy <lisacintosh@gmail.com>\n"
+"PO-Revision-Date: 2024-09-21 08:40+0000\n"
+"Last-Translator: wawa <vivian.du.44@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/desktop-cube/core/"
 "fr/>\n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: src/ImageChooserButton.js:46
 msgid "Select File"
@@ -41,7 +41,7 @@ msgstr "Voir le journal des changements"
 
 #: resources/ui/settings.ui:22
 msgid "View Donors Hall-of-Fame"
-msgstr ""
+msgstr "Voir Le Hall-Of-Fame Des Donateurs"
 
 #: resources/ui/settings.ui:28
 msgid "Donate"
@@ -61,7 +61,7 @@ msgstr "À propos de Desktop-Cube"
 
 #: resources/ui/settings.ui:65
 msgid "General"
-msgstr ""
+msgstr "Général"
 
 #: resources/ui/settings.ui:70
 msgid "General Options"
@@ -70,6 +70,8 @@ msgstr "Options générales"
 #: resources/ui/settings.ui:71
 msgid "These options affect the cube both in desktop and overview mode."
 msgstr ""
+"Ces options affectent le cube dans le mode bureau et dans le mode vue "
+"d'ensemble."
 
 #: resources/ui/settings.ui:75
 msgid "Gap between last and first workspace"
@@ -135,11 +137,13 @@ msgstr ""
 
 #: resources/ui/settings.ui:201
 msgid "Advanced Options"
-msgstr ""
+msgstr "Options Avancées"
 
 #: resources/ui/settings.ui:202
+#, fuzzy
 msgid "Usually, you can leave these options to their default values."
 msgstr ""
+"Normalement, vous pouvez laisser ces options à leurs valeurs par défaut."
 
 #: resources/ui/settings.ui:206
 msgid "Edge switch pressure"
@@ -147,11 +151,11 @@ msgstr ""
 
 #: resources/ui/settings.ui:207
 msgid "The amount of pressure required to switch workspaces."
-msgstr ""
+msgstr "La quantité de pression nécessaire pour changer de bureau."
 
 #: resources/ui/settings.ui:236
 msgid "Mouse rotation speed"
-msgstr ""
+msgstr "Vitesse de rotation de la souris"
 
 #: resources/ui/settings.ui:237
 msgid "A multiplier for the desktop cube rotation when dragged."
@@ -159,7 +163,7 @@ msgstr ""
 
 #: resources/ui/settings.ui:271
 msgid "Desktop"
-msgstr ""
+msgstr "Bureau"
 
 #: resources/ui/settings.ui:276
 msgid "Desktop Options"
@@ -186,10 +190,11 @@ msgstr ""
 #: resources/ui/settings.ui:326 resources/ui/settings.ui:385
 msgid "You can configure the required pressure in the general options."
 msgstr ""
+"Vous pouvez configurer la pression nécessaire dans les paramètres généraux."
 
 #: resources/ui/settings.ui:352
 msgid "Overview"
-msgstr ""
+msgstr "Vue d'ensemble"
 
 #: resources/ui/settings.ui:357
 msgid "Overview Options"
@@ -197,7 +202,7 @@ msgstr "Options de la vue d'ensemble"
 
 #: resources/ui/settings.ui:358
 msgid "These options tweak the cube in the overview."
-msgstr ""
+msgstr "Ces options modifient le cube dans le mode aperçu."
 
 #: resources/ui/settings.ui:362
 msgid "Click and drag the overview to rotate the cube"
