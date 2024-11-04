@@ -20,6 +20,7 @@ import Shell from 'gi://Shell';
 import St from 'gi://St';
 
 import GOpenHMD from 'gi://GOpenHMD';
+import Gxr from 'gi://Gxr';
 
 import * as Util from 'resource:///org/gnome/shell/misc/util.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
@@ -1113,9 +1114,68 @@ export default class DesktopCube extends Extension {
 
     var init_vr =
       () => {
-        this.gopenhmd = new GOpenHMD.Context();
-        this.devs     = this.gopenhmd.enumerate();
-        this.hmd      = this.gopenhmd.open_device(0, null);
+        let activate_openhmd_backend = () => {
+          this.gopenhmd = new GOpenHMD.Context();
+          this.devs     = this.gopenhmd.enumerate();
+          this.hmd      = this.gopenhmd.open_device(0, null);
+
+          this._deactivate_openhmd_backend = () => {
+            this.hmd            = null;
+            this.devs           = null;
+            this.gopenhmd       = null;
+          }
+        }
+
+        let activate_openxr_backend = () => {
+          this.gxr_ctx  = Gxr.Context.new("Desktop Cube", 1);
+
+          this._deactivate_openxr_backend = () => {
+            this.gxr_ctx            = null;
+          }
+        }
+
+        let check_if_openhmd_active = () => {
+          this.is_backend_openhmd = this._settings.get_boolean('radiobtn-backend-openhmd');
+        }
+
+        let check_if_openxr_active = () => {
+          this.is_backend_openxr = this._settings.get_boolean('radiobtn-backend-openxr');
+        }
+
+        this._settings.connect('changed::radiobtn-backend-openhmd', () => {
+          check_if_openhmd_active();
+
+          if (this.is_backend_openhmd) {
+            activate_openhmd_backend();
+          } else {
+            if (this._deactivate_openhmd_backend) {
+              this._deactivate_openhmd_backend();
+            }
+          }
+        })
+
+        this._settings.connect('changed::radiobtn-backend-openxr', () => {
+          check_if_openxr_active();
+
+          if (this.is_backend_openhmd) {
+            activate_openxr_backend();
+          } else {
+            if (this._deactivate_openxr_backend) {
+              this._deactivate_openxr_backend();
+            }
+          }
+        })
+
+        check_if_openhmd_active();
+        check_if_openxr_active();
+
+        if (this.is_backend_openhmd) {
+          activate_openhmd_backend();
+        }
+
+        if (this.is_backend_openxr) {
+          activate_openxr_backend();
+        }
 
         this.vr_monitors = get_monitor_groups();
 
@@ -1151,17 +1211,55 @@ export default class DesktopCube extends Extension {
             return null;
           };
 
-          this.gopenhmd.update();
-          const q     = this.hmd.rotation_quat();
-          const euler = toEuler(q.x, q.y, q.z, q.w, 'XYZ');
+          // Preserve for whole update to be atomic
+          let is_backend_openhmd = this.is_backend_openhmd;
+          let is_backend_openxr = this.is_backend_openxr;
 
-          const additional_empirical_adjust_k = 0.65;
+          if (is_backend_openhmd) {
+            this.gopenhmd.update();
+          }
+          
+          if (is_backend_openxr) {
+            var [pose_ret, pose] = this.gxr_ctx.get_head_pose();
+            if (pose_ret) {
+              //pose.print()
+            } else {
+              console.log('no pose received')
+              return;
+            }
+          }
 
-          const k = 100 * additional_empirical_adjust_k;
+          if (is_backend_openhmd) {
+            var q     = this.hmd.rotation_quat();
+            var euler = toEuler(q.x, q.y, q.z, q.w, 'XYZ');
+          }
 
-          this.rot_x = euler[0] * k;
-          this.rot_y = euler[1] * k;
-          this.rot_z = euler[2] * k;
+          if (is_backend_openxr) {
+            var [decompose_ret, , , q, , ]  = pose.decompose();
+            if (decompose_ret) {
+              //q.print()
+            } else {
+              console.log('no graphene matrix decompose possible')
+              return;
+            }
+            var euler = q.to_angles()
+          }
+
+          if (is_backend_openhmd) {
+            const additional_empirical_adjust_k = 0.65;
+
+            const k = 100 * additional_empirical_adjust_k;
+
+            this.rot_x = euler[0] * k;
+            this.rot_y = euler[1] * k;
+            this.rot_z = euler[2] * k;
+          }
+
+          if (is_backend_openxr) {
+            this.rot_x = euler[0];
+            this.rot_y = euler[1];
+            this.rot_z = euler[2];
+          }
         };
 
         this.workspacesView = undefined;
@@ -1274,9 +1372,13 @@ export default class DesktopCube extends Extension {
         this.workspacesView = null;
         this.monitors       = null;
 
-        this.hmd      = null;
-        this.devs     = null;
-        this.gopenhmd = null;
+        if (this._deactivate_openhmd_backend) {
+          this._deactivate_openhmd_backend();
+        }
+
+        if (this._deactivate_openxr_backend) {
+          this._deactivate_openxr_backend();
+        }
       }
     });
   }
@@ -1329,9 +1431,14 @@ export default class DesktopCube extends Extension {
       this.vr_monitors    = null;
       this.monitors       = null;
       this.workspacesView = null;
-      this.hmd            = null;
-      this.devs           = null;
-      this.gopenhmd       = null;
+
+      if (this._deactivate_openhmd_backend) {
+        this._deactivate_openhmd_backend();
+      }
+
+      if (this._deactivate_openxr_backend) {
+        this._deactivate_openxr_backend();
+      }
     }
 
     // Clean up perspective correction.
