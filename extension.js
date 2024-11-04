@@ -1273,7 +1273,10 @@ export default class DesktopCube extends Extension {
                 rot_y: this.rot_y ? this.rot_y : 0.0,
                 rot_z: this.rot_z ? this.rot_z : 0.0,
                 pointer_pos_x: mouse_x,
-                pointer_pos_y: mouse_y
+                pointer_pos_y: mouse_y,
+                no_beam: (Main.actionMode == Shell.ActionMode.OVERVIEW)
+                  || (Main.actionMode == Shell.ActionMode.NONE)
+                  || (Main.actionMode == Shell.ActionMode.POPUP)
               }
             )
           }

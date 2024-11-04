@@ -19,6 +19,9 @@ export const CorsorBeam = GObject.registerClass(
 
             this._pointer_pos_x = 0;
             this._pointer_pos_y = this._res_y - 0;
+
+            this._no_beam = 0;
+
             this.queue_repaint();
 
             this._source = ShaderLib.getCorsorBeam();
@@ -31,6 +34,7 @@ export const CorsorBeam = GObject.registerClass(
             this._rot_z = properties.rot_z;
             this._pointer_pos_x = properties.pointer_pos_x;
             this._pointer_pos_y = this._res_y - properties.pointer_pos_y;
+            this._no_beam = properties.no_beam ? 1 : 0;
             this.queue_repaint();
         }
 
@@ -47,6 +51,7 @@ export const CorsorBeam = GObject.registerClass(
             this.set_uniform_value('pointer_pos_y', this._pointer_pos_y);
             this.set_uniform_value('res_x', this._res_x);
             this.set_uniform_value('res_y', this._res_y);
+            this.set_uniform_value('no_beam', this._no_beam);
             super.vfunc_paint_target(...args);
         }
     });
@@ -65,6 +70,8 @@ export const ShaderLib = class {
 
             uniform int res_x;
             uniform int res_y;
+
+            uniform int no_beam;
 
             // draw line segment from A to B
             float segment(vec2 P, vec2 A, vec2 B, float r) 
@@ -89,7 +96,16 @@ export const ShaderLib = class {
                 vec2 mo_hmd = mo + (iRot.xy * 0.032);
                 float thickness = 0.001 + 0.001 / distance(uv, mo);
 
-                float intensity = segment(uv, mo_hmd, mo, thickness) * (distance(mo, uv) + 0.1);
+                vec2 point_from = mo;
+                vec2 point_to;
+
+                if (no_beam != 0) {
+                    point_to = mo;
+                } else {
+                    point_to = mo_hmd;
+                }
+
+                float intensity = segment(uv, point_to, point_from, thickness) * (distance(point_from, uv) + 0.1);
                 
                 c.rgb = mix(c.rgb, lineColor, intensity);
                 
