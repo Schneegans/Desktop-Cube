@@ -19,6 +19,8 @@ import GObject from 'gi://GObject';
 import Shell from 'gi://Shell';
 import St from 'gi://St';
 
+import GOpenHMD from 'gi://GOpenHMD';
+
 import * as Util from 'resource:///org/gnome/shell/misc/util.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as Config from 'resource:///org/gnome/shell/misc/config.js';
@@ -29,6 +31,7 @@ import {WorkspaceAnimationController} from 'resource:///org/gnome/shell/ui/works
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 import * as utils from './src/utils.js';
+import {setInterval, clearInterval} from './src/utils.js';
 import {DragGesture} from './src/DragGesture.js';
 import {Skybox} from './src/Skybox.js';
 
@@ -65,8 +68,103 @@ export default class DesktopCube extends Extension {
     this._origPrepSwitch = WorkspaceAnimationController.prototype._prepareWorkspaceSwitch;
     this._origFinalSwitch = WorkspaceAnimationController.prototype._finishWorkspaceSwitch;
 
+    var init_vr = () => {
+      this.gopenhmd = new GOpenHMD.Context()
+      this.devs = this.gopenhmd.enumerate()
+      this.hmd = this.gopenhmd.open_device(0, null)
+      
+      this.update_hmd = () => {
+        var toEuler = (x, y, z, w, order) => {
+          // https://github.com/rawify/Quaternion.js/blob/master/quaternion.js
+          var wx = w * x, wy = w * y, wz = w * z;
+          var xx = x * x, xy = x * y, xz = x * z;
+          var yy = y * y, yz = y * z, zz = z * z;
+    
+          function asin(t) {
+            return t >= 1 ? Math.PI / 2 : (t <= -1 ? -Math.PI / 2 : Math.asin(t));
+          }
+    
+          if (order === undefined || order === 'ZXY') {
+            return [
+              -Math.atan2(2 * (xy - wz), 1 - 2 * (xx + zz)),
+              asin(2 * (yz + wx)),
+              -Math.atan2(2 * (xz - wy), 1 - 2 * (xx + yy)),
+            ];
+          }
+    
+          if (order === 'XYZ' || order === 'RPY') {
+            return [
+              -Math.atan2(2 * (yz - wx), 1 - 2 * (xx + yy)),
+              asin(2 * (xz + wy)),
+              -Math.atan2(2 * (xy - wz), 1 - 2 * (yy + zz)),
+            ];
+          }
+    
+          return null;
+        }
+  
+        this.gopenhmd.update();
+        const q = this.hmd.rotation_quat();
+        const euler = toEuler(q.x, q.y, q.z, q.w, "XYZ");
+  
+        const additional_empirical_adjust_k = 0.65;
+        const k = 100 * additional_empirical_adjust_k;      
+        this.rot_x = euler[0] * k;
+        this.rot_y = euler[1] * k;
+        this.rot_z = euler[2] * k;
+      }
+  
+      this.workspacesView = undefined;
+      this.hmd_poller_fn = () => {
+        try {
+          this.update_hmd();
+        } catch (ex) {
+          this._settings.set_boolean('enable-vr', false);
+          return;
+        }
+        if (this.workspacesView) {
+          this.workspacesView._updateWorkspacesState();
+        }
+        if (this._skybox) {
+          const magic_pitch_k = 0.015;
+          this._skybox.pitch = this.rot_x * magic_pitch_k;
+          this._skybox.yaw = this.rot_y * magic_pitch_k;
+        }
+      }
+  
+      this.hmd_poller = setInterval(this.hmd_poller_fn, 10);
+    }
+
+    if (this._settings.get_boolean('enable-vr')) {
+      try {
+        init_vr();
+      } catch (ex) {
+        this._settings.set_boolean('enable-vr', false);
+      }
+    }
+
+    this._settings.connect('changed::enable-vr', () => {
+      if (this._settings.get_boolean('enable-vr')) {
+        try {
+          init_vr();
+        } catch (ex) {
+          this._settings.set_boolean('enable-vr', false);
+        }
+      } else {
+        clearInterval(this.hmd_poller);
+
+        this.hmd_poller_fn = null;
+        this.update_hmd = null;
+        this.workspacesView = null;
+
+        this.hmd = null;
+        this.devs = null;
+        this.gopenhmd = null;
+      }
+    });
+
     // We will use extensionThis to refer to the extension inside the patched methods.
-    const extensionThis = this;
+    var extensionThis = this;
 
     // -----------------------------------------------------------------------------------
     // ------------------------------- cubify the overview -------------------------------
@@ -111,6 +209,12 @@ export default class DesktopCube extends Extension {
     // repositioned.
     // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspacesView.js#L255
     WorkspacesView.prototype._updateWorkspacesState = function() {
+      if (extensionThis._settings.get_boolean('enable-vr')) {
+        if (extensionThis.workspacesView !== this) {
+          extensionThis.workspacesView = this;
+        }
+      }
+
       // Use the original method if we have just one workspace.
       const faceCount = this._workspaces.length;
       if (faceCount <= 1) {
@@ -166,7 +270,12 @@ export default class DesktopCube extends Extension {
       // modified SwipeTracker created by _addOverviewDragGesture() further below.
       this.pivot_point_z = -centerDepth;
       this.set_pivot_point(0.5, 0.5);
-      this.rotation_angle_x = extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
+
+      if (extensionThis._settings.get_boolean('enable-vr')) {
+        this.rotation_angle_x = extensionThis.rot_x;
+      } else {
+        this.rotation_angle_x = extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
+      }
 
       // During rotations, the cube is scaled down and the windows are "exploded". If we
       // are directly facing a cube side, the strengths of both effects are approaching
@@ -187,12 +296,20 @@ export default class DesktopCube extends Extension {
         w.pivot_point_z = -centerDepth;
 
         // Make cube smaller during rotations.
-        w.translation_z = -depthOffset;
+        if (extensionThis._settings.get_boolean('enable-vr')) {
+          // w.translation_z = -depthOffset; 
+        } else {
+          w.translation_z = -depthOffset; 
+        }
 
-        // The rotation angle is transitioned proportional to cubeMode^1.5. This slows
-        // down the rotation a bit closer to the desktop and to the app drawer.
-        w.rotation_angle_y =
-          Math.pow(cubeMode, 1.5) * (-this._scrollAdjustment.value + index) * faceAngle;
+        if (extensionThis._settings.get_boolean('enable-vr')) {
+          w.rotation_angle_y = -index * faceAngle - extensionThis.rot_y;
+        } else {
+          // The rotation angle is transitioned proportional to cubeMode^1.5. This slows
+          // down the rotation a bit closer to the desktop and to the app drawer.
+          w.rotation_angle_y =
+            Math.pow(cubeMode, 1.5) * (-this._scrollAdjustment.value + index) * faceAngle;
+        }
 
         // Distance to being the active workspace in [-1...0...1].
         const dist = Math.clamp(index - this._scrollAdjustment.value, -1, 1);
@@ -285,8 +402,13 @@ export default class DesktopCube extends Extension {
       // modified SwipeTracker created by _addDesktopDragGesture() further below.
       group._container.pivot_point_z = -centerDepth;
       group._container.set_pivot_point(0.5, 0.5);
-      group._container.rotation_angle_x =
-        extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
+      
+      if (extensionThis._settings.get_boolean('enable-vr')) {
+        group._container.rotation_angle_x = extensionThis.rot_x;
+      } else {
+        group._container.rotation_angle_x =
+          extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
+      }
 
       // During rotations, the cube is scaled down and the windows are "exploded". If we
       // are directly facing a cube side, the strengths of both effects are approaching
@@ -300,8 +422,12 @@ export default class DesktopCube extends Extension {
       group._workspaceGroups.forEach((child, i) => {
         child.set_pivot_point_z(-centerDepth);
         child.set_pivot_point(0.5, 0.5);
-        child.rotation_angle_y   = (i - group.progress) * faceAngle;
-        child.translation_z      = -depthOffset;
+        if (extensionThis._settings.get_boolean('enable-vr')) {
+          child.rotation_angle_y   = (i - group.progress) * faceAngle - extensionThis.rot_y;
+        } else {
+          child.rotation_angle_y   = (i - group.progress) * faceAngle;
+          child.translation_z      = -depthOffset;
+        }
         child.clip_to_allocation = false;
 
         // Counter the horizontal movement.
@@ -341,8 +467,13 @@ export default class DesktopCube extends Extension {
 
       // Update horizontal rotation of the background panorama during workspace switches.
       if (this._skybox) {
-        this._skybox.yaw =
+        if (extensionThis._settings.get_boolean('enable-vr')) {
+          this._skybox.yaw =
+          -1 * 2 * Math.PI * group.progress / global.workspaceManager.get_n_workspaces();
+        } else {
+          this._skybox.yaw =
           2 * Math.PI * group.progress / global.workspaceManager.get_n_workspaces();
+        }
       }
     };
 
@@ -533,19 +664,28 @@ export default class DesktopCube extends Extension {
     updateSkybox();
 
     // Update vertical rotation of the background panorama.
-    this._pitch.connect('notify::value', () => {
-      if (this._skybox) {
-        this._skybox.pitch = (this._pitch.value * MAX_VERTICAL_ROTATION) * Math.PI / 180;
-      }
-    });
+    if (this._settings.get_boolean('enable-vr')) {
+    } else {
+      this._pitch.connect('notify::value', () => {
+        if (this._skybox) {
+          this._skybox.pitch = (this._pitch.value * MAX_VERTICAL_ROTATION) * Math.PI / 180;
+        }
+      });
+    }
 
     // Update horizontal rotation of the background panorama during workspace switches in
     // the overview.
     Main.overview._overview.controls._workspaceAdjustment.connect('notify::value', () => {
       if (this._skybox) {
-        this._skybox.yaw = 2 * Math.PI *
+        if (this._settings.get_boolean('enable-vr')) { 
+          this._skybox.yaw = -1 * 2 * Math.PI *
           Main.overview._overview.controls._workspaceAdjustment.value /
           global.workspaceManager.get_n_workspaces();
+        } else {
+          this._skybox.yaw = 2 * Math.PI *
+          Main.overview._overview.controls._workspaceAdjustment.value /
+          global.workspaceManager.get_n_workspaces();
+        }
       }
     });
 
@@ -743,6 +883,9 @@ export default class DesktopCube extends Extension {
   // This function could be called after the extension is uninstalled, disabled in GNOME
   // Tweaks, when you log out or when the screen locks.
   disable() {
+    if (this._settings.get_boolean('enable-vr')) {
+      clearInterval(this.hmd_poller);
+    }
 
     // Restore the original behavior.
     SwipeTracker.prototype._endGesture              = this._origEndGesture;
@@ -773,6 +916,13 @@ export default class DesktopCube extends Extension {
     this._pressureBarrier = null;
     this._leftBarrier     = null;
     this._rightBarrier    = null;
+
+    if (this._settings.get_boolean('enable-vr')) {
+      this.workspacesView = null;
+      this.hmd = null;
+      this.devs = null;
+      this.gopenhmd = null;
+    }
 
     // Clean up perspective correction.
     this._disablePerspectiveCorrection();
@@ -828,11 +978,19 @@ export default class DesktopCube extends Extension {
     // it covers 90°. This prevents the affordance that it could be possible to switch
     // from the last ot the first workspace.
     if (this._settings.get_boolean('last-first-gap')) {
-      return (faceCount == 2 ? 90 : 180) / (faceCount - 1);
+      if (this._settings.get_boolean('enable-vr')) {
+        return -(faceCount == 2 ? 90 : 180) / (faceCount - 1);
+      } else {
+        return (faceCount == 2 ? 90 : 180) / (faceCount - 1);
+      }
     }
 
     // Else the "cube" covers 360°.
-    return 360.0 / faceCount;
+    if (this._settings.get_boolean('enable-vr')) {
+      return -360.0 / faceCount;
+    } else {
+      return 360.0 / faceCount;
+    }
   }
 
   // Returns the z-distance from the cube faces to the rotation pivot.
@@ -986,7 +1144,11 @@ export default class DesktopCube extends Extension {
 
     // The explode factor is set to the hDepthOffset value to make the front-most
     // window stay at a constant depth.
-    const hExplode = hDepthOffset;
+    // if (this._settings.get_boolean('enable-vr')) {
+      // const hExplode = -hDepthOffset;
+    // } else {
+      const hExplode = hDepthOffset;
+    // }
 
     // For vertical rotations, we move the cube backwards to reveal everything. The
     // maximum explode width is set to half of the workspace size.

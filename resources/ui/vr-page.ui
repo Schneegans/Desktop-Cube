@@ -1,0 +1,250 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.16.0 -->
+<interface>
+  <!-- interface-name gopenhmd.ui -->
+  <requires lib="gtk" version="4.12"/>
+  <requires lib="libadwaita" version="1.4"/>
+  <object class="AdwPreferencesPage" id="vr-page">
+    <property name="icon-name">settings-vr-symbolic</property>
+    <property name="title">VR</property>
+    <child>
+      <object class="GtkScrolledWindow">
+        <property name="height-request">500</property>
+        <child>
+          <object class="AdwClamp">
+            <property name="tightening-threshold">150</property>
+            <child>
+              <object class="GtkBox">
+                <property name="height-request">0</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">10</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="halign">center</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="pixel-size">128</property>
+                            <property name="resource">/img/scalable/actions/desktop-cube-vr-symbolic.svg</property>
+                            <style/>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="justify">center</property>
+                        <property name="label">VR Cube Desktop</property>
+                        <style>
+                          <class name="title-1"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="halign">center</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="hexpand">True</property>
+                                <property name="margin-bottom">5</property>
+                                <property name="margin-end">5</property>
+                                <property name="margin-start">5</property>
+                                <property name="margin-top">5</property>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label">OpenHMD version:</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="hexpand">True</property>
+                                <property name="margin-bottom">5</property>
+                                <property name="margin-end">5</property>
+                                <property name="margin-start">5</property>
+                                <property name="margin-top">5</property>
+                                <child>
+                                  <object class="GtkLabel" id="hmd_version_openhmd">
+                                    <property name="label">undefined</property>
+                                    <style/>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="horizontal"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label">Use GOpenHMD wrapper</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="halign">center</property>
+                        <property name="margin-bottom">10</property>
+                        <property name="margin-end">10</property>
+                        <property name="margin-start">10</property>
+                        <property name="margin-top">10</property>
+                        <property name="spacing">10</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label">Found devices:</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="hmd_dev_nums">
+                            <property name="label">undefined</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="hmd_enumerate">
+                            <property name="icon-name">emblem-synchronizing-symbolic</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">10</property>
+                    <property name="width-request">0</property>
+                    <child>
+                      <object class="AdwPreferencesGroup">
+                        <property name="description">General operational settings</property>
+                        <property name="title">Context</property>
+                        <property name="width-request">300</property>
+                        <child>
+                          <object class="AdwExpanderRow" id="hmd_current_selected">
+                            <property name="icon-name">dialog-error-symbolic</property>
+                            <property name="subtitle">Select device to operate with</property>
+                            <property name="title">Undefined</property>
+                            <property name="width-request">0</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwPreferencesGroup">
+                        <property name="description">Shows selected device state</property>
+                        <property name="title">Test device</property>
+                        <child>
+                          <object class="AdwSwitchRow" id="hmd_run_data_fetch">
+                            <property name="sensitive">False</property>
+                            <property name="subtitle">Undefined device</property>
+                            <property name="title">Run data fetch</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwPreferencesRow">
+                            <property name="sensitive">False</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="margin-bottom">10</property>
+                                <property name="margin-end">10</property>
+                                <property name="margin-start">10</property>
+                                <property name="margin-top">10</property>
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">15</property>
+                                <child>
+                                  <object class="GtkBox">
+                                    <property name="orientation">vertical</property>
+                                    <child>
+                                      <object class="GtkLabel">
+                                        <property name="label">X</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLevelBar" id="hmd_fetch_quat_x">
+                                        <property name="min-value">-1.0</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkBox">
+                                    <property name="orientation">vertical</property>
+                                    <child>
+                                      <object class="GtkLabel">
+                                        <property name="label">Y</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLevelBar" id="hmd_fetch_quat_y">
+                                        <property name="min-value">-1.0</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkBox">
+                                    <property name="orientation">vertical</property>
+                                    <child>
+                                      <object class="GtkLabel">
+                                        <property name="label">Z</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLevelBar" id="hmd_fetch_quat_z">
+                                        <property name="min-value">-1.0</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkBox">
+                                    <property name="orientation">vertical</property>
+                                    <child>
+                                      <object class="GtkLabel">
+                                        <property name="label">W</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLevelBar" id="hmd_fetch_quat_w">
+                                        <property name="min-value">-1.0</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwPreferencesGroup">
+                        <property name="description">VR mode settings</property>
+                        <property name="title">Cube Desktop VR</property>
+                        <child>
+                          <object class="AdwSwitchRow" id="enable-vr">
+                            <property name="icon-name">distributor-logo-Kubic-symbolic</property>
+                            <property name="subtitle">Turn cube inside out and look from within</property>
+                            <property name="title">Enable VR</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

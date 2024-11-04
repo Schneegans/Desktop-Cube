@@ -117,5 +117,16 @@ SPDX-License-Identifier: CC0-1.0
       <description>The opacity of the cube sides.</description>
     </key>
 
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- vr mode settings                                                              -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    
+    <key name="enable-vr" type="b">
+      <default>false</default>
+      <summary>Enable VR</summary>
+      <description>Turn cube inside out and look from within.</description>
+    </key>
+
   </schema>
 </schemalist>
