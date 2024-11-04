@@ -117,26 +117,59 @@ export default class DesktopCube extends Extension {
           this.rot_z = euler[2] * k;
         };
 
-        this.workspacesView               = undefined;
-        this.workspaceAnimationController = undefined;
+        this.workspacesView = undefined;
         this.hmd_poller_fn = () => {
           try {
             this.update_hmd();
 
-            if (Main.actionMode == Shell.ActionMode.OVERVIEW) {
-              if (this.workspacesView) {
-                this.workspacesView._updateWorkspacesState();
+            const update_workspace =
+              () => {
+                if (this.workspacesView) {
+                  this.workspacesView._updateWorkspacesState();
+                }
               }
-            }
 
-            if (Main.actionMode == Shell.ActionMode.NORMAL) {
-              if (this.workspaceAnimationController) {
-                if (this.workspaceAnimationController._switchData) {
-                  this.workspaceAnimationController._switchData.monitors.forEach(m => {
-                    updateMonitorGroup(m);
+            const update_monitor_group =
+              () => {
+                if (this.switchData) {
+                  this.switchData.monitors.forEach(m => {
+                    // Sometimes group.container or group._workspaceGroups doesn't exist.
+                    // Probably if no swipe active or yet not initilized on startup
+                    if (m._container && m._workspaceGroups) {
+                      try {
+                        updateMonitorGroup(m);
+                      } catch {
+                        // Probably monitors deleted in mid execution
+                        return;
+                      }
+                    } else {
+                      // console.error("Can not update monitor group")
+                      return;
+                    }
                   });
                 }
               }
+
+            switch (Main.actionMode) {
+              // SHELL_ACTION_MODE_NONE is active when windows is
+              // dragging between workspaces
+              case Shell.ActionMode.NONE:
+              case Shell.ActionMode.OVERVIEW:
+                update_workspace();
+                break;
+              case Shell.ActionMode.NORMAL:
+                update_monitor_group();
+                break;
+              // Noticed if click right button on desktop
+              // or if opened the notification panel
+              case Shell.ActionMode.POPUP:
+                // Could be on normal as well as on overview
+                // So just update both
+                update_workspace();
+                update_monitor_group();
+                break;
+              default:
+                console.error('Unhandled action mode: ' + Main.actionMode);
             }
           } catch (ex) {
             this._settings.set_boolean('enable-vr', false);
@@ -174,10 +207,10 @@ export default class DesktopCube extends Extension {
       } else {
         clearInterval(this.hmd_poller);
 
-        this.hmd_poller_fn                = null;
-        this.update_hmd                   = null;
-        this.workspacesView               = null;
-        this.workspaceAnimationController = null;
+        this.hmd_poller_fn  = null;
+        this.update_hmd     = null;
+        this.workspacesView = null;
+        this.monitors       = null;
 
         this.hmd      = null;
         this.devs     = null;
@@ -496,8 +529,8 @@ export default class DesktopCube extends Extension {
 
         // Make cube transparent during vertical rotations.
         if (extensionThis._settings.get_boolean('enable-vr')) {
-          child._background.opacity =
-            255 * (1.0 - Math.abs(extensionThis._pitch.value + extensionThis.rot_x));
+          // child._background.opacity =
+          //   255 * (1.0 - Math.abs(extensionThis._pitch.value + extensionThis.rot_x));
         } else {
           child._background.opacity = 255 * (1.0 - Math.abs(extensionThis._pitch.value));
         }
@@ -556,9 +589,13 @@ export default class DesktopCube extends Extension {
       // all workspaces will be shown during the workspace switch.
       extensionThis._origPrepSwitch.apply(this, []);
 
-      // Save monitors for calling updateMonitorGroup() outside of this function
-      if (extensionThis.workspaceAnimationController != this) {
-        extensionThis.workspaceAnimationController = this;
+      // Save switchData with monitors for calling updateMonitorGroup() outside of this
+      // function
+      try {
+        if (this._switchData != extensionThis.switchData) {
+          extensionThis.switchData = this._switchData;
+        }
+      } catch {
       }
 
       // Now tweak the monitor groups.
@@ -596,7 +633,20 @@ export default class DesktopCube extends Extension {
 
     // Re-attach the background panorama to the stage once the workspace switch is done.
     WorkspaceAnimationController.prototype._finishWorkspaceSwitch = function(...params) {
-      extensionThis._origFinalSwitch.apply(this, params);
+      if (this._settings.get_boolean('enable-vr')) {
+        Meta.enable_unredirect_for_display(global.display);
+
+        // It is used by main HMD update cycle too
+        // Also, for some reason, commenting it out is preventing view repositioning to
+        // the centre after a gesture end
+        // this._switchData = null;
+        // switchData.monitors.forEach(m => m.destroy());
+
+        this.movingWindow = null;
+
+      } else {
+        extensionThis._origFinalSwitch.apply(this, params);
+      }
 
       // Make sure that the skybox covers the entire stage again.
       if (extensionThis._skybox) {
@@ -990,6 +1040,7 @@ export default class DesktopCube extends Extension {
     this._rightBarrier    = null;
 
     if (this._settings.get_boolean('enable-vr')) {
+      this.monitors       = null;
       this.workspacesView = null;
       this.hmd            = null;
       this.devs           = null;
