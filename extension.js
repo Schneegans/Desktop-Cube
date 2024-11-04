@@ -115,16 +115,29 @@ export default class DesktopCube extends Extension {
       }
   
       this.workspacesView = undefined;
+      this.workspaceAnimationController = undefined;
       this.hmd_poller_fn = () => {
         try {
           this.update_hmd();
+
+          if (Main.actionMode == Shell.ActionMode.OVERVIEW) {
+            if (this.workspacesView) {
+              this.workspacesView._updateWorkspacesState();
+            }
+          }
+          
+          if (Main.actionMode == Shell.ActionMode.NORMAL) {
+            if (this.workspaceAnimationController) {
+              this.workspaceAnimationController._switchData.monitors.forEach(m => {
+                updateMonitorGroup(m);
+              });
+            }
+          }
         } catch (ex) {
           this._settings.set_boolean('enable-vr', false);
           return;
         }
-        if (this.workspacesView) {
-          this.workspacesView._updateWorkspacesState();
-        }
+
         if (this._skybox) {
           const magic_pitch_k = 0.015;
           this._skybox.pitch = this.rot_x * magic_pitch_k;
@@ -132,7 +145,8 @@ export default class DesktopCube extends Extension {
         }
       }
   
-      this.hmd_poller = setInterval(this.hmd_poller_fn, 10);
+      // TODO: how to keep updates synced with frames?
+      this.hmd_poller = setInterval(this.hmd_poller_fn, 16);
     }
 
     if (this._settings.get_boolean('enable-vr')) {
@@ -156,6 +170,7 @@ export default class DesktopCube extends Extension {
         this.hmd_poller_fn = null;
         this.update_hmd = null;
         this.workspacesView = null;
+        this.workspaceAnimationController = null;
 
         this.hmd = null;
         this.devs = null;
@@ -268,7 +283,14 @@ export default class DesktopCube extends Extension {
 
       // Apply vertical rotation if required. This comes from the pitch value of the
       // modified SwipeTracker created by _addOverviewDragGesture() further below.
-      this.pivot_point_z = -centerDepth;
+      if (extensionThis._settings.get_boolean('enable-vr')) {
+        // The centre of rotation should be in the user position
+        // TODO: probably better to set to a Clutter Stage's zfar value.
+        this.pivot_point_z = centerDepth;
+      } else {
+        this.pivot_point_z = -centerDepth;
+      }
+      
       this.set_pivot_point(0.5, 0.5);
 
       if (extensionThis._settings.get_boolean('enable-vr')) {
@@ -291,9 +313,16 @@ export default class DesktopCube extends Extension {
         // First update the corner radii. Corners are only rounded in overview.
         w.stateAdjustment.value = overviewMode;
 
-        // Now update the rotation of the cube face. The rotation center is -centerDepth
-        // units behind the front face.
-        w.pivot_point_z = -centerDepth;
+        // Now update the rotation of the cube face. 
+        if (extensionThis._settings.get_boolean('enable-vr')) {
+          // The centre of rotation should be in the user position
+          // TODO: probably better to set to a Clutter Stage's zfar value.
+          w.pivot_point_z = centerDepth;
+        } else {
+          // The rotation center is -centerDepth
+          // units behind the front face.
+          w.pivot_point_z = -centerDepth;
+        }
 
         // Make cube smaller during rotations.
         if (extensionThis._settings.get_boolean('enable-vr')) {
@@ -303,7 +332,7 @@ export default class DesktopCube extends Extension {
         }
 
         if (extensionThis._settings.get_boolean('enable-vr')) {
-          w.rotation_angle_y = -index * faceAngle - extensionThis.rot_y;
+          w.rotation_angle_y = -1 * (-this._scrollAdjustment.value + index) * faceAngle - extensionThis.rot_y;
         } else {
           // The rotation angle is transitioned proportional to cubeMode^1.5. This slows
           // down the rotation a bit closer to the desktop and to the app drawer.
@@ -317,11 +346,14 @@ export default class DesktopCube extends Extension {
         // This moves next and previous workspaces a bit to the left and right. This
         // ensures that we can actually see them if we look at the cube from the front.
         // The value is set to zero if we have five or more workspaces.
-        if (faceCount <= 4) {
-          w.translation_x =
-            dist * overviewMode * extensionThis._settings.get_int('horizontal-stretch');
+        if (extensionThis._settings.get_boolean('enable-vr')) {
         } else {
-          w.translation_x = 0;
+          if (faceCount <= 4) {
+              w.translation_x =
+                dist * overviewMode * extensionThis._settings.get_int('horizontal-stretch');
+          } else {
+            w.translation_x = 0;
+          }
         }
 
         // Update opacity only in overview mode.
@@ -400,11 +432,18 @@ export default class DesktopCube extends Extension {
 
       // Apply vertical rotation if required. This comes from the pitch value of the
       // modified SwipeTracker created by _addDesktopDragGesture() further below.
-      group._container.pivot_point_z = -centerDepth;
+      if (extensionThis._settings.get_boolean('enable-vr')) {
+        // The centre of rotation should be in the user position
+        // TODO: probably better to set to a Clutter Stage's zfar value.
+        group._container.pivot_point_z = centerDepth;
+      } else {
+        group._container.pivot_point_z = -centerDepth;
+      }
       group._container.set_pivot_point(0.5, 0.5);
       
       if (extensionThis._settings.get_boolean('enable-vr')) {
-        group._container.rotation_angle_x = extensionThis.rot_x;
+        group._container.rotation_angle_x = 
+          -extensionThis._pitch.value * MAX_VERTICAL_ROTATION + extensionThis.rot_x;
       } else {
         group._container.rotation_angle_x =
           extensionThis._pitch.value * MAX_VERTICAL_ROTATION;
@@ -415,15 +454,27 @@ export default class DesktopCube extends Extension {
       // zero. The strengths of both effects are small during horizontal rotations to make
       // workspace-switching not so obtrusive. However, during vertical rotations, the
       // effects are stronger.
+      // if (extensionThis._settings.get_boolean('enable-vr')) {
+      //   const [depthOffset, explode] = extensionThis._getExplodeFactors(
+      //     group.progress, extensionThis._pitch.value + extensionThis.rot_x, centerDepth, group._monitor.index);
+      // } else {
       const [depthOffset, explode] = extensionThis._getExplodeFactors(
         group.progress, extensionThis._pitch.value, centerDepth, group._monitor.index);
+      // }
 
       // Rotate the individual faces.
       group._workspaceGroups.forEach((child, i) => {
-        child.set_pivot_point_z(-centerDepth);
+        if (extensionThis._settings.get_boolean('enable-vr')) {
+          // The centre of rotation should be in the user position
+          // TODO: probably better to set to a Clutter Stage's zfar value.
+          child.set_pivot_point_z(centerDepth);
+        } else {
+          child.set_pivot_point_z(-centerDepth);
+        }
         child.set_pivot_point(0.5, 0.5);
         if (extensionThis._settings.get_boolean('enable-vr')) {
-          child.rotation_angle_y   = (i - group.progress) * faceAngle - extensionThis.rot_y;
+          child.rotation_angle_y   = -1 * (i - group.progress) * faceAngle - extensionThis.rot_y;
+          child.translation_z      = -depthOffset;
         } else {
           child.rotation_angle_y   = (i - group.progress) * faceAngle;
           child.translation_z      = -depthOffset;
@@ -434,7 +485,11 @@ export default class DesktopCube extends Extension {
         child.translation_x = -child.x;
 
         // Make cube transparent during vertical rotations.
-        child._background.opacity = 255 * (1.0 - Math.abs(extensionThis._pitch.value));
+        if (extensionThis._settings.get_boolean('enable-vr')) {
+          child._background.opacity = 255 * (1.0 - Math.abs(extensionThis._pitch.value + extensionThis.rot_x));
+        } else {
+          child._background.opacity = 255 * (1.0 - Math.abs(extensionThis._pitch.value));
+        }
 
         // Now we add some depth separation between the window clones. We get the stacking
         // order from the global window list. If the explode factor becomes too small, the
@@ -489,6 +544,11 @@ export default class DesktopCube extends Extension {
       // messes with your spatial memory. If no workspaceIndices are given to this method,
       // all workspaces will be shown during the workspace switch.
       extensionThis._origPrepSwitch.apply(this, []);
+
+      // Save monitors for calling updateMonitorGroup() outside of this function
+      if (extensionThis.workspaceAnimationController != this) {
+        extensionThis.workspaceAnimationController = this;
+      }
 
       // Now tweak the monitor groups.
       this._switchData.monitors.forEach(m => {
@@ -978,19 +1038,11 @@ export default class DesktopCube extends Extension {
     // it covers 90°. This prevents the affordance that it could be possible to switch
     // from the last ot the first workspace.
     if (this._settings.get_boolean('last-first-gap')) {
-      if (this._settings.get_boolean('enable-vr')) {
-        return -(faceCount == 2 ? 90 : 180) / (faceCount - 1);
-      } else {
-        return (faceCount == 2 ? 90 : 180) / (faceCount - 1);
-      }
+      return (faceCount == 2 ? 90 : 180) / (faceCount - 1);
     }
 
     // Else the "cube" covers 360°.
-    if (this._settings.get_boolean('enable-vr')) {
-      return -360.0 / faceCount;
-    } else {
-      return 360.0 / faceCount;
-    }
+    return 360.0 / faceCount;
   }
 
   // Returns the z-distance from the cube faces to the rotation pivot.
