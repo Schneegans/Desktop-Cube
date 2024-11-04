@@ -68,86 +68,89 @@ export default class DesktopCube extends Extension {
     this._origPrepSwitch = WorkspaceAnimationController.prototype._prepareWorkspaceSwitch;
     this._origFinalSwitch = WorkspaceAnimationController.prototype._finishWorkspaceSwitch;
 
-    var init_vr = () => {
-      this.gopenhmd = new GOpenHMD.Context()
-      this.devs = this.gopenhmd.enumerate()
-      this.hmd = this.gopenhmd.open_device(0, null)
-      
-      this.update_hmd = () => {
-        var toEuler = (x, y, z, w, order) => {
-          // https://github.com/rawify/Quaternion.js/blob/master/quaternion.js
-          var wx = w * x, wy = w * y, wz = w * z;
-          var xx = x * x, xy = x * y, xz = x * z;
-          var yy = y * y, yz = y * z, zz = z * z;
-    
-          function asin(t) {
-            return t >= 1 ? Math.PI / 2 : (t <= -1 ? -Math.PI / 2 : Math.asin(t));
-          }
-    
-          if (order === undefined || order === 'ZXY') {
-            return [
-              -Math.atan2(2 * (xy - wz), 1 - 2 * (xx + zz)),
-              asin(2 * (yz + wx)),
-              -Math.atan2(2 * (xz - wy), 1 - 2 * (xx + yy)),
-            ];
-          }
-    
-          if (order === 'XYZ' || order === 'RPY') {
-            return [
-              -Math.atan2(2 * (yz - wx), 1 - 2 * (xx + yy)),
-              asin(2 * (xz + wy)),
-              -Math.atan2(2 * (xy - wz), 1 - 2 * (yy + zz)),
-            ];
-          }
-    
-          return null;
-        }
-  
-        this.gopenhmd.update();
-        const q = this.hmd.rotation_quat();
-        const euler = toEuler(q.x, q.y, q.z, q.w, "XYZ");
-  
-        const additional_empirical_adjust_k = 0.65;
-        const k = 100 * additional_empirical_adjust_k;      
-        this.rot_x = euler[0] * k;
-        this.rot_y = euler[1] * k;
-        this.rot_z = euler[2] * k;
-      }
-  
-      this.workspacesView = undefined;
-      this.workspaceAnimationController = undefined;
-      this.hmd_poller_fn = () => {
-        try {
-          this.update_hmd();
+    var init_vr =
+      () => {
+        this.gopenhmd = new GOpenHMD.Context();
+        this.devs     = this.gopenhmd.enumerate();
+        this.hmd      = this.gopenhmd.open_device(0, null);
 
-          if (Main.actionMode == Shell.ActionMode.OVERVIEW) {
-            if (this.workspacesView) {
-              this.workspacesView._updateWorkspacesState();
-            }
-          }
-          
-          if (Main.actionMode == Shell.ActionMode.NORMAL) {
-            if (this.workspaceAnimationController) {
-              this.workspaceAnimationController._switchData.monitors.forEach(m => {
-                updateMonitorGroup(m);
-              });
-            }
-          }
-        } catch (ex) {
-          this._settings.set_boolean('enable-vr', false);
-          return;
-        }
+        this.update_hmd = () => {
+          var toEuler = (x, y, z, w, order) => {
+            // https://github.com/rawify/Quaternion.js/blob/master/quaternion.js
+            var wx = w * x, wy = w * y, wz = w * z;
+            var xx = x * x, xy = x * y, xz = x * z;
+            var yy = y * y, yz = y * z, zz = z * z;
 
-        if (this._skybox) {
-          const magic_pitch_k = 0.015;
-          this._skybox.pitch = this.rot_x * magic_pitch_k;
-          this._skybox.yaw = this.rot_y * magic_pitch_k;
-        }
+            function asin(t) {
+              return t >= 1 ? Math.PI / 2 : (t <= -1 ? -Math.PI / 2 : Math.asin(t));
+            }
+
+            if (order === undefined || order === 'ZXY') {
+              return [
+                -Math.atan2(2 * (xy - wz), 1 - 2 * (xx + zz)),
+                asin(2 * (yz + wx)),
+                -Math.atan2(2 * (xz - wy), 1 - 2 * (xx + yy)),
+              ];
+            }
+
+            if (order === 'XYZ' || order === 'RPY') {
+              return [
+                -Math.atan2(2 * (yz - wx), 1 - 2 * (xx + yy)),
+                asin(2 * (xz + wy)),
+                -Math.atan2(2 * (xy - wz), 1 - 2 * (yy + zz)),
+              ];
+            }
+
+            return null;
+          };
+
+          this.gopenhmd.update();
+          const q     = this.hmd.rotation_quat();
+          const euler = toEuler(q.x, q.y, q.z, q.w, 'XYZ');
+
+          const additional_empirical_adjust_k = 0.65;
+
+          const k = 100 * additional_empirical_adjust_k;
+
+          this.rot_x = euler[0] * k;
+          this.rot_y = euler[1] * k;
+          this.rot_z = euler[2] * k;
+        };
+
+        this.workspacesView               = undefined;
+        this.workspaceAnimationController = undefined;
+        this.hmd_poller_fn = () => {
+          try {
+            this.update_hmd();
+
+            if (Main.actionMode == Shell.ActionMode.OVERVIEW) {
+              if (this.workspacesView) {
+                this.workspacesView._updateWorkspacesState();
+              }
+            }
+
+            if (Main.actionMode == Shell.ActionMode.NORMAL) {
+              if (this.workspaceAnimationController) {
+                this.workspaceAnimationController._switchData.monitors.forEach(m => {
+                  updateMonitorGroup(m);
+                });
+              }
+            }
+          } catch (ex) {
+            this._settings.set_boolean('enable-vr', false);
+            return;
+          }
+
+          if (this._skybox) {
+            const magic_pitch_k = 0.015;
+            this._skybox.pitch  = this.rot_x * magic_pitch_k;
+            this._skybox.yaw    = this.rot_y * magic_pitch_k;
+          }
+        };
+
+        // TODO: how to keep updates synced with frames?
+        this.hmd_poller = setInterval(this.hmd_poller_fn, 16);
       }
-  
-      // TODO: how to keep updates synced with frames?
-      this.hmd_poller = setInterval(this.hmd_poller_fn, 16);
-    }
 
     if (this._settings.get_boolean('enable-vr')) {
       try {
@@ -167,13 +170,13 @@ export default class DesktopCube extends Extension {
       } else {
         clearInterval(this.hmd_poller);
 
-        this.hmd_poller_fn = null;
-        this.update_hmd = null;
-        this.workspacesView = null;
+        this.hmd_poller_fn                = null;
+        this.update_hmd                   = null;
+        this.workspacesView               = null;
         this.workspaceAnimationController = null;
 
-        this.hmd = null;
-        this.devs = null;
+        this.hmd      = null;
+        this.devs     = null;
         this.gopenhmd = null;
       }
     });
@@ -290,7 +293,7 @@ export default class DesktopCube extends Extension {
       } else {
         this.pivot_point_z = -centerDepth;
       }
-      
+
       this.set_pivot_point(0.5, 0.5);
 
       if (extensionThis._settings.get_boolean('enable-vr')) {
@@ -313,7 +316,7 @@ export default class DesktopCube extends Extension {
         // First update the corner radii. Corners are only rounded in overview.
         w.stateAdjustment.value = overviewMode;
 
-        // Now update the rotation of the cube face. 
+        // Now update the rotation of the cube face.
         if (extensionThis._settings.get_boolean('enable-vr')) {
           // The centre of rotation should be in the user position
           // TODO: probably better to set to a Clutter Stage's zfar value.
@@ -326,13 +329,14 @@ export default class DesktopCube extends Extension {
 
         // Make cube smaller during rotations.
         if (extensionThis._settings.get_boolean('enable-vr')) {
-          // w.translation_z = -depthOffset; 
+          // w.translation_z = -depthOffset;
         } else {
-          w.translation_z = -depthOffset; 
+          w.translation_z = -depthOffset;
         }
 
         if (extensionThis._settings.get_boolean('enable-vr')) {
-          w.rotation_angle_y = -1 * (-this._scrollAdjustment.value + index) * faceAngle - extensionThis.rot_y;
+          w.rotation_angle_y = -1 * (-this._scrollAdjustment.value + index) * faceAngle -
+            extensionThis.rot_y;
         } else {
           // The rotation angle is transitioned proportional to cubeMode^1.5. This slows
           // down the rotation a bit closer to the desktop and to the app drawer.
@@ -349,8 +353,8 @@ export default class DesktopCube extends Extension {
         if (extensionThis._settings.get_boolean('enable-vr')) {
         } else {
           if (faceCount <= 4) {
-              w.translation_x =
-                dist * overviewMode * extensionThis._settings.get_int('horizontal-stretch');
+            w.translation_x =
+              dist * overviewMode * extensionThis._settings.get_int('horizontal-stretch');
           } else {
             w.translation_x = 0;
           }
@@ -440,9 +444,9 @@ export default class DesktopCube extends Extension {
         group._container.pivot_point_z = -centerDepth;
       }
       group._container.set_pivot_point(0.5, 0.5);
-      
+
       if (extensionThis._settings.get_boolean('enable-vr')) {
-        group._container.rotation_angle_x = 
+        group._container.rotation_angle_x =
           -extensionThis._pitch.value * MAX_VERTICAL_ROTATION + extensionThis.rot_x;
       } else {
         group._container.rotation_angle_x =
@@ -456,7 +460,8 @@ export default class DesktopCube extends Extension {
       // effects are stronger.
       // if (extensionThis._settings.get_boolean('enable-vr')) {
       //   const [depthOffset, explode] = extensionThis._getExplodeFactors(
-      //     group.progress, extensionThis._pitch.value + extensionThis.rot_x, centerDepth, group._monitor.index);
+      //     group.progress, extensionThis._pitch.value + extensionThis.rot_x,
+      //     centerDepth, group._monitor.index);
       // } else {
       const [depthOffset, explode] = extensionThis._getExplodeFactors(
         group.progress, extensionThis._pitch.value, centerDepth, group._monitor.index);
@@ -473,11 +478,12 @@ export default class DesktopCube extends Extension {
         }
         child.set_pivot_point(0.5, 0.5);
         if (extensionThis._settings.get_boolean('enable-vr')) {
-          child.rotation_angle_y   = -1 * (i - group.progress) * faceAngle - extensionThis.rot_y;
-          child.translation_z      = -depthOffset;
+          child.rotation_angle_y =
+            -1 * (i - group.progress) * faceAngle - extensionThis.rot_y;
+          child.translation_z = -depthOffset;
         } else {
-          child.rotation_angle_y   = (i - group.progress) * faceAngle;
-          child.translation_z      = -depthOffset;
+          child.rotation_angle_y = (i - group.progress) * faceAngle;
+          child.translation_z    = -depthOffset;
         }
         child.clip_to_allocation = false;
 
@@ -486,7 +492,8 @@ export default class DesktopCube extends Extension {
 
         // Make cube transparent during vertical rotations.
         if (extensionThis._settings.get_boolean('enable-vr')) {
-          child._background.opacity = 255 * (1.0 - Math.abs(extensionThis._pitch.value + extensionThis.rot_x));
+          child._background.opacity =
+            255 * (1.0 - Math.abs(extensionThis._pitch.value + extensionThis.rot_x));
         } else {
           child._background.opacity = 255 * (1.0 - Math.abs(extensionThis._pitch.value));
         }
@@ -523,11 +530,11 @@ export default class DesktopCube extends Extension {
       // Update horizontal rotation of the background panorama during workspace switches.
       if (this._skybox) {
         if (extensionThis._settings.get_boolean('enable-vr')) {
-          this._skybox.yaw =
-          -1 * 2 * Math.PI * group.progress / global.workspaceManager.get_n_workspaces();
+          this._skybox.yaw = -1 * 2 * Math.PI * group.progress /
+            global.workspaceManager.get_n_workspaces();
         } else {
           this._skybox.yaw =
-          2 * Math.PI * group.progress / global.workspaceManager.get_n_workspaces();
+            2 * Math.PI * group.progress / global.workspaceManager.get_n_workspaces();
         }
       }
     };
@@ -728,7 +735,8 @@ export default class DesktopCube extends Extension {
     } else {
       this._pitch.connect('notify::value', () => {
         if (this._skybox) {
-          this._skybox.pitch = (this._pitch.value * MAX_VERTICAL_ROTATION) * Math.PI / 180;
+          this._skybox.pitch =
+            (this._pitch.value * MAX_VERTICAL_ROTATION) * Math.PI / 180;
         }
       });
     }
@@ -737,14 +745,14 @@ export default class DesktopCube extends Extension {
     // the overview.
     Main.overview._overview.controls._workspaceAdjustment.connect('notify::value', () => {
       if (this._skybox) {
-        if (this._settings.get_boolean('enable-vr')) { 
+        if (this._settings.get_boolean('enable-vr')) {
           this._skybox.yaw = -1 * 2 * Math.PI *
-          Main.overview._overview.controls._workspaceAdjustment.value /
-          global.workspaceManager.get_n_workspaces();
+            Main.overview._overview.controls._workspaceAdjustment.value /
+            global.workspaceManager.get_n_workspaces();
         } else {
           this._skybox.yaw = 2 * Math.PI *
-          Main.overview._overview.controls._workspaceAdjustment.value /
-          global.workspaceManager.get_n_workspaces();
+            Main.overview._overview.controls._workspaceAdjustment.value /
+            global.workspaceManager.get_n_workspaces();
         }
       }
     });
@@ -979,9 +987,9 @@ export default class DesktopCube extends Extension {
 
     if (this._settings.get_boolean('enable-vr')) {
       this.workspacesView = null;
-      this.hmd = null;
-      this.devs = null;
-      this.gopenhmd = null;
+      this.hmd            = null;
+      this.devs           = null;
+      this.gopenhmd       = null;
     }
 
     // Clean up perspective correction.
@@ -1197,9 +1205,9 @@ export default class DesktopCube extends Extension {
     // The explode factor is set to the hDepthOffset value to make the front-most
     // window stay at a constant depth.
     // if (this._settings.get_boolean('enable-vr')) {
-      // const hExplode = -hDepthOffset;
+    // const hExplode = -hDepthOffset;
     // } else {
-      const hExplode = hDepthOffset;
+    const hExplode = hDepthOffset;
     // }
 
     // For vertical rotations, we move the cube backwards to reveal everything. The
