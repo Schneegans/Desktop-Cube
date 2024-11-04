@@ -1332,9 +1332,36 @@ export default class DesktopCube extends Extension {
           }
         };
 
-        // TODO: how to keep updates synced with frames?
-        this.hmd_poller = setInterval(this.hmd_poller_fn, 16);
+        let loop = () => {
+          let timeout;
 
+          let is_backend_openhmd = this.is_backend_openhmd;
+          let is_backend_openxr = this.is_backend_openxr;
+
+          if (is_backend_openhmd) { timeout = 16 }; // TODO: how to keep updates synced with frames?
+          if (is_backend_openxr) { timeout = 10 }; // Rate will be delayed by special wait function
+          setTimeout(() => {
+            if (is_backend_openhmd) { this.hmd_poller_fn() }
+
+            if (is_backend_openxr) { 
+              // Needed to follow correct call order with begin/end frame.
+              // It also controls loop rate
+              this.gxr_ctx.wait_frame(); // TODO: probably not a good idea to lock js thread
+
+              // Calling begin/end frame allows to set `predicted_display_time` internally
+              // Without that `get_head_pose()` returns delayed data
+              this.gxr_ctx.begin_frame();
+              this.gxr_ctx.end_frame();
+              
+              this.hmd_poller_fn()
+            }
+
+            loop();
+          }, timeout);
+        };
+
+        loop(); // Start setTimeout chain
+        
         try {
           this._cursorBeamEffect = new CorsorBeam(1920, 1080);
           Main.uiGroup.add_effect_with_name('CorsorBeam', this._cursorBeamEffect);
