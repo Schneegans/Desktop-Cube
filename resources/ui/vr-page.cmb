@@ -19,15 +19,14 @@
 	(1,256,"GtkLabel",None,255,None,None,None,None,None),
 	(1,257,"GtkBox",None,254,None,None,None,1,None),
 	(1,258,"GtkLabel","hmd_version_openhmd",257,None,None,None,None,None),
-	(1,259,"GtkLabel",None,253,None,None,None,1,None),
 	(1,260,"GtkBox",None,248,None,None,None,3,None),
 	(1,261,"GtkLabel",None,260,None,None,None,None,None),
 	(1,262,"GtkLabel","hmd_dev_nums",260,None,None,None,1,None),
 	(1,263,"GtkButton","hmd_enumerate",260,None,None,None,2,None),
 	(1,264,"GtkBox",None,247,None,None,None,1,None),
-	(1,265,"AdwPreferencesGroup",None,264,None,None,None,None,None),
+	(1,265,"AdwPreferencesGroup",None,264,None,None,None,1,None),
 	(1,266,"AdwExpanderRow","hmd_current_selected",265,None,None,None,None,None),
-	(1,267,"AdwPreferencesGroup",None,264,None,None,None,1,None),
+	(1,267,"AdwPreferencesGroup",None,264,None,None,None,2,None),
 	(1,268,"AdwSwitchRow","hmd_run_data_fetch",267,None,None,None,None,None),
 	(1,269,"AdwPreferencesRow",None,267,None,None,None,1,None),
 	(1,270,"GtkBox",None,269,None,None,None,None,None),
@@ -43,8 +42,17 @@
 	(1,280,"GtkBox",None,270,None,None,None,3,None),
 	(1,281,"GtkLabel",None,280,None,None,None,None,None),
 	(1,282,"GtkLevelBar","hmd_fetch_quat_w",280,None,None,None,1,None),
-	(1,283,"AdwPreferencesGroup",None,264,None,None,None,2,None),
-	(1,284,"AdwSwitchRow","enable-vr",283,None,None,None,-1,None)
+	(1,283,"AdwPreferencesGroup",None,264,None,None,None,3,None),
+	(1,284,"AdwSwitchRow","enable-vr",283,None,None,None,-1,None),
+	(1,285,"AdwPreferencesGroup",None,264,None,None,None,None,None),
+	(1,311,"AdwActionRow",None,285,None,None,None,-1,None),
+	(1,312,"AdwActionRow",None,285,None,None,None,-1,None),
+	(1,313,"GtkCheckButton","radiobtn-backend-openhmd",311,None,None,None,None,None),
+	(1,314,"(external)","309",None,None,None,None,None,None),
+	(1,315,"(external)","310",None,None,None,None,None,None),
+	(1,316,"GtkCheckButton","radiobtn-backend-openxr",312,None,None,None,None,None),
+	(1,317,"(external)","314",None,None,None,None,None,None),
+	(1,318,"(external)","315",None,None,None,None,None,None)
   </object>
   <object_property>
 	(1,1,"AdwPreferencesPage","icon-name","settings-vr-symbolic",None,None,None,None,None,None,None,None,None),
@@ -75,13 +83,8 @@
 	(1,257,"GtkWidget","margin-start","5",None,None,None,None,None,None,None,None,None),
 	(1,257,"GtkWidget","margin-top","5",None,None,None,None,None,None,None,None,None),
 	(1,258,"GtkLabel","label","undefined",None,None,None,None,None,None,None,None,None),
-	(1,259,"GtkLabel","label","Use GOpenHMD wrapper",None,None,None,None,None,None,None,None,None),
 	(1,260,"GtkBox","spacing","10",None,None,None,None,None,None,None,None,None),
 	(1,260,"GtkWidget","halign","center",None,None,None,None,None,None,None,None,None),
-	(1,260,"GtkWidget","margin-bottom","10",None,None,None,None,None,None,None,None,None),
-	(1,260,"GtkWidget","margin-end","10",None,None,None,None,None,None,None,None,None),
-	(1,260,"GtkWidget","margin-start","10",None,None,None,None,None,None,None,None,None),
-	(1,260,"GtkWidget","margin-top","10",None,None,None,None,None,None,None,None,None),
 	(1,261,"GtkLabel","label","Found devices:",None,None,None,None,None,None,None,None,None),
 	(1,262,"GtkLabel","label","undefined",None,None,None,None,None,None,None,None,None),
 	(1,263,"GtkButton","icon-name","emblem-synchronizing-symbolic",None,None,None,None,None,None,None,None,None),
@@ -89,7 +92,7 @@
 	(1,264,"GtkOrientable","orientation","vertical",None,None,None,None,None,None,None,None,None),
 	(1,264,"GtkWidget","width-request","0",None,None,None,None,None,None,None,None,None),
 	(1,265,"AdwPreferencesGroup","description","General operational settings",None,None,None,None,None,None,None,None,None),
-	(1,265,"AdwPreferencesGroup","title","Context",None,None,None,None,None,None,None,None,None),
+	(1,265,"AdwPreferencesGroup","title","OpenHMD Context",None,None,None,None,None,None,None,None,None),
 	(1,265,"GtkWidget","width-request","300",None,None,None,None,None,None,None,None,None),
 	(1,266,"AdwExpanderRow","icon-name","dialog-error-symbolic",None,None,None,None,None,None,None,None,None),
 	(1,266,"AdwExpanderRow","subtitle","Select device to operate with",None,None,None,None,None,None,None,None,None),
@@ -123,15 +126,24 @@
 	(1,283,"AdwPreferencesGroup","title","Cube Desktop VR",None,None,None,None,None,None,None,None,None),
 	(1,284,"AdwActionRow","icon-name","distributor-logo-Kubic-symbolic",None,None,None,None,None,None,None,None,None),
 	(1,284,"AdwActionRow","subtitle","Turn cube inside out and look from within",None,None,None,None,None,None,None,None,None),
-	(1,284,"AdwPreferencesRow","title","Enable VR",None,None,None,None,None,None,None,None,None)
+	(1,284,"AdwPreferencesRow","title","Enable VR",None,None,None,None,None,None,None,None,None),
+	(1,285,"AdwPreferencesGroup","description","Select library to be used for HMD access",None,None,None,None,None,None,None,None,None),
+	(1,285,"AdwPreferencesGroup","title","HMD communication backend",None,None,None,None,None,None,None,None,None),
+	(1,311,"AdwActionRow","subtitle","GJS wrapper by GOpenHMD",None,None,None,None,None,None,None,None,None),
+	(1,311,"AdwPreferencesRow","title","OpenHMD",None,None,None,None,None,None,None,None,None),
+	(1,312,"AdwActionRow","activatable-widget","316",None,None,None,None,None,None,None,None,None),
+	(1,312,"AdwActionRow","subtitle","GJS wrapper by GXR",None,None,None,None,None,None,None,None,None),
+	(1,312,"AdwPreferencesRow","title","OpenXR",None,None,None,None,None,None,None,None,None),
+	(1,313,"GtkCheckButton","active","True",None,None,None,None,None,None,None,None,None),
+	(1,316,"GtkCheckButton","group","313",None,None,None,None,None,None,None,None,None)
   </object_property>
   <object_data>
 	(1,250,"GtkWidget",1,1,None,None,None,None,None,None),
 	(1,252,"GtkWidget",1,1,None,None,None,None,None,None),
 	(1,252,"GtkWidget",2,2,None,1,None,None,None,None),
-	(1,258,"GtkWidget",1,1,None,None,None,None,None,None),
+	(1,254,"GtkWidget",2,2,None,1,None,None,None,None),
 	(1,254,"GtkWidget",1,1,None,None,None,None,None,None),
-	(1,254,"GtkWidget",2,2,None,1,None,None,None,None)
+	(1,258,"GtkWidget",1,1,None,None,None,None,None,None)
   </object_data>
   <object_data_arg>
 	(1,252,"GtkWidget",2,2,"name","title-1"),

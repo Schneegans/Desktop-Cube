@@ -83,20 +83,11 @@
                             </style>
                           </object>
                         </child>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="label">Use GOpenHMD wrapper</property>
-                          </object>
-                        </child>
                       </object>
                     </child>
                     <child>
                       <object class="GtkBox">
                         <property name="halign">center</property>
-                        <property name="margin-bottom">10</property>
-                        <property name="margin-end">10</property>
-                        <property name="margin-start">10</property>
-                        <property name="margin-top">10</property>
                         <property name="spacing">10</property>
                         <child>
                           <object class="GtkLabel">
@@ -124,8 +115,37 @@
                     <property name="width-request">0</property>
                     <child>
                       <object class="AdwPreferencesGroup">
+                        <property name="description">Select library to be used for HMD access</property>
+                        <property name="title">HMD communication backend</property>
+                        <child>
+                          <object class="AdwActionRow">
+                            <property name="subtitle">GJS wrapper by GOpenHMD</property>
+                            <property name="title">OpenHMD</property>
+                            <child>
+                              <object class="GtkCheckButton" id="radiobtn-backend-openhmd">
+                                <property name="active">True</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwActionRow">
+                            <property name="activatable-widget">radiobtn-backend-openxr</property>
+                            <property name="subtitle">GJS wrapper by GXR</property>
+                            <property name="title">OpenXR</property>
+                            <child>
+                              <object class="GtkCheckButton" id="radiobtn-backend-openxr">
+                                <property name="group">radiobtn-backend-openhmd</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwPreferencesGroup">
                         <property name="description">General operational settings</property>
-                        <property name="title">Context</property>
+                        <property name="title">OpenHMD Context</property>
                         <property name="width-request">300</property>
                         <child>
                           <object class="AdwExpanderRow" id="hmd_current_selected">

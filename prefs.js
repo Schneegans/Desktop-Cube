@@ -91,6 +91,12 @@ export default class DesktopCubePreferences extends ExtensionPreferences {
     // VR mode
     this._settings.bind('enable-vr', this._builder.get_object('enable-vr'), 'active',
       Gio.SettingsBindFlags.DEFAULT);
+    this._settings.bind('radiobtn-backend-openhmd', this._builder.get_object('radiobtn-backend-openhmd'), 'active',
+      Gio.SettingsBindFlags.DEFAULT);
+    this._settings.bind('radiobtn-backend-openxr', this._builder.get_object('radiobtn-backend-openxr'), 'active',
+      Gio.SettingsBindFlags.DEFAULT);
+
+    this._vr_mode_configure_backend_lib_switch(this._builder, this._settings);
 
     // Inject the video link.
     const label    = this._builder.get_object('central-perspective-row');
@@ -231,6 +237,35 @@ export default class DesktopCubePreferences extends ExtensionPreferences {
   _vr_mode_set_openhmd_version(builder) {
     var hmd_version_openhmd_label = builder.get_object('hmd_version_openhmd');
     hmd_version_openhmd_label.set_text(GOpenHMD.version().to_string())
+  }
+
+  _vr_mode_configure_backend_lib_switch(builder, settings) {
+    let hmd_current_selected    = builder.get_object('hmd_current_selected');
+    let hmd_run_data_fetch    = builder.get_object('hmd_run_data_fetch');
+
+    let sync_cur_backend_state_with_context_sensitive = () => {
+      if (settings.get_boolean('radiobtn-backend-openhmd')) {
+        hmd_current_selected.sensitive = true;
+      } else {
+        hmd_current_selected.sensitive = false;
+      }
+    }
+
+    let sync_cur_backend_state_with_data_fetch_sensitive = () => {
+      if (settings.get_boolean('radiobtn-backend-openhmd')) {
+        hmd_run_data_fetch.sensitive = true;
+      } else {
+        hmd_run_data_fetch.sensitive = false;
+      }
+    }
+
+    settings.connect('changed::radiobtn-backend-openhmd', () => {
+      sync_cur_backend_state_with_context_sensitive();
+      sync_cur_backend_state_with_data_fetch_sensitive();
+    });
+
+    sync_cur_backend_state_with_context_sensitive();
+    sync_cur_backend_state_with_data_fetch_sensitive();
   }
 
   _vr_mode_context_enumerate(builder) {
