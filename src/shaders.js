@@ -17,9 +17,8 @@ export const CorsorBeam = GObject.registerClass(
             this._rot_y = 0.0;
             this._rot_z = 0.0;
 
-            this._pointer_pos_x = 0.0;
-            this._pointer_pos_y = this._res_y - 0.0;
-            
+            this._pointer_pos_x = 0;
+            this._pointer_pos_y = this._res_y - 0;
             this.queue_repaint();
 
             this._source = ShaderLib.getCorsorBeam();
@@ -44,8 +43,8 @@ export const CorsorBeam = GObject.registerClass(
             this.set_uniform_value('rot_x', this._rot_x);
             this.set_uniform_value('rot_y', this._rot_y);
             this.set_uniform_value('rot_z', this._rot_z);
-            this.set_uniform_value('pointer_pos_x', this._pointer_pos_x + 0.001); // TODO: doesn't work without adding
-            this.set_uniform_value('pointer_pos_y', this._pointer_pos_y + 0.001); // TODO: doesn't work without adding
+            this.set_uniform_value('pointer_pos_x', this._pointer_pos_x);
+            this.set_uniform_value('pointer_pos_y', this._pointer_pos_y);
             this.set_uniform_value('res_x', this._res_x);
             this.set_uniform_value('res_y', this._res_y);
             super.vfunc_paint_target(...args);
@@ -61,8 +60,8 @@ export const ShaderLib = class {
             uniform float rot_y;
             uniform float rot_z;
 
-            uniform float pointer_pos_x;
-            uniform float pointer_pos_y;
+            uniform int pointer_pos_x;
+            uniform int pointer_pos_y;
 
             uniform int res_x;
             uniform int res_y;
@@ -81,7 +80,7 @@ export const ShaderLib = class {
             void main() {
                 vec4 c = texture2D(tex, cogl_tex_coord_in[0].st);
 
-                vec2 iMouse = vec2(pointer_pos_x, pointer_pos_y);
+                vec2 iMouse = vec2(float(pointer_pos_x), float(pointer_pos_y));
                 vec3 iRot = vec3(rot_y, -rot_x, rot_z);
                 vec2 iResolution = vec2(res_x, res_y);
 
