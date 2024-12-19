@@ -8,73 +8,77 @@ msgstr ""
 "Project-Id-Version: desktop-cube\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-07 13:05+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-12-19 23:40+0000\n"
+"Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
+"Language-Team: Tamil <https://hosted.weblate.org/projects/desktop-cube/core/"
+"ta/>\n"
 "Language: ta\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.9.2-dev\n"
 
 #: src/ImageChooserButton.js:46
 msgid "Select File"
-msgstr ""
+msgstr "கோப்பைத் தேர்ந்தெடு"
 
 #: src/ImageChooserButton.js:47
 msgid "Cancel"
-msgstr ""
+msgstr "ரத்துசெய்"
 
 #: src/ImageChooserButton.js:93 resources/ui/imageChooserButton.ui:27
 msgid "(None)"
-msgstr ""
+msgstr "(எதுவுமில்லை)"
 
 #: resources/ui/settings.ui:14
 msgid "Visit Homepage"
-msgstr ""
+msgstr "முகப்புப்பக்கத்தைப் பார்வையிடவும்"
 
 #: resources/ui/settings.ui:18
 msgid "View Changelog"
-msgstr ""
+msgstr "சேஞ்ச்லாக் காண்க"
 
 #: resources/ui/settings.ui:22
 msgid "View Donors Hall-of-Fame"
-msgstr ""
+msgstr "நன்கொடையாளர்களைக் காண்க ஆல்-ஆஃப்-ஃபேம்"
 
 #: resources/ui/settings.ui:28
 msgid "Donate"
-msgstr ""
+msgstr "நன்கொடை"
 
 #: resources/ui/settings.ui:43
 msgid "Report a Bug"
-msgstr ""
+msgstr "ஒரு பிழையைப் புகாரளிக்கவும்"
 
 #: resources/ui/settings.ui:47
 msgid "Translate"
-msgstr ""
+msgstr "மொழிபெயர்த்திடு"
 
 #: resources/ui/settings.ui:53
 msgid "About the Desktop-Cube"
-msgstr ""
+msgstr "டெச்க்டாப்-கியூப் பற்றி"
 
 #: resources/ui/settings.ui:65
 msgid "General"
-msgstr ""
+msgstr "பொது"
 
 #: resources/ui/settings.ui:70
 msgid "General Options"
-msgstr ""
+msgstr "பொது விருப்பங்கள்"
 
 #: resources/ui/settings.ui:71
 msgid "These options affect the cube both in desktop and overview mode."
 msgstr ""
+"இந்த விருப்பங்கள் டெச்க்டாப் மற்றும் கண்ணோட்டம் பயன்முறையில் கனசதுரத்தை பாதிக்கின்றன."
 
 #: resources/ui/settings.ui:75
 msgid "Gap between last and first workspace"
-msgstr ""
+msgstr "கடைசி மற்றும் முதல் பணியிடத்திற்கு இடையிலான இடைவெளி"
 
 #: resources/ui/settings.ui:76
 msgid "You cannot switch from the last to the first workspace anyways."
-msgstr ""
+msgstr "நீங்கள் எப்படியும் கடைசி பணியிடத்திற்கு மாற முடியாது."
 
 #: resources/ui/settings.ui:87 resources/ui/settings.ui:110
 #: resources/ui/settings.ui:133 resources/ui/settings.ui:164
@@ -85,36 +89,36 @@ msgstr ""
 #: resources/ui/settings.ui:426 resources/ui/settings.ui:456
 #: resources/ui/settings.ui:487 resources/ui/settings.ui:518
 msgid "Reset to default value"
-msgstr ""
+msgstr "இயல்புநிலை மதிப்புக்கு மீட்டமைக்கவும்"
 
 #: resources/ui/settings.ui:98
 msgid "Explode cube on vertical rotations"
-msgstr ""
+msgstr "செங்குத்து சுழற்சிகளில் கியூப் வெடிக்கவும்"
 
 #: resources/ui/settings.ui:99
 msgid "Rotate the cube up or down to show the 3D structure."
-msgstr ""
+msgstr "3D கட்டமைப்பைக் காட்ட கனசதுரத்தை மேலே அல்லது கீழ் சுழற்றுங்கள்."
 
 #: resources/ui/settings.ui:121
 msgid "Enable central perspective for each monitor"
-msgstr ""
+msgstr "ஒவ்வொரு மானிட்டருக்கும் மைய முன்னோக்கை இயக்கவும்"
 
 #: resources/ui/settings.ui:122
 #, javascript-format
 msgid "For an explanation, you can watch this video: %s."
-msgstr ""
+msgstr "விளக்கத்திற்கு, நீங்கள் இந்த வீடியோவைப் பார்க்கலாம்: %s."
 
 #: resources/ui/settings.ui:144
 msgid "Window parallax effect"
-msgstr ""
+msgstr "சாளர இடமாறு விளைவு"
 
 #: resources/ui/settings.ui:175
 msgid "Background panorama"
-msgstr ""
+msgstr "பின்னணி பனோரமா"
 
 #: resources/ui/settings.ui:176
 msgid "See tooltip of the button for some hints."
-msgstr ""
+msgstr "சில குறிப்புகளுக்கு பொத்தானின் உதவிக்குறிப்பைப் பார்க்கவும்."
 
 #: resources/ui/settings.ui:179
 msgid ""
@@ -122,96 +126,105 @@ msgid ""
 "in the equirectangular projection. A good source for such panoramas is "
 "polyhaven.com/hdris. Be sure to download the tone-mapped JPEG versions!"
 msgstr ""
+"நீங்கள் இங்கே எந்த படத்தையும் பயன்படுத்தலாம். சிறந்த முடிவுகளுக்கு, இது சமநிலை திட்டத்தில் "
+"360 ° பனோரமாவாக இருக்க வேண்டும். அத்தகைய பனோரமாக்களுக்கு ஒரு நல்ல சான்று "
+"பாலிஏவன்.காம்/எச்.டி.ஆர்.ஐ.எச். தொனி-வரைபட JPEG பதிப்புகளைப் பதிவிறக்குவதை "
+"உறுதிப்படுத்திக் கொள்ளுங்கள்!"
 
 #: resources/ui/settings.ui:201
 msgid "Advanced Options"
-msgstr ""
+msgstr "மேம்பட்ட விருப்பங்கள்"
 
 #: resources/ui/settings.ui:202
 msgid "Usually, you can leave these options to their default values."
 msgstr ""
+"வழக்கமாக, இந்த விருப்பங்களை அவற்றின் இயல்புநிலை மதிப்புகளுக்கு விட்டுவிடலாம்."
 
 #: resources/ui/settings.ui:206
 msgid "Edge switch pressure"
-msgstr ""
+msgstr "விளிம்பு சுவிட்ச் அழுத்தம்"
 
 #: resources/ui/settings.ui:207
 msgid "The amount of pressure required to switch workspaces."
-msgstr ""
+msgstr "பணியிடங்களை மாற்ற தேவையான அழுத்தத்தின் அளவு."
 
 #: resources/ui/settings.ui:236
 msgid "Mouse rotation speed"
-msgstr ""
+msgstr "சுட்டி சுழற்சி விரைவு"
 
 #: resources/ui/settings.ui:237
 msgid "A multiplier for the desktop cube rotation when dragged."
-msgstr ""
+msgstr "இழுக்கும்போது டெச்க்டாப் கியூப் சுழற்சிக்கான பெருக்கி."
 
 #: resources/ui/settings.ui:271
 msgid "Desktop"
-msgstr ""
+msgstr "டெச்க்டாப்"
 
 #: resources/ui/settings.ui:276
 msgid "Desktop Options"
-msgstr ""
+msgstr "டெச்க்டாப் விருப்பங்கள்"
 
 #: resources/ui/settings.ui:277
 msgid ""
 "These options tweak the cube when switching workspaces outside the overview."
 msgstr ""
+"இந்த விருப்பங்கள் கண்ணோட்டத்திற்கு வெளியே பணியிடங்களை மாற்றும்போது கனசதுரத்தை "
+"மாற்றியமைக்கின்றன."
 
 #: resources/ui/settings.ui:281
 msgid "Click and drag the desktop to rotate the cube"
-msgstr ""
+msgstr "கனசதுரத்தை சுழற்ற டெச்க்டாப்பைக் சொடுக்கு செய்து இழுக்கவும்"
 
 #: resources/ui/settings.ui:303
 msgid "Click and drag the panel to rotate the cube"
-msgstr ""
+msgstr "கனசதுரத்தை சுழற்ற பேனலைக் சொடுக்கு செய்து இழுக்கவும்"
 
 #: resources/ui/settings.ui:325
 msgid "Drag windows to the edge of the desktop to switch workspaces"
-msgstr ""
+msgstr "பணியிடங்களை மாற்ற சன்னல்களை டெச்க்டாப்பின் விளிம்பிற்கு இழுக்கவும்"
 
 #: resources/ui/settings.ui:326 resources/ui/settings.ui:385
 msgid "You can configure the required pressure in the general options."
-msgstr ""
+msgstr "தேவையான அழுத்தத்தை பொதுவான விருப்பங்களில் உள்ளமைக்கலாம்."
 
 #: resources/ui/settings.ui:352
 msgid "Overview"
-msgstr ""
+msgstr "கண்ணோட்டம்"
 
 #: resources/ui/settings.ui:357
 msgid "Overview Options"
-msgstr ""
+msgstr "கண்ணோட்டம் விருப்பங்கள்"
 
 #: resources/ui/settings.ui:358
 msgid "These options tweak the cube in the overview."
-msgstr ""
+msgstr "இந்த விருப்பங்கள் கண்ணோட்டத்தில் கனசதுரத்தை மாற்றியமைக்கின்றன."
 
 #: resources/ui/settings.ui:362
 msgid "Click and drag the overview to rotate the cube"
-msgstr ""
+msgstr "கனசதுரத்தை சுழற்ற கண்ணோட்டத்தைக் சொடுக்கு செய்து இழுக்கவும்"
 
 #: resources/ui/settings.ui:384
 msgid "Drag windows to the edge of the overview to switch workspaces"
-msgstr ""
+msgstr "பணியிடங்களை மாற்ற கண்ணோட்டத்தின் விளிம்பிற்கு சாளரங்களை இழுக்கவும்"
 
 #: resources/ui/settings.ui:407
 msgid "Gap between adjacent workspaces"
-msgstr ""
+msgstr "அருகிலுள்ள பணியிடங்களுக்கு இடையில் இடைவெளி"
 
 #: resources/ui/settings.ui:437
 msgid "Horizontal stretching of the cube"
-msgstr ""
+msgstr "கனசதுரத்தின் கிடைமட்ட நீட்சி"
 
 #: resources/ui/settings.ui:438
 msgid "This ensures that you can see the cube's sides from the front."
 msgstr ""
+"இது கனசதுரத்தின் பக்கங்களை முன்பக்கத்திலிருந்து பார்க்க முடியும் என்பதை இது உறுதி "
+"செய்கிறது."
 
 #: resources/ui/settings.ui:467
 msgid "Opacity of the active workspace"
-msgstr ""
+msgstr "செயலில் உள்ள பணியிடத்தின் ஒளிபுகாநிலை"
 
 #: resources/ui/settings.ui:498
 msgid "Opacity of inactive workspaces"
-msgstr ""
+msgstr "செயலற்ற பணியிடங்களின் ஒளிபுகாநிலை"
