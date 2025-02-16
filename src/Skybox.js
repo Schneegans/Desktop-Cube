@@ -132,7 +132,7 @@ var SkyboxEffect = GObject.registerClass({
 
         try {
           const pixbuf  = GdkPixbuf.Pixbuf.new_from_stream_finish(result);
-          const texture = new Clutter.Image();
+          const texture = new St.ImageContent();
           texture.set_data(pixbuf.get_pixels(), FORMATS[pixbuf.get_n_channels() - 1],
                            pixbuf.get_width(), pixbuf.get_height(),
                            pixbuf.get_rowstride());
