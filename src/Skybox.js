@@ -17,6 +17,7 @@ import GObject from 'gi://GObject';
 import Shell from 'gi://Shell';
 import GdkPixbuf from 'gi://GdkPixbuf';
 import Cogl from 'gi://Cogl';
+import St from 'gi://St';
 
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
@@ -66,7 +67,7 @@ var SkyboxEffect = GObject.registerClass({
   vfunc_build_pipeline() {
 
     // In the vertex shader, we compute the view space position of the actor's corners.
-    this.add_glsl_snippet(Shell.SnippetHook.VERTEX, 'varying vec4 vsPos;',
+    this.add_glsl_snippet(Cogl.SnippetHook ? Cogl.SnippetHook.VERTEX : Shell.SnippetHook.VERTEX, 'varying vec4 vsPos;',
                           'vsPos = cogl_modelview_matrix * cogl_position_in;', false);
 
     const fragmentDeclares = `
@@ -102,7 +103,7 @@ var SkyboxEffect = GObject.registerClass({
       cogl_color_out = texture2D(uTexture, vec2(x, y));
     `;
 
-    this.add_glsl_snippet(Shell.SnippetHook.FRAGMENT, fragmentDeclares, fragmentCode,
+    this.add_glsl_snippet(Cogl.SnippetHook ? Cogl.SnippetHook.FRAGMENT : Shell.SnippetHook.FRAGMENT, fragmentDeclares, fragmentCode,
                           false);
   }
 
