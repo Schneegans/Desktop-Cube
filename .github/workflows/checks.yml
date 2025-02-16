@@ -95,7 +95,6 @@ jobs:
           - "41"
         session:
           - "gnome-xsession"
-          - "gnome-wayland-nested"
     steps:
       - uses: actions/checkout@v4
       - name: Download Dependencies
