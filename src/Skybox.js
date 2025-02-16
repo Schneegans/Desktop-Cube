@@ -67,8 +67,9 @@ var SkyboxEffect = GObject.registerClass({
   vfunc_build_pipeline() {
 
     // In the vertex shader, we compute the view space position of the actor's corners.
-    this.add_glsl_snippet(Cogl.SnippetHook ? Cogl.SnippetHook.VERTEX : Shell.SnippetHook.VERTEX, 'varying vec4 vsPos;',
-                          'vsPos = cogl_modelview_matrix * cogl_position_in;', false);
+    this.add_glsl_snippet(
+      Cogl.SnippetHook ? Cogl.SnippetHook.VERTEX : Shell.SnippetHook.VERTEX,
+      'varying vec4 vsPos;', 'vsPos = cogl_modelview_matrix * cogl_position_in;', false);
 
     const fragmentDeclares = `
       varying vec4      vsPos;
@@ -103,8 +104,9 @@ var SkyboxEffect = GObject.registerClass({
       cogl_color_out = texture2D(uTexture, vec2(x, y));
     `;
 
-    this.add_glsl_snippet(Cogl.SnippetHook ? Cogl.SnippetHook.FRAGMENT : Shell.SnippetHook.FRAGMENT, fragmentDeclares, fragmentCode,
-                          false);
+    this.add_glsl_snippet(
+      Cogl.SnippetHook ? Cogl.SnippetHook.FRAGMENT : Shell.SnippetHook.FRAGMENT,
+      fragmentDeclares, fragmentCode, false);
   }
 
   // For each draw call, we have to set some uniform values.
