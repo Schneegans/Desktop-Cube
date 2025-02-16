@@ -1,19 +1,15 @@
 {
-    "uuid": "desktop-cube@schneegans.github.com",
-    "description": "Indulge in nostalgia with useless 3D effects.",
-    "name": "Desktop Cube",
-    "donations": {
-        "kofi": "schneegans",
-        "github": "schneegans",
-        "paypal": "simonschneegans"
-    },
-    "gettext-domain": "desktop-cube",
-    "settings-schema": "org.gnome.shell.extensions.desktop-cube",
-    "shell-version": [
-        "45",
-        "46",
-        "47"
-    ],
-    "url": "https://github.com/Schneegans/Desktop-Cube",
-    "version": 26
+  "uuid": "desktop-cube@schneegans.github.com",
+  "description": "Indulge in nostalgia with useless 3D effects.",
+  "name": "Desktop Cube",
+  "donations": {
+    "kofi": "schneegans",
+    "github": "schneegans",
+    "paypal": "simonschneegans"
+  },
+  "gettext-domain": "desktop-cube",
+  "settings-schema": "org.gnome.shell.extensions.desktop-cube",
+  "shell-version": ["45", "46", "47", "48"],
+  "url": "https://github.com/Schneegans/Desktop-Cube",
+  "version": 27
 }
