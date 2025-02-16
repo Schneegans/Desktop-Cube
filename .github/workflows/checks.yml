@@ -101,7 +101,7 @@ jobs:
       - name: Download Dependencies
         run: |
           sudo apt update -q
-          sudo apt install gettext libglib2.0-dev
+          sudo apt install gettext libglib2.0-dev image-magick
       - name: Build Desktop Cube
         run: make
       - name: Test Desktop Cube
