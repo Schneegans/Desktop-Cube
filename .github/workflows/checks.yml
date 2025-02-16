@@ -100,8 +100,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Download Dependencies
         run: |
-          sudo apt update -qq
-          sudo apt install gettext -qq
+          sudo apt update -q
+          sudo apt install gettext libglib2.0-dev
       - name: Build Desktop Cube
         run: make
       - name: Test Desktop Cube
