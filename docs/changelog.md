@@ -7,11 +7,12 @@ SPDX-License-Identifier: CC-BY-4.0
 
 ## [Desktop Cube 27](https://github.com/schneegans/Desktop-Cube/releases/tag/v27)
 
-**Release Date:** TBD
+**Release Date:** 2025-02-18
 
 #### Enhancements
 
 - Ported the extension to GNOME 48.
+- Several translation updates. Thanks to all the translators!
 
 ## [Desktop Cube 26](https://github.com/schneegans/Desktop-Cube/releases/tag/v26)
 
