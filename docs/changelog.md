@@ -5,6 +5,14 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## [Desktop Cube 28](https://github.com/schneegans/Desktop-Cube/releases/tag/v28)
+
+**Release Date:** 2025-03-08
+
+#### Bug Fixes
+
+- Fixed an issue introduced by the GNOME 48 Beta release which caused the sky box to not work properly.
+
 ## [Desktop Cube 27](https://github.com/schneegans/Desktop-Cube/releases/tag/v27)
 
 **Release Date:** 2025-02-18
