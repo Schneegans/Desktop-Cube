@@ -141,10 +141,10 @@ var SkyboxEffect = GObject.registerClass({
           // https://gitlab.gnome.org/GNOME/gnome-shell/-/commit/44b84e458a22046fedb85701ea25ad08ecc0d43f
           if (utils.shellVersionIsAtLeast(48, 'beta')) {
             texture.set_data(global.stage.context.get_backend().get_cogl_context(),
-                             data.get_pixels(), FORMATS[pixbuf.get_n_channels() - 1],
+                             pixbuf.get_pixels(), FORMATS[pixbuf.get_n_channels() - 1],
                              pixbuf.width, pixbuf.height, pixbuf.rowstride);
           } else {
-            texture.set_data(data.get_pixels(), FORMATS[pixbuf.get_n_channels() - 1],
+            texture.set_data(pixbuf.get_pixels(), FORMATS[pixbuf.get_n_channels() - 1],
                              pixbuf.width, pixbuf.height, pixbuf.rowstride);
           }
 
