@@ -1166,7 +1166,7 @@ export default class DesktopCube extends Extension {
   _addDragGesture(actor, tracker, mode) {
     const gesture = new DragGesture(actor, mode);
 
-    if (utils.shellVersionIsAtLeast(49, "beta")) {
+    if (utils.shellVersionIsAtLeast(49, 'beta')) {
       gesture.connect('begin', tracker._beginTouchpadGesture.bind(tracker));
       gesture.connect('update', tracker._updateTouchpadGesture.bind(tracker));
       gesture.connect('end', tracker._endTouchpadGesture.bind(tracker));
@@ -1175,7 +1175,7 @@ export default class DesktopCube extends Extension {
       gesture.connect('update', tracker._updateGesture.bind(tracker));
       gesture.connect('end', tracker._endTouchGesture.bind(tracker));
     }
-    
+
     tracker.bind_property('distance', gesture, 'distance',
                           GObject.BindingFlags.SYNC_CREATE);
 
