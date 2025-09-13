@@ -30,7 +30,7 @@ import {Workspace} from 'resource:///org/gnome/shell/ui/workspace.js';
 // able to rotate the cube with the left mouse button, so we add the gesture defined    //
 // below to these two SwipeTracker instances (this is done by the _addDragGesture() of  //
 // the extension class). The gesture is loosely based on the gesture defined here:      //
-// https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/swipeTracker.js#L213    //
+// https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/swipeTracker.js#L89    //
 // It behaves the same in the regard that it reports update events for horizontal       //
 // movements. However, it stores vertical movements as well and makes this accessible   //
 // via the "pitch" property. This is then used for vertical rotations of the cube.      //
@@ -176,11 +176,7 @@ export var DragGesture =
           // When starting a drag in desktop mode, we grab the input so that we can move
           // the pointer across windows without loosing the input events.
           if (Main.actionMode == Shell.ActionMode.NORMAL) {
-            const sequence = event.type() == Clutter.EventType.TOUCH_UPDATE ?
-              event.get_event_sequence() :
-              null;
-
-            if (!this._grab(event.get_device(), sequence)) {
+            if (!this._grab()) {
               return Clutter.EVENT_PROPAGATE;
             }
           }
@@ -256,7 +252,7 @@ export var DragGesture =
   // Makes sure that all events from the pointing device we received last input from is
   // passed to the given actor. This is used to ensure that we do not "loose" the touch
   // buttons will dragging them around.
-  _grab(device, sequence) {
+  _grab() {
     this._lastGrab = global.stage.grab(this._actor);
     return this._lastGrab != null;
   }

@@ -857,7 +857,7 @@ export default class DesktopCube extends Extension {
     // Then sort the children actors accordingly.
     const parent = actors[0].get_parent();
     for (let i = 0; i < copy.length; i++) {
-      parent.set_child_at_index(copy[i], -1);
+      parent.set_child_at_index(copy[i], i);
     }
   }
 
@@ -954,7 +954,7 @@ export default class DesktopCube extends Extension {
 
     // Finally, sort the children actors accordingly.
     for (let i = 0; i < copy.length; i++) {
-      parent.set_child_at_index(copy[i], -1);
+      parent.set_child_at_index(copy[i], i);
     }
   }
 
@@ -1165,9 +1165,17 @@ export default class DesktopCube extends Extension {
   // SwipeTracker's gesture ends, the St.Adjustment's value will be eased to zero.
   _addDragGesture(actor, tracker, mode) {
     const gesture = new DragGesture(actor, mode);
-    gesture.connect('begin', tracker._beginGesture.bind(tracker));
-    gesture.connect('update', tracker._updateGesture.bind(tracker));
-    gesture.connect('end', tracker._endTouchGesture.bind(tracker));
+
+    if (utils.shellVersionIsAtLeast(49, "beta")) {
+      gesture.connect('begin', tracker._beginTouchpadGesture.bind(tracker));
+      gesture.connect('update', tracker._updateTouchpadGesture.bind(tracker));
+      gesture.connect('end', tracker._endTouchpadGesture.bind(tracker));
+    } else {
+      gesture.connect('begin', tracker._beginGesture.bind(tracker));
+      gesture.connect('update', tracker._updateGesture.bind(tracker));
+      gesture.connect('end', tracker._endTouchGesture.bind(tracker));
+    }
+    
     tracker.bind_property('distance', gesture, 'distance',
                           GObject.BindingFlags.SYNC_CREATE);
 
