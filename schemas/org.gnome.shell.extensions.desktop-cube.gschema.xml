@@ -117,5 +117,28 @@ SPDX-License-Identifier: CC0-1.0
       <description>The opacity of the cube sides.</description>
     </key>
 
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- vr mode settings                                                              -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    
+    <key name="enable-vr" type="b">
+      <default>false</default>
+      <summary>Enable VR</summary>
+      <description>Turn cube inside out and look from within.</description>
+    </key>
+    
+    <key name="radiobtn-backend-openhmd" type="b">
+      <default>true</default>
+      <summary>Select OpenHMD backend</summary>
+      <description>Use OpenHMD to communicate with HMD</description>
+    </key>
+    
+    <key name="radiobtn-backend-openxr" type="b">
+      <default>false</default>
+      <summary>Select OpenXR backend</summary>
+      <description>Use OpenXR to communicate with HMD</description>
+    </key>
+
   </schema>
 </schemalist>
