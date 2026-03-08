@@ -890,7 +890,7 @@ export default class DesktopCube extends Extension {
 
       let monitor;
 
-      if (Meta.is_wayland_compositor()) {
+      if (!Meta.is_wayland_compositor || Meta.is_wayland_compositor()) {
 
         // On Wayland, each monitor should have its own StageView. Therefore, the virtual
         // camera has been positioned in front of each monitor separately.
@@ -1035,7 +1035,7 @@ export default class DesktopCube extends Extension {
       // coordinates of the virtual camera.
       let cameraX, cameraY;
 
-      if (Meta.is_wayland_compositor()) {
+      if (!Meta.is_wayland_compositor || Meta.is_wayland_compositor()) {
 
         // On Wayland, each monitor has its own StageView. Therefore we can move the
         // virtual camera for each monitor separately.

@@ -112,7 +112,7 @@ export var DragGesture =
     }
 
     // Ignore touch events on X11. On X11, we get emulated pointer events.
-    if (!Meta.is_wayland_compositor() &&
+    if (Meta.is_wayland_compositor && !Meta.is_wayland_compositor() &&
         (event.type() == Clutter.EventType.TOUCH_BEGIN ||
          event.type() == Clutter.EventType.TOUCH_UPDATE ||
          event.type() == Clutter.EventType.TOUCH_END)) {
