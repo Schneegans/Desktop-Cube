@@ -1252,9 +1252,29 @@ export default class DesktopCube extends Extension {
     // allows us to override this behavior.
     tracker.allowLongSwipes = true;
 
-    // We have to prevent moving fullscreen windows when dragging.
-    this._origPanelTryDragWindow = actor._tryDragWindow;
-    actor._tryDragWindow = () => Clutter.EVENT_PROPAGATE;
+    if (GS_VERSION >= 50) {
+      // The panel actor itself must be reactive so it receives pointer events that land on
+      // empty areas between panel children (clock, status icons, etc.). Without this, those
+      // events are swallowed by the stage and never reach the DragGesture. Save the current
+      // state so we can restore it on removal.
+      this._origPanelReactivity = actor.reactive;
+      actor.reactive             = true;
+
+      // On GNOME 50+, the panel has a built-in Clutter.ClickGesture (the 'window-drag'
+      // action) with recognize_on_press:true. This gesture fires immediately on mouse-down
+      // and starts a window grab operation (begin_grab_op), which steals all subsequent
+      // pointer events and prevents our DragGesture from ever seeing motion events.
+      // We disable it while panel dragging is active and restore it on removal.
+      if (actor._clickGesture) {
+        this._origPanelClickGestureEnabled = actor._clickGesture.enabled;
+        actor._clickGesture.enabled = false;
+      }
+    } else {
+      // On older GNOME versions, we have to prevent moving fullscreen windows when
+      // dragging. The _tryDragWindow method does not exist on GNOME 50+.
+      this._origPanelTryDragWindow = actor._tryDragWindow;
+      actor._tryDragWindow = () => Clutter.EVENT_PROPAGATE;
+    }
 
     this._panelDragGesture = this._addDragGesture(actor, tracker, mode);
   }
@@ -1296,8 +1316,21 @@ export default class DesktopCube extends Extension {
       // Restore original behavior.
       this._panelDragGesture.tracker.allowLongSwipes = false;
 
-      // Make sure to restore the original state.
-      this._panelDragGesture.actor._tryDragWindow = this._origPanelTryDragWindow;
+      if (GS_VERSION >= 50) {
+        // Make sure to restore the original state.
+        this._panelDragGesture.actor.reactive = this._origPanelReactivity;
+
+        // Restore the panel's built-in window-drag click gesture if we disabled it.
+        if (this._panelDragGesture.actor._clickGesture &&
+            this._origPanelClickGestureEnabled !== undefined) {
+          this._panelDragGesture.actor._clickGesture.enabled =
+            this._origPanelClickGestureEnabled;
+          delete this._origPanelClickGestureEnabled;
+        }
+      } else {
+        // On older GNOME versions, restore the original _tryDragWindow method.
+        this._panelDragGesture.actor._tryDragWindow = this._origPanelTryDragWindow;
+      }
 
       this._removeDragGesture(this._panelDragGesture);
 
