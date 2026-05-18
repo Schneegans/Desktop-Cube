@@ -5,6 +5,18 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## [unreleased]
+
+**Release Date:** TBD
+
+#### Enhancements
+
+- Several translation updates. Thanks to all the translators!
+
+#### Bug Fixes
+
+- Fixed the drag-panel-to-rotate-cube feature on GNOME 50. Thanks to [@felipe-juan](https://github.com/felipe-juan) for this fix!
+
 ## [Desktop Cube 31](https://github.com/schneegans/Desktop-Cube/releases/tag/v31)
 
 **Release Date:** 2026-03-15
