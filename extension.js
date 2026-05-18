@@ -1253,21 +1253,21 @@ export default class DesktopCube extends Extension {
     tracker.allowLongSwipes = true;
 
     if (GS_VERSION >= 50) {
-      // The panel actor itself must be reactive so it receives pointer events that land on
-      // empty areas between panel children (clock, status icons, etc.). Without this, those
-      // events are swallowed by the stage and never reach the DragGesture. Save the current
-      // state so we can restore it on removal.
+      // The panel actor itself must be reactive so it receives pointer events that land
+      // on empty areas between panel children (clock, status icons, etc.). Without this,
+      // those events are swallowed by the stage and never reach the DragGesture. Save the
+      // current state so we can restore it on removal.
       this._origPanelReactivity = actor.reactive;
-      actor.reactive             = true;
+      actor.reactive            = true;
 
       // On GNOME 50+, the panel has a built-in Clutter.ClickGesture (the 'window-drag'
-      // action) with recognize_on_press:true. This gesture fires immediately on mouse-down
-      // and starts a window grab operation (begin_grab_op), which steals all subsequent
-      // pointer events and prevents our DragGesture from ever seeing motion events.
-      // We disable it while panel dragging is active and restore it on removal.
+      // action) with recognize_on_press:true. This gesture fires immediately on
+      // mouse-down and starts a window grab operation (begin_grab_op), which steals all
+      // subsequent pointer events and prevents our DragGesture from ever seeing motion
+      // events. We disable it while panel dragging is active and restore it on removal.
       if (actor._clickGesture) {
         this._origPanelClickGestureEnabled = actor._clickGesture.enabled;
-        actor._clickGesture.enabled = false;
+        actor._clickGesture.enabled        = false;
       }
     } else {
       // On older GNOME versions, we have to prevent moving fullscreen windows when
