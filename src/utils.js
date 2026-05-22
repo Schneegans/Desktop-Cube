@@ -9,6 +9,8 @@
 // SPDX-FileCopyrightText: Simon Schneegans <code@simonschneegans.de>
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+import GLib from 'gi://GLib';
+
 'use strict';
 
 // This method can be used to import the Config module.
@@ -87,4 +89,15 @@ export async function importGettext() {
       .gettext;
   }
   return (await import('resource:///org/gnome/shell/extensions/extension.js')).gettext;
+}
+
+export function setInterval(func, delay, ...args) {
+  return GLib.timeout_add(GLib.PRIORITY_DEFAULT, delay, () => {
+      func(...args);
+      return GLib.SOURCE_CONTINUE;
+  });
+};
+
+export function clearInterval(...args) {
+  GLib.source_remove(...args);
 }
