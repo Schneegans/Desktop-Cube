@@ -5,6 +5,14 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## [Desktop Cube 33](https://github.com/schneegans/Desktop-Cube/releases/tag/v33)
+
+**Release Date:** 2026-06-28
+
+#### Bug Fixes
+
+- Fixed several shexli linter warnings which popped up during the review process.
+
 ## [Desktop Cube 32](https://github.com/schneegans/Desktop-Cube/releases/tag/v32)
 
 **Release Date:** 2026-06-28
