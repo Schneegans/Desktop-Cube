@@ -769,7 +769,6 @@ export default class DesktopCube extends Extension {
     this._pressureBarrier.destroy();
     this._leftBarrier.destroy();
     this._rightBarrier.destroy();
-    this._pitch.destroy();
 
     this._pressureBarrier = null;
     this._leftBarrier     = null;
