@@ -350,11 +350,11 @@ export default class DesktopCube extends Extension {
     // bit to arrange the workspaces in a cube-like fashion. We have to adjust to parts of
     // the code as the automatic transitions (e.g. when switching with key combinations)
     // are handled differently than the gesture based switches.
-    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L299
+    // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/workspaceAnimation.js#L377
     WorkspaceAnimationController.prototype._prepareWorkspaceSwitch = function() {
       // Here, we call the original method without any arguments. Usually, GNOME Shell
       // "skips" workspaces when switching to a workspace which is more than one workspace
-      // to the left or the right. This behavior is not desirable for thr cube, as it
+      // to the left or the right. This behavior is not desirable for the cube, as it
       // messes with your spatial memory. If no workspaceIndices are given to this method,
       // all workspaces will be shown during the workspace switch.
       extensionThis._origPrepSwitch.apply(this, []);
@@ -362,7 +362,8 @@ export default class DesktopCube extends Extension {
       // Now tweak the monitor groups.
       this._switchData.monitors.forEach(m => {
         // Call the method above whenever the transition progress changes.
-        m.connect('notify::progress', () => updateMonitorGroup(m));
+        m._desktopCubeProgressID =
+          m.connect('notify::progress', () => updateMonitorGroup(m));
 
         // Call the method above whenever a gesture is active.
         const orig              = m.updateSwipeForMonitor;
@@ -394,6 +395,13 @@ export default class DesktopCube extends Extension {
 
     // Re-attach the background panorama to the stage once the workspace switch is done.
     WorkspaceAnimationController.prototype._finishWorkspaceSwitch = function(...params) {
+      this._switchData.monitors.forEach(m => {
+        if (m._desktopCubeProgressID) {
+          m.disconnect(m._desktopCubeProgressID);
+          delete m._desktopCubeProgressID;
+        }
+      });
+
       extensionThis._origFinalSwitch.apply(this, params);
 
       // Make sure that the skybox covers the entire stage again.
@@ -541,13 +549,15 @@ export default class DesktopCube extends Extension {
 
     // Update horizontal rotation of the background panorama during workspace switches in
     // the overview.
-    Main.overview._overview.controls._workspaceAdjustment.connect('notify::value', () => {
-      if (this._skybox) {
-        this._skybox.yaw = 2 * Math.PI *
-          Main.overview._overview.controls._workspaceAdjustment.value /
-          global.workspaceManager.get_n_workspaces();
-      }
-    });
+    this._workspaceAdjustmentID =
+      Main.overview._overview.controls._workspaceAdjustment.connect(
+        'notify::value', () => {
+          if (this._skybox) {
+            this._skybox.yaw = 2 * Math.PI *
+              Main.overview._overview.controls._workspaceAdjustment.value /
+              global.workspaceManager.get_n_workspaces();
+          }
+        });
 
 
     // -----------------------------------------------------------------------------------
@@ -691,14 +701,14 @@ export default class DesktopCube extends Extension {
     });
 
     // Keep a reference to the currently dragged window.
-    global.display.connect('grab-op-begin', (d, win, op) => {
+    this._grabOpBeginID = global.display.connect('grab-op-begin', (d, win, op) => {
       if (op == Meta.GrabOp.MOVING) {
         this._draggedWindow = win;
       }
     });
 
     // Release the reference to the currently dragged window.
-    global.display.connect('grab-op-end', (d, win, op) => {
+    this._grabOpEndID = global.display.connect('grab-op-end', (d, win, op) => {
       if (op == Meta.GrabOp.MOVING) {
         this._draggedWindow = null;
       }
@@ -763,8 +773,13 @@ export default class DesktopCube extends Extension {
       this._skybox = null;
     }
 
+    Main.overview._overview.controls._workspaceAdjustment.disconnect(
+      this._workspaceAdjustmentID);
+
     // Clean up the edge-workspace-switching.
     global.stage.disconnect(this._stageAllocationID);
+    global.display.disconnect(this._grabOpBeginID);
+    global.display.disconnect(this._grabOpEndID);
 
     this._pressureBarrier.destroy();
     this._leftBarrier.destroy();
