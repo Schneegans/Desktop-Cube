@@ -145,9 +145,10 @@ export default class DesktopCubePreferences extends ExtensionPreferences {
 
     // As we do not have something like a destructor, we just listen for the destroy
     // signal of our general page.
-    this._pages[0].connect('destroy', () => {
+    window.connect('close-request', () => {
       // Unregister our resources.
       Gio.resources_unregister(this._resources);
+      this._resources = null;
     });
   }
 
