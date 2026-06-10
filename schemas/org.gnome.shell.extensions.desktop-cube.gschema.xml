@@ -77,9 +77,21 @@ SPDX-License-Identifier: CC0-1.0
       <description>Switch workspaces when dragging a window over the desktop's edge.</description>
     </key>
 
+    <key name="enable-scroll-wrap" type="b">
+      <default>false</default>
+      <summary>Enable Scroll Wrap-Around</summary>
+      <description>Allow scrolling from the last workspace to the first and vice versa.</description>
+    </key>
+
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- overview cube settings                                                        -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <key name="hide-dash-in-overview" type="b">
+      <default>false</default>
+      <summary>Hide Dash in Overview</summary>
+      <description>Hide the application dash when the overview is shown.</description>
+    </key>
 
     <key name="enable-overview-dragging" type="b">
       <default>true</default>

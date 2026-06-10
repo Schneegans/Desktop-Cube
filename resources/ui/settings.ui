@@ -343,6 +343,28 @@ SPDX-License-Identifier: GPL-3.0-or-later
           </object>
         </child>
 
+        <child>
+          <object class="AdwActionRow">
+            <property name="title" translatable="yes">Wrap around when scrolling past the last or first workspace</property>
+            <property name="activatable-widget">enable-scroll-wrap</property>
+            <child>
+              <object class="GtkSwitch" id="enable-scroll-wrap">
+                <property name="valign">center</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="reset-enable-scroll-wrap">
+                <property name="icon-name">edit-clear-symbolic</property>
+                <property name="valign">center</property>
+                <property name="tooltip-text" translatable="yes">Reset to default value</property>
+                <style>
+                  <class name="flat" />
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+
       </object>
     </child>
 
@@ -356,6 +378,28 @@ SPDX-License-Identifier: GPL-3.0-or-later
       <object class="AdwPreferencesGroup">
         <property name="title" translatable="yes">Overview Options</property>
         <property name="description" translatable="yes">These options tweak the cube in the overview.</property>
+
+        <child>
+          <object class="AdwActionRow">
+            <property name="title" translatable="yes">Hide the dash in the overview</property>
+            <property name="activatable-widget">hide-dash-in-overview</property>
+            <child>
+              <object class="GtkSwitch" id="hide-dash-in-overview">
+                <property name="valign">center</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="reset-hide-dash-in-overview">
+                <property name="icon-name">edit-clear-symbolic</property>
+                <property name="valign">center</property>
+                <property name="tooltip-text" translatable="yes">Reset to default value</property>
+                <style>
+                  <class name="flat" />
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
 
         <child>
           <object class="AdwActionRow">

@@ -5,6 +5,16 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## Unreleased
+
+#### Enhancements
+
+- Added a **scroll wrap-around** option in the Desktop preferences. When enabled, scrolling past the last workspace jumps to the first, and vice versa. This works by monkey-patching `Meta.Workspace.get_neighbor()` to return the opposite boundary workspace when GNOME would otherwise return the current one (GNOME returns `this` instead of `null` at boundaries). The full cube animation plays normally since `_prepareWorkspaceSwitch` is already patched by the extension.
+
+#### Bug Fixes
+
+- Fixed a crash when **Dash to Dock** (or similar extensions) is installed alongside Desktop Cube. The crash occurred because Dash to Dock removes the native GNOME Shell dash from the overview, causing `Main.overview._overview._controls._dash` to be `undefined`. Desktop Cube's "Hide Dash in Overview" feature now uses optional chaining (`?.`) to safely skip dash hiding/showing when the native dash is absent, instead of throwing a `TypeError`. This also fixes the same crash during extension disable while the screen is locked.
+
 ## [Desktop Cube 33](https://github.com/schneegans/Desktop-Cube/releases/tag/v33)
 
 **Release Date:** 2026-06-28
