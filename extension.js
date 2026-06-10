@@ -462,6 +462,19 @@ export default class DesktopCube extends Extension {
       extensionThis._origEndGesture.apply(this, [time, distance, isTouchpad]);
     };
 
+    // Add scroll wrap-around.
+    if (this._settings.get_boolean('enable-scroll-wrap')) {
+      this._addScrollWrap();
+    }
+
+    this._settings.connect('changed::enable-scroll-wrap', () => {
+      if (this._settings.get_boolean('enable-scroll-wrap')) {
+        this._addScrollWrap();
+      } else {
+        this._removeScrollWrap();
+      }
+    });
+
     // Add single-click drag gesture to the desktop.
     if (this._settings.get_boolean('enable-desktop-dragging')) {
       this._addDesktopDragGesture();
@@ -559,6 +572,35 @@ export default class DesktopCube extends Extension {
           }
         });
 
+
+    // -----------------------------------------------------------------------------------
+    // ---------------------------- hide dash in overview --------------------------------
+    // -----------------------------------------------------------------------------------
+
+    const updateDashVisibility = () => {
+      const hide = this._settings.get_boolean('hide-dash-in-overview');
+      const dash = Main.overview._overview._controls._dash;
+      if (!dash) {
+        return;
+      }
+      if (hide && Main.overview.visible) {
+        dash.hide();
+      } else {
+        dash.show();
+      }
+    };
+
+    this._overviewShowingDashID = Main.overview.connect('showing', () => {
+      if (this._settings.get_boolean('hide-dash-in-overview')) {
+        Main.overview._overview._controls._dash?.hide();
+      }
+    });
+
+    this._overviewHidingDashID = Main.overview.connect('hiding', () => {
+      Main.overview._overview._controls._dash?.show();
+    });
+
+    this._settings.connect('changed::hide-dash-in-overview', updateDashVisibility);
 
     // -----------------------------------------------------------------------------------
     // ----------------------- enable edge-drag workspace-switches -----------------------
@@ -762,6 +804,9 @@ export default class DesktopCube extends Extension {
     WorkspaceAnimationController.prototype._prepareWorkspaceSwitch = this._origPrepSwitch;
     WorkspaceAnimationController.prototype._finishWorkspaceSwitch = this._origFinalSwitch;
 
+    // Remove scroll wrap-around.
+    this._removeScrollWrap();
+
     // Remove all drag-to-rotate gestures.
     this._removeDesktopDragGesture();
     this._removePanelDragGesture();
@@ -772,6 +817,10 @@ export default class DesktopCube extends Extension {
       this._skybox.destroy();
       this._skybox = null;
     }
+
+    Main.overview.disconnect(this._overviewShowingDashID);
+    Main.overview.disconnect(this._overviewHidingDashID);
+    Main.overview._overview._controls._dash?.show();
 
     Main.overview._overview.controls._workspaceAdjustment.disconnect(
       this._workspaceAdjustmentID);
@@ -1230,6 +1279,49 @@ export default class DesktopCube extends Extension {
   _removeDragGesture(info) {
     info.gesture.destroy();
     info.tracker.disconnect(info.trackerConnection);
+  }
+
+  // Intercepts scroll events on the background before GNOME processes them. When the
+  // user scrolls past the last (or first) workspace, we activate the first (or last)
+  // workspace directly, bypassing GNOME's linear clamp. The cube animation fires
+  // automatically because _prepareWorkspaceSwitch is already monkey-patched above.
+  // Monkey-patches Meta.Workspace.get_neighbor() so that navigating past the last or
+  // first workspace wraps around instead of returning null. GNOME's own workspace-switch
+  // code (keybindings, scroll) calls get_neighbor() to decide where to go, so patching
+  // here means the full animation plays normally — we never need to call activate().
+  _addScrollWrap() {
+    const wm = global.workspace_manager;
+
+    this._origGetNeighbor = wm.get_active_workspace().__proto__.get_neighbor;
+    const extensionThis   = this;
+
+    wm.get_active_workspace().__proto__.get_neighbor = function(direction) {
+      const result = extensionThis._origGetNeighbor.call(this, direction);
+
+      // GNOME returns the same workspace when at the boundary instead of null.
+      // Detect that case and wrap around manually.
+      if (result === this) {
+        const n = wm.get_n_workspaces();
+        if (direction == Meta.MotionDirection.RIGHT ||
+            direction == Meta.MotionDirection.DOWN) {
+          return wm.get_workspace_by_index(0);
+        }
+        if (direction == Meta.MotionDirection.LEFT ||
+            direction == Meta.MotionDirection.UP) {
+          return wm.get_workspace_by_index(n - 1);
+        }
+      }
+
+      return result;
+    };
+  }
+
+  _removeScrollWrap() {
+    if (this._origGetNeighbor) {
+      global.workspace_manager.get_active_workspace().__proto__.get_neighbor =
+        this._origGetNeighbor;
+      delete this._origGetNeighbor;
+    }
   }
 
   // Calls _addDragGesture() for the SwipeTracker and actor responsible for

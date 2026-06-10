@@ -64,7 +64,9 @@ export default class DesktopCubePreferences extends ExtensionPreferences {
     this._bindSwitch('enable-desktop-dragging');
     this._bindSwitch('enable-panel-dragging');
     this._bindSwitch('enable-desktop-edge-switch');
+    this._bindSwitch('enable-scroll-wrap');
     this._bindSwitch('enable-overview-edge-switch');
+    this._bindSwitch('hide-dash-in-overview');
     this._bindSwitch('enable-overview-dragging');
     this._bindSwitch('do-explode');
     this._bindSwitch('per-monitor-perspective');
