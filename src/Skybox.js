@@ -33,20 +33,21 @@ import * as utils from './utils.js';
 // parameter controlling the horizontal and vertical rotation of the camera.            //
 //                                                                                      //
 // Since GNOME 51, Shell.GLSLEffect has been removed from gnome-shell. On newer         //
-// versions, we therefore use Clutter.ShaderEffect instead. Unlike Shell.GLSLEffect, it  //
+// versions, we therefore use Clutter.ShaderEffect instead. Unlike Shell.GLSLEffect, it //
 // only manages a single Cogl.Snippet automatically (returned by                        //
-// vfunc_get_static_snippet()), so we let it handle the fragment shader (which is also   //
-// required for its uniform bookkeeping to kick in) and add the vertex shader snippet    //
-// to the pipeline ourselves.                                                            //
+// vfunc_get_static_snippet()), so we let it handle the fragment shader (which is also  //
+// required for its uniform bookkeeping to kick in) and add the vertex shader snippet   //
+// to the pipeline ourselves.                                                           //
 //////////////////////////////////////////////////////////////////////////////////////////
 
 const _useShaderEffect = !Shell.GLSLEffect;
 
 const _properties = {
-  'yaw':   GObject.ParamSpec.double('yaw', 'yaw', 'yaw', GObject.ParamFlags.READWRITE,
-                                    -2 * Math.PI, 2 * Math.PI, 0),
-  'pitch': GObject.ParamSpec.double('pitch', 'pitch', 'pitch', GObject.ParamFlags.READWRITE,
-                                    -0.5 * Math.PI, 0.5 * Math.PI, 0),
+  'yaw': GObject.ParamSpec.double('yaw', 'yaw', 'yaw', GObject.ParamFlags.READWRITE,
+                                  -2 * Math.PI, 2 * Math.PI, 0),
+  'pitch':
+    GObject.ParamSpec.double('pitch', 'pitch', 'pitch', GObject.ParamFlags.READWRITE,
+                             -0.5 * Math.PI, 0.5 * Math.PI, 0),
 };
 
 // In the vertex shader, we compute the view space position of the actor's corners.
@@ -128,9 +129,7 @@ const _methods = {
 let SkyboxEffect;
 
 if (_useShaderEffect) {
-  // clang-format off
   class SkyboxEffectImpl extends Clutter.ShaderEffect {
-  // clang-format on
     _init(file) {
       super._init();
 
@@ -185,9 +184,7 @@ if (_useShaderEffect) {
   Object.assign(SkyboxEffectImpl.prototype, _methods);
   SkyboxEffect = GObject.registerClass({Properties: _properties}, SkyboxEffectImpl);
 } else {
-  // clang-format off
   class SkyboxEffectImpl extends Shell.GLSLEffect {
-  // clang-format on
     _init(file) {
       super._init();
 
