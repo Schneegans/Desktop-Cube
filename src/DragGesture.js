@@ -275,7 +275,7 @@ export var DragGesture =
     } else if (event.type() == Clutter.EventType.TOUCH_END) {
       // For touch, we only obey the pointer emulating sequence.
       // In GNOME 50 this method got removed.
-      if (typeof(global.display.is_pointer_emulating_sequence) === "function") {
+      if (typeof (global.display.is_pointer_emulating_sequence) === 'function') {
         return global.display.is_pointer_emulating_sequence(event.get_event_sequence());
       }
 
@@ -288,11 +288,19 @@ export var DragGesture =
   // This is borrowed from here:
   // https://gitlab.gnome.org/GNOME/gnome-shell/-/blob/main/js/ui/dnd.js#L259
   _eventIsMotion(event) {
-    return event.type() == Clutter.EventType.MOTION ||
-      (event.type() == Clutter.EventType.TOUCH_UPDATE &&
-        (typeof(global.display.is_pointer_emulating_sequence) != "function" || 
-          global.display.is_pointer_emulating_sequence(event.get_event_sequence())
-        )
-      );
+    if (event.type() == Clutter.EventType.MOTION) {
+      return true;
+    }
+
+    if (event.type() == Clutter.EventType.TOUCH_UPDATE) {
+      // In GNOME 50 this method got removed.
+      if (typeof (global.display.is_pointer_emulating_sequence) === 'function') {
+        return global.display.is_pointer_emulating_sequence(event.get_event_sequence());
+      }
+
+      return true;
+    }
+
+    return false;
   }
 });
