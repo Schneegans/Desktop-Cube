@@ -5,13 +5,17 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
-## [unreleased]
+## [Desktop Cube 34](https://github.com/schneegans/Desktop-Cube/releases/tag/v34)
 
-**Release Date:** TBD
+**Release Date:** 2026-09-23
 
 #### Enhancements
 
 - Added support for GNOME 51.
+
+#### Bug Fixes
+
+- Fixed an issue with the drag-panel-to-rotate-cube feature on touch devices on GNOME 50. Thanks to [@rexendevar](https://github.com/rexendevar) for this fix!
 
 ## [Desktop Cube 33](https://github.com/schneegans/Desktop-Cube/releases/tag/v33)
 
