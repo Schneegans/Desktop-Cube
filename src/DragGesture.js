@@ -274,7 +274,12 @@ export var DragGesture =
       return (event.get_state() & buttonMask) == 0;
     } else if (event.type() == Clutter.EventType.TOUCH_END) {
       // For touch, we only obey the pointer emulating sequence.
-      return global.display.is_pointer_emulating_sequence(event.get_event_sequence());
+      // In GNOME 50 this method got removed.
+      if (typeof(global.display.is_pointer_emulating_sequence) === "function") {
+        return global.display.is_pointer_emulating_sequence(event.get_event_sequence());
+      }
+
+      return true;
     }
 
     return false;
@@ -285,6 +290,9 @@ export var DragGesture =
   _eventIsMotion(event) {
     return event.type() == Clutter.EventType.MOTION ||
       (event.type() == Clutter.EventType.TOUCH_UPDATE &&
-       global.display.is_pointer_emulating_sequence(event.get_event_sequence()));
+        (typeof(global.display.is_pointer_emulating_sequence) != "function" || 
+          global.display.is_pointer_emulating_sequence(event.get_event_sequence())
+        )
+      );
   }
 });
