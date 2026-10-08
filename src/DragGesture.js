@@ -15,6 +15,7 @@ import Meta from 'gi://Meta';
 import Clutter from 'gi://Clutter';
 import GObject from 'gi://GObject';
 import Shell from 'gi://Shell';
+import St from 'gi://St';
 
 import * as Util from 'resource:///org/gnome/shell/misc/util.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
@@ -167,7 +168,9 @@ export var DragGesture =
       // pointer is moved enough.
       if (this._state == State.PENDING) {
 
-        const threshold = Clutter.Settings.get_default().dnd_drag_threshold;
+        // Clutter.Settings.get_default() was removed in GNOME 51; St.Settings
+        // reads the same GSettings key (mouse drag-threshold).
+        const threshold = St.Settings.get().drag_threshold;
 
         if (Math.abs(currentPos[0] - this._clickPos[0]) > threshold ||
             Math.abs(currentPos[1] - this._clickPos[1]) > threshold) {
