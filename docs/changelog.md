@@ -5,6 +5,14 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
+## [Unreleased]
+
+**Release Date:** TBD
+
+#### Bug Fixes
+
+- Fixed a regression which led to crash on GNOME 51. Thanks to [@camiloeferrera](https://github.com/camiloeferrera) for this fix!
+
 ## [Desktop Cube 34](https://github.com/schneegans/Desktop-Cube/releases/tag/v34)
 
 **Release Date:** 2026-09-23
