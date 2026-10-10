@@ -5,9 +5,9 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # Changelog of the Desktop Cube Extension
 
-## [Unreleased]
+## [Desktop Cube 35](https://github.com/schneegans/Desktop-Cube/releases/tag/v35)
 
-**Release Date:** TBD
+**Release Date:** 2026-10-10
 
 #### Bug Fixes
 
